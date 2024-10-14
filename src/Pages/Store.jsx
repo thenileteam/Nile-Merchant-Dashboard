@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import Links from '../Links';
 import { image, nilelogowhite, notification, store1, accountsetting, arrow, store, dollar, profile, notification2, bank, invoice, containertruck, websecurity, delete1 } from '../assets';
+import DeleteAccount from '../Components/Store/DeleteAccount';
 
 const Store = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -98,7 +99,7 @@ const Store = () => {
                         <Link to="/notification"><img src={notification} alt="" /></Link>
                     </div>
                     <div>
-                        <Link to="/profile"><img src={image} alt="" /></Link>
+                        <Link to="/profilesetting"><img src={image} alt="" /></Link>
                     </div>
                 </div>
             </div>
@@ -243,13 +244,8 @@ const Store = () => {
                   </div>  
                 </Link>
 
-                <div className='flex items-center justify-between bg-[#EAF4E2] border-[#8ED06C] border-2 rounded-md w-[322.89px] h-[160px] p-3'>
-                  <div>
-                    <img src={delete1} alt="" />
-                    <div className='mt-5'>
-                      <h1 className='text-[#333333] font-bold'>Delete Your Account</h1>
-                    </div>
-                  </div>
+                <div>
+                  <DeleteAccount />
                 </div>
               </div>
             </div>

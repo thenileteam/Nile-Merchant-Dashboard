@@ -98,7 +98,7 @@ const Product = () => {
                         <Link to="/notification"><img src={notification} alt="" /></Link>
                     </div>
                     <div>
-                        <Link to="/profile"><img src={image} alt="" /></Link>
+                        <Link to="/profilesetting"><img src={image} alt="" /></Link>
                     </div>
                 </div>
             </div>

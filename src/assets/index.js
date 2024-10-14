@@ -52,6 +52,7 @@ import roundedimage from "./roundedimage.png";
 import addsquare from "./addsquare.png";
 import add from "./add.png";
 import done from "./done.png";
+import delete2 from "./delete2.png";
 
 
 export {
@@ -109,4 +110,5 @@ export {
     addsquare,
     add,
     done,
+    delete2,
 }

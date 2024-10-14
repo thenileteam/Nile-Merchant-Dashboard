@@ -58,7 +58,7 @@ const SignIn = () => {
                         </div>
                         <div className='flex items-center gap-1'>
                             <h1 className='text-[#333333] text-[14px]'>Forgotten Password ?</h1>
-                            <Link to=""><p className='text-[#000000] font-bold'>Click Here</p></Link>
+                            <Link to="/forgotpassword"><p className='text-[#000000] font-bold'>Click Here</p></Link>
                         </div>
                     </div>
 
