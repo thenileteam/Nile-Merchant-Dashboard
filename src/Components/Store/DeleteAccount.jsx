@@ -34,7 +34,7 @@ const DeleteAccount = () => {
       setIsFinalConfirmationOpen(false); // Fully close the popup
       setIsFadingOut(false); // Reset fade state
       navigate('/'); // Redirect to login page
-    }, 2000); // Total time = 2.5 seconds + 0.5 seconds for fade-out
+    }, 1500); // Total time = 2.5 seconds + 0.5 seconds for fade-out
   };
 
   return (

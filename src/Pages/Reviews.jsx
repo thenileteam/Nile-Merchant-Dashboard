@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import Links from '../Links';
 import { image, nilelogowhite, notification, starhalf, starsquare, star, commentblock } from '../assets';
+import ReviewTables from '../Components/Review/ReviewTables';
 
 const Reviews = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -23,7 +24,7 @@ const Reviews = () => {
 
         {/* Sidebar */}
         <div
-            className={`fixed top-0 left-0 h-full w-[290px] z-10 bg-[#004324] border-2 text-white p-5 transition-transform transform ${
+            className={`fixed top-0 left-0 h-full w-[290px] z-20 bg-[#004324] border-2 text-white p-5 transition-transform transform ${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
             } lg:translate-x-0`}
         >
@@ -33,7 +34,7 @@ const Reviews = () => {
 
         {/* Navbar */}
         <div className="flex-grow lg:ml-64">
-            <nav className="bg-[#EAF4E2] p-4 shadow-md flex items-center gap-5 fixed w-full">
+            <nav className="bg-[#EAF4E2] p-4 shadow-md z-10 flex items-center gap-5 fixed w-full">
             <button
                 className="lg:hidden text-gray-800 z-20"
                 onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -133,6 +134,10 @@ const Reviews = () => {
                 <div className='flex justify-center mt-3'>
                     <button className='text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md'>Check Your Customers</button>
                 </div>
+            </div>
+
+            <div>
+                <ReviewTables />
             </div>
         </div>
         </div>

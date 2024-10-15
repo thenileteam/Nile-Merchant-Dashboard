@@ -53,6 +53,9 @@ import addsquare from "./addsquare.png";
 import add from "./add.png";
 import done from "./done.png";
 import delete2 from "./delete2.png";
+import download from "./download.png";
+import preference1 from "./preference1.png";
+import addsquare1 from "./addsquare1.png";
 
 
 export {
@@ -111,4 +114,7 @@ export {
     add,
     done,
     delete2,
+    download,
+    preference1,
+    addsquare1,
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import Links from '../Links';
 import { bitcoin, image, nilelogowhite, notification, packagemoving, store, transaction, arrow, packagemoving1, truck, dollar, bank } from '../assets';
+import DashoardTabel from '../Components/Dashboard/DashoardTabel';
 
 const Dashboard = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -194,6 +195,10 @@ const Dashboard = () => {
                 </div>
 
               </div>
+            </div>
+
+            <div>
+              <DashoardTabel />
             </div>
         </div>
         </div>
