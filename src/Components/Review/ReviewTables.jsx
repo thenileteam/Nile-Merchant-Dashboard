@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { addsquare1, download, preference1 } from '../../assets'
+import { download, preference1 } from '../../assets'
 
 const ReviewTable = () => {
 
@@ -37,9 +37,8 @@ const ReviewTable = () => {
                 <div className="absolute right-10 mt-2 w-[230px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none p-5" style={{top: '100%'}}>
                     <div className="py-1 space-y-3" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                         <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('Input Customer Name')}>Customer Name</h1>
-                        <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('Input Order ID')}>Order ID</h1>
-                        <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('Input Store Name')}>Store Name</h1>
-                        <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('Input Product Name')}>Product Name</h1>
+                        <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('Input Review ID')}>Review ID</h1>
+                        <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('Input Ratings')}>Ratings</h1>
                         <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('DD/MM/YYR')}>Date</h1>
                     </div>
                 </div>
@@ -56,7 +55,7 @@ const ReviewTable = () => {
                 />
                 <button 
                     onClick={closePopup} 
-                    className="mt-4 text-white bg-[#333333] p-2 font-bold px-5 rounded-md justify-center mx-auto flex"
+                    className="mt-4 text-white bg-[#004324] p-2 font-bold px-5 rounded-md justify-center mx-auto flex"
                 >
                     Enter
                 </button>

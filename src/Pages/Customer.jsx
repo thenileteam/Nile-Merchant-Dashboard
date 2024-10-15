@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import Links from '../Links';
 import { image, nilelogowhite, notification, starhalf, starsquare, star, commentblock, userlist, usergroup, usercheck, userarrow, userblock } from '../assets';
+import CustomerTable from '../Components/Customers/CustomerTable';
 
 const Customer = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -23,7 +24,7 @@ const Customer = () => {
 
         {/* Sidebar */}
         <div
-            className={`fixed top-0 left-0 h-full w-[290px] z-10 bg-[#004324] border-2 text-white p-5 transition-transform transform ${
+            className={`fixed top-0 left-0 h-full w-[290px] z-20 bg-[#004324] border-2 text-white p-5 transition-transform transform ${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
             } lg:translate-x-0`}
         >
@@ -33,7 +34,7 @@ const Customer = () => {
 
         {/* Navbar */}
         <div className="flex-grow lg:ml-64">
-            <nav className="bg-[#EAF4E2] p-4 shadow-md flex items-center gap-5 fixed w-full">
+            <nav className="bg-[#EAF4E2] p-4 shadow-md flex z-10 items-center gap-5 fixed w-full">
             <button
                 className="lg:hidden text-gray-800 z-20"
                 onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -133,6 +134,10 @@ const Customer = () => {
                 <div className='flex justify-center mt-3'>
                     <button className='text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md'>Add Customers</button>
                 </div>
+            </div>
+
+            <div>
+                <CustomerTable />
             </div>
         </div>
         </div>

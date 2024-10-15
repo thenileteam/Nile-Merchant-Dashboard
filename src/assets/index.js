@@ -56,6 +56,7 @@ import delete2 from "./delete2.png";
 import download from "./download.png";
 import preference1 from "./preference1.png";
 import addsquare1 from "./addsquare1.png";
+import withdraw from "./withdraw.png";
 
 
 export {
@@ -117,4 +118,5 @@ export {
     download,
     preference1,
     addsquare1,
+    withdraw,
 }

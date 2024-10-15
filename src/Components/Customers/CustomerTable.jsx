@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
-import { download, preference1 } from '../../assets'
+import { addsquare1, download, preference1 } from '../../assets'
 
-const OrdersTable = () => {
+const CustomerTable = () => {
 
     const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
     const [popupVisible, setPopupVisible] = useState(false);
@@ -37,10 +37,10 @@ const OrdersTable = () => {
                 <div className="absolute right-10 mt-2 w-[230px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none p-5" style={{top: '100%'}}>
                     <div className="py-1 space-y-3" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                         <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('Input Customer Name')}>Customer Name</h1>
-                        <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('Input Order ID')}>Order ID</h1>
-                        <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('Input Store Name')}>Store Name</h1>
-                        <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('Input Product Name')}>Product Name</h1>
-                        <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('DD/MM/YYR')}>Date</h1>
+                        <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('Input Customer ID')}>Customer ID</h1>
+                        <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('Input Number')}>Total Orders</h1>
+                        <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('Input Amount')}>Total Spend</h1>
+                        <h1 className='text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer' onClick={() => handleFilterClick('DD/MM/YYR')}>Last Purchase Date</h1>
                     </div>
                 </div>
             )}
@@ -67,93 +67,84 @@ const OrdersTable = () => {
         <table className=" w-full border-separate border-spacing-y-5">
             <thead>
             <tr className='text-left bg-[#EAF4E2] shadow-lg'>
-                <th className="px-2 py-3">Customer Name</th>
-                <th className="px-2 py-3 text-center">Order ID</th>
-                <th className="px-2 py-3 text-center">Product Name</th>
-                <th className="px-2 py-3 text-center">Price</th>
-                <th className="px-2 py-3 text-center">Total P. With Shipping</th>
+                <th className="px-2 py-3 text-center">Customer ID</th>
+                <th className="px-2 py-3 text-center">Customer Name</th>
+                <th className="px-2 py-3 text-center">Email</th>
+                <th className="px-2 py-3 text-center">Total Orders</th>
+                <th className="px-2 py-3 text-center">Total Spend</th>
             </tr>
             </thead>
             <tbody>
             {/* Row 1 */}
             <tr className='bg-[#ffffff] shadow-md'>
-                <td className="px-2 py-3 bg-[#EAF4E2]">Kunle</td>
                 <td className="px-2 py-3 text-center">5321</td>
-                <td className="px-2 py-3 text-center">Lion's Den</td>
-                <td className="px-2 py-3 text-center">57</td>
-                <td className="px-2 py-3 text-center">$350</td>
+                <td className="px-2 py-3 text-center">Jacob</td>
+                <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
+                <td className="px-2 py-3 text-center">5</td>
+                <td className="px-2 py-3 text-center">$56</td>
             </tr>
 
             {/* Row 2 */}
             <tr className='bg-[#ffffff] shadow-md'>
-                <td className="px-2 py-3 bg-[#EAF4E2]">Damola</td>
                 <td className="px-2 py-3 text-center">5321</td>
-                <td className="px-2 py-3 text-center">Lion's Den</td>
-                <td className="px-2 py-3 text-center">57</td>
-                <td className="px-2 py-3 text-center">$350</td>
+                <td className="px-2 py-3 text-center">Sammy</td>
+                <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
+                <td className="px-2 py-3 text-center">3</td>
+                <td className="px-2 py-3 text-center">$26</td>
             </tr>
 
             {/* Row 3 */}
             <tr className='bg-[#ffffff] shadow-md'>
-                <td className="px-2 py-3 bg-[#EAF4E2]">Rohim</td>
                 <td className="px-2 py-3 text-center">5321</td>
-                <td className="px-2 py-3 text-center">Lion's Den</td>
-                <td className="px-2 py-3 text-center">57</td>
-                <td className="px-2 py-3 text-center">$350</td>
+                <td className="px-2 py-3 text-center">Sammy</td>
+                <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
+                <td className="px-2 py-3 text-center">3</td>
+                <td className="px-2 py-3 text-center">$26</td>
             </tr>
 
             {/* Row 4 */}
             <tr className='bg-[#ffffff] shadow-md'>
-                <td className="px-2 py-3 bg-[#EAF4E2]">Debby</td>
                 <td className="px-2 py-3 text-center">5321</td>
-                <td className="px-2 py-3 text-center">Lion's Den</td>
-                <td className="px-2 py-3 text-center">57</td>
-                <td className="px-2 py-3 text-center">$350</td>
+                <td className="px-2 py-3 text-center">Sammy</td>
+                <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
+                <td className="px-2 py-3 text-center">3</td>
+                <td className="px-2 py-3 text-center">$26</td>
             </tr>
 
             {/* Row 5 */}
             <tr className='bg-[#ffffff] shadow-md'>
-                <td className="px-2 py-3 bg-[#EAF4E2]">James</td>
                 <td className="px-2 py-3 text-center">5321</td>
-                <td className="px-2 py-3 text-center">Lion's Den</td>
-                <td className="px-2 py-3 text-center">57</td>
-                <td className="px-2 py-3 text-center">$350</td>
+                <td className="px-2 py-3 text-center">Sammy</td>
+                <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
+                <td className="px-2 py-3 text-center">3</td>
+                <td className="px-2 py-3 text-center">$26</td>
             </tr>
 
             {/* Row 6 */}
             <tr className='bg-[#ffffff] shadow-md'>
-                <td className="px-2 py-3 bg-[#EAF4E2]">Jaddy</td>
                 <td className="px-2 py-3 text-center">5321</td>
-                <td className="px-2 py-3 text-center">Lion's Den</td>
-                <td className="px-2 py-3 text-center">57</td>
-                <td className="px-2 py-3 text-center">$350</td>
+                <td className="px-2 py-3 text-center">Sammy</td>
+                <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
+                <td className="px-2 py-3 text-center">3</td>
+                <td className="px-2 py-3 text-center">$26</td>
             </tr>
 
             {/* Row 7 */}
             <tr className='bg-[#ffffff] shadow-md'>
-                <td className="px-2 py-3 bg-[#EAF4E2]">Mary</td>
                 <td className="px-2 py-3 text-center">5321</td>
-                <td className="px-2 py-3 text-center">Lion's Den</td>
-                <td className="px-2 py-3 text-center">57</td>
-                <td className="px-2 py-3 text-center">$350</td>
+                <td className="px-2 py-3 text-center">Sammy</td>
+                <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
+                <td className="px-2 py-3 text-center">3</td>
+                <td className="px-2 py-3 text-center">$26</td>
             </tr>
 
             {/* Row 8 */}
             <tr className='bg-[#ffffff] shadow-md'>
-                <td className="px-2 py-3 bg-[#EAF4E2]">Mary</td>
                 <td className="px-2 py-3 text-center">5321</td>
-                <td className="px-2 py-3 text-center">Lion's Den</td>
-                <td className="px-2 py-3 text-center">57</td>
-                <td className="px-2 py-3 text-center">$350</td>
-            </tr>
-
-            {/* Row 9 */}
-            <tr className='bg-[#ffffff] shadow-md'>
-                <td className="px-2 py-3 bg-[#EAF4E2]">Kelly</td>
-                <td className="px-2 py-3 text-center">5321</td>
-                <td className="px-2 py-3 text-center">Lion's Den</td>
-                <td className="px-2 py-3 text-center">57</td>
-                <td className="px-2 py-3 text-center">$350</td>
+                <td className="px-2 py-3 text-center">Sammy</td>
+                <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
+                <td className="px-2 py-3 text-center">3</td>
+                <td className="px-2 py-3 text-center">$26</td>
             </tr>
             </tbody>
         </table>
@@ -247,9 +238,14 @@ const OrdersTable = () => {
                 </ol>
             </div>
 
-        <div className=' flex px-28 justify-end mt-10'>
+        <div className=' flex px-28 justify-end items-center mt-10 gap-24'>
             
-            <h1 className='text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2 rounded-md'>
+            <h1 className='text-[#004324] flex font-bold gap-1 items-center border-[#004324] border-2 p-2 rounded-sm'>
+                <img src={addsquare1} alt="" />
+                Add Product
+            </h1>
+
+            <h1 className='text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2 rounded-sm'>
                 <img src={download} alt="" />
                 Export CSV
             </h1>
@@ -258,4 +254,4 @@ const OrdersTable = () => {
   )
 }
 
-export default OrdersTable
+export default CustomerTable
