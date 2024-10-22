@@ -100,16 +100,42 @@ const OrdersTable = () => {
           <thead>
             <tr className="text-left bg-[#EAF4E2] shadow-lg">
               <th className="px-2 py-3 text-[14px]">Customer Name</th>
-              <th className="px-2 py-3 text-center text-[14px]">Order ID</th>
-              <th className="px-2 py-3 text-center text-[14px]">Product Name</th>
-              <th className="px-2 py-3 text-center text-[14px]">Price</th>
-              <th className="px-2 py-3 text-center text-[14px]">Total P. With Shipping</th>
-              <th className="px-2 py-3 text-center text-[14px]">Order Date</th>
-              <th className="px-2 py-3 text-center text-[14px]">Shipping Status</th>
-              <th className="px-2 py-3 text-center text-[14px]">Track Order</th>
-              <th className="px-2 py-3 text-center text-[14px]">Payment Status</th>
-              <th className="px-2 py-3 text-center text-[14px]">Actions</th>
-              <th className="px-2 py-3 text-center text-[14px]">Bulk Action</th>
+              <th className="px-2 py-3 text-center">Order ID</th>
+              <th className="px-2 py-3 text-center">Product Name</th>
+              <th className="px-2 py-3 text-center">Price</th>
+              <th className="px-2 py-3 text-center">Total P. With Shipping</th>
+              <th className="px-2 py-3 text-center">Order Date</th>
+              <th className="px-2 py-3 text-center">Shipping Status</th>
+              <th className="px-2 py-3 text-center">Track Order</th>
+              <th className="px-2 py-3 text-center">Payment Status</th>
+              <th className="px-2 py-3 text-center">Actions</th>
+              <th className="px-2 py-3 text-center">
+                Bulk Action
+                <svg
+                  width="24"
+                  className="flex justify-center mx-auto"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 9L9 14.9996M15 15L9 9.00039"
+                    stroke="#8ED06C"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
+                    stroke="#8ED06C"
+                    stroke-width="1.5"
+                  />
+                </svg>
+                <h1 className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
+                  Mark As Shipped
+                </h1>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -125,6 +151,14 @@ const OrdersTable = () => {
               <td className="px-2 py-3 text-center">Completed</td>
               <td className="px-2 py-3 text-center">Completed</td>
               <td className="px-2 py-3 text-center">Completed</td>
+              <td className="px-2 py-3 text-center">
+                <input
+                  type="checkbox"
+                  id="MarketingAccept"
+                  name="marketing_accept"
+                  className="size-5 rounded-md bg-white shadow-sm"
+                />
+              </td>
             </tr>
 
             {/* Row 2 */}
@@ -138,7 +172,37 @@ const OrdersTable = () => {
               <td className="px-2 py-3 text-center">Pending</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
               <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Mark As Shipped</td>
+              <td className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
+                Mark As Shipped
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 9L9 14.9996M15 15L9 9.00039"
+                    stroke="#8ED06C"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
+                    stroke="#8ED06C"
+                    stroke-width="1.5"
+                  />
+                </svg>
+              </td>
+              <td className="px-2 py-3 text-center">
+                <input
+                  type="checkbox"
+                  id="MarketingAccept"
+                  name="marketing_accept"
+                  className="size-5 rounded-md bg-white shadow-sm"
+                />
+              </td>
             </tr>
 
             {/* Row 3 */}
@@ -152,7 +216,37 @@ const OrdersTable = () => {
               <td className="px-2 py-3 text-center">Pending</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
               <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Mark As Shipped</td>
+              <td className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
+                Mark As Shipped
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 9L9 14.9996M15 15L9 9.00039"
+                    stroke="#8ED06C"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
+                    stroke="#8ED06C"
+                    stroke-width="1.5"
+                  />
+                </svg>
+              </td>
+              <td className="px-2 py-3 text-center">
+                <input
+                  type="checkbox"
+                  id="MarketingAccept"
+                  name="marketing_accept"
+                  className="size-5 rounded-md bg-white shadow-sm"
+                />
+              </td>
             </tr>
 
             {/* Row 4 */}
@@ -167,6 +261,14 @@ const OrdersTable = () => {
               <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
               <td className="px-2 py-3 text-center">Pending</td>
               <td className="px-2 py-3 text-center">Cancelled</td>
+              <td className="px-2 py-3 text-center">
+                <input
+                  type="checkbox"
+                  id="MarketingAccept"
+                  name="marketing_accept"
+                  className="size-5 rounded-md bg-white shadow-sm"
+                />
+              </td>
             </tr>
 
             {/* Row 5 */}
@@ -181,6 +283,14 @@ const OrdersTable = () => {
               <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
               <td className="px-2 py-3 text-center">Pending</td>
               <td className="px-2 py-3 text-center">Cancelled</td>
+              <td className="px-2 py-3 text-center">
+                <input
+                  type="checkbox"
+                  id="MarketingAccept"
+                  name="marketing_accept"
+                  className="size-5 rounded-md bg-white shadow-sm"
+                />
+              </td>
             </tr>
 
             {/* Row 6 */}
@@ -195,6 +305,14 @@ const OrdersTable = () => {
               <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
               <td className="px-2 py-3 text-center">Pending</td>
               <td className="px-2 py-3 text-center">Cancelled</td>
+              <td className="px-2 py-3 text-center">
+                <input
+                  type="checkbox"
+                  id="MarketingAccept"
+                  name="marketing_accept"
+                  className="size-5 rounded-md bg-white shadow-sm"
+                />
+              </td>
             </tr>
 
             {/* Row 7 */}
@@ -208,7 +326,37 @@ const OrdersTable = () => {
               <td className="px-2 py-3 text-center">Pending</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
               <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Mark As Shipped</td>
+              <td className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
+                Mark As Shipped
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 9L9 14.9996M15 15L9 9.00039"
+                    stroke="#8ED06C"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
+                    stroke="#8ED06C"
+                    stroke-width="1.5"
+                  />
+                </svg>
+              </td>
+              <td className="px-2 py-3 text-center">
+                <input
+                  type="checkbox"
+                  id="MarketingAccept"
+                  name="marketing_accept"
+                  className="size-5 rounded-md bg-white shadow-sm"
+                />
+              </td>
             </tr>
 
             {/* Row 8 */}
@@ -222,7 +370,37 @@ const OrdersTable = () => {
               <td className="px-2 py-3 text-center">Pending</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
               <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Mark As Shipped</td>
+              <td className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
+                Mark As Shipped
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 9L9 14.9996M15 15L9 9.00039"
+                    stroke="#8ED06C"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
+                    stroke="#8ED06C"
+                    stroke-width="1.5"
+                  />
+                </svg>
+              </td>
+              <td className="px-2 py-3 text-center">
+                <input
+                  type="checkbox"
+                  id="MarketingAccept"
+                  name="marketing_accept"
+                  className="size-5 rounded-md bg-white shadow-sm"
+                />
+              </td>
             </tr>
 
             {/* Row 9 */}
@@ -236,7 +414,37 @@ const OrdersTable = () => {
               <td className="px-2 py-3 text-center">Pending</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
               <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Mark As Shipped</td>
+              <td className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
+                Mark As Shipped
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 9L9 14.9996M15 15L9 9.00039"
+                    stroke="#8ED06C"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
+                    stroke="#8ED06C"
+                    stroke-width="1.5"
+                  />
+                </svg>
+              </td>
+              <td className="px-2 py-3 text-center">
+                <input
+                  type="checkbox"
+                  id="MarketingAccept"
+                  name="marketing_accept"
+                  className="size-5 rounded-md bg-white shadow-sm"
+                />
+              </td>
             </tr>
           </tbody>
         </table>
