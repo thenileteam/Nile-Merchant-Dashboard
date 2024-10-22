@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { download, preference1 } from "../../assets";
+import ReviewText from "../Popup Modals/ReviewText";
+import Respond from "../Popup Modals/Respond";
+import Publish from "../Popup Modals/Publish";
 
 const ReviewTable = () => {
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
@@ -108,10 +111,10 @@ const ReviewTable = () => {
               <td className="px-2 py-3 text-center">5321</td>
               <td className="px-2 py-3 text-center">Jacob</td>
               <td className="px-2 py-3 text-center">4.5/5</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">View</td>
+              <ReviewText />
               <td className="px-2 py-3 text-center">12/09/2024</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Respond</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Publish</td>
+              <Respond />
+              <Publish />
             </tr>
 
             {/* Row 2 */}
@@ -119,10 +122,10 @@ const ReviewTable = () => {
               <td className="px-2 py-3 text-center">5321</td>
               <td className="px-2 py-3 text-center">Sammy</td>
               <td className="px-2 py-3 text-center">1.83/5</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">View</td>
+              <ReviewText />
               <td className="px-2 py-3 text-center">05/09/2024</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Respond</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Publish</td>
+              <Respond />
+              <Publish />
             </tr>
 
             {/* Row 3 */}
@@ -130,10 +133,10 @@ const ReviewTable = () => {
               <td className="px-2 py-3 text-center">5321</td>
               <td className="px-2 py-3 text-center">Sammy</td>
               <td className="px-2 py-3 text-center">1.83/5</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">View</td>
+              <ReviewText />
               <td className="px-2 py-3 text-center">05/09/2024</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Respond</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Publish</td>
+              <Respond />
+              <Publish />
             </tr>
 
             {/* Row 4 */}
@@ -141,10 +144,10 @@ const ReviewTable = () => {
               <td className="px-2 py-3 text-center">5321</td>
               <td className="px-2 py-3 text-center">Sammy</td>
               <td className="px-2 py-3 text-center">1.83/5</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">View</td>
+              <ReviewText />
               <td className="px-2 py-3 text-center">05/09/2024</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Respond</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Publish</td>
+              <Respond />
+              <Publish />
             </tr>
 
             {/* Row 5 */}
@@ -152,10 +155,10 @@ const ReviewTable = () => {
               <td className="px-2 py-3 text-center">5321</td>
               <td className="px-2 py-3 text-center">Darah</td>
               <td className="px-2 py-3 text-center">3/5</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">View</td>
+              <ReviewText />
               <td className="px-2 py-3 text-center">29/08/2024</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Respond</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Publish</td>
+              <Respond />
+              <Publish />
             </tr>
 
             {/* Row 6 */}
@@ -163,10 +166,10 @@ const ReviewTable = () => {
               <td className="px-2 py-3 text-center">5321</td>
               <td className="px-2 py-3 text-center">Darah</td>
               <td className="px-2 py-3 text-center">3/5</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">View</td>
+              <ReviewText />
               <td className="px-2 py-3 text-center">29/08/2024</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Respond</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Publish</td>
+              <Respond />
+              <Publish />
             </tr>
 
             {/* Row 7 */}
@@ -174,10 +177,10 @@ const ReviewTable = () => {
               <td className="px-2 py-3 text-center">5321</td>
               <td className="px-2 py-3 text-center">Darah</td>
               <td className="px-2 py-3 text-center">3/5</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">View</td>
+              <ReviewText />
               <td className="px-2 py-3 text-center">29/08/2024</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Respond</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Publish</td>
+              <Respond />
+              <Publish />
             </tr>
 
             {/* Row 8 */}
@@ -185,10 +188,10 @@ const ReviewTable = () => {
               <td className="px-2 py-3 text-center">5321</td>
               <td className="px-2 py-3 text-center">Darah</td>
               <td className="px-2 py-3 text-center">3/5</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">View</td>
+              <ReviewText />
               <td className="px-2 py-3 text-center">29/08/2024</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Respond</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Publish</td>
+              <Respond />
+              <Publish />
             </tr>
           </tbody>
         </table>

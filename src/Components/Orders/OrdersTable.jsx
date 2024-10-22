@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { download, preference1 } from "../../assets";
+import ShippingConfirm from "../Popup Modals/ShippingConfirm";
 
 const OrdersTable = () => {
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
@@ -172,29 +173,7 @@ const OrdersTable = () => {
               <td className="px-2 py-3 text-center">Pending</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
               <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
-                Mark As Shipped
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M15 9L9 14.9996M15 15L9 9.00039"
-                    stroke="#8ED06C"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
-                    stroke="#8ED06C"
-                    stroke-width="1.5"
-                  />
-                </svg>
-              </td>
+              <ShippingConfirm />
               <td className="px-2 py-3 text-center">
                 <input
                   type="checkbox"
@@ -216,29 +195,7 @@ const OrdersTable = () => {
               <td className="px-2 py-3 text-center">Pending</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
               <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
-                Mark As Shipped
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M15 9L9 14.9996M15 15L9 9.00039"
-                    stroke="#8ED06C"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
-                    stroke="#8ED06C"
-                    stroke-width="1.5"
-                  />
-                </svg>
-              </td>
+              <ShippingConfirm />
               <td className="px-2 py-3 text-center">
                 <input
                   type="checkbox"
@@ -326,29 +283,7 @@ const OrdersTable = () => {
               <td className="px-2 py-3 text-center">Pending</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
               <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
-                Mark As Shipped
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M15 9L9 14.9996M15 15L9 9.00039"
-                    stroke="#8ED06C"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
-                    stroke="#8ED06C"
-                    stroke-width="1.5"
-                  />
-                </svg>
-              </td>
+              <ShippingConfirm />
               <td className="px-2 py-3 text-center">
                 <input
                   type="checkbox"
@@ -370,29 +305,7 @@ const OrdersTable = () => {
               <td className="px-2 py-3 text-center">Pending</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
               <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
-                Mark As Shipped
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M15 9L9 14.9996M15 15L9 9.00039"
-                    stroke="#8ED06C"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
-                    stroke="#8ED06C"
-                    stroke-width="1.5"
-                  />
-                </svg>
-              </td>
+              <ShippingConfirm />
               <td className="px-2 py-3 text-center">
                 <input
                   type="checkbox"
@@ -414,29 +327,7 @@ const OrdersTable = () => {
               <td className="px-2 py-3 text-center">Pending</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
               <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
-                Mark As Shipped
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M15 9L9 14.9996M15 15L9 9.00039"
-                    stroke="#8ED06C"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
-                    stroke="#8ED06C"
-                    stroke-width="1.5"
-                  />
-                </svg>
-              </td>
+              <ShippingConfirm />
               <td className="px-2 py-3 text-center">
                 <input
                   type="checkbox"
