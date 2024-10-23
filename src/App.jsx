@@ -1,7 +1,8 @@
 import React from 'react'
-import SignIn from './Pages/SignIn'
 import { Route, Routes } from 'react-router-dom'
+import SignIn from './Pages/SignIn'
 import SignUp from './Pages/SignUp'
+import ForgotPassword from './Pages/ForgotPassword'
 import Dashboard from "./Pages/Dashboard"
 import Orders from './Pages/Orders'
 import Product from './Pages/Product'
@@ -21,6 +22,7 @@ import PlanSetting from './Components/Store/PlanSetting'
 import ShippingSetting from './Components/Store/ShippingSetting'
 import DomainSetting from './Components/Store/DomainSetting'
 
+
 const App = () => {
   return (
     <div>
@@ -28,6 +30,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<SignIn />}/>
         <Route path='/signup' element={<SignUp />}/>
+        <Route path='/forgotpassword' element={<ForgotPassword />}/>
         <Route path='/dashboard' element={<Dashboard />}/>
         <Route path='/orders' element={<Orders />}/>
         <Route path='/product' element={<Product />}/>
