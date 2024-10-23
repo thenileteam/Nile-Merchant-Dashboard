@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { download, preference1, withdraw } from "../../assets";
+import DownloadInvoice from "../Popup Modals/DownloadInvoice";
+import RequestPayout from "../Popup Modals/RequestPayout";
 
 const FinancialTable = () => {
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
@@ -112,7 +114,7 @@ const FinancialTable = () => {
               <td className="px-2 py-3 text-center">$56</td>
               <td className="px-2 py-3 text-center">12/09/2024</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">
-                Download Invoice
+                <DownloadInvoice />
               </td>
               <td className="px-2 py-3 text-center">
                 <input
@@ -131,7 +133,7 @@ const FinancialTable = () => {
               <td className="px-2 py-3 text-center">$26</td>
               <td className="px-2 py-3 text-center">05/09/2024</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">
-                Download Invoice
+                <DownloadInvoice />
               </td>
               <td className="px-2 py-3 text-center">
                 <input
@@ -150,7 +152,7 @@ const FinancialTable = () => {
               <td className="px-2 py-3 text-center">$26</td>
               <td className="px-2 py-3 text-center">05/09/2024</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">
-                Download Invoice
+                <DownloadInvoice />
               </td>
               <td className="px-2 py-3 text-center">
                 <input
@@ -169,7 +171,7 @@ const FinancialTable = () => {
               <td className="px-2 py-3 text-center">$26</td>
               <td className="px-2 py-3 text-center">05/09/2024</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">
-                Download Invoice
+                <DownloadInvoice />
               </td>
               <td className="px-2 py-3 text-center">
                 <input
@@ -188,7 +190,7 @@ const FinancialTable = () => {
               <td className="px-2 py-3 text-center">$26</td>
               <td className="px-2 py-3 text-center">05/09/2024</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">
-                Download Invoice
+                <DownloadInvoice />
               </td>
               <td className="px-2 py-3 text-center">
                 <input
@@ -207,7 +209,7 @@ const FinancialTable = () => {
               <td className="px-2 py-3 text-center">$26</td>
               <td className="px-2 py-3 text-center">05/09/2024</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">
-                Download Invoice
+                <DownloadInvoice />
               </td>
               <td className="px-2 py-3 text-center">
                 <input
@@ -226,7 +228,7 @@ const FinancialTable = () => {
               <td className="px-2 py-3 text-center">$26</td>
               <td className="px-2 py-3 text-center">05/09/2024</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">
-                Download Invoice
+                <DownloadInvoice />
               </td>
               <td className="px-2 py-3 text-center">
                 <input
@@ -245,7 +247,7 @@ const FinancialTable = () => {
               <td className="px-2 py-3 text-center">$26</td>
               <td className="px-2 py-3 text-center">05/09/2024</td>
               <td className="px-2 py-3 text-center text-[#8ED06C]">
-                Download Invoice
+                <DownloadInvoice />
               </td>
               <td className="px-2 py-3 text-center">
                 <input
@@ -348,10 +350,7 @@ const FinancialTable = () => {
       </div>
 
       <div className=" flex px-28 justify-end items-center mt-10 gap-20">
-        <h1 className="text-[#004324] flex font-bold gap-1 items-center border-[#004324] border-2 p-2 rounded-sm">
-          <img src={withdraw} alt="" />
-          Request Payout
-        </h1>
+        <RequestPayout />
 
         <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2 rounded-sm">
           <img src={download} alt="" />
