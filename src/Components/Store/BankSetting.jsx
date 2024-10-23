@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { addsquare, arrowleft, image, notification } from "../../assets";
 import { Link } from "react-router-dom";
+import SaveChanges from "../Popup Modals/SaveChanges";
 
 const BankSetting = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -211,9 +212,7 @@ const BankSetting = () => {
           </form>
         </div>
         <div className="flex items-center justify-center gap-16 mt-10">
-          <button className="border-[#004324] border-2 text-[#ffffff] bg-[#004324] font-bold p-3 rounded-lg w-[192px]">
-            Save Changes
-          </button>
+          <SaveChanges />
         </div>
       </div>
     </div>
