@@ -16,20 +16,36 @@ const ShippingConfirm = () => {
   };
 
   // Function to handle the "Yes" button click
-  const handleYesClick = () => {
-    setIsPopupOpen(false); // Close the main popup
-    setIsFinalConfirmationOpen(true); // Show the final confirmation popup
+  const handleYesClick = async () => {
+    try {
+      // Make an API call to confirm the shipping
+      const response = await axios.post("YOUR_API_ENDPOINT", {
+        // You can add any required data here, e.g., order ID
+        // orderId: "12345",
+      });
 
-    // Automatically start the fade-out after a short delay
-    setTimeout(() => {
-      setIsFadingOut(true); // Trigger fade-out animation
-    }, 2500); // Show the final confirmation for 2.5 seconds before fading out
+      if (response.status === 200) {
+        // Close the main popup
+        setIsPopupOpen(false);
+        // Show the final confirmation popup
+        setIsFinalConfirmationOpen(true);
 
-    // Close the final confirmation popup after the fade-out completes (300ms)
-    setTimeout(() => {
-      setIsFinalConfirmationOpen(false); // Fully close the popup
-      setIsFadingOut(false); // Reset fade state
-    }, 500); // Total time = 2.5 seconds + 0.5 seconds for fade-out
+        // Automatically start the fade-out after a short delay
+        setTimeout(() => {
+          setIsFadingOut(true); // Trigger fade-out animation
+        }, 2500); // Show for 2.5 seconds before fading out
+
+        // Close the final confirmation popup after the fade-out completes (300ms)
+        setTimeout(() => {
+          setIsFinalConfirmationOpen(false); // Fully close the popup
+          setIsFadingOut(false); // Reset fade state
+        }, 500); // Total time = 2.5 seconds + 0.5 seconds for fade-out
+      } else {
+        console.error("Shipping confirmation failed.");
+      }
+    } catch (error) {
+      console.error("Error confirming shipping:", error);
+    }
   };
   return (
     <>

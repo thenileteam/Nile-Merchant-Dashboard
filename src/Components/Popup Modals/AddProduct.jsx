@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { addsquare } from "../../assets";
 
 const AddProduct = () => {
@@ -7,6 +8,23 @@ const AddProduct = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isFinalConfirmationOpen, setIsFinalConfirmationOpen] = useState(false);
   const [fadeOut, setFadeOut] = useState(false); // State for fade-out animation
+
+  // Form fields state
+  const [productDetails, setProductDetails] = useState({
+    category: "",
+    name: "",
+    details: "",
+    stockQuantity: "",
+    size: "",
+    weight: "",
+    freeShipping: false,
+    price: "",
+    discountedPrice: "",
+    color: "",
+    dimensions: { length: "", width: "", height: "" },
+    packaging: "",
+    handlingTime: "",
+  });
 
   // Function to toggle the main popup visibility
   const togglePopup = () => {
@@ -23,29 +41,38 @@ const AddProduct = () => {
     }, 200); // Match this duration with your CSS transition duration
   };
 
-  // Function to handle confirmation
-  const handleConfirm = () => {
-    // Logic for the edit action goes here
-    setFadeOut(true); // Start fade-out animation for the confirmation popup
-    setTimeout(() => {
-      setIsConfirmationOpen(false); // Close the confirmation popup after the animation
-      setIsFinalConfirmationOpen(true); // Open the final confirmation popup
-      setFadeOut(false); // Reset fade-out state
-    }, 300); // Match this duration with your CSS transition duration
+  // Function to handle confirmation and send data to API
+  const handleConfirm = async () => {
+    setFadeOut(true);
+    setTimeout(async () => {
+      setIsConfirmationOpen(false);
+      setIsFinalConfirmationOpen(true);
+      setFadeOut(false);
 
-    // Automatically close the final confirmation popup after 3 seconds
+      try {
+        // Replace with your actual API endpoint
+        const response = await axios.post(
+          "https://nile-microservices.onrender.com/product/create",
+          productDetails
+        );
+        console.log("Product added:", response.data);
+      } catch (error) {
+        console.error("Error adding product:", error);
+      }
+    }, 300);
+
     setTimeout(() => {
       setIsFinalConfirmationOpen(false);
-    }, 1000); // 3000 + 300 to allow time for fade-out
+    }, 1000);
   };
 
-  // Function to toggle the confirmation popup visibility
-  const toggleConfirmation = () => {
-    setFadeOut(true); // Start fade-out animation for the confirmation popup
-    setTimeout(() => {
-      setIsConfirmationOpen(!isConfirmationOpen); // Toggle confirmation popup
-      setFadeOut(false); // Reset fade-out state
-    }, 300); // Match this duration with your CSS transition duration
+  // Function to handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProductDetails((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
   return (
     <>
@@ -115,6 +142,8 @@ const AddProduct = () => {
                       <input
                         id="quantity"
                         type="text"
+                        value={productDetails.category}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="E.g:Apparel"
                       />
@@ -130,6 +159,8 @@ const AddProduct = () => {
                       <input
                         id="category"
                         type="text"
+                        value={productDetails.name}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="E.g:Floki"
                       />
@@ -139,14 +170,16 @@ const AddProduct = () => {
                   <div className="flex items-center gap-5">
                     <div className="mb-4">
                       <label
-                        htmlFor="productname"
+                        htmlFor="productdetails"
                         className="block text-[16px] font-bold text-[#333333]"
                       >
                         Product Details
                       </label>
                       <input
-                        id="product_name"
+                        id="product_details"
                         type="text"
+                        value={productDetails.details}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Input Details"
                       />
@@ -160,8 +193,10 @@ const AddProduct = () => {
                         Stock Quantity
                       </label>
                       <input
-                        id="product_name"
+                        id="stock_qunatity"
                         type="text"
+                        value={productDetails.stockQuantity}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="321"
                       />
@@ -179,6 +214,8 @@ const AddProduct = () => {
                       <select
                         name=""
                         id=""
+                        value={productDetails.size}
+                        onChange={handleInputChange}
                         className="w-full rounded-lg border-[#8ED06C] border-2 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">E.g:XXL</option>
@@ -194,14 +231,16 @@ const AddProduct = () => {
 
                   <div className="mb-4">
                     <label
-                      htmlFor="productname"
+                      htmlFor="shippingweight"
                       className="block text-[16px] font-bold text-[#333333]"
                     >
                       Shipping Weight (In KG)
                     </label>
                     <input
-                      id="product_name"
+                      id="shipping_weight"
                       type="text"
+                      value={productDetails.weight}
+                      onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="E.g:20kg"
                     />
@@ -217,6 +256,8 @@ const AddProduct = () => {
                           &#8203;
                           <input
                             type="checkbox"
+                            value={productDetails.freeShipping}
+                            onChange={handleInputChange}
                             className="size-4 rounded border-gray-300"
                             id="Option2"
                           />
@@ -228,6 +269,8 @@ const AddProduct = () => {
                           &#8203;
                           <input
                             type="checkbox"
+                            value={productDetails.freeShipping}
+                            onChange={handleInputChange}
                             className="size-4 rounded border-gray-300"
                             id="Option2"
                           />
@@ -247,6 +290,8 @@ const AddProduct = () => {
                     <input
                       id="product_name"
                       type="text"
+                      value={productDetails.price}
+                      onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
@@ -261,6 +306,8 @@ const AddProduct = () => {
                     <input
                       id="product_name"
                       type="text"
+                      value={productDetails.discountedPrice}
+                      onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
@@ -276,6 +323,8 @@ const AddProduct = () => {
                       <select
                         name=""
                         id=""
+                        value={productDetails.color}
+                        onChange={handleInputChange}
                         className="w-full rounded-lg border-[#8ED06C] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">E.g:Red</option>
@@ -299,18 +348,24 @@ const AddProduct = () => {
                       <input
                         id="product_name"
                         type="text"
+                        value={productDetails.dimensions}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Length"
                       />
                       <input
                         id="product_name"
                         type="text"
+                        value={productDetails.dimensions}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Width"
                       />
                       <input
                         id="product_name"
                         type="text"
+                        value={productDetails.dimensions}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Height"
                       />
@@ -327,6 +382,8 @@ const AddProduct = () => {
                       <select
                         name=""
                         id=""
+                        value={productDetails.packaging}
+                        onChange={handleInputChange}
                         className="w-full rounded-lg border-[#8ED06C] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">Choose Package Type</option>
@@ -349,6 +406,8 @@ const AddProduct = () => {
                     <input
                       id="product_name"
                       type="text"
+                      value={productDetails.handlingTime}
+                      onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />

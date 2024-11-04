@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { reload } from "../../assets";
 
 const AddCustomer = () => {
@@ -7,6 +8,16 @@ const AddCustomer = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isFinalConfirmationOpen, setIsFinalConfirmationOpen] = useState(false);
   const [fadeOut, setFadeOut] = useState(false); // State for fade-out animation
+  const [customerName, setCustomerName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [customerID, setCustomerID] = useState("");
+
+  // Function to generate a random code
+  const generateCustomerID = () => {
+    const code = `CUS-${Math.floor(100000 + Math.random() * 900000)}`;
+    setCustomerID(code);
+  };
 
   // Function to toggle the main popup visibility
   const togglePopup = () => {
@@ -23,30 +34,40 @@ const AddCustomer = () => {
     }, 200); // Match this duration with your CSS transition duration
   };
 
-  // Function to handle confirmation
-  const handleConfirm = () => {
-    // Logic for the edit action goes here
-    setFadeOut(true); // Start fade-out animation for the confirmation popup
-    setTimeout(() => {
-      setIsConfirmationOpen(false); // Close the confirmation popup after the animation
-      setIsFinalConfirmationOpen(true); // Open the final confirmation popup
-      setFadeOut(false); // Reset fade-out state
-    }, 300); // Match this duration with your CSS transition duration
+  const handleConfirm = async () => {
+    setFadeOut(true);
+    setTimeout(async () => {
+      try {
+        const response = await axios.post("/api/customers", {
+          name: customerName,
+          phoneNumber,
+          email: emailAddress,
+          customerID,
+        });
 
-    // Automatically close the final confirmation popup after 3 seconds
-    setTimeout(() => {
-      setIsFinalConfirmationOpen(false);
-    }, 1000); // 3000 + 300 to allow time for fade-out
+        console.log("Customer added successfully:", response.data);
+        setIsConfirmationOpen(false);
+        setIsFinalConfirmationOpen(true);
+        setFadeOut(false);
+
+        // Close final confirmation popup after a few seconds
+        setTimeout(() => {
+          setIsFinalConfirmationOpen(false);
+        }, 2000); // Adjust this duration to control how long the popup is displayed
+      } catch (error) {
+        console.error("Error adding customer:", error);
+      }
+    }, 300);
   };
 
-  // Function to toggle the confirmation popup visibility
   const toggleConfirmation = () => {
-    setFadeOut(true); // Start fade-out animation for the confirmation popup
+    setFadeOut(true);
     setTimeout(() => {
-      setIsConfirmationOpen(!isConfirmationOpen); // Toggle confirmation popup
-      setFadeOut(false); // Reset fade-out state
-    }, 300); // Match this duration with your CSS transition duration
+      setIsConfirmationOpen(!isConfirmationOpen);
+      setFadeOut(false);
+    }, 300);
   };
+
   return (
     <>
       {/* Button to trigger the popup */}
@@ -117,6 +138,8 @@ const AddCustomer = () => {
                         type="text"
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Add The Customer's Name"
+                        value={customerName}
+                        onChange={(e) => setCustomerName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -134,6 +157,8 @@ const AddCustomer = () => {
                         type="text"
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Add The Customer's Phone Number"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
                       />
                     </div>
                   </div>
@@ -151,6 +176,8 @@ const AddCustomer = () => {
                       type="email"
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="Add The Customer's Email"
+                      value={emailAddress}
+                      onChange={(e) => setEmailAddress(e.target.value)}
                     />
                   </div>
                   <div className="relative">
@@ -166,10 +193,13 @@ const AddCustomer = () => {
                       id=""
                       placeholder="Generate Code"
                       className="w-full rounded-md border-[#8ED06C] border-2 bg-[#F5F5F5] py-2 pe-10 shadow-sm p-2"
+                      value={customerID}
+                      readOnly
                     />
                     <span className="absolute inset-y-0 end-0 grid w-10 place-content-center mt-6">
                       <button
                         type="button"
+                        onClick={generateCustomerID}
                         className="text-gray-600 hover:text-gray-700"
                       >
                         <img src={reload} alt="" />

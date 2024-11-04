@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { addsquare, addsquare1 } from "../../assets";
+import axios from "axios";
+import { addsquare } from "../../assets";
 
 const AddProduct1 = () => {
   // State to control the popup visibility and animation
@@ -7,6 +8,23 @@ const AddProduct1 = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isFinalConfirmationOpen, setIsFinalConfirmationOpen] = useState(false);
   const [fadeOut, setFadeOut] = useState(false); // State for fade-out animation
+
+  // Form fields state
+  const [productDetails, setProductDetails] = useState({
+    category: "",
+    name: "",
+    details: "",
+    stockQuantity: "",
+    size: "",
+    weight: "",
+    freeShipping: false,
+    price: "",
+    discountedPrice: "",
+    color: "",
+    dimensions: { length: "", width: "", height: "" },
+    packaging: "",
+    handlingTime: "",
+  });
 
   // Function to toggle the main popup visibility
   const togglePopup = () => {
@@ -23,38 +41,66 @@ const AddProduct1 = () => {
     }, 200); // Match this duration with your CSS transition duration
   };
 
-  // Function to handle confirmation
-  const handleConfirm = () => {
-    // Logic for the edit action goes here
-    setFadeOut(true); // Start fade-out animation for the confirmation popup
-    setTimeout(() => {
-      setIsConfirmationOpen(false); // Close the confirmation popup after the animation
-      setIsFinalConfirmationOpen(true); // Open the final confirmation popup
-      setFadeOut(false); // Reset fade-out state
-    }, 300); // Match this duration with your CSS transition duration
+  // Function to handle confirmation and send data to API
+  const handleConfirm = async () => {
+    setFadeOut(true);
+    setTimeout(async () => {
+      setIsConfirmationOpen(false);
+      setIsFinalConfirmationOpen(true);
+      setFadeOut(false);
 
-    // Automatically close the final confirmation popup after 3 seconds
+      try {
+        // Replace with your actual API endpoint
+        const response = await axios.post(
+          "https://nile-microservices.onrender.com/product/create",
+          productDetails
+        );
+        console.log("Product added:", response.data);
+      } catch (error) {
+        console.error("Error adding product:", error);
+      }
+    }, 300);
+
     setTimeout(() => {
       setIsFinalConfirmationOpen(false);
-    }, 1000); // 3000 + 300 to allow time for fade-out
+    }, 1000);
   };
 
-  // Function to toggle the confirmation popup visibility
-  const toggleConfirmation = () => {
-    setFadeOut(true); // Start fade-out animation for the confirmation popup
-    setTimeout(() => {
-      setIsConfirmationOpen(!isConfirmationOpen); // Toggle confirmation popup
-      setFadeOut(false); // Reset fade-out state
-    }, 300); // Match this duration with your CSS transition duration
+  // Function to handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProductDetails((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
   return (
     <>
       {/* Button to trigger the popup */}
-      <button
-        onClick={togglePopup}
-        className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md"
-      >
-        Add Products
+      <button onClick={togglePopup}>
+        <h1 className="text-[#004324] flex font-bold gap-1 items-center border-[#004324] hover:bg-[#004324] hover:text-[#ffffff] duration-500 border-2 p-2 rounded-md">
+          <svg
+            width="25"
+            height="24"
+            viewBox="0 0 25 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12.5 8V16M16.5 12H8.5"
+              stroke="currentcolor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M3 12C3 7.52166 3 5.28249 4.39124 3.89124C5.78249 2.5 8.02166 2.5 12.5 2.5C16.9783 2.5 19.2175 2.5 20.6088 3.89124C22 5.28249 22 7.52166 22 12C22 16.4783 22 18.7175 20.6088 20.1088C19.2175 21.5 16.9783 21.5 12.5 21.5C8.02166 21.5 5.78249 21.5 4.39124 20.1088C3 18.7175 3 16.4783 3 12Z"
+              stroke="currentcolor"
+              stroke-width="1.5"
+            />
+          </svg>
+          Add Product
+        </h1>
       </button>
 
       {isPopupOpen && (
@@ -96,6 +142,8 @@ const AddProduct1 = () => {
                       <input
                         id="quantity"
                         type="text"
+                        value={productDetails.category}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="E.g:Apparel"
                       />
@@ -111,6 +159,8 @@ const AddProduct1 = () => {
                       <input
                         id="category"
                         type="text"
+                        value={productDetails.name}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="E.g:Floki"
                       />
@@ -120,14 +170,16 @@ const AddProduct1 = () => {
                   <div className="flex items-center gap-5">
                     <div className="mb-4">
                       <label
-                        htmlFor="productname"
+                        htmlFor="productdetails"
                         className="block text-[16px] font-bold text-[#333333]"
                       >
                         Product Details
                       </label>
                       <input
-                        id="product_name"
+                        id="product_details"
                         type="text"
+                        value={productDetails.details}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Input Details"
                       />
@@ -141,8 +193,10 @@ const AddProduct1 = () => {
                         Stock Quantity
                       </label>
                       <input
-                        id="product_name"
+                        id="stock_qunatity"
                         type="text"
+                        value={productDetails.stockQuantity}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="321"
                       />
@@ -160,6 +214,8 @@ const AddProduct1 = () => {
                       <select
                         name=""
                         id=""
+                        value={productDetails.size}
+                        onChange={handleInputChange}
                         className="w-full rounded-lg border-[#8ED06C] border-2 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">E.g:XXL</option>
@@ -175,14 +231,16 @@ const AddProduct1 = () => {
 
                   <div className="mb-4">
                     <label
-                      htmlFor="productname"
+                      htmlFor="shippingweight"
                       className="block text-[16px] font-bold text-[#333333]"
                     >
                       Shipping Weight (In KG)
                     </label>
                     <input
-                      id="product_name"
+                      id="shipping_weight"
                       type="text"
+                      value={productDetails.weight}
+                      onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="E.g:20kg"
                     />
@@ -198,6 +256,8 @@ const AddProduct1 = () => {
                           &#8203;
                           <input
                             type="checkbox"
+                            value={productDetails.freeShipping}
+                            onChange={handleInputChange}
                             className="size-4 rounded border-gray-300"
                             id="Option2"
                           />
@@ -209,6 +269,8 @@ const AddProduct1 = () => {
                           &#8203;
                           <input
                             type="checkbox"
+                            value={productDetails.freeShipping}
+                            onChange={handleInputChange}
                             className="size-4 rounded border-gray-300"
                             id="Option2"
                           />
@@ -228,6 +290,8 @@ const AddProduct1 = () => {
                     <input
                       id="product_name"
                       type="text"
+                      value={productDetails.price}
+                      onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
@@ -242,6 +306,8 @@ const AddProduct1 = () => {
                     <input
                       id="product_name"
                       type="text"
+                      value={productDetails.discountedPrice}
+                      onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
@@ -257,6 +323,8 @@ const AddProduct1 = () => {
                       <select
                         name=""
                         id=""
+                        value={productDetails.color}
+                        onChange={handleInputChange}
                         className="w-full rounded-lg border-[#8ED06C] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">E.g:Red</option>
@@ -280,18 +348,24 @@ const AddProduct1 = () => {
                       <input
                         id="product_name"
                         type="text"
+                        value={productDetails.dimensions}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Length"
                       />
                       <input
                         id="product_name"
                         type="text"
+                        value={productDetails.dimensions}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Width"
                       />
                       <input
                         id="product_name"
                         type="text"
+                        value={productDetails.dimensions}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Height"
                       />
@@ -308,6 +382,8 @@ const AddProduct1 = () => {
                       <select
                         name=""
                         id=""
+                        value={productDetails.packaging}
+                        onChange={handleInputChange}
                         className="w-full rounded-lg border-[#8ED06C] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">Choose Package Type</option>
@@ -330,6 +406,8 @@ const AddProduct1 = () => {
                     <input
                       id="product_name"
                       type="text"
+                      value={productDetails.handlingTime}
+                      onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
@@ -355,29 +433,15 @@ const AddProduct1 = () => {
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M10.7892 21.9609H9.89111C6.64261 21.9609 5.01836 21.9609 4.00918 20.9358C3 19.9106 3 18.2607 3 14.9609V9.96093C3 6.6611 3 5.01119 4.00918 3.98607C5.01836 2.96094 6.64261 2.96094 9.89111 2.96094H12.8444C16.0929 2.96094 17.9907 3.01612 19 4.04125C20.0092 5.06637 20 6.6611 20 9.96093V11.1473"
-                        stroke="currentColor" // Use currentColor to make the stroke inherit the button's text color
+                        d="M12.5 8V16M16.5 12H8.5"
+                        stroke="currentcolor"
                         stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                       />
                       <path
-                        d="M16.4453 2V4M11.4453 2V4M6.44531 2V4"
-                        stroke="currentColor" // Inherit text color
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M7.5 15H11.5M7.5 10H15.5"
-                        stroke="currentColor" // Inherit text color
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                      />
-                      <path
-                        opacity="0.93"
-                        d="M21.2598 14.8785C20.3544 13.8641 19.8112 13.9245 19.2076 14.1056C18.7851 14.166 17.3365 15.8568 16.7329 16.3952C15.7419 17.3743 14.7464 18.3823 14.6807 18.5138C14.4931 18.8188 14.3186 19.3592 14.2341 19.963C14.0771 20.8688 13.8507 21.8885 14.1375 21.9759C14.4242 22.0632 15.2239 21.8954 16.1293 21.7625C16.7329 21.6538 17.1554 21.533 17.4572 21.3519C17.8797 21.0983 18.6644 20.2046 20.0164 18.8761C20.8644 17.9833 21.6823 17.3664 21.9238 16.7626C22.1652 15.8568 21.8031 15.3737 21.2598 14.8785Z"
-                        stroke="currentColor" // Inherit text color
+                        d="M3 12C3 7.52166 3 5.28249 4.39124 3.89124C5.78249 2.5 8.02166 2.5 12.5 2.5C16.9783 2.5 19.2175 2.5 20.6088 3.89124C22 5.28249 22 7.52166 22 12C22 16.4783 22 18.7175 20.6088 20.1088C19.2175 21.5 16.9783 21.5 12.5 21.5C8.02166 21.5 5.78249 21.5 4.39124 20.1088C3 18.7175 3 16.4783 3 12Z"
+                        stroke="currentcolor"
                         stroke-width="1.5"
                       />
                     </svg>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { addsquare, addsquare1 } from "../../assets";
+import axios from "axios"; // Import axios
+import { addsquare } from "../../assets";
 
 const EditProduct = () => {
   // State to control the popup visibility and animation
@@ -7,6 +8,31 @@ const EditProduct = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isFinalConfirmationOpen, setIsFinalConfirmationOpen] = useState(false);
   const [fadeOut, setFadeOut] = useState(false); // State for fade-out animation
+
+  const [productData, setProductData] = useState({
+    category: "",
+    name: "",
+    details: "",
+    quantity: "",
+    size: "",
+    weight: "",
+    realPrice: "",
+    discountedPrice: "",
+    color: "",
+    dimensions: { length: "", width: "", height: "" },
+    packaging: "",
+    handlingTime: "",
+    freeShipping: false,
+  });
+
+  // Function to update product data state
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setProductData((prevData) => ({
+      ...prevData,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
 
   // Function to toggle the main popup visibility
   const togglePopup = () => {
@@ -23,29 +49,33 @@ const EditProduct = () => {
     }, 200); // Match this duration with your CSS transition duration
   };
 
-  // Function to handle confirmation
-  const handleConfirm = () => {
-    // Logic for the edit action goes here
-    setFadeOut(true); // Start fade-out animation for the confirmation popup
-    setTimeout(() => {
-      setIsConfirmationOpen(false); // Close the confirmation popup after the animation
-      setIsFinalConfirmationOpen(true); // Open the final confirmation popup
-      setFadeOut(false); // Reset fade-out state
-    }, 300); // Match this duration with your CSS transition duration
-
-    // Automatically close the final confirmation popup after 3 seconds
-    setTimeout(() => {
-      setIsFinalConfirmationOpen(false);
-    }, 1000); // 3000 + 300 to allow time for fade-out
+  // Function to make the API call using axios
+  const editProduct = async () => {
+    try {
+      const response = await axios.put(
+        "https://nile-microservices.onrender.com/edit", // Replace with actual API endpoint
+        productData
+      );
+      console.log("Product updated:", response.data);
+      // Show final confirmation popup
+      setIsConfirmationOpen(false);
+      setIsFinalConfirmationOpen(true);
+      // Close the final confirmation popup after a few seconds
+      setTimeout(() => {
+        setIsFinalConfirmationOpen(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Error updating product:", error);
+    }
   };
 
-  // Function to toggle the confirmation popup visibility
-  const toggleConfirmation = () => {
-    setFadeOut(true); // Start fade-out animation for the confirmation popup
+  const handleConfirm = () => {
+    setFadeOut(true);
     setTimeout(() => {
-      setIsConfirmationOpen(!isConfirmationOpen); // Toggle confirmation popup
-      setFadeOut(false); // Reset fade-out state
-    }, 300); // Match this duration with your CSS transition duration
+      setIsConfirmationOpen(false);
+      editProduct(); // Call editProduct to make the API request
+      setFadeOut(false);
+    }, 300);
   };
   return (
     <>
