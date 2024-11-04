@@ -21,7 +21,7 @@ const DeleteProduct = () => {
     try {
       // Send a delete request to the API
       await axios.delete(
-        "https://nile-microservices.onrender.com/product/delete"
+        `YOUR_API_ENDPOINT/products/${productId}`
       ); // replace {productId} with actual product ID
 
       // If successful, close the main popup and show the final confirmation
@@ -40,6 +40,7 @@ const DeleteProduct = () => {
       }, 500);
     } catch (error) {
       console.error("Error deleting product:", error);
+      alert("Failed to delete the product. Please try again.");
       // Handle error (e.g., show a message to the user)
     }
   };
