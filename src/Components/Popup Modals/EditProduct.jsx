@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import axios
+import axios from "axios";
 import { addsquare } from "../../assets";
 
 const EditProduct = () => {
@@ -9,30 +9,22 @@ const EditProduct = () => {
   const [isFinalConfirmationOpen, setIsFinalConfirmationOpen] = useState(false);
   const [fadeOut, setFadeOut] = useState(false); // State for fade-out animation
 
-  const [productData, setProductData] = useState({
+  // Form fields state
+  const [productDetails, setProductDetails] = useState({
     category: "",
     name: "",
     details: "",
-    quantity: "",
+    stockQuantity: "",
     size: "",
     weight: "",
-    realPrice: "",
+    freeShipping: false,
+    price: "",
     discountedPrice: "",
     color: "",
     dimensions: { length: "", width: "", height: "" },
     packaging: "",
     handlingTime: "",
-    freeShipping: false,
   });
-
-  // Function to update product data state
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setProductData((prevData) => ({
-      ...prevData,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
 
   // Function to toggle the main popup visibility
   const togglePopup = () => {
@@ -49,33 +41,54 @@ const EditProduct = () => {
     }, 200); // Match this duration with your CSS transition duration
   };
 
-  // Function to make the API call using axios
-  const editProduct = async () => {
-    try {
-      const response = await axios.put(
-        "https://nile-microservices.onrender.com/edit", // Replace with actual API endpoint
-        productData
-      );
-      console.log("Product updated:", response.data);
-      // Show final confirmation popup
+  // Function to handle confirmation and send data to API
+  const handleConfirm = async () => {
+    setFadeOut(true);
+    setTimeout(async () => {
       setIsConfirmationOpen(false);
       setIsFinalConfirmationOpen(true);
-      // Close the final confirmation popup after a few seconds
-      setTimeout(() => {
-        setIsFinalConfirmationOpen(false);
-      }, 3000);
-    } catch (error) {
-      console.error("Error updating product:", error);
-    }
+      setFadeOut(false);
+
+      try {
+        // Replace with your actual API endpoint
+        const response = await axios.post(
+          "https://nile-microservices.onrender.com/edit",
+          productDetails
+        );
+        console.log("Product updated:", response.data);
+      } catch (error) {
+        console.error("Error updating product:", error);
+      }
+    }, 300);
+
+    setTimeout(() => {
+      setIsFinalConfirmationOpen(false);
+    }, 1000);
   };
 
-  const handleConfirm = () => {
-    setFadeOut(true);
-    setTimeout(() => {
-      setIsConfirmationOpen(false);
-      editProduct(); // Call editProduct to make the API request
-      setFadeOut(false);
-    }, 300);
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    if (name.startsWith("dimensions.")) {
+      const key = name.split(".")[1];
+      setProductDetails((prev) => ({
+        ...prev,
+        dimensions: {
+          ...prev.dimensions,
+          [key]: value,
+        },
+      }));
+    } else if (type === "checkbox") {
+      setProductDetails((prev) => ({
+        ...prev,
+        [name]: checked,
+      }));
+    } else {
+      setProductDetails((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
   return (
     <>
@@ -138,14 +151,17 @@ const EditProduct = () => {
                   <div className="flex items-center gap-5">
                     <div className="mb-4">
                       <label
-                        htmlFor="qunatity"
-                        className="block text-[16px] font-bold text-[#333333] text-left"
+                        htmlFor="category"
+                        className="block text-[16px] text-left font-bold text-[#333333]"
                       >
                         Product Category
                       </label>
                       <input
-                        id="quantity"
+                        id="category"
+                        name="category"
                         type="text"
+                        value={productDetails.category}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="E.g:Apparel"
                       />
@@ -153,14 +169,17 @@ const EditProduct = () => {
 
                     <div className="mb-4">
                       <label
-                        htmlFor="category"
-                        className="block text-[16px] font-bold text-[#333333] text-left"
+                        htmlFor="name"
+                        className="block text-[16px] text-left font-bold text-[#333333]"
                       >
                         Product Name
                       </label>
                       <input
-                        id="category"
+                        id="name"
+                        name="name"
                         type="text"
+                        value={productDetails.name}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="E.g:Floki"
                       />
@@ -170,14 +189,17 @@ const EditProduct = () => {
                   <div className="flex items-center gap-5">
                     <div className="mb-4">
                       <label
-                        htmlFor="productname"
-                        className="block text-[16px] font-bold text-[#333333] text-left"
+                        htmlFor="details"
+                        className="block text-[16px] text-left font-bold text-[#333333]"
                       >
                         Product Details
                       </label>
                       <input
-                        id="product_name"
+                        id="details"
+                        name="details"
                         type="text"
+                        value={productDetails.details}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Input Details"
                       />
@@ -185,14 +207,17 @@ const EditProduct = () => {
 
                     <div className="mb-4">
                       <label
-                        htmlFor="productname"
-                        className="block text-[16px] font-bold text-[#333333] text-left"
+                        htmlFor="stockQuantity"
+                        className="block text-[16px] text-left font-bold text-[#333333]"
                       >
                         Stock Quantity
                       </label>
                       <input
-                        id="product_name"
+                        id="stockQunatity"
+                        name="stockQuantity"
                         type="text"
+                        value={productDetails.stockQuantity}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="321"
                       />
@@ -202,20 +227,25 @@ const EditProduct = () => {
                   <div>
                     <div className="relative">
                       <label
-                        htmlFor=""
-                        className="block text-[16px] font-bold text-[#333333] text-left"
+                        htmlFor="size"
+                        className="block text-[16px] text-left font-bold text-[#333333]"
                       >
                         Product Size
                       </label>
                       <select
-                        name=""
-                        id=""
-                        className="w-full rounded-lg border-[#8ED06C] border-2 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
+                        name="size"
+                        id="size"
+                        value={productDetails.size}
+                        onChange={handleInputChange}
+                        className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">E.g:XXL</option>
-                        <option value="JM">All Product</option>
-                        <option value="SRV">Shoes</option>
-                        <option value="JH">Apparels</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                        <option value="LG">LG</option>
+                        <option value="SM">SM</option>
+                        <option value="XS">XS</option>
+                        <option value="XXS">XXS</option>
                       </select>
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
@@ -225,20 +255,23 @@ const EditProduct = () => {
 
                   <div className="mb-4">
                     <label
-                      htmlFor="productname"
-                      className="block text-[16px] font-bold text-[#333333] text-left"
+                      htmlFor="weight"
+                      className="block text-[16px] text-left font-bold text-[#333333]"
                     >
                       Shipping Weight (In KG)
                     </label>
                     <input
-                      id="product_name"
+                      id="weight"
+                      name="weight"
                       type="text"
+                      value={productDetails.weight}
+                      onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="E.g:20kg"
                     />
                   </div>
                   <div>
-                    <h1 className="block text-[16px] font-bold text-[#333333] text-left">
+                    <h1 className="block text-[16px] text-left font-bold text-[#333333]">
                       Offer Free Shipping ?
                     </h1>
                     <div className="space-y-3">
@@ -248,6 +281,8 @@ const EditProduct = () => {
                           &#8203;
                           <input
                             type="checkbox"
+                            value={productDetails.freeShipping}
+                            onChange={handleInputChange}
                             className="size-4 rounded border-gray-300"
                             id="Option2"
                           />
@@ -259,6 +294,8 @@ const EditProduct = () => {
                           &#8203;
                           <input
                             type="checkbox"
+                            value={productDetails.freeShipping}
+                            onChange={handleInputChange}
                             className="size-4 rounded border-gray-300"
                             id="Option2"
                           />
@@ -270,28 +307,34 @@ const EditProduct = () => {
                 <div className="space-y-3">
                   <div className="mb-4">
                     <label
-                      htmlFor="productname"
-                      className="block text-[16px] font-bold text-[#333333] text-left"
+                      htmlFor="price"
+                      className="block text-[16px] text-left font-bold text-[#333333]"
                     >
                       Product Real Price
                     </label>
                     <input
-                      id="product_name"
+                      id="price"
+                      name="price"
                       type="text"
+                      value={productDetails.price}
+                      onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
                   </div>
                   <div className="mb-4">
                     <label
-                      htmlFor="productname"
-                      className="block text-[16px] font-bold text-[#333333] text-left"
+                      htmlFor="discountedPrice"
+                      className="block text-[16px] text-left font-bold text-[#333333]"
                     >
                       Discounted Price
                     </label>
                     <input
-                      id="product_name"
+                      id="discountedPrice"
+                      name="discountedPrice"
                       type="text"
+                      value={productDetails.discountedPrice}
+                      onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
@@ -299,20 +342,22 @@ const EditProduct = () => {
                   <div>
                     <div className="relative">
                       <label
-                        htmlFor=""
-                        className="block text-[16px] font-bold text-[#333333] text-left"
+                        htmlFor="color"
+                        className="block text-[16px] text-left font-bold text-[#333333]"
                       >
                         Product Color
                       </label>
                       <select
-                        name=""
-                        id=""
-                        className="w-full rounded-lg border-[#8ED06C] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
+                        name="color"
+                        id="color"
+                        value={productDetails.color}
+                        onChange={handleInputChange}
+                        className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">E.g:Red</option>
-                        <option value="JM">All Product</option>
-                        <option value="SRV">Shoes</option>
-                        <option value="JH">Apparels</option>
+                        <option value="BL">Blue</option>
+                        <option value="RD">Red</option>
+                        <option value="PK">Pink</option>
                       </select>
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
@@ -321,27 +366,36 @@ const EditProduct = () => {
                   </div>
                   <div>
                     <label
-                      htmlFor="Name"
-                      className="block text-[16px] font-bold text-[#333333] text-left"
+                      htmlFor="dimensionsLength"
+                      className="block text-[16px] text-left font-bold text-[#333333]"
                     >
                       Product Dimensions
                     </label>
                     <div className="mb-4 flex items-center gap-3">
                       <input
-                        id="product_name"
+                        id="dimensionsLength"
+                        name="dimensions.length"
                         type="text"
+                        value={productDetails.dimensions.length}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Length"
                       />
                       <input
-                        id="product_name"
+                        id="dimensionsWidth"
+                        name="dimensions.width"
                         type="text"
+                        value={productDetails.dimensions.width}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Width"
                       />
                       <input
-                        id="product_name"
+                        id="dimensionsHeight"
+                        name="dimensions.height"
                         type="text"
+                        value={productDetails.dimensions.height}
+                        onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Height"
                       />
@@ -350,20 +404,21 @@ const EditProduct = () => {
                   <div>
                     <div className="relative">
                       <label
-                        htmlFor=""
-                        className="block text-[16px] font-bold text-[#333333] text-left"
+                        htmlFor="packaging"
+                        className="block text-[16px] text-left font-bold text-[#333333]"
                       >
                         Packaging Preference
                       </label>
                       <select
-                        name=""
-                        id=""
-                        className="w-full rounded-lg border-[#8ED06C] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
+                        name="packaging"
+                        id="packaging"
+                        value={productDetails.packaging}
+                        onChange={handleInputChange}
+                        className="w-full rounded-lg border-[#8ED06C] bg-[#f5f5f5] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">Choose Package Type</option>
-                        <option value="JM">All Product</option>
-                        <option value="SRV">Shoes</option>
-                        <option value="JH">Apparels</option>
+                        <option value="BS">Box Size</option>
+                        <option value="PM">Packaging Materials</option>
                       </select>
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
@@ -372,14 +427,17 @@ const EditProduct = () => {
                   </div>
                   <div className="mb-4">
                     <label
-                      htmlFor="productname"
-                      className="block text-[16px] font-bold text-[#333333] text-left"
+                      htmlFor="handlingTime"
+                      className="block text-[16px] text-left font-bold text-[#333333]"
                     >
                       Handling Time
                     </label>
                     <input
-                      id="product_name"
+                      id="handlingTime"
+                      name="handlingTime"
                       type="text"
+                      value={productDetails.handlingTime}
+                      onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />

@@ -66,39 +66,35 @@ const AddProduct1 = () => {
     }, 1000);
   };
 
-  // Function to handle input changes
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProductDetails((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    const { name, value, type, checked } = e.target;
+    
+    if (name.startsWith("dimensions.")) {
+      const key = name.split(".")[1];
+      setProductDetails((prev) => ({
+        ...prev,
+        dimensions: {
+          ...prev.dimensions,
+          [key]: value,
+        },
+      }));
+    } else if (type === "checkbox") {
+      setProductDetails((prev) => ({
+        ...prev,
+        [name]: checked,
+      }));
+    } else {
+      setProductDetails((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
   return (
     <>
       {/* Button to trigger the popup */}
       <button onClick={togglePopup}>
-        <h1 className="text-[#004324] flex font-bold gap-1 items-center border-[#004324] hover:bg-[#004324] hover:text-[#ffffff] duration-500 border-2 p-2 rounded-md">
-          <svg
-            width="25"
-            height="24"
-            viewBox="0 0 25 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12.5 8V16M16.5 12H8.5"
-              stroke="currentcolor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M3 12C3 7.52166 3 5.28249 4.39124 3.89124C5.78249 2.5 8.02166 2.5 12.5 2.5C16.9783 2.5 19.2175 2.5 20.6088 3.89124C22 5.28249 22 7.52166 22 12C22 16.4783 22 18.7175 20.6088 20.1088C19.2175 21.5 16.9783 21.5 12.5 21.5C8.02166 21.5 5.78249 21.5 4.39124 20.1088C3 18.7175 3 16.4783 3 12Z"
-              stroke="currentcolor"
-              stroke-width="1.5"
-            />
-          </svg>
+        <h1 className="flex font-bold gap-1 items-center border-[#004324] bg-[#004324] text-[#ffffff] duration-500 border-2 p-2 rounded-md">
           Add Product
         </h1>
       </button>
@@ -134,13 +130,14 @@ const AddProduct1 = () => {
                   <div className="flex items-center gap-5">
                     <div className="mb-4">
                       <label
-                        htmlFor="qunatity"
+                        htmlFor="category"
                         className="block text-[16px] font-bold text-[#333333]"
                       >
                         Product Category
                       </label>
                       <input
-                        id="quantity"
+                        id="category"
+                        name="category"
                         type="text"
                         value={productDetails.category}
                         onChange={handleInputChange}
@@ -151,13 +148,14 @@ const AddProduct1 = () => {
 
                     <div className="mb-4">
                       <label
-                        htmlFor="category"
+                        htmlFor="name"
                         className="block text-[16px] font-bold text-[#333333]"
                       >
                         Product Name
                       </label>
                       <input
-                        id="category"
+                        id="name"
+                        name="name"
                         type="text"
                         value={productDetails.name}
                         onChange={handleInputChange}
@@ -170,13 +168,14 @@ const AddProduct1 = () => {
                   <div className="flex items-center gap-5">
                     <div className="mb-4">
                       <label
-                        htmlFor="productdetails"
+                        htmlFor="details"
                         className="block text-[16px] font-bold text-[#333333]"
                       >
                         Product Details
                       </label>
                       <input
-                        id="product_details"
+                        id="details"
+                        name="details"
                         type="text"
                         value={productDetails.details}
                         onChange={handleInputChange}
@@ -187,13 +186,14 @@ const AddProduct1 = () => {
 
                     <div className="mb-4">
                       <label
-                        htmlFor="productname"
+                        htmlFor="stockQuantity"
                         className="block text-[16px] font-bold text-[#333333]"
                       >
                         Stock Quantity
                       </label>
                       <input
-                        id="stock_qunatity"
+                        id="stockQunatity"
+                        name="stockQuantity"
                         type="text"
                         value={productDetails.stockQuantity}
                         onChange={handleInputChange}
@@ -206,22 +206,25 @@ const AddProduct1 = () => {
                   <div>
                     <div className="relative">
                       <label
-                        htmlFor=""
+                        htmlFor="size"
                         className="block text-[16px] font-bold text-[#333333]"
                       >
                         Product Size
                       </label>
                       <select
-                        name=""
-                        id=""
+                        name="size"
+                        id="size"
                         value={productDetails.size}
                         onChange={handleInputChange}
-                        className="w-full rounded-lg border-[#8ED06C] border-2 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
+                        className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">E.g:XXL</option>
-                        <option value="JM">All Product</option>
-                        <option value="SRV">Shoes</option>
-                        <option value="JH">Apparels</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                        <option value="LG">LG</option>
+                        <option value="SM">SM</option>
+                        <option value="XS">XS</option>
+                        <option value="XXS">XXS</option>
                       </select>
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
@@ -231,13 +234,14 @@ const AddProduct1 = () => {
 
                   <div className="mb-4">
                     <label
-                      htmlFor="shippingweight"
+                      htmlFor="weight"
                       className="block text-[16px] font-bold text-[#333333]"
                     >
                       Shipping Weight (In KG)
                     </label>
                     <input
-                      id="shipping_weight"
+                      id="weight"
+                      name="weight"
                       type="text"
                       value={productDetails.weight}
                       onChange={handleInputChange}
@@ -282,13 +286,14 @@ const AddProduct1 = () => {
                 <div className="space-y-3">
                   <div className="mb-4">
                     <label
-                      htmlFor="productname"
+                      htmlFor="price"
                       className="block text-[16px] font-bold text-[#333333]"
                     >
                       Product Real Price
                     </label>
                     <input
-                      id="product_name"
+                      id="price"
+                      name="price"
                       type="text"
                       value={productDetails.price}
                       onChange={handleInputChange}
@@ -298,13 +303,14 @@ const AddProduct1 = () => {
                   </div>
                   <div className="mb-4">
                     <label
-                      htmlFor="productname"
+                      htmlFor="discountedPrice"
                       className="block text-[16px] font-bold text-[#333333]"
                     >
                       Discounted Price
                     </label>
                     <input
-                      id="product_name"
+                      id="discountedPrice"
+                      name="discountedPrice"
                       type="text"
                       value={productDetails.discountedPrice}
                       onChange={handleInputChange}
@@ -315,22 +321,22 @@ const AddProduct1 = () => {
                   <div>
                     <div className="relative">
                       <label
-                        htmlFor=""
+                        htmlFor="color"
                         className="block text-[16px] font-bold text-[#333333]"
                       >
                         Product Color
                       </label>
                       <select
-                        name=""
-                        id=""
+                        name="color"
+                        id="color"
                         value={productDetails.color}
                         onChange={handleInputChange}
-                        className="w-full rounded-lg border-[#8ED06C] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
+                        className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">E.g:Red</option>
-                        <option value="JM">All Product</option>
-                        <option value="SRV">Shoes</option>
-                        <option value="JH">Apparels</option>
+                        <option value="BL">Blue</option>
+                        <option value="RD">Red</option>
+                        <option value="PK">Pink</option>
                       </select>
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
@@ -339,32 +345,35 @@ const AddProduct1 = () => {
                   </div>
                   <div>
                     <label
-                      htmlFor="Name"
+                      htmlFor="dimensionsLength"
                       className="block text-[16px] font-bold text-[#333333]"
                     >
                       Product Dimensions
                     </label>
                     <div className="mb-4 flex items-center gap-3">
                       <input
-                        id="product_name"
+                        id="dimensionsLength"
+                        name="dimensions.length"
                         type="text"
-                        value={productDetails.dimensions}
+                        value={productDetails.dimensions.length}
                         onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Length"
                       />
                       <input
-                        id="product_name"
+                        id="dimensionsWidth"
+                        name="dimensions.width"
                         type="text"
-                        value={productDetails.dimensions}
+                        value={productDetails.dimensions.width}
                         onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Width"
                       />
                       <input
-                        id="product_name"
+                        id="dimensionsHeight"
+                        name="dimensions.height"
                         type="text"
-                        value={productDetails.dimensions}
+                        value={productDetails.dimensions.height}
                         onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Height"
@@ -374,22 +383,21 @@ const AddProduct1 = () => {
                   <div>
                     <div className="relative">
                       <label
-                        htmlFor=""
+                        htmlFor="packaging"
                         className="block text-[16px] font-bold text-[#333333]"
                       >
                         Packaging Preference
                       </label>
                       <select
-                        name=""
-                        id=""
+                        name="packaging"
+                        id="packaging"
                         value={productDetails.packaging}
                         onChange={handleInputChange}
-                        className="w-full rounded-lg border-[#8ED06C] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
+                        className="w-full rounded-lg border-[#8ED06C] bg-[#f5f5f5] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">Choose Package Type</option>
-                        <option value="JM">All Product</option>
-                        <option value="SRV">Shoes</option>
-                        <option value="JH">Apparels</option>
+                        <option value="BS">Box Size</option>
+                        <option value="PM">Packaging Materials</option>
                       </select>
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
@@ -398,13 +406,14 @@ const AddProduct1 = () => {
                   </div>
                   <div className="mb-4">
                     <label
-                      htmlFor="productname"
+                      htmlFor="handlingTime"
                       className="block text-[16px] font-bold text-[#333333]"
                     >
                       Handling Time
                     </label>
                     <input
-                      id="product_name"
+                      id="handlingTime"
+                      name="handlingTime"
                       type="text"
                       value={productDetails.handlingTime}
                       onChange={handleInputChange}
