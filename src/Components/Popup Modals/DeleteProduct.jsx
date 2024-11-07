@@ -21,7 +21,7 @@ const DeleteProduct = () => {
     try {
       // Send a delete request to the API
       await axios.delete(
-        `YOUR_API_ENDPOINT/products/${productId}`
+        `https://nile-microservices.onrender.com/product/delete/${productId}`
       ); // replace {productId} with actual product ID
 
       // If successful, close the main popup and show the final confirmation

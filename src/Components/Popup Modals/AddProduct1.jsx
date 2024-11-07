@@ -41,6 +41,10 @@ const AddProduct1 = () => {
     }, 200); // Match this duration with your CSS transition duration
   };
 
+  const toggleConfirmation = () => {
+    setIsConfirmationOpen(false);
+  };
+
   // Function to handle confirmation and send data to API
   const handleConfirm = async () => {
     setFadeOut(true);
