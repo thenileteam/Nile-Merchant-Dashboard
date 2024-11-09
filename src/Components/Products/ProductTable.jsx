@@ -1,13 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { download, preference1 } from "../../assets";
 import EditProduct from "../Popup Modals/EditProduct";
 import DeleteProduct from "../Popup Modals/DeleteProduct";
 import AddProduct from "../Popup Modals/AddProduct";
+import axios from "axios";
 
 const ProductTable = () => {
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedText, setSelectedText] = useState("");
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("products/product/create");
+        if (Array.isArray(response.data)) {
+          setProducts(response.data);
+        } else {
+          console.error("API response is not an array:", response.data);
+          // Handle the case where the response is not an array
+          setProducts([]);
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   const toggleFilterDropdown = () => {
     setFilterDropdownOpen(!filterDropdownOpen);
@@ -26,7 +46,6 @@ const ProductTable = () => {
   };
   return (
     <>
-
       {/* Filter Dropdown Section */}
       <div className="flex items-center justify-end px-24 mt-10 relative">
         <h1 className="text-[#333333] font-bold text-[16px]">Filter By :</h1>
@@ -161,182 +180,30 @@ const ProductTable = () => {
               </th>
             </tr>
           </thead>
+
           <tbody>
-            {/* Row 1 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">Shoes</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">57</td>
-              <td className="px-2 py-3 text-center">In Stock</td>
-              <td className="px-2 py-3 text-center flex items-center gap-2 justify-center">
-                <EditProduct />
-                <DeleteProduct />
-              </td>
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 2 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">Apparel</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">71</td>
-              <td className="px-2 py-3 text-center">Low Stock</td>
-              <td className="px-2 py-3 text-center flex items-center gap-2 justify-center">
-                <EditProduct />
-                <DeleteProduct />
-              </td>
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 3 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">Appliances</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">94</td>
-              <td className="px-2 py-3 text-center">Out Of Stock</td>
-              <td className="px-2 py-3 text-center flex items-center gap-2 justify-center">
-                <EditProduct />
-                <DeleteProduct />
-              </td>
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 4 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">Appliances</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">94</td>
-              <td className="px-2 py-3 text-center">Out Of Stock</td>
-              <td className="px-2 py-3 text-center flex items-center gap-2 justify-center">
-                <EditProduct />
-                <DeleteProduct />
-              </td>
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 5 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">Appliances</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">94</td>
-              <td className="px-2 py-3 text-center">Out Of Stock</td>
-              <td className="px-2 py-3 text-center flex items-center gap-2 justify-center">
-                <EditProduct />
-                <DeleteProduct />
-              </td>
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 6 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">Appliances</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">94</td>
-              <td className="px-2 py-3 text-center">Out Of Stock</td>
-              <td className="px-2 py-3 text-center flex items-center gap-2 justify-center">
-                <EditProduct />
-                <DeleteProduct />
-              </td>
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 7 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">Appliances</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">94</td>
-              <td className="px-2 py-3 text-center">Out Of Stock</td>
-              <td className="px-2 py-3 text-center flex items-center gap-2 justify-center">
-                <EditProduct />
-                <DeleteProduct />
-              </td>
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 8 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">Appliances</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">94</td>
-              <td className="px-2 py-3 text-center">Out Of Stock</td>
-              <td className="px-2 py-3 text-center flex items-center gap-2 justify-center">
-                <EditProduct />
-                <DeleteProduct />
-              </td>
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
+            {products.map((product) => (
+              <tr key={product.id} className="bg-[#ffffff] shadow-md">
+                <td className="px-2 py-3 text-center">{product.id}</td>
+                <td className="px-2 py-3 text-center">{product.name}</td>
+                <td className="px-2 py-3 text-center">{product.category}</td>
+                <td className="px-2 py-3 text-center">{product.price}</td>
+                <td className="px-2 py-3 text-center">{product.unitsSold}</td>
+                <td className="px-2 py-3 text-center">{product.stockLevel}</td>
+                <td className="px-2 py-3 text-center flex items-center gap-2 justify-center">
+                  <EditProduct product={product} />
+                  <DeleteProduct product={product} />
+                </td>
+                <td className="px-2 py-3 text-center">
+                  <input
+                    type="checkbox"
+                    id={`product-${product.id}`}
+                    name={`product-${product.id}`}
+                    className="size-5 rounded-md bg-white shadow-sm"
+                  />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

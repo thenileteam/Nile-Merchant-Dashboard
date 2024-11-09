@@ -3,6 +3,13 @@ import { addsquare, reload } from "../../assets";
 
 const PercentageProduct = ({ isVisible, onClose }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [customerID, setCustomerID] = useState("");
+
+  // Function to generate a random code
+  const generateCustomerID = () => {
+    const code = `DIS-${Math.floor(100000 + Math.random() * 900000)}`;
+    setCustomerID(code);
+  };
 
   const handleSendDiscount = () => {
     onClose(); // Close initial popup
@@ -100,10 +107,13 @@ const PercentageProduct = ({ isVisible, onClose }) => {
                     id=""
                     placeholder="Generate Code"
                     className="w-full rounded-md border-[#EAF4E2] border-2 py-2.5 pe-10 shadow-sm sm:text-sm p-3"
+                    value={customerID}
+                    readOnly
                   />
                   <span className="absolute inset-y-0 end-0 grid w-10 place-content-center mt-6">
                     <button
                       type="button"
+                      onClick={generateCustomerID}
                       className="text-gray-600 hover:text-gray-700"
                     >
                       <img src={reload} alt="" />

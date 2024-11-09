@@ -77,7 +77,7 @@ const Dashboard = () => {
               </button>
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-[32px] font-bold ml-20">Welcome Dorah</h1>
+                  <h1 className="text-[32px] font-bold ml-20">Welcome User</h1>
                 </div>
                 <div className="flex items-center gap-10 ml-[450px]">
                   <div className="relative">
