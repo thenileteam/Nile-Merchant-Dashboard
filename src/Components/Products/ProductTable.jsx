@@ -14,7 +14,7 @@ const ProductTable = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("products/product/create");
+        const response = await axios.get("/users/products/product");
         if (Array.isArray(response.data)) {
           setProducts(response.data);
         } else {
