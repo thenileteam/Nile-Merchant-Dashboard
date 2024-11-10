@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { nilelogosolid } from "../assets";
 import { Link, useNavigate } from "react-router-dom";
-import ApiInstance from "../Api/ApiInstance";
-import Cookies from "js-cookie";
-
+import axios from "axios";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -14,35 +12,28 @@ const SignIn = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading
+    setLoading(true);
 
     try {
-      const response = await ApiInstance.post("/users/auth/login", {
+      const response = await axios.post("https://nile-microservices-auth.onrender.com/auth/login", {
         email,
         password,
       });
-
-      console.log(response.data);
-
-      console.log(response.data.data.user);
-
-      localStorage.setItem("Id", response?.data?.data?.user?._id);
-
-      // Set a cookie
-      Cookies.set("accessToken", response?.data?.accessToken);
-      Cookies.set("refreshToken", response?.data?.refreshToken);
-
-      if (response.status === 200) {
-        // Navigate to dashboard or perform actions after login success
-        navigate("/dashboard");
-      }
+      
+      // Store the authentication token (assuming it's in response.data.token)
+      localStorage.setItem('authToken', response.data.token);
+      
+      // You might also want to store user data if it's included in the response
+      localStorage.setItem('userData', JSON.stringify(response.data.user));
+      
+      // Then navigate to dashboard
+      navigate("/dashboard");
     } catch (error) {
-      setError("Invalid email or password");
-      console.error("Login error:", error);
+      setError(error.response?.data.message || "Incorrect email or password");
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
-  };
+};
 
   return (
     <div className="mt-28 mb-10">
