@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { nilelogosolid } from "../assets";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import ApiInstance from "../Api/ApiInstance";
+import Cookies from "js-cookie";
+
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -12,18 +14,33 @@ const SignIn = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading(true); // Start loading
 
     try {
-      const response = await axios.post("https://nile-microservices-auth.onrender.com/auth/login", {
+      const response = await ApiInstance.post("/users/auth/login", {
         email,
         password,
       });
-      navigate("/dashboard");
+
+      console.log(response.data);
+
+      console.log(response.data.data.user);
+
+      localStorage.setItem("Id", response?.data?.data?.user?._id);
+
+      // Set a cookie
+      Cookies.set("accessToken", response?.data?.accessToken);
+      Cookies.set("refreshToken", response?.data?.refreshToken);
+
+      if (response.status === 200) {
+        // Navigate to dashboard or perform actions after login success
+        navigate("/dashboard");
+      }
     } catch (error) {
-      setError(error.response?.data.message || "Incorrect email or password");
+      setError("Invalid email or password");
+      console.error("Login error:", error);
     } finally {
-      setLoading(false);
+      setLoading(false); // End loading
     }
   };
 
@@ -103,7 +120,7 @@ const SignIn = () => {
           </button>
 
           <div className="flex items-center gap-1 justify-center mt-3">
-            <h1 className="text-[#333333] text-[16px]">Don't Have An Account?</h1>
+            <h1 className="text-[#333333] text-[16px]">Dont Have An Account?</h1>
             <Link to="/signup">
               <p className="text-[#000000] font-bold">Click Here</p>
             </Link>
