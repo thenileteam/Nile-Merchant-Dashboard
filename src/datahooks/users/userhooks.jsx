@@ -10,7 +10,7 @@ export const useLogUserIn = () => {
   const [error] = useState("");
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
-      return ApiInstance.post("/users/auth/super-admin/login", data);
+      return ApiInstance.post("/users/auth/login", data);
     },
     onSuccess: (response) => {
       // Set data in localStorage
@@ -38,7 +38,7 @@ export const useSignUserUp = () => {
   const [error] = useState("");
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
-      return ApiInstance.post("/users/auth//register", data);
+      return ApiInstance.post("/users/auth/register", data);
     },
     onSuccess: () => {
       toast("Auth Success✔");
