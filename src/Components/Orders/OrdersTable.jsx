@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import { download, preference1 } from "../../assets";
-import ShippingConfirm from "../Popup Modals/ShippingConfirm";
+// import ShippingConfirm from "../Popup Modals/ShippingConfirm";
+import { format, parseISO } from "date-fns";
 
-const OrdersTable = () => {
+const OrdersTable = ({ data }) => {
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedText, setSelectedText] = useState("");
@@ -24,7 +26,6 @@ const OrdersTable = () => {
   };
   return (
     <>
-
       {/* Filter Dropdown Section */}
       <div className="flex items-center justify-end px-24 mt-10 relative">
         <h1 className="text-[#333333] font-bold text-[16px]">Filter By :</h1>
@@ -126,14 +127,14 @@ const OrdersTable = () => {
                   <path
                     d="M15 9L9 14.9996M15 15L9 9.00039"
                     stroke="#8ED06C"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <path
                     d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
                     stroke="#8ED06C"
-                    stroke-width="1.5"
+                    strokeWidth="1.5"
                   />
                 </svg>
                 <h1 className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
@@ -143,118 +144,36 @@ const OrdersTable = () => {
             </tr>
           </thead>
           <tbody>
+            {data?.map((order) => (
+              <tr key={order._id} className="bg-[#ffffff] shadow-md">
+                <td className="px-2 py-3 bg-[#EAF4E2]">{order.customerId}</td>
+                <td className="px-2 py-3 text-center">{order.id}</td>
+                <td className="px-2 py-3 text-center">Lion&lsquo;s Den</td>
+                <td className="px-2 py-3 text-center">57</td>
+                <td className="px-2 py-3 text-center">${order.totalAmount}</td>
+                <td className="px-2 py-3 text-center">
+                  {format(parseISO(order?.createdAt), "dd MMMM yyyy")}
+                </td>
+                <td className="px-2 py-3 text-center">NA</td>
+                <td className="px-2 py-3 text-center">Completed</td>
+                <td className="px-2 py-3 text-center">
+                  {order.payment || "Pending"}
+                </td>
+                <td className="px-2 py-3 text-center">{order.status}</td>
+                <td className="px-2 py-3 text-center">
+                  <input
+                    type="checkbox"
+                    id="MarketingAccept"
+                    name="marketing_accept"
+                    className="size-5 rounded-md bg-white shadow-sm"
+                  />
+                </td>
+              </tr>
+            ))}
             {/* Row 1 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 bg-[#EAF4E2]">Kunle</td>
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">57</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">05/11/2024</td>
-              <td className="px-2 py-3 text-center">Completed</td>
-              <td className="px-2 py-3 text-center">Completed</td>
-              <td className="px-2 py-3 text-center">Completed</td>
-              <td className="px-2 py-3 text-center">Completed</td>
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 2 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 bg-[#EAF4E2]">Damola</td>
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">57</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">05/11/2024</td>
-              <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
-              <td className="px-2 py-3 text-center">Pending</td>
-              <ShippingConfirm />
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 3 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 bg-[#EAF4E2]">Rohim</td>
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">57</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">05/11/2024</td>
-              <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
-              <td className="px-2 py-3 text-center">Pending</td>
-              <ShippingConfirm />
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 4 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 bg-[#EAF4E2]">Debby</td>
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">57</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">05/11/2024</td>
-              <td className="px-2 py-3 text-center">Cancelled</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
-              <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center">Cancelled</td>
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 5 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 bg-[#EAF4E2]">James</td>
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">57</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">05/11/2024</td>
-              <td className="px-2 py-3 text-center">Cancelled</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
-              <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center">Cancelled</td>
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
 
             {/* Row 6 */}
-            <tr className="bg-[#ffffff] shadow-md">
+            {/* <tr className="bg-[#ffffff] shadow-md">
               <td className="px-2 py-3 bg-[#EAF4E2]">Jaddy</td>
               <td className="px-2 py-3 text-center">5321</td>
               <td className="px-2 py-3 text-center">Lion's Den</td>
@@ -276,7 +195,7 @@ const OrdersTable = () => {
             </tr>
 
             {/* Row 7 */}
-            <tr className="bg-[#ffffff] shadow-md">
+            {/* <tr className="bg-[#ffffff] shadow-md">
               <td className="px-2 py-3 bg-[#EAF4E2]">Mary</td>
               <td className="px-2 py-3 text-center">5321</td>
               <td className="px-2 py-3 text-center">Lion's Den</td>
@@ -295,10 +214,10 @@ const OrdersTable = () => {
                   className="size-5 rounded-md bg-white shadow-sm"
                 />
               </td>
-            </tr>
+            </tr> */}
 
             {/* Row 8 */}
-            <tr className="bg-[#ffffff] shadow-md">
+            {/* <tr className="bg-[#ffffff] shadow-md">
               <td className="px-2 py-3 bg-[#EAF4E2]">Mary</td>
               <td className="px-2 py-3 text-center">5321</td>
               <td className="px-2 py-3 text-center">Lion's Den</td>
@@ -317,10 +236,10 @@ const OrdersTable = () => {
                   className="size-5 rounded-md bg-white shadow-sm"
                 />
               </td>
-            </tr>
+            </tr> */}
 
             {/* Row 9 */}
-            <tr className="bg-[#ffffff] shadow-md">
+            {/* <tr className="bg-[#ffffff] shadow-md">
               <td className="px-2 py-3 bg-[#EAF4E2]">Kelly</td>
               <td className="px-2 py-3 text-center">5321</td>
               <td className="px-2 py-3 text-center">Lion's Den</td>
@@ -339,7 +258,7 @@ const OrdersTable = () => {
                   className="size-5 rounded-md bg-white shadow-sm"
                 />
               </td>
-            </tr>
+            </tr>  */}
           </tbody>
         </table>
       </div>

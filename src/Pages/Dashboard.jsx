@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
@@ -16,6 +15,7 @@ import {
   bank,
 } from "../assets";
 import DashoardTabel from "../Components/Dashboard/DashoardTabel";
+import { useState } from "react";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);

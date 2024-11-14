@@ -1,44 +1,35 @@
 import { useState } from "react";
 import { nilelogosolid } from "../assets";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import { useLogUserIn } from "../datahooks/users/userhooks";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+
+  const { mutate, isPending } = useLogUserIn();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
+    console.log(isPending);
     try {
-      const response = await axios.post("https://nile-microservices-auth.onrender.com/auth/login", {
+      mutate({
         email,
         password,
       });
-      
-      // Store the authentication token (assuming it's in response.data.token)
-      localStorage.setItem('authToken', response.data.token);
-      
-      // You might also want to store user data if it's included in the response
-      localStorage.setItem('userData', JSON.stringify(response.data.user));
-      
-      // Then navigate to dashboard
-      navigate("/dashboard");
     } catch (error) {
-      setError(error.response?.data.message || "Incorrect email or password");
-    } finally {
-      setLoading(false);
+      console.error("Login error:", error);
     }
-};
+  };
 
   return (
     <div className="mt-28 mb-10">
       <div>
-        <img src={nilelogosolid} alt="" className="flex justify-center mx-auto" />
+        <img
+          src={nilelogosolid}
+          alt=""
+          className="flex justify-center mx-auto"
+        />
         <h1 className="text-[#333333] text-center text-[24px] font-bold mt-8">
           Welcome To The Merchant Dashboard
         </h1>
@@ -47,7 +38,10 @@ const SignIn = () => {
       <div className="flex justify-center mx-auto">
         <form onSubmit={handleLogin} className="space-y-6 mt-6">
           <div>
-            <label htmlFor="EmailAddress" className="block text-[16px] font-bold text-[#333333]">
+            <label
+              htmlFor="EmailAddress"
+              className="block text-[16px] font-bold text-[#333333]"
+            >
               Email Address
             </label>
             <input
@@ -63,7 +57,10 @@ const SignIn = () => {
           </div>
 
           <div>
-            <label htmlFor="Password" className="block text-[16px] font-bold text-[#333333]">
+            <label
+              htmlFor="Password"
+              className="block text-[16px] font-bold text-[#333333]"
+            >
               Password
             </label>
             <input
@@ -78,10 +75,11 @@ const SignIn = () => {
             />
           </div>
 
-          {error && <p className="text-red-500 text-center">{error}</p>}
-
           <div className="flex items-center justify-center mx-auto gap-10">
-            <label htmlFor="MarketingAccept" className="flex gap-1 items-center">
+            <label
+              htmlFor="MarketingAccept"
+              className="flex gap-1 items-center"
+            >
               <input
                 type="checkbox"
                 id="MarketingAccept"
@@ -91,7 +89,9 @@ const SignIn = () => {
               <span className="text-[14px] text-[#333333]">Remember Me</span>
             </label>
             <div className="flex items-center gap-1">
-              <h1 className="text-[#333333] text-[14px]">Forgotten Password?</h1>
+              <h1 className="text-[#333333] text-[14px]">
+                Forgotten Password?
+              </h1>
               <Link to="/email">
                 <p className="text-[#000000] font-bold">Click Here</p>
               </Link>
@@ -101,9 +101,9 @@ const SignIn = () => {
           <button
             type="submit"
             className="text-[#ffffff] bg-[#004324] w-full p-2 rounded-md mt-5 flex items-center justify-center"
-            disabled={loading}
+            disabled={isPending}
           >
-            {loading ? (
+            {isPending ? (
               <div className="w-4 h-4 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
             ) : (
               "Log In"
@@ -111,7 +111,9 @@ const SignIn = () => {
           </button>
 
           <div className="flex items-center gap-1 justify-center mt-3">
-            <h1 className="text-[#333333] text-[16px]">Dont Have An Account?</h1>
+            <h1 className="text-[#333333] text-[16px]">
+              Dont Have An Account?
+            </h1>
             <Link to="/signup">
               <p className="text-[#000000] font-bold">Click Here</p>
             </Link>

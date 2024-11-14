@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable no-unused-vars */
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
@@ -12,6 +13,7 @@ import {
   shoppingcartremove,
 } from "../assets";
 import OrdersTable from "../Components/Orders/OrdersTable";
+import { useFetchOrders } from "../datahooks/users/userhooks";
 
 const Orders = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -19,6 +21,8 @@ const Orders = () => {
   const closeSidebar = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
+  const { data, isError, isFetching } = useFetchOrders();
+
   return (
     <>
       <div className="bg-[#F5F5F5] pb-20">
@@ -127,7 +131,7 @@ const Orders = () => {
                 </div>
               </div>
             </nav>
-            
+
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
               <div className="flex gap-28 justify-center">
@@ -156,19 +160,33 @@ const Orders = () => {
             </div>
 
             <div className="px-24 mt-32">
-              <div>
-                <img
-                  src={shoppingcartremove}
-                  alt=""
-                  className="flex justify-center mx-auto"
-                />
-                <h1 className="text-[24px] font-extrabold text-center">
-                  You Have No orders Yet
-                </h1>
-                <p className="text-[#6E6E6E] font-bold text-center">
-                  You’ll get notified when you receive your first order
-                </p>
-              </div>
+              {data && (
+                <div className="flex  items-center gap-16">
+                  <button className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px]  text-white ">
+                    <img src="/public/plus.svg" alt="" />
+                    Create Order
+                  </button>
+                  <button className=" flex bg-white rounded-[4px] border border-[#8ED06C] gap-1 p-[10.5px]  text-[#8ED06C] ">
+                    <img src="/public/export.svg" alt="" />
+                    Export CSV
+                  </button>
+                </div>
+              )}
+              {data && data.length === 0 && (
+                <div>
+                  <img
+                    src={shoppingcartremove}
+                    alt=""
+                    className="flex justify-center mx-auto"
+                  />
+                  <h1 className="text-[24px] font-extrabold text-center">
+                    You Have No orders Yet
+                  </h1>
+                  <p className="text-[#6E6E6E] font-bold text-center">
+                    You’ll get notified when you receive your first order
+                  </p>
+                </div>
+              )}
               <div className="flex justify-center mt-3">
                 <button className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md">
                   Check Your Customers
@@ -177,7 +195,7 @@ const Orders = () => {
             </div>
 
             <div>
-              <OrdersTable />
+              <OrdersTable data={data} />
             </div>
           </div>
         </div>
