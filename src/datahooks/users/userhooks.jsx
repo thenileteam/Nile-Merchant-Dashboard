@@ -33,6 +33,29 @@ export const useLogUserIn = () => {
     error,
   };
 };
+export const useSignUserUp = () => {
+  const navigate = useNavigate();
+  const [error] = useState("");
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data) => {
+      return ApiInstance.post("/users/auth//register", data);
+    },
+    onSuccess: () => {
+      toast("Auth Success✔");
+      // Navigate to dashboard
+      navigate("/");
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message || "An error occurred");
+    },
+  });
+
+  return {
+    signUpMutate: mutate,
+    signUpIsPending: isPending,
+    signUpError: error,
+  };
+};
 
 export const useFetchDashboardData = () => {
   const [customDashboardData, setCustomDashboardData] = useState({});

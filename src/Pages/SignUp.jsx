@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { nilelogosolid } from "../assets";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios
+import { useSignUserUp } from "../datahooks/users/userhooks";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -13,8 +15,7 @@ const SignUp = () => {
     image: null,
     marketing_accept: false,
   });
-  const navigate = useNavigate();
-
+  const { signUpMutate, signUpError, signUpIsPending } = useSignUserUp();
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -44,21 +45,7 @@ const SignUp = () => {
       data.append(key, value);
     });
 
-    try {
-      const response = await axios.post("https://nile-microservices-auth.onrender.com/auth/register", formData,
-      );
-
-      // Navigate to dashboard on success
-      navigate("/");
-    } catch (error) {
-      // Handle errors from the response
-      if (error.response) {
-        alert(error.response.data.message || "Signup failed. Please try again.");
-      } else {
-        alert("An error occurred. Please try again.");
-        console.error(error);
-      }
-    }
+    signUpMutate(data);
   };
 
   return (
@@ -204,7 +191,11 @@ const SignUp = () => {
             type="submit"
             className="text-[#ffffff] bg-[#004324] w-full p-2 rounded-md mt-5"
           >
-            Sign Up
+            {signUpIsPending ? (
+              <div className="w-4 h-4 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              " Sign Up"
+            )}
           </button>
         </form>
       </div>
