@@ -173,25 +173,28 @@ const Orders = () => {
                 </div>
               )}
               {data && data.length === 0 && (
-                <div>
-                  <img
-                    src={shoppingcartremove}
-                    alt=""
-                    className="flex justify-center mx-auto"
-                  />
-                  <h1 className="text-[24px] font-extrabold text-center">
-                    You Have No orders Yet
-                  </h1>
-                  <p className="text-[#6E6E6E] font-bold text-center">
-                    You’ll get notified when you receive your first order
-                  </p>
-                </div>
+                <>
+                  <div>
+                    <img
+                      src={shoppingcartremove}
+                      alt=""
+                      className="flex justify-center mx-auto"
+                    />
+                    <h1 className="text-[24px] font-extrabold text-center">
+                      You Have No orders Yet
+                    </h1>
+                    <p className="text-[#6E6E6E] font-bold text-center">
+                      You’ll get notified when you receive your first order
+                    </p>
+                  </div>
+
+                  <div className="flex justify-center mt-3">
+                    <button className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md">
+                      Check Your Customers
+                    </button>
+                  </div>
+                </>
               )}
-              <div className="flex justify-center mt-3">
-                <button className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md">
-                  Check Your Customers
-                </button>
-              </div>
             </div>
 
             <div>
