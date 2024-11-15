@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { nilelogosolid } from "../assets";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
+import { useSignUserUp } from "../datahooks/users/userhooks";
 
 const SignUp = () => {
   const [step, setStep] = useState(false);
@@ -16,8 +18,7 @@ const SignUp = () => {
     image: null,
     marketing_accept: false,
   });
-  const navigate = useNavigate();
-
+  const { signUpMutate, signUpError, signUpIsPending } = useSignUserUp();
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -66,6 +67,7 @@ const SignUp = () => {
         console.error(error);
       }
     }
+    signUpMutate(data);
   };
 
   return (

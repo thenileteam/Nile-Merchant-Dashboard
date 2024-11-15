@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable no-unused-vars */
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
@@ -12,6 +13,7 @@ import {
   shoppingcartremove,
 } from "../assets";
 import OrdersTable from "../Components/Orders/OrdersTable";
+import { useFetchOrders } from "../datahooks/users/userhooks";
 
 const Orders = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -19,8 +21,122 @@ const Orders = () => {
   const closeSidebar = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
+  const { data, isError, isFetching } = useFetchOrders();
+  const [createOrderForm, setCreateOrderForm] = useState(false);
   return (
     <>
+      {createOrderForm && (
+        <div className=" w-full fixed grid place-items-center h-screen bg-black/40">
+          <div className=" w-full h-full absolute top-0 left-0 "></div>
+          <div
+            className=" rounded-[8px] pt-[96px] pb-8 px-8 relative bg-white"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <img
+              src="/public/ Cancel.svg"
+              className=" size-8 absolute top-8 right-8"
+              alt=""
+            />
+            <div className=" flex flex-col gap-4">
+              <div className=" grid grid-cols-2 gap-16">
+                <div className=" flex flex-col gap-2">
+                  <label
+                    className=" font-black  text-[16px]  leading-5 "
+                    htmlFor="Customer Name"
+                  >
+                    Customer Name
+                  </label>
+                  <input
+                    placeholder="Select Customer"
+                    type="text"
+                    className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]"
+                  />
+                </div>
+                <div className=" flex flex-col gap-2">
+                  <label
+                    className=" font-black  text-[16px]  leading-5 "
+                    htmlFor="Sales Channel"
+                  >
+                    Sales Channel
+                  </label>
+                  <div className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]">
+                    <select name="selct" id="" disabled="disabled">
+                      <option value="">Choose Sales Channel</option>
+                    </select>
+                    <img
+                      className=" absolute  top-1/2 -translate-y-1/2 right-4"
+                      src="/public/plus.svg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className=" grid grid-cols-2 gap-16">
+                <div className=" flex flex-col gap-2">
+                  <label
+                    className=" font-black  text-[16px]  leading-5 "
+                    htmlFor="Product Name"
+                  >
+                    Product Name
+                  </label>
+                  <input
+                    placeholder="Select Product"
+                    type="text"
+                    className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]"
+                  />
+                </div>
+                <div className=" flex flex-col gap-2">
+                  <label
+                    className=" font-black  text-[16px]  leading-5 "
+                    htmlFor="Sales Channel"
+                  >
+                    Payment Status
+                  </label>
+                  <div className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]">
+                    <select
+                      className=" appearance-none"
+                      name="select"
+                      id=""
+                      disabled="disabled"
+                    >
+                      <option value="">Choose Payment Status</option>
+                    </select>
+                    <img
+                      className=" absolute  top-1/2 -translate-y-1/2 right-4"
+                      src="/public/plus.svg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className=" grid grid-cols-2 gap-16">
+                <div className=" flex flex-col gap-2">
+                  <label
+                    className=" font-black  text-[16px]  leading-5 "
+                    htmlFor="Order Date"
+                  >
+                    Order Date
+                  </label>
+                  <input
+                    placeholder="DD/MM/YY"
+                    type="date"
+                    className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]"
+                  />
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={() => setCreateOrderForm(true)}
+              className=" flex bg-[#004324] mx-auto mt-16 rounded-[4px] gap-1 p-[10.5px]  text-white "
+            >
+              <img src="/public/plus.svg" alt="" />
+              Create Order
+            </button>
+          </div>
+        </div>
+      )}
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
           {/* Overlay for small screens */}
@@ -127,7 +243,7 @@ const Orders = () => {
                 </div>
               </div>
             </nav>
-            
+
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
               <div className="flex gap-28 justify-center">
@@ -156,28 +272,48 @@ const Orders = () => {
             </div>
 
             <div className="px-24 mt-32">
-              <div>
-                <img
-                  src={shoppingcartremove}
-                  alt=""
-                  className="flex justify-center mx-auto"
-                />
-                <h1 className="text-[24px] font-extrabold text-center">
-                  You Have No orders Yet
-                </h1>
-                <p className="text-[#6E6E6E] font-bold text-center">
-                  You’ll get notified when you receive your first order
-                </p>
-              </div>
-              <div className="flex justify-center mt-3">
-                <button className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md">
-                  Check Your Customers
-                </button>
-              </div>
+              {data && (
+                <div className="flex  items-center gap-16">
+                  <button
+                    onClick={() => setCreateOrderForm(true)}
+                    className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px]  text-white "
+                  >
+                    <img src="/public/plus.svg" alt="" />
+                    Create Order
+                  </button>
+                  <button className=" flex bg-white rounded-[4px] border border-[#8ED06C] gap-1 p-[10.5px]  text-[#8ED06C] ">
+                    <img src="/public/export.svg" alt="" />
+                    Export CSV
+                  </button>
+                </div>
+              )}
+              {data && data.length === 0 && (
+                <>
+                  <div>
+                    <img
+                      src={shoppingcartremove}
+                      alt=""
+                      className="flex justify-center mx-auto"
+                    />
+                    <h1 className="text-[24px] font-extrabold text-center">
+                      You Have No orders Yet
+                    </h1>
+                    <p className="text-[#6E6E6E] font-bold text-center">
+                      You’ll get notified when you receive your first order
+                    </p>
+                  </div>
+
+                  <div className="flex justify-center mt-3">
+                    <button className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md">
+                      Check Your Customers
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
 
             <div>
-              <OrdersTable />
+              <OrdersTable data={data} />
             </div>
           </div>
         </div>
