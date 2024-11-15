@@ -22,15 +22,121 @@ const Orders = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
   const { data, isError, isFetching } = useFetchOrders();
-const [createOrderForm, setCreateOrderForm] = useState(false)
+  const [createOrderForm, setCreateOrderForm] = useState(false);
   return (
     <>
-    {
-      createOrderForm && <div className=" wfu">
-        <div></div>
-        <div></div>
-      </div>
-    }
+      {createOrderForm && (
+        <div className=" w-full fixed grid place-items-center h-screen bg-black/40">
+          <div className=" w-full h-full absolute top-0 left-0 "></div>
+          <div
+            className=" rounded-[8px] pt-[96px] pb-8 px-8 relative bg-white"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <img
+              src="/public/ Cancel.svg"
+              className=" size-8 absolute top-8 right-8"
+              alt=""
+            />
+            <div className=" flex flex-col gap-4">
+              <div className=" grid grid-cols-2 gap-16">
+                <div className=" flex flex-col gap-2">
+                  <label
+                    className=" font-black  text-[16px]  leading-5 "
+                    htmlFor="Customer Name"
+                  >
+                    Customer Name
+                  </label>
+                  <input
+                    placeholder="Select Customer"
+                    type="text"
+                    className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]"
+                  />
+                </div>
+                <div className=" flex flex-col gap-2">
+                  <label
+                    className=" font-black  text-[16px]  leading-5 "
+                    htmlFor="Sales Channel"
+                  >
+                    Sales Channel
+                  </label>
+                  <div className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]">
+                    <select name="selct" id="" disabled="disabled">
+                      <option value="">Choose Sales Channel</option>
+                    </select>
+                    <img
+                      className=" absolute  top-1/2 -translate-y-1/2 right-4"
+                      src="/public/plus.svg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className=" grid grid-cols-2 gap-16">
+                <div className=" flex flex-col gap-2">
+                  <label
+                    className=" font-black  text-[16px]  leading-5 "
+                    htmlFor="Product Name"
+                  >
+                    Product Name
+                  </label>
+                  <input
+                    placeholder="Select Product"
+                    type="text"
+                    className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]"
+                  />
+                </div>
+                <div className=" flex flex-col gap-2">
+                  <label
+                    className=" font-black  text-[16px]  leading-5 "
+                    htmlFor="Sales Channel"
+                  >
+                    Payment Status
+                  </label>
+                  <div className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]">
+                    <select
+                      className=" appearance-none"
+                      name="select"
+                      id=""
+                      disabled="disabled"
+                    >
+                      <option value="">Choose Payment Status</option>
+                    </select>
+                    <img
+                      className=" absolute  top-1/2 -translate-y-1/2 right-4"
+                      src="/public/plus.svg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className=" grid grid-cols-2 gap-16">
+                <div className=" flex flex-col gap-2">
+                  <label
+                    className=" font-black  text-[16px]  leading-5 "
+                    htmlFor="Order Date"
+                  >
+                    Order Date
+                  </label>
+                  <input
+                    placeholder="DD/MM/YY"
+                    type="date"
+                    className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]"
+                  />
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={() => setCreateOrderForm(true)}
+              className=" flex bg-[#004324] mx-auto mt-16 rounded-[4px] gap-1 p-[10.5px]  text-white "
+            >
+              <img src="/public/plus.svg" alt="" />
+              Create Order
+            </button>
+          </div>
+        </div>
+      )}
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
           {/* Overlay for small screens */}
@@ -168,7 +274,10 @@ const [createOrderForm, setCreateOrderForm] = useState(false)
             <div className="px-24 mt-32">
               {data && (
                 <div className="flex  items-center gap-16">
-                  <button className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px]  text-white ">
+                  <button
+                    onClick={() => setCreateOrderForm(true)}
+                    className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px]  text-white "
+                  >
                     <img src="/public/plus.svg" alt="" />
                     Create Order
                   </button>
