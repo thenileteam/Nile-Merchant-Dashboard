@@ -95,9 +95,8 @@ const SignIn = () => {
                   required
                 />
               </div>
-
               {error && <p className="text-red-500 text-center">{error}</p>}
-
+                {/* updates */}
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-center mx-auto md:gap-10">
                 <label
                   htmlFor="MarketingAccept"
@@ -113,12 +112,12 @@ const SignIn = () => {
                     Remember Me
                   </span>
                 </label>
-                <div className="flex items-center gap-1">
+                <div className="flex items_center gap-1">
                   <h1 className="text-[#333333] text-[14px]">
                     Forgotten Password?
                   </h1>
                   <Link to="/email">
-                    <p className="text-[#000000] font-bold">Click Here</p>
+                    <p className="text-lightGreen font-bold">Click Here</p>
                   </Link>
                 </div>
               </div>

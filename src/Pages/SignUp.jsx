@@ -176,7 +176,7 @@ const SignUp = () => {
                       name="name"
                       placeholder="Enter your Full Name"
                       onChange={handleChange}
-                      className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
+                      className="mt-1 w-full p-3 rounded-md border border-lightGreen bg-white text-sm text-gray-700 shadow-sm"
                     />
                   </div>
                   <div>

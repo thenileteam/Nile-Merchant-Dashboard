@@ -43,11 +43,11 @@ const LoginReviews = () => {
         transition={{ duration: 1 }}
       >
         <img src={reviews[currentReview].img} alt="lady smiling" />
-        <div className="text-white absolute bottom-[164px] left-16 right-16">
+        <div className="text-white absolute bottom-[120px] left-16 right-16">
           <p className="font-bold">{reviews[currentReview].text}</p>
           <h4 className="mt-2">{reviews[currentReview].author}</h4>
         </div>
-          <img className="absolute bottom-16 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          <img className="absolute bottom-14 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
             src={reviews[currentReview].slide}
             alt={`slide${reviews[currentReview]}`}
           />
