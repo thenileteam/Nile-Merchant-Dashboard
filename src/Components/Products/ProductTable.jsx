@@ -15,6 +15,8 @@ const ProductTable = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get("/users/products/product");
+        console.log(response.data);
+        
         if (Array.isArray(response.data)) {
           setProducts(response.data);
         } else {
