@@ -3,7 +3,11 @@
 import { useState, useEffect } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
-const SelectCustomerForm = ({ setSelectCustomerForm }) => {
+const SelectCustomerForm = ({
+  setSelectCustomerForm,
+  selectedCustomer,
+  setSelectedCustomer,
+}) => {
   const [products, setProducts] = useState([
     { name: "John Doe 1", quantity: 1 },
     { name: "Jane ALi", quantity: 1 },
@@ -32,11 +36,15 @@ const SelectCustomerForm = ({ setSelectCustomerForm }) => {
 
   // Handle checkbox change
   const handleCheckboxChange = (product) => {
-    const isInCart = cart.some((item) => item.name === product.name);
+    const isInCart = selectedCustomer.some(
+      (item) => item.name === product.name
+    );
     if (isInCart) {
-      setCart(cart.filter((item) => item.name !== product.name));
+      setSelectedCustomer(
+        selectedCustomer.filter((item) => item.name !== product.name)
+      );
     } else {
-      setCart([{ ...product }]);
+      setSelectedCustomer([{ ...product }]);
     }
   };
   console.log(cart);
@@ -73,7 +81,9 @@ const SelectCustomerForm = ({ setSelectCustomerForm }) => {
                     <span>{product.name}</span>
                     <input
                       type="checkbox"
-                      checked={cart.some((item) => item.name === product.name)}
+                      checked={selectedCustomer.some(
+                        (item) => item.name === product.name
+                      )}
                       onChange={() => handleCheckboxChange(product)}
                     />
                   </li>

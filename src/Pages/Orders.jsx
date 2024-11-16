@@ -29,6 +29,7 @@ const Orders = () => {
   const [createOrderForm, setCreateOrderForm] = useState(false);
   const [selectProductForm, setSelectProductForm] = useState(false);
   const [selectCustomerForm, setSelectCustomerForm] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState([]);
   return (
     <>
       {createOrderForm && (
@@ -59,7 +60,9 @@ const Orders = () => {
                     onClick={() => setSelectCustomerForm(true)}
                     className=" bg-[#F5F5F5] cursor-pointer flex items-center px-4 rounded-[4px]  border-[#8ED06C] border-[1px] h-[50px] placeholder:text-[#6E6E6E80]"
                   >
-                    Customer Name
+                    {selectedCustomer.length > 0
+                      ? selectedCustomer[0].name
+                      : "Customer Name"}
                   </div>
                 </div>
                 <div className=" flex flex-col gap-2">
@@ -93,7 +96,7 @@ const Orders = () => {
                     type="text"
                     className="flex items-center  cursor-pointer bg-[#F5F5F5]  h-[50px] rounded-[4px]  border-[#8ED06C] border-[1px] px-4 placeholder:text-[#6E6E6E80]"
                   >
-                    Product Name{" "}
+                    Product Name
                   </div>
                 </div>
                 <div className=" flex flex-col gap-2">
@@ -140,7 +143,11 @@ const Orders = () => {
         </div>
       )}
       {selectCustomerForm && (
-        <SelectCustomerform setSelectCustomerForm={setSelectCustomerForm} />
+        <SelectCustomerform
+          selectedCustomer={selectedCustomer}
+          setSelectedCustomer={setSelectedCustomer}
+          setSelectCustomerForm={setSelectCustomerForm}
+        />
       )}
       {selectProductForm && (
         <SelectProductForm setSelectProductForm={setSelectProductForm} />
