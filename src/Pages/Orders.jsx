@@ -14,6 +14,10 @@ import {
 } from "../assets";
 import OrdersTable from "../Components/Orders/OrdersTable";
 import { useFetchOrders } from "../datahooks/users/userhooks";
+import CustomDropdown from "../Components/uicomps/customdropdown";
+import CustomSalesChannelDropdown from "../Components/uicomps/customsaleschannel";
+import SelectCustomerform from "../Components/Orders/selectcustomerform";
+import SelectProductForm from "../Components/Orders/selectproductform";
 
 const Orders = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -23,20 +27,23 @@ const Orders = () => {
   };
   const { data, isError, isFetching } = useFetchOrders();
   const [createOrderForm, setCreateOrderForm] = useState(false);
+  const [selectProductForm, setSelectProductForm] = useState(false);
+  const [selectCustomerForm, setSelectCustomerForm] = useState(false);
   return (
     <>
       {createOrderForm && (
-        <div className=" w-full fixed grid place-items-center h-screen bg-black/40">
-          <div className=" w-full h-full absolute top-0 left-0 "></div>
+        <div className=" w-full fixed z-40  justify-center items-center flex h-screen ">
+          <div className=" w-full h-full bg-black/30 absolute top-0 left-0 "></div>
           <div
-            className=" rounded-[8px] pt-[96px] pb-8 px-8 relative bg-white"
+            className=" rounded-[8px] z-[400000000] mx-auto pt-[96px] pb-8 px-8 relative bg-white"
             onClick={(e) => {
               e.stopPropagation();
             }}
           >
             <img
-              src="/public/ Cancel.svg"
-              className=" size-8 absolute top-8 right-8"
+              onClick={() => setCreateOrderForm(false)}
+              src="/public/Cancel.svg"
+              className=" cursor-pointer size-8 absolute top-8 right-8"
               alt=""
             />
             <div className=" flex flex-col gap-4">
@@ -48,11 +55,12 @@ const Orders = () => {
                   >
                     Customer Name
                   </label>
-                  <input
-                    placeholder="Select Customer"
-                    type="text"
-                    className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]"
-                  />
+                  <div
+                    onClick={() => setSelectCustomerForm(true)}
+                    className=" bg-[#F5F5F5] cursor-pointer flex items-center px-4 rounded-[4px]  border-[#8ED06C] border-[1px] h-[50px] placeholder:text-[#6E6E6E80]"
+                  >
+                    Customer Name
+                  </div>
                 </div>
                 <div className=" flex flex-col gap-2">
                   <label
@@ -61,10 +69,8 @@ const Orders = () => {
                   >
                     Sales Channel
                   </label>
-                  <div className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]">
-                    <select name="selct" id="" disabled="disabled">
-                      <option value="">Choose Sales Channel</option>
-                    </select>
+                  <div className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px]  placeholder:text-[#6E6E6E80]">
+                    <CustomSalesChannelDropdown />
                     <img
                       className=" absolute  top-1/2 -translate-y-1/2 right-4"
                       src="/public/plus.svg"
@@ -81,11 +87,14 @@ const Orders = () => {
                   >
                     Product Name
                   </label>
-                  <input
+                  <div
+                    onClick={() => setSelectProductForm(true)}
                     placeholder="Select Product"
                     type="text"
-                    className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]"
-                  />
+                    className="flex items-center  cursor-pointer bg-[#F5F5F5]  h-[50px] rounded-[4px]  border-[#8ED06C] border-[1px] px-4 placeholder:text-[#6E6E6E80]"
+                  >
+                    Product Name{" "}
+                  </div>
                 </div>
                 <div className=" flex flex-col gap-2">
                   <label
@@ -94,15 +103,8 @@ const Orders = () => {
                   >
                     Payment Status
                   </label>
-                  <div className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]">
-                    <select
-                      className=" appearance-none"
-                      name="select"
-                      id=""
-                      disabled="disabled"
-                    >
-                      <option value="">Choose Payment Status</option>
-                    </select>
+                  <div className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px]  placeholder:text-[#6E6E6E80]">
+                    <CustomDropdown />
                     <img
                       className=" absolute  top-1/2 -translate-y-1/2 right-4"
                       src="/public/plus.svg"
@@ -122,7 +124,7 @@ const Orders = () => {
                   <input
                     placeholder="DD/MM/YY"
                     type="date"
-                    className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] p-4 placeholder:text-[#6E6E6E80]"
+                    className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] h-[50px] px-4 placeholder:text-[#6E6E6E80]"
                   />
                 </div>
               </div>
@@ -136,6 +138,12 @@ const Orders = () => {
             </button>
           </div>
         </div>
+      )}
+      {selectCustomerForm && (
+        <SelectCustomerform setSelectCustomerForm={setSelectCustomerForm} />
+      )}
+      {selectProductForm && (
+        <SelectProductForm setSelectProductForm={setSelectProductForm} />
       )}
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
