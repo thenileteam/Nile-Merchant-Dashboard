@@ -18,18 +18,59 @@ import CustomDropdown from "../Components/uicomps/customdropdown";
 import CustomSalesChannelDropdown from "../Components/uicomps/customsaleschannel";
 import SelectCustomerform from "../Components/Orders/selectcustomerform";
 import SelectProductForm from "../Components/Orders/selectproductform";
+import { toast } from "sonner";
+import { useCreateNewOrder } from "../datahooks/orders/orderhooks";
+import { AiOutlineLoading } from "react-icons/ai";
 
 const Orders = () => {
+  const { addOrderToBackend, isAddingOrder } = useCreateNewOrder();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const [createdAt, setCreatedAt] = useState(null);
   const closeSidebar = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
+  const [paymentStatus, setPaymentStatus] = useState("");
+  const [salesChannel, setSalesChannel] = useState("");
   const { data, isError, isFetching } = useFetchOrders();
   const [createOrderForm, setCreateOrderForm] = useState(false);
   const [selectProductForm, setSelectProductForm] = useState(false);
   const [selectCustomerForm, setSelectCustomerForm] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState([]);
+  const handleDateChange = (e) => {
+    const selectedDate = new Date(e.target.value);
+    setCreatedAt(selectedDate.toISOString());
+  };
+
+  const addOrder = () => {
+    const itemsFromLocalStorage = JSON.parse(
+      localStorage.getItem("orderItems")
+    );
+    const customerFromLocalStorage = JSON.parse(
+      localStorage.getItem("customer")
+    )[0];
+
+    console.log(customerFromLocalStorage);
+    const orderData = {
+      totalAmount: itemsFromLocalStorage.totalAmount,
+      items: itemsFromLocalStorage.items,
+      phoneNumber: customerFromLocalStorage.phoneNumber || null,
+      name: customerFromLocalStorage.name || null,
+      email: customerFromLocalStorage.email || null,
+      PaymentStatus: paymentStatus,
+      createdAt: createdAt,
+      customerId: customerFromLocalStorage.id,
+      storeId: customerFromLocalStorage.storeId,
+      salesChannel,
+    };
+    console.log(orderData);
+    try {
+      addOrderToBackend(orderData);
+      setCreateOrderForm(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {createOrderForm && (
@@ -61,7 +102,7 @@ const Orders = () => {
                     className=" bg-[#F5F5F5] cursor-pointer flex items-center px-4 rounded-[4px]  border-[#8ED06C] border-[1px] h-[50px] placeholder:text-[#6E6E6E80]"
                   >
                     {selectedCustomer.length > 0
-                      ? selectedCustomer[0].name
+                      ? selectedCustomer[0]?.name || selectedCustomer[0]?.email
                       : "Customer Name"}
                   </div>
                 </div>
@@ -73,7 +114,10 @@ const Orders = () => {
                     Sales Channel
                   </label>
                   <div className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px]  placeholder:text-[#6E6E6E80]">
-                    <CustomSalesChannelDropdown />
+                    <CustomSalesChannelDropdown
+                      setSalesChannel={setSalesChannel}
+                      salesChannel={salesChannel}
+                    />
                     <img
                       className=" absolute  top-1/2 -translate-y-1/2 right-4"
                       src="/public/plus.svg"
@@ -107,7 +151,10 @@ const Orders = () => {
                     Payment Status
                   </label>
                   <div className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px]  placeholder:text-[#6E6E6E80]">
-                    <CustomDropdown />
+                    <CustomDropdown
+                      paymentStatus={paymentStatus}
+                      setPaymentStatus={setPaymentStatus}
+                    />
                     <img
                       className=" absolute  top-1/2 -translate-y-1/2 right-4"
                       src="/public/plus.svg"
@@ -125,6 +172,7 @@ const Orders = () => {
                     Order Date
                   </label>
                   <input
+                    onChange={(e) => handleDateChange(e)}
                     placeholder="DD/MM/YY"
                     type="date"
                     className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] h-[50px] px-4 placeholder:text-[#6E6E6E80]"
@@ -133,11 +181,18 @@ const Orders = () => {
               </div>
             </div>
             <button
-              onClick={() => setCreateOrderForm(true)}
-              className=" flex bg-[#004324] mx-auto mt-16 rounded-[4px] gap-1 p-[10.5px]  text-white "
+              type="submit"
+              onClick={addOrder}
+              className=" flex bg-[#004324] justify-center items-center mx-auto mt-16 rounded-[4px] gap-1 p-[10.5px]  text-white "
             >
-              <img src="/public/plus.svg" alt="" />
-              Create Order
+              {isAddingOrder ? (
+                <AiOutlineLoading className=" animate-spin transition-all" />
+              ) : (
+                <>
+                  <img src="/plus.svg" alt="Plus Icon" />
+                  <span>Create Order</span>
+                </>
+              )}
             </button>
           </div>
         </div>

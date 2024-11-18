@@ -1,7 +1,7 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 
-const CustomSalesChannelDropdown = () => {
-  const [selected, setSelected] = useState("");
+const CustomSalesChannelDropdown = ({ setSalesChannel, salesChannel }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const options = [
     { value: "", label: "Choose Sales Channel", color: "text-[#6E6E6E]" },
@@ -15,7 +15,7 @@ const CustomSalesChannelDropdown = () => {
   ];
 
   const handleSelect = (value) => {
-    setSelected(value);
+    setSalesChannel(value);
   };
   return (
     <div className="relative">
@@ -29,7 +29,7 @@ const CustomSalesChannelDropdown = () => {
         }}
         className="w-full h-[50px] px-4  text-left   rounded-lg appearance-none"
       >
-        {options.find((opt) => opt.value === selected)?.label ||
+        {options.find((opt) => opt.value === salesChannel)?.label ||
           "Choose Payment Status"}
       </button>
       {modalOpen && (

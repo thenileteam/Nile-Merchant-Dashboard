@@ -146,9 +146,11 @@ const OrdersTable = ({ data }) => {
           <tbody>
             {data?.map((order) => (
               <tr key={order._id} className="bg-[#ffffff] shadow-md">
-                <td className="px-2 py-3 bg-[#EAF4E2]">{order.customerId}</td>
+                <td className="px-2 py-3 bg-[#EAF4E2]">
+                  {order.customer.name || order.customer.id.slice(0, 2)}
+                </td>
                 <td className="px-2 py-3 text-center">{order.id}</td>
-                <td className="px-2 py-3 text-center">Lion&lsquo;s Den</td>
+                <td className="px-2 py-3 text-center">{order.items[0].name}</td>
                 <td className="px-2 py-3 text-center">57</td>
                 <td className="px-2 py-3 text-center">${order.totalAmount}</td>
                 <td className="px-2 py-3 text-center">

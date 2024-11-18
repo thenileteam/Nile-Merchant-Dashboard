@@ -15,6 +15,11 @@ export const useLogUserIn = () => {
     onSuccess: (response) => {
       // Set data in localStorage
       localStorage.setItem("Id", response?.data?.data?.user?._id);
+      localStorage.setItem(
+        "stores",
+        JSON.stringify(response?.data?.data?.stores)
+      );
+
       // Set cookies
       Cookies.set("accessToken", response?.data?.accessToken);
       Cookies.set("refreshToken", response?.data?.refreshToken);
@@ -59,12 +64,13 @@ export const useSignUserUp = () => {
 
 export const useFetchDashboardData = () => {
   const [customDashboardData, setCustomDashboardData] = useState({});
-
+  const stores = JSON.parse(localStorage.getItem("stores"));
+  console.log(stores);
   const { data, isFetching, isError } = useQuery({
     queryKey: ["dashboard"],
     queryFn: async () => {
       const { data: ordersData } = await ApiInstance.get(
-        "/orders/orders/admin/orders"
+        `/orders/orders/stores/${stores[0]._id}`
       );
       const { data: storesData } = await ApiInstance.get("/users/stores", {
         params: {
@@ -87,10 +93,19 @@ export const useFetchDashboardData = () => {
   };
 };
 export const useFetchOrders = () => {
+  const stores = JSON.parse(localStorage.getItem("stores"));
+  console.log(stores);
   const { data, isFetching, isError } = useQuery({
-    queryKey: ["dashboard"],
+    queryKey: ["orders"],
     queryFn: async () => {
-      const res = await ApiInstance.get("/orders/orders/admin/orders");
+      const res = await ApiInstance.get(
+        `/orders/orders/stores/${stores[0]._id}`,
+        {
+          params: {
+            storeId: stores[0]._id,
+          },
+        }
+      );
 
       return res.data?.responseObject?.orders;
     },
@@ -101,6 +116,28 @@ export const useFetchOrders = () => {
   return {
     data,
     isFetching,
+    isError,
+  };
+};
+export const useFetchStoreCustomers = () => {
+  const stores = JSON.parse(localStorage.getItem("stores"));
+  console.log(stores);
+  const { data, isFetching, isError } = useQuery({
+    queryKey: ["customers"],
+    queryFn: async () => {
+      const res = await ApiInstance.get(
+        `/orders/orders/customers/${stores[0]._id}`
+      );
+
+      return res.data?.responseObject;
+    },
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+
+  return {
+    customers: data,
+    isFetchingCustomers: isFetching,
     isError,
   };
 };
