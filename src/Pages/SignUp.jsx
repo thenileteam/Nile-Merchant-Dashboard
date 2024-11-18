@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import { nilelogosolid } from "../assets";
+import { nilelogosolid, eye } from "../assets";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
@@ -72,7 +72,7 @@ const SignUp = () => {
 
   return (
     <section>
-      <div className="container lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-lg p-8 lg:p-16">
+      <div className="container lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-lg p-8 lg:p-16 shadow-md shadow-gray-300">
         <article className="mb-10">
           <div>
             <img
@@ -86,6 +86,7 @@ const SignUp = () => {
             <p className="text-center text-[#6E6E6E] text-[20px] font-semibold">
               Join Our platform And Start Managing Your Store Effortlessly!
             </p>
+            {/* conditionally rendering the text to show for each steps that is rendered */}
             {step ? (
               <strong className="text-lightGreen text-center block mt-2">
                 Step 2 of 2
@@ -100,10 +101,10 @@ const SignUp = () => {
           {/* Input Fields */}
           <div className="mx-auto">
             <form onSubmit={handleSubmit} className="space-y-6 mt-6">
-              {/* conditionally rendering the input fields for the sign up steps */}
+              {/* conditionally rendering 3 input fields at a time for the sign up steps */}
               {step ? (
                 <>
-                  <div className="">
+                  <div className="relative">
                     <label
                       htmlFor="Password"
                       className="block text-[16px] font-bold text-[#333333]"
@@ -118,8 +119,9 @@ const SignUp = () => {
                       onChange={handleChange}
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                     />
+                      <img src={eye} className="absolute top-11 right-3 w-3 h-3 " alt="hide password icon" />
                   </div>
-                  <div>
+                  <div className="relative">
                     <label
                       htmlFor="RepeatPassword"
                       className="block text-[16px] font-bold text-[#333333]"
@@ -134,6 +136,7 @@ const SignUp = () => {
                       onChange={handleChange}
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                     />
+                      <img src={eye} className="absolute top-11 right-3 w-3 h-3" alt="hide password icon" />
                   </div>
 
                   <div>
