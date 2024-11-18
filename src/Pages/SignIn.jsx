@@ -3,14 +3,16 @@ import { nilelogosolid, eye } from "../assets";
 import { Link, useNavigate } from "react-router-dom";
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
+import {useShowPassword } from '../Context/Context'
 import axios from "axios";
 
-const SignIn = () => {
+const SignIn = ({id}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { showPassword, handleShowPassword } = useShowPassword()
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -71,7 +73,7 @@ const SignIn = () => {
                   name="email_address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Ashimiuade@gmail.com"
+                  placeholder="Input email here"
                   className="mt-1 w-full lg:w-[450px] p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                   required
                 />
@@ -85,16 +87,16 @@ const SignIn = () => {
                   Password
                 </label>
                 <input
-                  type="password"
+                  type={showPassword.password?'text':"password"}
                   id="Password"
                   name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="*******"
+                  placeholder="type password"
                   className="mt-1 w-full lg:w-[450px] p-3 rounded-md border border-lightGreen bg-white text-sm text-gray-700 shadow-sm"
                   required
                 />
-                  <img src={eye} className="absolute top-11 right-3 w-3 h-3" alt="hide password icon" />
+                  <img src={eye} className="absolute top-11 right-3 w-3 h-3" alt="hide password icon" onClick={()=>handleShowPassword('password')}/>
               </div>
               {error && <p className="text-red-500 text-center">{error}</p>}
                 {/* updates */}
