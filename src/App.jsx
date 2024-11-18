@@ -23,42 +23,46 @@ import DomainSetting from "./Components/Store/DomainSetting";
 import Email from "./Pages/Email";
 import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {ShowPasswordProvider}from './Context/Context'
 
 const App = () => {
   const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div>
-        <Toaster />
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/email" element={<Email />} />
-          <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/product" element={<Product />} />
-          <Route path="/reviews" element={<Reviews />} />
-          <Route path="/customer" element={<Customer />} />
-          <Route path="/financial" element={<FinancialManagement />} />
-          <Route path="/store" element={<Store />} />
-          <Route path="/notification" element={<Notification />} />
-          <Route path="/profilesetting" element={<ProfileSetting />} />
-          <Route path="/storesetting" element={<StoreSetting />} />
-          <Route path="/paymentsetting" element={<PaymentSetting />} />
-          <Route path="/usersetting" element={<UserSetting />} />
-          <Route
-            path="/notificationsetting"
-            element={<NotificationSetting />}
-          />
-          <Route path="/banksetting" element={<BankSetting />} />
-          <Route path="/plansetting" element={<PlanSetting />} />
-          <Route path="/shippingsetting" element={<ShippingSetting />} />
-          <Route path="/domainsetting" element={<DomainSetting />} />
-        </Routes>
-      </div>
+      {/*  wrapped the components in ShowPasswordProvider for easy access to the shared state */}
+       <ShowPasswordProvider> 
+        <div>
+          <Toaster />
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/email" element={<Email />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/product" element={<Product />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/customer" element={<Customer />} />
+            <Route path="/financial" element={<FinancialManagement />} />
+            <Route path="/store" element={<Store />} />
+            <Route path="/notification" element={<Notification />} />
+            <Route path="/profilesetting" element={<ProfileSetting />} />
+            <Route path="/storesetting" element={<StoreSetting />} />
+            <Route path="/paymentsetting" element={<PaymentSetting />} />
+            <Route path="/usersetting" element={<UserSetting />} />
+            <Route
+              path="/notificationsetting"
+              element={<NotificationSetting />}
+            />
+            <Route path="/banksetting" element={<BankSetting />} />
+            <Route path="/plansetting" element={<PlanSetting />} />
+            <Route path="/shippingsetting" element={<ShippingSetting />} />
+            <Route path="/domainsetting" element={<DomainSetting />} />
+          </Routes>
+        </div>
+      </ShowPasswordProvider>
     </QueryClientProvider>
   );
 };

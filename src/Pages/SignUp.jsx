@@ -6,8 +6,11 @@ import axios from "axios"; // Import axios
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
 import { useSignUserUp } from "../datahooks/users/userhooks";
+import {useShowPassword} from '../Context/Context'
 
 const SignUp = () => {
+  //custom context hook
+  const { showPassword, handleShowPassword } = useShowPassword()
   const [step, setStep] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -112,14 +115,14 @@ const SignUp = () => {
                       Password
                     </label>
                     <input
-                      type="password"
+                      type={showPassword.password1? 'text':"password"}
                       id="Password"
                       name="password"
                       placeholder="********"
                       onChange={handleChange}
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                     />
-                      <img src={eye} className="absolute top-11 right-3 w-3 h-3 " alt="hide password icon" />
+                      <img src={eye} className="absolute top-11 right-3 w-3 h-3 " alt="hide password icon" onClick={()=>handleShowPassword('password1')}/>
                   </div>
                   <div className="relative">
                     <label
@@ -129,14 +132,14 @@ const SignUp = () => {
                       Repeat Password
                     </label>
                     <input
-                      type="password"
+                      type={showPassword.password2? 'text':"password"}
                       id="RepeatPassword"
                       name="passwordConfirm"
-                      placeholder="********"
+                      placeholder="Type password again"
                       onChange={handleChange}
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                     />
-                      <img src={eye} className="absolute top-11 right-3 w-3 h-3" alt="hide password icon" />
+                      <img src={eye} className="absolute top-11 right-3 w-3 h-3" alt="hide password icon"onClick={()=>handleShowPassword('password2')}/>
                   </div>
 
                   <div>
