@@ -63,6 +63,7 @@ import loginReview2 from './loginReview2.svg'
 import dot1 from './dot1.svg'
 import dot2 from './dot2.svg'
 import dot3 from './dot3.svg'
+import eye from './Eye-icon.svg'
 
 export {
     nilelogosolid,
@@ -128,5 +129,5 @@ export {
     loginReview,
     loginReview2,
     dot1,
-    dot2,dot3
+    dot2,dot3,eye
 }

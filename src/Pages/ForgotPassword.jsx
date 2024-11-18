@@ -1,5 +1,5 @@
 import React from "react";
-import { nilelogosolid } from "../assets";
+import { nilelogosolid, eye } from "../assets";
 import { Link } from "react-router-dom";
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
@@ -7,7 +7,7 @@ import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
 const ForgotPassword = () => {
   return (
     <section>
-      <div className="container lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-lg">
+      <div className="container lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-lg p-8 lg:p-16 shadow-md shadow-dimWhite">
         <div className="mb-10">
           <div>
             <img
@@ -21,9 +21,9 @@ const ForgotPassword = () => {
           </div>
 
           {/* Input Fields */}
-          <div className="flex justify-center mx-auto">
+          <div className="relative mx-auto">
             <form action="#" className="space-y-6 mt-6">
-              <div>
+              <div className="relative">
                 <label
                   htmlFor="NewPassword"
                   className="block text-[16px] font-bold text-[#333333]"
@@ -36,11 +36,12 @@ const ForgotPassword = () => {
                   id="new_Password"
                   name="password"
                   placeholder="*******"
-                  className="mt-1 w-[450px] p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
+                  className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                 />
+                <img src={eye} className="absolute top-11 right-3 w-3 h-3" alt="hide password icon" />
               </div>
 
-              <div>
+              <div className="relative">
                 <label
                   htmlFor="Repeat Password"
                   className="block text-[16px] font-bold text-[#333333]"
@@ -53,8 +54,9 @@ const ForgotPassword = () => {
                   id="repeat_Password"
                   name="password"
                   placeholder="*******"
-                  className="mt-1 w-[450px] p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
+                  className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                 />
+                  <img src={eye} className="absolute top-11 right-3 w-3 h-3" alt="hide password icon" />
               </div>
 
               {/* Reset Password Button */}

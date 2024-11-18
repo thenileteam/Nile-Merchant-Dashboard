@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { nilelogosolid } from "../assets";
+import { nilelogosolid, eye } from "../assets";
 import { Link, useNavigate } from "react-router-dom";
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
@@ -77,7 +77,7 @@ const SignIn = () => {
                 />
               </div>
 
-              <div>
+              <div className="relative">
                 <label
                   htmlFor="Password"
                   className="block text-[16px] font-bold text-[#333333]"
@@ -94,6 +94,7 @@ const SignIn = () => {
                   className="mt-1 w-full lg:w-[450px] p-3 rounded-md border border-lightGreen bg-white text-sm text-gray-700 shadow-sm"
                   required
                 />
+                  <img src={eye} className="absolute top-11 right-3 w-3 h-3" alt="hide password icon" />
               </div>
               {error && <p className="text-red-500 text-center">{error}</p>}
                 {/* updates */}
@@ -112,7 +113,7 @@ const SignIn = () => {
                     Remember Me
                   </span>
                 </label>
-                <div className="flex items_center gap-1">
+                <div className="flex items_center gap-1 ">
                   <h1 className="text-[#333333] text-[14px]">
                     Forgotten Password?
                   </h1>

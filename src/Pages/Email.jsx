@@ -21,7 +21,7 @@ const Email = () => {
           </div>
 
           {/* Input Fields */}
-          <div className="flex justify-center mx-auto">
+          <div className=" mx-auto">
             <form action="#" className="space-y-6 mt-6">
               <div>
                 <label
@@ -36,14 +36,14 @@ const Email = () => {
                   id="EmailAddress"
                   name="email_address"
                   placeholder="Ashimiuade@gmail.com"
-                  className="mt-1 w-[450px] p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
+                  className="mt-1 w-full block p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
 
               {/* Reset Password Button */}
               <Link to="/forgotpassword">
                 <div className="mt-5">
-                  <button className="text-[#ffffff] bg-[#004324] w-full p-2 rounded-md">
+                  <button className="text-[#ffffff] bg-[#004324] w-full block p-2 rounded-md">
                     Send Link
                   </button>
                 </div>
