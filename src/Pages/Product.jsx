@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
@@ -13,10 +13,12 @@ import {
 } from "../assets";
 import ProductTable from "../Components/Products/ProductTable";
 import AddProduct1 from "../Components/Popup Modals/AddProduct1";
+import { useFetchProducts } from "../datahooks/products/productshooks";
+import Skeleton from "react-loading-skeleton";
 
 const Product = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const { data, isFetching, isError } = useFetchProducts();
   const closeSidebar = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
@@ -128,56 +130,71 @@ const Product = () => {
                 </div>
               </div>
             </nav>
-            
+
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
-              <div className="flex gap-28">
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={packagemoving} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Total Products</p>
+              {isFetching ? (
+                <div className=" grid grid-cols-3 gap-10">
+                  {" "}
+                  <Skeleton className=" w-[60px] h-[150px] rounded-sm" />{" "}
+                  <Skeleton className=" w-[60px] h-[150px] rounded-sm" />{" "}
+                  <Skeleton className=" w-[60px] h-[150px] rounded-sm" />{" "}
                 </div>
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={deliveryview} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Total Products View</p>
+              ) : (
+                <div className="flex gap-28">
+                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                    <img src={packagemoving} alt="" />
+                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                      {data?.length || "0"}
+                    </h1>
+                    <p className="text-[#6E6E6E]">Total Products</p>
+                  </div>
+                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                    <img src={deliveryview} alt="" />
+                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                      0
+                    </h1>
+                    <p className="text-[#6E6E6E]">Total Products View</p>
+                  </div>
+                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                    <img src={timer} alt="" />
+                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                      0
+                    </h1>
+                    <p className="text-[#6E6E6E]">Average View Per Hour</p>
+                  </div>
                 </div>
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={timer} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Average View Per Hour</p>
-                </div>
-              </div>
+              )}
             </div>
 
-            <div className="px-24 mt-28">
-              <div>
-                <img
-                  src={packageoutofstock}
-                  alt=""
-                  className="flex justify-center mx-auto"
-                />
-                <h1 className="text-[24px] font-extrabold text-center">
-                  You Have No Product Yet
-                </h1>
-                <p className="text-[#6E6E6E] font-bold text-center">
-                  First up;Add your products Dear <br /> Merchants in order to
-                  start making <br /> sales
-                </p>
+            {data && data.length === 0 && (
+              <div className="px-24 mt-28">
+                <div>
+                  <img
+                    src={packageoutofstock}
+                    alt=""
+                    className="flex justify-center mx-auto"
+                  />
+                  <h1 className="text-[24px] font-extrabold text-center">
+                    You Have No Product Yet
+                  </h1>
+                  <p className="text-[#6E6E6E] font-bold text-center">
+                    First up;Add your products Dear <br /> Merchants in order to
+                    start making <br /> sales
+                  </p>
+                </div>
+                <div className="flex justify-center mt-3">
+                  <AddProduct1 />
+                </div>
               </div>
-              <div className="flex justify-center mt-3">
-                <AddProduct1 />
-              </div>
-            </div>
+            )}
 
             <div>
-              <ProductTable />
+              <ProductTable
+                data={data}
+                isFetching={isFetching}
+                isError={isError}
+              />
             </div>
           </div>
         </div>
