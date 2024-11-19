@@ -2,20 +2,20 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
+import { useFetchProducts } from "../../datahooks/products/productshooks";
+import { toast } from "sonner";
 
 const SelectProductForm = ({ setSelectProductForm }) => {
-  const [products, setProducts] = useState([
-    { name: "Product 1", quantity: 1 },
-    { name: "Product 2", quantity: 1 },
-    { name: "Product 3", quantity: 1 },
-    { name: "Product 4", quantity: 1 },
-    { name: "Product 5", quantity: 1 },
-  ]);
+  const { data, isFetching, isError } = useFetchProducts();
+  console.log(data);
+  const [products, setProducts] = useState();
 
   const [cart, setCart] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-
+  useEffect(() => {
+    setProducts(data);
+  }, [data]);
   // Debounce the search term
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -28,10 +28,13 @@ const SelectProductForm = ({ setSelectProductForm }) => {
   }, [searchTerm]);
 
   // Filter products based on the debounced search term
-  const filteredProducts = products.filter((product) =>
+  const filteredProducts = products?.filter((product) =>
     product.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
   );
-
+  const total_cart_price = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
   // Handle checkbox change
   const handleCheckboxChange = (product) => {
     const isInCart = cart.some((item) => item.name === product.name);
@@ -57,6 +60,32 @@ const SelectProductForm = ({ setSelectProductForm }) => {
       )
     );
   };
+  const addProductData = () => {
+    const itemsArray = cart.map((item) => {
+      const {
+        imageUrl,
+        quantitySizes,
+        stock,
+        updatedAt,
+        categoryId,
+        createdAt,
+        description,
+        discountedPrice,
+        productStatus,
+        id,
+        uuid,
+        ...rest
+      } = item;
+      return { ...rest, productId: uuid };
+    });
+    const itemsData = {
+      items: itemsArray,
+      totalAmount: total_cart_price,
+    };
+    localStorage.setItem("orderItems", JSON.stringify(itemsData));
+    toast.success("Order Items Added");
+    setSelectProductForm(false);
+  };
 
   return (
     <div className="fixed z-[100000] w-full right-0 left-0 h-screen grid place-items-center">
@@ -64,9 +93,9 @@ const SelectProductForm = ({ setSelectProductForm }) => {
         onClick={() => setSelectProductForm(false)}
         className="absolute w-full h-full left-0 right-0 top-0 bg-black/20"
       ></div>
-      <div className="bg-white flex flex-col pb-8 justify-center items-center  relative rounded-[8px]">
-        <div className=" gap-8 w-full grid grid-cols-2 p-8">
-          <div className="flex w-[371px] flex-col">
+      <div className="bg-white w-[80%] flex flex-col pb-8 justify-center items-center  relative rounded-[8px]">
+        <div className=" gap-8 w-full grid grid-cols-1 md:grid-cols-2 p-8">
+          <div className="flex  w-full md:w-[371px] flex-col">
             <div className="flex mb-2 w-full justify-between items-center">
               <p>Select Product</p>
               <div className="border h-[26px] bg-[#F5F5F5] border-[#8ED06C] rounded-[4px]">
@@ -82,8 +111,8 @@ const SelectProductForm = ({ setSelectProductForm }) => {
 
             {/* Product List */}
             <ul className="flex h-auto max-h-[250px] overflow-y-auto flex-col gap-1">
-              {filteredProducts.length > 0 ? (
-                filteredProducts.map((product, index) => (
+              {filteredProducts?.length > 0 ? (
+                filteredProducts?.map((product, index) => (
                   <li
                     key={index}
                     className="w-full border rounded-[4px] border-[#8ED06C] flex justify-between p-2 bg-[#F5F5F5]"
@@ -130,7 +159,7 @@ const SelectProductForm = ({ setSelectProductForm }) => {
                         </span>
                       </div>
                       <span className="text-[14px] text-[#333333] font-bold leading-[18px]">
-                        $350
+                        ${item.price * item.quantity}
                       </span>
                     </div>
                   </li>
@@ -141,18 +170,22 @@ const SelectProductForm = ({ setSelectProductForm }) => {
             )}
             <div className=" flex mt-8 bg-[#8ED06C] p-2 text-[14px]  font-bold leading-[18px] justify-between items-center">
               Total Price
-              <div className=" flex items-center gap-8">
+              <div className=" w-fit pr-3 flex items-center gap-8">
                 <span className="text-[14px] w-[56px] text-[#333333] font-bold leading-[18px]">
-                  50
+                  {cart.reduce((total, item) => total + item.quantity, 0)}
                 </span>
                 <span className="text-[14px] w-[59px] text-[#333333] font-bold leading-[18px]">
-                  $350
+                  ${total_cart_price}
                 </span>
               </div>
             </div>
           </div>
         </div>
-        <button className="  mt-8 bg-[#004324]  rounded  px-2 py-1 text-white">
+        <button
+          onClick={addProductData}
+          type="submit"
+          className="  mt-8 bg-[#004324]  rounded  px-2 py-1 text-white"
+        >
           Add Selected{" "}
         </button>
       </div>

@@ -45,7 +45,7 @@ const SignIn = ({id}) => {
   return (
     //update
     <section className="h-screen">
-      <div className="container lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-2xl lg:shadow-md lg::shadow-gray-300 p-4 lg:p-16">
+      <div className="container md:max-w-[700px]  lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-2xl lg:shadow-md lg::shadow-gray-300 p-4 lg:p-16">
         <div className="mb-10">
           <div className="">
             <img

@@ -10,8 +10,8 @@ export const useShowPassword = () => useContext(ShowPasswordContext);
 //The provider component
 export const ShowPasswordProvider = ({ children }) => {
     const [showPassword, setShowPassword] = useState({  password: false, // For SignInPage
-        password1: false, // For SignUpPage
-        password2: false, // For SignUpPage
+        password1: false, // For the first password field on SignUpPage 
+        password2: false, // For second field on the SignUpPage
         newPassword: false, // For ForgotPasswordPage
         confirmPassword: false,});
     const handleShowPassword = (passwordKey) => {

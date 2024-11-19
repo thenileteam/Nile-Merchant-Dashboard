@@ -10,7 +10,7 @@ const ForgotPassword = () => {
   
   return (
     <section>
-      <div className="container lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-lg p-8 lg:p-16 shadow-md shadow-dimWhite">
+      <div className="container md:max-w-[700px] lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-lg p-8 lg:p-16 shadow-md shadow-dimWhite">
         <div className="mb-10">
           <div>
             <img

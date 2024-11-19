@@ -1,7 +1,7 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 
-const CustomDropdown = () => {
-  const [selected, setSelected] = useState("");
+const CustomDropdown = ({ paymentStatus, setPaymentStatus }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const options = [
     { value: "", label: "Choose Payment Status", color: "text-zinc-600" },
@@ -15,7 +15,7 @@ const CustomDropdown = () => {
   ];
 
   const handleSelect = (value) => {
-    setSelected(value);
+    setPaymentStatus(value);
   };
   return (
     <div className="relative">
@@ -29,7 +29,7 @@ const CustomDropdown = () => {
         }}
         className="w-full h-[50px] px-4 text-left   rounded-lg appearance-none"
       >
-        {options.find((opt) => opt.value === selected)?.label ||
+        {options.find((opt) => opt.value === paymentStatus)?.label ||
           "Choose Payment Status"}
       </button>
       {modalOpen && (

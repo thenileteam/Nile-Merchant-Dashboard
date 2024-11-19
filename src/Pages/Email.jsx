@@ -7,7 +7,7 @@ import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
 const Email = () => {
   return (
     <>
-      <div className="container lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-lg lg:shadow-md lg:shadow-gray-300 p-8 lg:p-16">
+      <div className="container md:max-w-[700px] lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-lg lg:shadow-md lg:shadow-gray-300 p-8 lg:p-16">
         <div className="mb-10">
           <div>
             <img
