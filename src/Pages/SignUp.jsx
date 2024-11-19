@@ -6,11 +6,11 @@ import axios from "axios"; // Import axios
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
 import { useSignUserUp } from "../datahooks/users/userhooks";
-import {useShowPassword} from '../Context/Context'
+import { useShowPassword } from "../Context/Context";
 
 const SignUp = () => {
   //custom context hook
-  const { showPassword, handleShowPassword } = useShowPassword()
+  const { showPassword, handleShowPassword } = useShowPassword();
   const [step, setStep] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -51,25 +51,6 @@ const SignUp = () => {
       data.append(key, value);
     });
 
-    try {
-      const response = await axios.post(
-        "https://nile-microservices-auth.onrender.com/auth/register",
-        formData
-      );
-
-      // Navigate to dashboard on success
-      navigate("/");
-    } catch (error) {
-      // Handle errors from the response
-      if (error.response) {
-        alert(
-          error.response.data.message || "Signup failed. Please try again."
-        );
-      } else {
-        alert("An error occurred. Please try again.");
-        console.error(error);
-      }
-    }
     signUpMutate(data);
   };
 
@@ -115,14 +96,19 @@ const SignUp = () => {
                       Password
                     </label>
                     <input
-                      type={showPassword.password1? 'text':"password"}
+                      type={showPassword.password1 ? "text" : "password"}
                       id="Password"
                       name="password"
                       placeholder="********"
                       onChange={handleChange}
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                     />
-                      <img src={eye} className="absolute top-11 right-3 w-3 h-3 " alt="hide password icon" onClick={()=>handleShowPassword('password1')}/>
+                    <img
+                      src={eye}
+                      className="absolute top-11 right-3 w-3 h-3 "
+                      alt="hide password icon"
+                      onClick={() => handleShowPassword("password1")}
+                    />
                   </div>
                   <div className="relative">
                     <label
@@ -132,14 +118,19 @@ const SignUp = () => {
                       Repeat Password
                     </label>
                     <input
-                      type={showPassword.password2? 'text':"password"}
+                      type={showPassword.password2 ? "text" : "password"}
                       id="RepeatPassword"
                       name="passwordConfirm"
                       placeholder="Type password again"
                       onChange={handleChange}
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                     />
-                      <img src={eye} className="absolute top-11 right-3 w-3 h-3" alt="hide password icon"onClick={()=>handleShowPassword('password2')}/>
+                    <img
+                      src={eye}
+                      className="absolute top-11 right-3 w-3 h-3"
+                      alt="hide password icon"
+                      onClick={() => handleShowPassword("password2")}
+                    />
                   </div>
 
                   <div>
@@ -240,8 +231,13 @@ const SignUp = () => {
                 <button
                   type="submit"
                   className="text-[#ffffff] bg-[#004324] w-full p-2 rounded-md mt-5"
+                  disabled={signUpIsPending}
                 >
-                  Sign Up
+                  {signUpIsPending ? (
+                    <div className="w-4 h-4 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                  ) : (
+                    "       Sign Up"
+                  )}
                 </button>
               ) : (
                 <button

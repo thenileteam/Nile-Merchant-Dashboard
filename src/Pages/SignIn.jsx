@@ -1,44 +1,28 @@
 import { useState } from "react";
 import { nilelogosolid, eye } from "../assets";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
-import {useShowPassword } from '../Context/Context'
-import axios from "axios";
-
-const SignIn = ({id}) => {
+import { useShowPassword } from "../Context/Context";
+import { useLogUserIn } from "../datahooks/users/userhooks";
+const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const { showPassword, handleShowPassword } = useShowPassword()
+
+  const { showPassword, handleShowPassword } = useShowPassword();
+
+  const { mutate, isPending } = useLogUserIn();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
+    console.log(isPending);
     try {
-      const response = await axios.post(
-        "https://nile-microservices-auth.onrender.com/auth/login",
-        {
-          email,
-          password,
-        }
-      );
-
-      // Store the authentication token (assuming it's in response.data.token)
-      localStorage.setItem("authToken", response.data.token);
-
-      // You might also want to store user data if it's included in the response
-      localStorage.setItem("userData", JSON.stringify(response.data.user));
-
-      // Then navigate to dashboard
-      navigate("/dashboard");
+      mutate({
+        email,
+        password,
+      });
     } catch (error) {
-      setError(error.response?.data.message || "Incorrect email or password");
-    } finally {
-      setLoading(false);
+      console.error("Login error:", error);
     }
   };
 
@@ -87,7 +71,7 @@ const SignIn = ({id}) => {
                   Password
                 </label>
                 <input
-                  type={showPassword.password?'text':"password"}
+                  type={showPassword.password ? "text" : "password"}
                   id="Password"
                   name="password"
                   value={password}
@@ -96,10 +80,14 @@ const SignIn = ({id}) => {
                   className="mt-1 w-full lg:w-[450px] p-3 rounded-md border border-lightGreen bg-white text-sm text-gray-700 shadow-sm"
                   required
                 />
-                  <img src={eye} className="absolute top-11 right-3 w-3 h-3" alt="hide password icon" onClick={()=>handleShowPassword('password')}/>
+                <img
+                  src={eye}
+                  className="absolute top-11 right-3 w-3 h-3"
+                  alt="hide password icon"
+                  onClick={() => handleShowPassword("password")}
+                />
               </div>
-              {error && <p className="text-red-500 text-center">{error}</p>}
-                {/* updates */}
+              {/* updates */}
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-center mx-auto md:gap-10">
                 <label
                   htmlFor="MarketingAccept"
@@ -128,9 +116,9 @@ const SignIn = ({id}) => {
               <button
                 type="submit"
                 className="text-[#ffffff] bg-[#004324] w-full p-2 rounded-md mt-5 flex items-center justify-center"
-                disabled={loading}
+                disabled={isPending}
               >
-                {loading ? (
+                {isPending ? (
                   <div className="w-4 h-4 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
                 ) : (
                   "Log In"
