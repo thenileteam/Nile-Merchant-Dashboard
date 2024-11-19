@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { loginReview, wuraolaImg, donBaci, dot1, dot2, dot3 } from "../../assets";
+import {wuraolaImg, donBaci, tadfarm, dot1, dot2, dot3 } from "../../assets";
 
 const reviews = [
   {
@@ -18,7 +18,7 @@ const reviews = [
   {
     text:  "Tracking payments and inventory has never been this easy. Nile is a true partner for my business.",
     author: "Titilayo Aisha Damilola - CEO, Tad Farms",
-    img: loginReview,
+    img: tadfarm,
     slide: dot3,
   },
 ];
