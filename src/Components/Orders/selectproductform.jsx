@@ -90,10 +90,16 @@ const SelectProductForm = ({ setSelectProductForm }) => {
   return (
     <div className="fixed z-[100000] w-full right-0 left-0 h-screen grid place-items-center">
       <div
-        onClick={() => setSelectProductForm(false)}
+        // onClick={() => setSelectProductForm(false)}
         className="absolute w-full h-full left-0 right-0 top-0 bg-black/20"
       ></div>
-      <div className="bg-white w-[80%] flex flex-col pb-8 justify-center items-center  relative rounded-[8px]">
+      <div className="bg-white max-w-fit flex flex-col pb-8 justify-center items-center  relative rounded-[8px]">
+        <img
+          onClick={() => setSelectProductForm(false)}
+          src="/public/Cancel.svg"
+          className=" cursor-pointer size-6 absolute top-2 right-2"
+          alt=""
+        />
         <div className=" gap-8 w-full grid grid-cols-1 md:grid-cols-2 p-8">
           <div className="flex  w-full md:w-[371px] flex-col">
             <div className="flex mb-2 w-full justify-between items-center">
@@ -142,7 +148,7 @@ const SelectProductForm = ({ setSelectProductForm }) => {
                     className="w-full items-center rounded-[4px] border border-[#8ED06C] p-2 bg-[#E5FCE5] flex justify-between"
                   >
                     <span>{item.name}</span>
-                    <div className="flex items-center gap-8">
+                    <div className="flex ml-5 items-center gap-8">
                       <div className="flex items-center border border-[#8ED06C] gap-2 rounded-[4px] p-1">
                         <span
                           onClick={() => handleQuantityChange(item.name, false)}

@@ -23,7 +23,10 @@ import { useCreateNewOrder } from "../datahooks/orders/orderhooks";
 import { AiOutlineLoading } from "react-icons/ai";
 
 const Orders = () => {
-  const { addOrderToBackend, isAddingOrder } = useCreateNewOrder();
+  const { addOrderToBackend, isAddingOrder } = useCreateNewOrder(() => {
+    setCreateOrderForm(false);
+  });
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [createdAt, setCreatedAt] = useState(null);
   const closeSidebar = () => {
@@ -41,7 +44,7 @@ const Orders = () => {
     setCreatedAt(selectedDate.toISOString());
   };
 
-  const addOrder = () => {
+  const addOrder = async () => {
     const itemsFromLocalStorage = JSON.parse(
       localStorage.getItem("orderItems")
     );
@@ -65,7 +68,6 @@ const Orders = () => {
     console.log(orderData);
     try {
       addOrderToBackend(orderData);
-      setCreateOrderForm(false);
     } catch (error) {
       console.log(error);
     }
@@ -175,12 +177,14 @@ const Orders = () => {
                     onChange={(e) => handleDateChange(e)}
                     placeholder="DD/MM/YY"
                     type="date"
-                    className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px] h-[50px] px-4 placeholder:text-[#6E6E6E80]"
+                    className="bg-[#F5F5F5] rounded-[4px] border-[#8ED06C] border-[1px] h-[50px] px-4 placeholder:text-[#6E6E6E80]"
+                    max={new Date().toISOString().split("T")[0]}
                   />
                 </div>
               </div>
             </div>
             <button
+              disabled={isAddingOrder}
               type="submit"
               onClick={addOrder}
               className=" flex bg-[#004324] justify-center items-center mx-auto mt-16 rounded-[4px] gap-1 p-[10.5px]  text-white "
@@ -320,7 +324,7 @@ const Orders = () => {
                 <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                   <img src={shoppingcart} alt="" />
                   <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
+                    {data?.length || 0}
                   </h1>
                   <p className="text-[#6E6E6E]">Total Orders</p>
                 </div>

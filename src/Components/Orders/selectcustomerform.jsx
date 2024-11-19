@@ -58,10 +58,21 @@ const SelectCustomerForm = ({
   return (
     <div className="fixed z-[100000] w-full right-0 left-0 h-screen grid place-items-center">
       <div
-        onClick={() => setSelectCustomerForm(false)}
+        // onClick={() => setSelectCustomerForm(false)}
         className="absolute w-full h-full left-0 right-0 top-0 bg-black/80"
       ></div>
-      <div className="bg-white flex flex-col pb-8 justify-center items-center relative rounded-[8px]">
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        className="bg-white flex flex-col pb-8 justify-center items-center relative rounded-[8px]"
+      >
+        <img
+          onClick={() => setSelectCustomerForm(false)}
+          src="/public/Cancel.svg"
+          className=" cursor-pointer size-6 absolute top-2 right-2"
+          alt=""
+        />
         <div className="gap-8 w-full p-8">
           <div className="flex w-[371px] flex-col">
             <div className="flex mb-2 w-full justify-between items-center">
