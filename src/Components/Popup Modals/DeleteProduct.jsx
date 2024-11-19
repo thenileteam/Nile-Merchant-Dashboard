@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 
-import ApiInstance from "../../Api/ApiInstance";
+import { useDeleteProduct } from "../../datahooks/products/productshooks";
 
 const DeleteProduct = ({ product }) => {
   // State to control the main popup visibility
@@ -17,35 +17,28 @@ const DeleteProduct = ({ product }) => {
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
   };
+  const { deleteProduct } = useDeleteProduct(() => {
+    setIsPopupOpen(false);
+    setIsFinalConfirmationOpen(true);
 
+    // Automatically start the fade-out after a short delay
+    setTimeout(() => {
+      setIsFadingOut(true);
+    }, 100);
+
+    // Close the final confirmation popup after the fade-out completes (300ms)
+    setTimeout(() => {
+      setIsFinalConfirmationOpen(false);
+      setIsFadingOut(false);
+    }, 500);
+  });
   // Function to handle the "Yes" button click and delete product
   const handleYesClick = async () => {
     try {
+      deleteProduct(product);
       // Send a delete request to the API
-      await ApiInstance.delete(
-        `/products/product/delete`,
-        { storeId: product.storeId },
-        {
-          params: {
-            id: product.uuid,
-          },
-        }
-      );
 
       // If successful, close the main popup and show the final confirmation
-      setIsPopupOpen(false);
-      setIsFinalConfirmationOpen(true);
-
-      // Automatically start the fade-out after a short delay
-      setTimeout(() => {
-        setIsFadingOut(true);
-      }, 100);
-
-      // Close the final confirmation popup after the fade-out completes (300ms)
-      setTimeout(() => {
-        setIsFinalConfirmationOpen(false);
-        setIsFadingOut(false);
-      }, 500);
     } catch (error) {
       console.error("Error deleting product:", error);
       alert("Failed to delete the product. Please try again.");
