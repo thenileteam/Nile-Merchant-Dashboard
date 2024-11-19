@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import ApiInstance from "../../Api/ApiInstance";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
+const stores = JSON.parse(localStorage.getItem("stores"));
 export const useFetchProducts = () => {
-  const stores = JSON.parse(localStorage.getItem("stores"));
-
   const { data, isFetching, isError } = useQuery({
     queryKey: ["products", stores[0]._id], // Include store ID to uniquely identify the query
     queryFn: async () => {
@@ -28,5 +29,25 @@ export const useFetchProducts = () => {
     data,
     isFetching,
     isError,
+  };
+};
+
+export const useCreateNewProduct = (onSuccessCallback) => {
+  const queryClient = useQueryClient();
+  const { mutate, isLoading: isAddingProduct } = useMutation({
+    mutationFn: (data) => ApiInstance.post("/products/product/create", data),
+    onSuccess: () => {
+      toast.success("Product Added Successfully");
+      if (onSuccessCallback) onSuccessCallback();
+      queryClient.invalidateQueries(["products", stores[0]._id]);
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "An error occurred");
+    },
+  });
+
+  return {
+    addProductToBackend: mutate,
+    isAddingProduct,
   };
 };

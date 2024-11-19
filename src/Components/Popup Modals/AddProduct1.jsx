@@ -1,26 +1,35 @@
 import { useState } from "react";
-import axios from "axios";
+
 import { addsquare } from "../../assets";
+import { useCreateNewProduct } from "../../datahooks/products/productshooks";
 
 const AddProduct1 = () => {
+  const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
+    setIsFinalConfirmationOpen(true);
+    setTimeout(() => {
+      setIsFinalConfirmationOpen(false);
+    }, 2000);
+  });
   // State to control the popup visibility and animation
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isFinalConfirmationOpen, setIsFinalConfirmationOpen] = useState(false);
   const [fadeOut, setFadeOut] = useState(false); // State for fade-out animation
+  const store = JSON.parse(localStorage.getItem("stores"))[0];
 
   // Form fields state
   const [productDetails, setProductDetails] = useState({
-    category: "",
+    categoryName: "",
     name: "",
-    details: "",
-    stockQuantity: "",
-    size: "",
-    weight: "",
+    storeId: "",
+    description: "",
+    stock: "",
+    quantitySizes: "",
+    shippingWeight: "",
     freeShipping: false,
-    price: "",
-    discountedPrice: "",
-    color: "",
+    price: 0,
+    discountedPrice: 0,
+    productColorName: "",
     dimensions: { length: "", width: "", height: "" },
     packaging: "",
     handlingTime: "",
@@ -50,16 +59,34 @@ const AddProduct1 = () => {
     setFadeOut(true);
     setTimeout(async () => {
       setIsConfirmationOpen(false);
-      setIsFinalConfirmationOpen(true);
+
       setFadeOut(false);
 
       try {
-        // Replace with your actual API endpoint
-        const response = await axios.post(
-          "https://nile-microservices.onrender.com/product/create",
-          productDetails
-        );
-        console.log("Product added:", response.data);
+        if (!store) return;
+        const dataToBackend = {
+          name: productDetails.name,
+          storeId: store._id,
+          userId: store.userId,
+          length: productDetails.dimensions.length,
+          width: productDetails.dimensions.width,
+          description: productDetails.description,
+          height: productDetails.dimensions.height,
+          shippingWeight: productDetails.shippingWeight,
+          price: productDetails.price,
+          discountedPrice: productDetails.discountedPrice,
+          freeShipping: productDetails.freeShipping,
+          packaging: productDetails.packaging,
+          productColorName: productDetails.productColorName,
+          categoryName: productDetails.categoryName,
+          imageUrl: "sss",
+          handlingTime: productDetails.handlingTime,
+          stock: productDetails.stock,
+          productStatus: "AVAILABLE",
+          quantitySizes: productDetails.quantitySizes,
+        };
+        console.log(dataToBackend);
+        addProductToBackend(dataToBackend);
       } catch (error) {
         console.error("Error adding product:", error);
       }
@@ -141,9 +168,9 @@ const AddProduct1 = () => {
                       </label>
                       <input
                         id="category"
-                        name="category"
+                        name="categoryName"
                         type="text"
-                        value={productDetails.category}
+                        value={productDetails.categoryName}
                         onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="E.g:Apparel"
@@ -179,9 +206,9 @@ const AddProduct1 = () => {
                       </label>
                       <input
                         id="details"
-                        name="details"
+                        name="description"
                         type="text"
-                        value={productDetails.details}
+                        value={productDetails.description}
                         onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Input Details"
@@ -197,9 +224,9 @@ const AddProduct1 = () => {
                       </label>
                       <input
                         id="stockQunatity"
-                        name="stockQuantity"
+                        name="stock"
                         type="text"
-                        value={productDetails.stockQuantity}
+                        value={productDetails.stock}
                         onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                         placeholder="321"
@@ -216,9 +243,9 @@ const AddProduct1 = () => {
                         Product Size
                       </label>
                       <select
-                        name="size"
+                        name="quantitySizes"
                         id="size"
-                        value={productDetails.size}
+                        value={productDetails.quantitySizes}
                         onChange={handleInputChange}
                         className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
@@ -245,9 +272,9 @@ const AddProduct1 = () => {
                     </label>
                     <input
                       id="weight"
-                      name="weight"
+                      name="shippingWeight"
                       type="text"
-                      value={productDetails.weight}
+                      value={productDetails.shippingWeight}
                       onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="E.g:20kg"
@@ -298,7 +325,7 @@ const AddProduct1 = () => {
                     <input
                       id="price"
                       name="price"
-                      type="text"
+                      type="number"
                       value={productDetails.price}
                       onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
@@ -315,7 +342,7 @@ const AddProduct1 = () => {
                     <input
                       id="discountedPrice"
                       name="discountedPrice"
-                      type="text"
+                      type="number"
                       value={productDetails.discountedPrice}
                       onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
@@ -331,16 +358,16 @@ const AddProduct1 = () => {
                         Product Color
                       </label>
                       <select
-                        name="color"
+                        name="productColorName"
                         id="color"
-                        value={productDetails.color}
+                        value={productDetails.productColorName}
                         onChange={handleInputChange}
                         className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">E.g:Red</option>
-                        <option value="BL">Blue</option>
-                        <option value="RD">Red</option>
-                        <option value="PK">Pink</option>
+                        <option value="Blue">Blue</option>
+                        <option value="Red">Red</option>
+                        <option value="Pink">Pink</option>
                       </select>
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
@@ -400,8 +427,8 @@ const AddProduct1 = () => {
                         className="w-full rounded-lg border-[#8ED06C] bg-[#f5f5f5] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">Choose Package Type</option>
-                        <option value="BS">Box Size</option>
-                        <option value="PM">Packaging Materials</option>
+                        <option value="BOX">Box Size</option>
+                        <option value="MATERIAL">Packaging Materials</option>
                       </select>
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
@@ -433,33 +460,38 @@ const AddProduct1 = () => {
               <div className="flex justify-center gap-4 mt-16">
                 {/* Edit Button */}
                 <button
+                  disabled={isAddingProduct}
                   className="px-2 py-2 hover:bg-[#004324] bg-[#f5f5f5] border-[#004324] border-2 text-[#004324] font-medium rounded-md shadow-lg hover:text-[#ffffff] transition ease-out duration-700"
                   onClick={showConfirmation}
                   type="button"
                 >
-                  <div className="flex items-center gap-1">
-                    <svg
-                      width="25"
-                      height="24"
-                      viewBox="0 0 25 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12.5 8V16M16.5 12H8.5"
-                        stroke="currentcolor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M3 12C3 7.52166 3 5.28249 4.39124 3.89124C5.78249 2.5 8.02166 2.5 12.5 2.5C16.9783 2.5 19.2175 2.5 20.6088 3.89124C22 5.28249 22 7.52166 22 12C22 16.4783 22 18.7175 20.6088 20.1088C19.2175 21.5 16.9783 21.5 12.5 21.5C8.02166 21.5 5.78249 21.5 4.39124 20.1088C3 18.7175 3 16.4783 3 12Z"
-                        stroke="currentcolor"
-                        strokeWidth="1.5"
-                      />
-                    </svg>
-                    <p>Add Product</p>
-                  </div>
+                  {isAddingProduct ? (
+                    <div className="w-4 h-4 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                  ) : (
+                    <div className="flex items-center gap-1">
+                      <svg
+                        width="25"
+                        height="24"
+                        viewBox="0 0 25 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12.5 8V16M16.5 12H8.5"
+                          stroke="currentcolor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M3 12C3 7.52166 3 5.28249 4.39124 3.89124C5.78249 2.5 8.02166 2.5 12.5 2.5C16.9783 2.5 19.2175 2.5 20.6088 3.89124C22 5.28249 22 7.52166 22 12C22 16.4783 22 18.7175 20.6088 20.1088C19.2175 21.5 16.9783 21.5 12.5 21.5C8.02166 21.5 5.78249 21.5 4.39124 20.1088C3 18.7175 3 16.4783 3 12Z"
+                          stroke="currentcolor"
+                          strokeWidth="1.5"
+                        />
+                      </svg>
+                      <p>Add Product</p>
+                    </div>
+                  )}
                 </button>
               </div>
             </form>
