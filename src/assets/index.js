@@ -58,7 +58,13 @@ import preference1 from "./preference1.png";
 import addsquare1 from "./addsquare1.png";
 import withdraw from "./withdraw.png";
 import reload from "./reload.png";
-
+import loginReview from './loginReview.svg'
+import wuraolaImg from './wuraola.jpeg'
+import donBaci from './don-baci.jpeg'
+import dot1 from './dot1.svg'
+import dot2 from './dot2.svg'
+import dot3 from './dot3.svg'
+import eye from './Eye-icon.svg'
 
 export {
     nilelogosolid,
@@ -121,4 +127,9 @@ export {
     addsquare1,
     withdraw,
     reload,
+    loginReview,
+    wuraolaImg,
+    donBaci,
+    dot1,
+    dot2,dot3,eye
 }
