@@ -85,7 +85,7 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData }) => {
               </tr>
 
               {/* Row 3 */}
-              <tr className="bg-[#ffffff] shadow-md">
+              {/* <tr className="bg-[#ffffff] shadow-md">
                 <td className="px-2 py-3 bg-[#EAF4E2]">Your Reviews</td>
                 <td className="px-2 py-3 text-center">35</td>
                 <td className="px-2 py-3 text-center">210</td>
@@ -99,7 +99,7 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData }) => {
                     View
                   </Link>
                 </td>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
         )}
