@@ -230,7 +230,7 @@ const SignUp = () => {
               {step ? (
                 <button
                   type="submit"
-                  className="text-[#ffffff] bg-[#004324] w-full p-2 rounded-md mt-5"
+                  className="text-[#ffffff] grid place-items-center bg-[#004324] w-full p-2 rounded-md mt-5"
                   disabled={signUpIsPending}
                 >
                   {signUpIsPending ? (
@@ -243,7 +243,10 @@ const SignUp = () => {
                 <button
                   type="button"
                   className="text-[#ffffff] bg-[#004324] w-full p-2 rounded-md mt-5"
-                  onClick={() => setStep(true)}
+                  onClick={(e) => {
+                    setStep(true);
+                    e.preventDefault();
+                  }}
                 >
                   Continue
                 </button>

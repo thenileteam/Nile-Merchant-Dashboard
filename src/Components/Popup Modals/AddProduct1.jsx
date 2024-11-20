@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { addsquare } from "../../assets";
 import { useCreateNewProduct } from "../../datahooks/products/productshooks";
+import { BiLoaderCircle } from "react-icons/bi";
 
 const AddProduct1 = () => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
@@ -493,9 +494,9 @@ const AddProduct1 = () => {
                   type="button"
                 >
                   {isAddingProduct ? (
-                    <div className="w-4 h-4 border-4 border-white border-t-transparent rounded-full animate-spin">
+                    <div className="w-[100px] grid justify-center h-[40px] border-4 border-white border-t-transparent rounded-full ">
                       {" "}
-                      Adding Product
+                      <BiLoaderCircle className=" animate-spin duration-300 transition-all" />
                     </div>
                   ) : (
                     <div className="flex items-center gap-1">
