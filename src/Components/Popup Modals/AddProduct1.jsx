@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 
 import { addsquare } from "../../assets";
@@ -5,10 +6,7 @@ import { useCreateNewProduct } from "../../datahooks/products/productshooks";
 
 const AddProduct1 = () => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
-    setIsFinalConfirmationOpen(true);
-    setTimeout(() => {
-      setIsFinalConfirmationOpen(false);
-    }, 2000);
+    setIsPopupOpen(false); // close the popup after adding product
   });
   // State to control the popup visibility and animation
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -53,7 +51,36 @@ const AddProduct1 = () => {
   const toggleConfirmation = () => {
     setIsConfirmationOpen(false);
   };
-
+  const handleAddProduct = () => {
+    try {
+      if (!store) return;
+      const dataToBackend = {
+        name: productDetails.name,
+        storeId: store._id,
+        userId: store.userId,
+        length: productDetails.dimensions.length,
+        width: productDetails.dimensions.width,
+        description: productDetails.description,
+        height: productDetails.dimensions.height,
+        shippingWeight: productDetails.shippingWeight,
+        price: productDetails.price,
+        discountedPrice: productDetails.discountedPrice,
+        freeShipping: productDetails.freeShipping,
+        packaging: productDetails.packaging,
+        productColorName: productDetails.productColorName,
+        categoryName: productDetails.categoryName,
+        imageUrl: "sss",
+        handlingTime: productDetails.handlingTime,
+        stock: productDetails.stock,
+        productStatus: "AVAILABLE",
+        quantitySizes: productDetails.quantitySizes,
+      };
+      // console.log(dataToBackend);
+      addProductToBackend(dataToBackend);
+    } catch (error) {
+      console.error("Error adding product:", error);
+    }
+  };
   // Function to handle confirmation and send data to API
   const handleConfirm = async () => {
     setFadeOut(true);
@@ -462,11 +489,14 @@ const AddProduct1 = () => {
                 <button
                   disabled={isAddingProduct}
                   className="px-2 py-2 hover:bg-[#004324] bg-[#f5f5f5] border-[#004324] border-2 text-[#004324] font-medium rounded-md shadow-lg hover:text-[#ffffff] transition ease-out duration-700"
-                  onClick={showConfirmation}
+                  onClick={handleAddProduct}
                   type="button"
                 >
                   {isAddingProduct ? (
-                    <div className="w-4 h-4 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-4 h-4 border-4 border-white border-t-transparent rounded-full animate-spin">
+                      {" "}
+                      Adding Product
+                    </div>
                   ) : (
                     <div className="flex items-center gap-1">
                       <svg
