@@ -11,7 +11,7 @@ export const useCreateNewOrder = (onSuccessCallback) => {
       toast.success("Order Added Successfully");
       if (onSuccessCallback) onSuccessCallback();
       // Invalidate the 'orders' query to refetch all orders
-      queryClient.invalidateQueries(["orders"]);
+      queryClient.invalidateQueries(["orders", "dashboard"]);
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "An error occurred");

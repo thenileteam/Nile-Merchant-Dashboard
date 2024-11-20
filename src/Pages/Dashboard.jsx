@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
@@ -16,8 +17,11 @@ import {
 } from "../assets";
 import DashoardTabel from "../Components/Dashboard/DashoardTabel";
 import { useState } from "react";
+import { useFetchDashboardData } from "../datahooks/users/userhooks";
 
 const Dashboard = () => {
+  const { dashboardData, isFetchingDashboardData, dashboardDataisError } =
+    useFetchDashboardData();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const closeSidebar = () => {
@@ -252,7 +256,10 @@ const Dashboard = () => {
             </div>
 
             <div>
-              <DashoardTabel />
+              <DashoardTabel
+                dashboardData={dashboardData}
+                isFetchingDashboardData={isFetchingDashboardData}
+              />
             </div>
           </div>
         </div>
