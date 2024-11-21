@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom"; // Make sure this is imported if using React Router
 import { useState } from "react";
@@ -14,6 +14,7 @@ import {
   startOfWeek,
   startOfYear,
 } from "date-fns";
+const stores = JSON.parse(localStorage.getItem("stores")) || [];
 
 export const useLogUserIn = () => {
   const navigate = useNavigate();
@@ -71,10 +72,34 @@ export const useSignUserUp = () => {
     signUpError: error,
   };
 };
+export const useAddCustomer = (onSuccess) => {
+  const queryClient = useQueryClient();
+  const [error] = useState("");
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data) => {
+      return ApiInstance.post(
+        `/orders/orders/customers/create/${stores[0]._id}`,
+        data
+      );
+    },
+    onSuccess: () => {
+      toast("Customer Successfully Created ✔");
+      onSuccess ? onSuccess() : null;
+      queryClient.invalidateQueries(["customers"]);
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message || "An error occurred");
+    },
+  });
+
+  return {
+    addCustomerQuery: mutate,
+    addCustomerQueryIsPending: isPending,
+    addCustomerQueryError: error,
+  };
+};
 
 export const useFetchDashboardData = () => {
-  const stores = JSON.parse(localStorage.getItem("stores")) || [];
-
   const fetchDashboardData = async () => {
     if (stores.length === 0) {
       throw new Error("No stores found in localStorage.");
@@ -143,6 +168,7 @@ export const useFetchDashboardData = () => {
         week: ordersThisWeek,
         month: ordersThisMonth,
         year: ordersThisYear,
+        totalOrders: ordersData?.responseObject?.orders?.length,
       },
       salesData: res.data.responseObject,
       product: product,

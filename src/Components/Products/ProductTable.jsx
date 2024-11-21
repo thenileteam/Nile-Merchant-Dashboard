@@ -181,7 +181,7 @@ const ProductTable = ({ data, isFetching, isError }) => {
                   <td className="px-2 py-3 text-center">{product.id}</td>
                   <td className="px-2 py-3 text-center">{product.name}</td>
                   <td className="px-2 py-3 text-center">
-                    {product.categoryId.slice(0, 5)}
+                    {product.category.name}
                   </td>
                   <td className="px-2 py-3 text-center">{product.price}</td>
                   <td className="px-2 py-3 text-center">{product.unitsSold}</td>

@@ -136,9 +136,9 @@ const Product = () => {
               {isFetching ? (
                 <div className=" grid grid-cols-3 gap-10">
                   {" "}
-                  <Skeleton className=" w-[60px] h-[150px] rounded-sm" />{" "}
-                  <Skeleton className=" w-[60px] h-[150px] rounded-sm" />{" "}
-                  <Skeleton className=" w-[60px] h-[150px] rounded-sm" />{" "}
+                  <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
+                  <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
+                  <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
                 </div>
               ) : (
                 <div className="flex gap-28">

@@ -172,6 +172,7 @@ const OrdersTable = ({ data }) => {
                 </td>
               </tr>
             ))}
+
             {/* Row 1 */}
 
             {/* Row 6 */}
