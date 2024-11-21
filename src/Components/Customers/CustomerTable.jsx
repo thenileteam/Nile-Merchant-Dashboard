@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import { download, preference1 } from "../../assets";
 import SendDiscount from "../Popup Modals/SendDiscount";
-import AddCustomer from "../Popup Modals/AddCustomer";
+// import AddCustomer from "../Popup Modals/AddCustomer";
+import CustomAwaitTable from "../uicomps/customawaittable";
+import AddCustomer1 from "../Popup Modals/AddCustomer1";
 
-const CustomerTable = () => {
+const CustomerTable = ({ customers, isLoading, error }) => {
+  console.log(customers);
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedText, setSelectedText] = useState("");
 
   const toggleFilterDropdown = () => {
     setFilterDropdownOpen(!filterDropdownOpen);
+  };
+
+  const getTotalAmountSpent = (order) => {
+    return order.reduce((acc, current) => acc + current.totalAmount, 0);
   };
 
   const handleFilterClick = (text) => {
@@ -100,176 +108,54 @@ const CustomerTable = () => {
 
       {/* Tables */}
       <div className="px-24">
-        <table className=" w-full border-separate border-spacing-y-5">
-          <thead>
-            <tr className="text-left bg-[#EAF4E2] shadow-lg">
-              <th className="px-2 py-3 text-center">Customer ID</th>
-              <th className="px-2 py-3 text-center">Customer Name</th>
-              <th className="px-2 py-3 text-center">Email</th>
-              <th className="px-2 py-3 text-center">Total Orders</th>
-              <th className="px-2 py-3 text-center">Total Spend</th>
-              <th className="px-2 py-3 text-center">Last Purchase Date</th>
-              <th className="px-2 py-3 text-center">Actions</th>
-              <th className="px-2 py-3 text-center">
-                Bulk Action
-                <p className="text-center text-[#8ED06C]">Send Discount</p>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* Row 1 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Jacob</td>
-              <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
-              <td className="px-2 py-3 text-center">5</td>
-              <td className="px-2 py-3 text-center">$56</td>
-              <td className="px-2 py-3 text-center">12/09/2024</td>
-              <SendDiscount />
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 2 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Sammy</td>
-              <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
-              <td className="px-2 py-3 text-center">3</td>
-              <td className="px-2 py-3 text-center">$26</td>
-              <td className="px-2 py-3 text-center">05/09/2024</td>
-              <SendDiscount />
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 3 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Sammy</td>
-              <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
-              <td className="px-2 py-3 text-center">3</td>
-              <td className="px-2 py-3 text-center">$26</td>
-              <td className="px-2 py-3 text-center">05/09/2024</td>
-              <SendDiscount />
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 4 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Sammy</td>
-              <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
-              <td className="px-2 py-3 text-center">3</td>
-              <td className="px-2 py-3 text-center">$26</td>
-              <td className="px-2 py-3 text-center">05/09/2024</td>
-              <SendDiscount />
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 5 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Sammy</td>
-              <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
-              <td className="px-2 py-3 text-center">3</td>
-              <td className="px-2 py-3 text-center">$26</td>
-              <td className="px-2 py-3 text-center">05/09/2024</td>
-              <SendDiscount />
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 6 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Sammy</td>
-              <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
-              <td className="px-2 py-3 text-center">3</td>
-              <td className="px-2 py-3 text-center">$26</td>
-              <td className="px-2 py-3 text-center">05/09/2024</td>
-              <SendDiscount />
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 7 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Sammy</td>
-              <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
-              <td className="px-2 py-3 text-center">3</td>
-              <td className="px-2 py-3 text-center">$26</td>
-              <td className="px-2 py-3 text-center">05/09/2024</td>
-              <SendDiscount />
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 8 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Sammy</td>
-              <td className="px-2 py-3 text-center">Jacobjam@gmail.com</td>
-              <td className="px-2 py-3 text-center">3</td>
-              <td className="px-2 py-3 text-center">$26</td>
-              <td className="px-2 py-3 text-center">05/09/2024</td>
-              <SendDiscount />
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <CustomAwaitTable isLoading={isLoading} error={error}>
+          <table className=" w-full border-separate border-spacing-y-5">
+            <thead>
+              <tr className="text-left bg-[#EAF4E2] shadow-lg">
+                <th className="px-2 py-3 text-center">Customer ID</th>
+                <th className="px-2 py-3 text-center">Customer Name</th>
+                <th className="px-2 py-3 text-center">Email</th>
+                <th className="px-2 py-3 text-center">Total Orders</th>
+                <th className="px-2 py-3 text-center">Total Spend</th>
+                <th className="px-2 py-3 text-center">Last Purchase Date</th>
+                <th className="px-2 py-3 text-center">Actions</th>
+                <th className="px-2 py-3 text-center">
+                  Bulk Action
+                  <p className="text-center text-[#8ED06C]">Send Discount</p>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* Row 1 */}
+              {customers &&
+                customers.map((customer) => (
+                  <tr key={customer.id} className="bg-[#ffffff] shadow-md">
+                    <td className="px-2 py-3 text-center">
+                      {customer.id.slice(0, 3)}
+                    </td>
+                    <td className="px-2 py-3 text-center">{customer.name}</td>
+                    <td className="px-2 py-3 text-center">{customer.email}</td>
+                    <td className="px-2 py-3 text-center">
+                      {customer.order?.length || 0}
+                    </td>
+                    <td className="px-2 py-3 text-center">
+                      ${getTotalAmountSpent(customer.order)}
+                    </td>
+                    <td className="px-2 py-3 text-center">12/09/2024</td>
+                    <SendDiscount />
+                    <td className="px-2 py-3 text-center">
+                      <input
+                        type="checkbox"
+                        id="MarketingAccept"
+                        name="marketing_accept"
+                        className="size-5 rounded-md bg-white shadow-sm"
+                      />
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </CustomAwaitTable>
       </div>
 
       {/*Pagination*/}
@@ -358,10 +244,10 @@ const CustomerTable = () => {
           </li>
         </ol>
       </div>
-      
+
       {/* Add Cutomer & Export CSV Button */}
       <div className=" flex px-28 justify-end items-center mt-10 gap-24">
-        <AddCustomer />
+        <AddCustomer1 transparent={true} />
 
         <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
           <img src={download} alt="" />

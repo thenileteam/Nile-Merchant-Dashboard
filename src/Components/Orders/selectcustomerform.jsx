@@ -179,6 +179,7 @@ const SelectCustomerForm = ({
                 name="email"
                 className="bg-transparent border border-primary p-1 rounded-md text-[#6E6E6E80] leading-[18px] px-1 font-[700] text-[14px]  w-full h-full"
                 type="email"
+                required
                 placeholder="Enter Customer Email"
                 onChange={handleCustomerDataChange}
               />
