@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
@@ -16,13 +17,18 @@ import {
 } from "../assets";
 import DashoardTabel from "../Components/Dashboard/DashoardTabel";
 import { useState } from "react";
+import { useFetchDashboardData } from "../datahooks/users/userhooks";
+import Skeleton from "react-loading-skeleton";
 
 const Dashboard = () => {
+  const { dashboardData, isFetchingDashboardData, dashboardDataisError } =
+    useFetchDashboardData();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const closeSidebar = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
+
   return (
     <>
       <div className="bg-[#F5F5F5] pb-20">
@@ -132,31 +138,39 @@ const Dashboard = () => {
             </nav>
 
             {/* Cards */}
-            <div className="p-6 mt-28 px-32">
-              <div className="flex gap-28">
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={transaction} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Avalaible Balance</p>
-                </div>
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={packagemoving} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Total sales</p>
-                </div>
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={bitcoin} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Total Payouts</p>
+            {isFetchingDashboardData ? (
+              <div className=" w-full mt-28 px-32  h-40 flex flex-row gap-28">
+                <div className=" h-[150px] bg-zinc-200  w-[300px]" />
+                <div className=" h-[150px] bg-zinc-200 w-[300px]" />
+                <div className=" h-[150px] bg-zinc-200 w-[300px]" />
+              </div>
+            ) : (
+              <div className="p-6 mt-28 px-32">
+                <div className="flex gap-28">
+                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                    <img src={transaction} alt="" />
+                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                      NA
+                    </h1>
+                    <p className="text-[#6E6E6E]">Avalaible Balance</p>
+                  </div>
+                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                    <img src={packagemoving} alt="" />
+                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                      {dashboardData?.salesData?.totalSales}
+                    </h1>
+                    <p className="text-[#6E6E6E]">Total sales</p>
+                  </div>
+                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                    <img src={bitcoin} alt="" />
+                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                      NA
+                    </h1>
+                    <p className="text-[#6E6E6E]">Total Payouts</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Line */}
             <div className="px-32">
@@ -252,7 +266,10 @@ const Dashboard = () => {
             </div>
 
             <div>
-              <DashoardTabel />
+              <DashoardTabel
+                dashboardData={dashboardData}
+                isFetchingDashboardData={isFetchingDashboardData}
+              />
             </div>
           </div>
         </div>
