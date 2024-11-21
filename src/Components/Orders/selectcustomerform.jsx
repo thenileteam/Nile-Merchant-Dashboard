@@ -155,9 +155,13 @@ const SelectCustomerForm = ({
           )}
           <button
             className=" bg-[#004324] rounded px-2 py-1 text-white"
-            onClick={() => setShowAddCustomerSec(true)}
+            onClick={() =>
+              showAddCustomerSec
+                ? setShowAddCustomerSec(false)
+                : setShowAddCustomerSec(true)
+            }
           >
-            Create Customer
+            {showAddCustomerSec ? "Close Form" : "Create Customer"}
           </button>
         </div>
         {showAddCustomerSec && (
