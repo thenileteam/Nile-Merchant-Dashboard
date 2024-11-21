@@ -236,7 +236,7 @@ const SignUp = () => {
                   {signUpIsPending ? (
                     <div className="w-4 h-4 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
                   ) : (
-                    "       Sign Up"
+                    "Sign Up"
                   )}
                 </button>
               ) : (
