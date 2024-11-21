@@ -16,12 +16,12 @@ export const ShowPasswordProvider = ({ children }) => {
     newPassword: false, // For ForgotPasswordPage
     confirmPassword: false,
   });
-  const handleShowPassword = (passwordKey) => {
-    setShowPassword((prevVisibility) => ({
-      ...prevVisibility,
-      [passwordKey]: !prevVisibility[passwordKey],
+  const handleShowPassword = (id) => {
+    setShowPassword((prev) => ({
+      ...prev,
+      [id]: prev[id] ? false : true,
     }));
-  };
+  }
 
   return (
     <ShowPasswordContext.Provider value={{ showPassword, handleShowPassword }}>

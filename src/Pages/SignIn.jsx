@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { nilelogosolid, eye } from "../assets";
+import { nilelogosolid, eye, lashesIcon } from "../assets";
 import { Link } from "react-router-dom";
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
@@ -80,12 +80,21 @@ const SignIn = () => {
                   className="mt-1 w-full lg:w-[450px] p-3 rounded-md border border-lightGreen bg-white text-sm text-gray-700 shadow-sm"
                   required
                 />
-                <img
-                  src={eye}
-                  className="absolute top-11 right-3 w-3 h-3"
-                  alt="hide password icon"
-                  onClick={() => handleShowPassword("password")}
-                />
+                {showPassword.password ? (
+                  <img
+                    src={lashesIcon}
+                    className="absolute top-11 right-2  w-10 h-5"
+                    alt="hide password icon"
+                    onClick={() => handleShowPassword("password")}
+                  />
+                ) : (
+                  <img
+                    src={eye}
+                    className="absolute top-11 right-2 w-7 h-4"
+                    alt="hide password icon"
+                    onClick={() => handleShowPassword("password")}
+                  />
+                )}
               </div>
               {/* updates */}
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-center mx-auto md:gap-10">

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import { nilelogosolid, eye } from "../assets";
+import { nilelogosolid, eye,lashesIcon } from "../assets";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
@@ -29,13 +29,13 @@ const SignUp = () => {
       [name]: type === "checkbox" ? checked : value,
     });
   };
-
-  const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      image: e.target.files[0],
-    });
-  };
+// I dont think this is needed anymore since its now a text field and not a file input
+  // const handleFileChange = (e) => {
+  //   setFormData({
+  //     ...formData,
+  //     image: e.target.files[0],
+  //   });
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -103,12 +103,19 @@ const SignUp = () => {
                       onChange={handleChange}
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                     />
-                    <img
-                      src={eye}
-                      className="absolute top-11 right-3 w-3 h-3 "
+                    {showPassword.password1?<img
+                      src={lashesIcon}
+                      className="absolute top-11 right-2 w-10 h-5 "
                       alt="hide password icon"
                       onClick={() => handleShowPassword("password1")}
+                    /> :
+                    <img
+                    src={eye}
+                    className="absolute top-11 right-2 w-7 h-4"
+                    alt="hide password icon"
+                    onClick={() => handleShowPassword("password1")}
                     />
+                  }
                   </div>
                   <div className="relative">
                     <label
@@ -124,13 +131,19 @@ const SignUp = () => {
                       placeholder="Type password again"
                       onChange={handleChange}
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
-                    />
-                    <img
-                      src={eye}
-                      className="absolute top-11 right-3 w-3 h-3"
+                    />{showPassword.password2?<img
+                      src={lashesIcon}
+                      className="absolute top-11 right-2 w-10 h-5"
                       alt="hide password icon"
                       onClick={() => handleShowPassword("password2")}
+                    /> :
+                    <img
+                    src={eye}
+                    className="absolute top-11 right-2 w-7 h-4 "
+                    alt="hide password icon"
+                    onClick={() => handleShowPassword("password2")}
                     />
+                  }
                   </div>
 
                   <div>
@@ -138,22 +151,24 @@ const SignUp = () => {
                       htmlFor="ProfileImage"
                       className="block text-[16px] font-bold text-[#333333]"
                     >
-                      Add Profile Image
+                      Store URL
                     </label>
                     <div className="mt-1">
-                      <label
+                      {/* <label
                         htmlFor="ProfileImage"
                         className="block w-full p-3 text-sm text-gray-400 bg-white border-lightGreen border rounded-md cursor-pointer shadow-sm"
                       >
-                        Choose Image
-                      </label>
+                       Add Store URL
+                      </label> */}
+                      {/* changed the input field to a type of text to add a store URL */}
                       <input
-                        type="file"
+                        type="text"
                         id="ProfileImage"
                         name="image"
-                        accept="image/*"
-                        onChange={handleFileChange}
-                        className="hidden"
+                        // accept="image/*"
+                        // onChange={handleFileChange}
+                        className="block w-full p-3 text-sm text-gray-400 bg-white border-lightGreen border rounded-md"
+                        placeholder="Add Store URL"
                       />
                     </div>
                   </div>

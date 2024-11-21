@@ -66,6 +66,7 @@ import dot2 from './dot2.svg'
 import dot3 from './dot3.svg'
 import eye from './Eye-icon.svg'
 import tadfarm from './tadFarm.jpg'
+import lashesIcon from './lashes-icon.svg'
 
 export {
     nilelogosolid,
@@ -133,5 +134,5 @@ export {
     donBaci,
     dot1,
     dot2, dot3, eye
-    ,tadfarm
+    ,tadfarm,lashesIcon
 }
