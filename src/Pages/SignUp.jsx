@@ -22,13 +22,13 @@ const SignUp = () => {
     marketing_accept: false,
   });
   //check if all input fields av been field b4 enabling the submit button
-  const isFormValid =
-    formData.name &&
-    formData.email &&
-    formData.password &&
-    formData.passwordConfirm &&
-    formData.storeName &&
-    formData.storeURL;
+  // const isFormValid =
+  //   formData.name &&
+  //   formData.email &&
+  //   formData.password &&
+  //   formData.passwordConfirm &&
+  //   formData.storeName &&
+  //   formData.storeURL;
   
   //backend checks
   const { signUpMutate, signUpError, signUpIsPending } = useSignUserUp();
@@ -254,8 +254,8 @@ const SignUp = () => {
               {step ? (
                 <button
                   type="submit"
-                  className={isFormValid?"text-[#ffffff] grid place-items-center bg-[#004324] w-full p-2 rounded-md mt-5":'  text-[#ffffff] grid place-items-center bg-[#004324] opacity-85 w-full p-2 rounded-md mt-5'}
-                  disabled={signUpIsPending||!isFormValid}
+                  className={"text-[#ffffff] grid place-items-center bg-[#004324] w-full p-2 rounded-md mt-5"}
+                  disabled={signUpIsPending}
                 >
                   {signUpIsPending ? (
                     <div className="w-4 disabled:bg-opacity-30 h-4 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
