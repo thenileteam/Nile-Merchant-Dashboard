@@ -74,7 +74,7 @@ const AddProduct1 = () => {
         handlingTime: productDetails.handlingTime,
         stock: productDetails.stock,
         productStatus: "AVAILABLE",
-        quantitySizes: productDetails.quantitySizes,
+        productSizes: productDetails.quantitySizes,
       };
       // console.log(dataToBackend);
       addProductToBackend(dataToBackend);

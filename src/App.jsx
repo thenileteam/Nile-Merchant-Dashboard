@@ -23,15 +23,15 @@ import DomainSetting from "./Components/Store/DomainSetting";
 import Email from "./Pages/Email";
 import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {ShowPasswordProvider}from './Context/Context'
-
+import { ShowPasswordProvider } from "./Context/Context";
+import "react-loading-skeleton/dist/skeleton.css";
 const App = () => {
   const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
       {/*  wrapped the components in ShowPasswordProvider for easy access to the shared state */}
-       <ShowPasswordProvider> 
+      <ShowPasswordProvider>
         <div>
           <Toaster />
           <ScrollToTop />

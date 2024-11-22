@@ -21,6 +21,7 @@ import SelectProductForm from "../Components/Orders/selectproductform";
 import { toast } from "sonner";
 import { useCreateNewOrder } from "../datahooks/orders/orderhooks";
 import { AiOutlineLoading } from "react-icons/ai";
+import Skeleton from "react-loading-skeleton";
 
 const Orders = () => {
   const { addOrderToBackend, isAddingOrder } = useCreateNewOrder(() => {
@@ -321,27 +322,38 @@ const Orders = () => {
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
               <div className="flex gap-28 justify-center">
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={shoppingcart} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    {data?.length || 0}
-                  </h1>
-                  <p className="text-[#6E6E6E]">Total Orders</p>
-                </div>
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={truck1} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Pending Shipment</p>
-                </div>
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={timer} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Average Deliver Time</p>
-                </div>
+                {isFetching ? (
+                  <div className=" grid grid-cols-3 gap-10">
+                    {" "}
+                    <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
+                    <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
+                    <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
+                  </div>
+                ) : (
+                  <>
+                    <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                      <img src={shoppingcart} alt="" />
+                      <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                        {data?.length || 0}
+                      </h1>
+                      <p className="text-[#6E6E6E]">Total Orders</p>
+                    </div>
+                    <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                      <img src={truck1} alt="" />
+                      <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                        0
+                      </h1>
+                      <p className="text-[#6E6E6E]">Pending Shipment</p>
+                    </div>
+                    <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                      <img src={timer} alt="" />
+                      <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                        0
+                      </h1>
+                      <p className="text-[#6E6E6E]">Average Deliver Time</p>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 

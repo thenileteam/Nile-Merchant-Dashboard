@@ -150,21 +150,21 @@ const Dashboard = () => {
                   <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={transaction} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                      NA
+                      0
                     </h1>
                     <p className="text-[#6E6E6E]">Avalaible Balance</p>
                   </div>
                   <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={packagemoving} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                      {dashboardData?.salesData?.totalSales}
+                      {dashboardData?.orders?.totalOrders}
                     </h1>
                     <p className="text-[#6E6E6E]">Total sales</p>
                   </div>
                   <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={bitcoin} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                      NA
+                      0
                     </h1>
                     <p className="text-[#6E6E6E]">Total Payouts</p>
                   </div>

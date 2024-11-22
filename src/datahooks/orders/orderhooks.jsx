@@ -3,7 +3,7 @@ import ApiInstance from "../../Api/ApiInstance";
 import { toast } from "sonner";
 
 export const useCreateNewOrder = (onSuccessCallback) => {
-  const queryClient = useQueryClient(); // Get the query client to manage cache
+  const queryClient = useQueryClient();
 
   const { mutate, isLoading: isAddingOrder } = useMutation({
     mutationFn: (data) => ApiInstance.post("/orders/orders", data),

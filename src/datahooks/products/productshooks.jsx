@@ -18,11 +18,11 @@ export const useFetchProducts = () => {
         return modifiedProducts;
       } catch (error) {
         console.error("Error fetching products:", error);
-        throw error; // This ensures `isError` becomes `true`
+        throw error;
       }
     },
-    staleTime: Infinity, // Cache won't go stale
-    cacheTime: Infinity, // Cache will persist indefinitely
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
 
   return {
