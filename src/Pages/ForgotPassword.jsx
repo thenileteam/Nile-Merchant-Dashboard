@@ -1,13 +1,12 @@
 import React from "react";
-import { nilelogosolid, eye } from "../assets";
+import { nilelogosolid, eye, lashesIcon } from "../assets";
 import { Link } from "react-router-dom";
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
-import {useShowPassword} from '../Context/Context'
+import { useShowPassword} from "../Context/Context";
 
 const ForgotPassword = () => {
-  const{showPassword, handleShowPassword} = useShowPassword()
-  
+  const { showPassword, handleShowPassword } = useShowPassword();
   return (
     <section>
       <div className="container md:max-w-[700px] lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-lg p-8 lg:p-16 shadow-md shadow-dimWhite">
@@ -35,31 +34,67 @@ const ForgotPassword = () => {
                 </label>
 
                 <input
-                  type={showPassword.newPassword ?"text":"password"}
-                  id="new_Password"
-                  name="password"
+                  type={showPassword.newPassword ? "text" : "password"}
+                  id="NewPassword"
+                  name="NewPassword"
                   placeholder="type password"
-                  className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
+                  className={
+                       "mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
+                  }
                 />
-                <img src={eye} className="absolute top-11 right-3 w-3 h-3" alt="hide password icon" onClick={()=>handleShowPassword('newPassword')}/>
+                {showPassword.newPassword ? (
+                  <img
+                    src={lashesIcon}
+                    className="absolute top-11 right-2 w-10 h-5"
+                    alt="hide password icon"
+                    loading="lazy"
+                    onClick={() => handleShowPassword("NewPassword")}
+                  />
+                ) : (
+                  <img
+                    src={eye}
+                    className="absolute top-11 right-2 w-7 h-4"
+                    alt="hide password icon"
+                    loading="lazy"
+                    onClick={() => handleShowPassword("NewPassword")}
+                  />
+                )}
               </div>
 
               <div className="relative">
                 <label
-                  htmlFor="Repeat Password"
+                  htmlFor="RepeatPassword"
                   className="block text-[16px] font-bold text-[#333333]"
                 >
                   Repeat Password
                 </label>
 
                 <input
-                  type={showPassword.confirmPassword? "text":"password"}
-                  id="repeat_Password"
-                  name="password"
+                  type={showPassword.confirmPassword ? "text" : "password"}
+                  id="RepeatPassword"
+                  name="RepeatPassword"
                   placeholder="type the same password"
-                  className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
+                  className={
+                   "mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
+                  }
                 />
-                  <img src={eye} className="absolute top-11 right-3 w-3 h-3" alt="hide password icon" onClick={()=>handleShowPassword('confirmPassword')}/>
+                {showPassword.confirmPassword ? (
+                  <img
+                    src={lashesIcon}
+                    className="absolute top-11 right-2 w-10 h-5"
+                    alt="hide password icon"
+                    loading="lazy"
+                    onClick={() => handleShowPassword("confirmPassword")}
+                  />
+                ) : (
+                  <img
+                    src={eye}
+                    className="absolute top-11 right-2 w-7 h-4"
+                    alt="hide password icon"
+                    loading="lazy"
+                    onClick={() => handleShowPassword("confirmPassword")}
+                  />
+                )}
               </div>
 
               {/* Reset Password Button */}
@@ -72,7 +107,11 @@ const ForgotPassword = () => {
               </Link>
             </form>
           </div>
-            <CreateAccPaths text='Dont Have An Account ?' path='/signup' linkText='Create one'/>
+          <CreateAccPaths
+            text="Dont Have An Account ?"
+            path="/signup"
+            linkText="Create one"
+          />
         </div>
         <LoginReviews />
       </div>
