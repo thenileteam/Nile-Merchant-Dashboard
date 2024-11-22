@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import { nilelogosolid, eye,lashesIcon } from "../assets";
+import { nilelogosolid, eye, lashesIcon } from "../assets";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
@@ -11,16 +11,26 @@ import { useShowPassword } from "../Context/Context";
 const SignUp = () => {
   //custom context hook
   const { showPassword, handleShowPassword } = useShowPassword();
-  const [step, setStep] = useState(false);
+  const [step, setStep] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     passwordConfirm: "",
     storeName: "",
-    image: null,
+    storeURL: "",
     marketing_accept: false,
   });
+  //check if all input fields av been field b4 enabling the submit button
+  const isFormValid =
+    formData.name &&
+    formData.email &&
+    formData.password &&
+    formData.passwordConfirm &&
+    formData.storeName &&
+    formData.storeURL;
+  
+  //backend checks
   const { signUpMutate, signUpError, signUpIsPending } = useSignUserUp();
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -29,13 +39,7 @@ const SignUp = () => {
       [name]: type === "checkbox" ? checked : value,
     });
   };
-// I dont think this is needed anymore since its now a text field and not a file input
-  // const handleFileChange = (e) => {
-  //   setFormData({
-  //     ...formData,
-  //     image: e.target.files[0],
-  //   });
-  // };
+   
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,7 +90,7 @@ const SignUp = () => {
           <div className="mx-auto">
             <form onSubmit={handleSubmit} className="space-y-6 mt-6">
               {/* conditionally rendering 3 input fields at a time for the sign up steps */}
-              {step ? (
+              {step? (
                 <>
                   <div className="relative">
                     <label
@@ -103,19 +107,23 @@ const SignUp = () => {
                       onChange={handleChange}
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                     />
-                    {showPassword.password1?<img
-                      src={lashesIcon}
-                      className="absolute top-11 right-2 w-10 h-5 "
-                      alt="hide password icon"
-                      onClick={() => handleShowPassword("password1")}
-                    /> :
-                    <img
-                    src={eye}
-                    className="absolute top-11 right-2 w-7 h-4"
-                    alt="hide password icon"
-                    onClick={() => handleShowPassword("password1")}
-                    />
-                  }
+                    {showPassword.password1 ? (
+                      <img
+                        src={lashesIcon}
+                        className="absolute top-11 right-2 w-10 h-5 "
+                        alt="hide password icon"
+                        loading="lazy"
+                        onClick={() => handleShowPassword("password1")}
+                      />
+                    ) : (
+                      <img
+                        src={eye}
+                        className="absolute top-11 right-2 w-7 h-4"
+                        alt="hide password icon"
+                        loading="lazy"
+                        onClick={() => handleShowPassword("password1")}
+                      />
+                    )}
                   </div>
                   <div className="relative">
                     <label
@@ -131,39 +139,39 @@ const SignUp = () => {
                       placeholder="Type password again"
                       onChange={handleChange}
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
-                    />{showPassword.password2?<img
-                      src={lashesIcon}
-                      className="absolute top-11 right-2 w-10 h-5"
-                      alt="hide password icon"
-                      onClick={() => handleShowPassword("password2")}
-                    /> :
-                    <img
-                    src={eye}
-                    className="absolute top-11 right-2 w-7 h-4 "
-                    alt="hide password icon"
-                    onClick={() => handleShowPassword("password2")}
                     />
-                  }
+                    {showPassword.password2 ? (
+                      <img
+                        src={lashesIcon}
+                        className="absolute top-11 right-2 w-10 h-5"
+                        alt="hide password icon"
+                        loading="lazy"
+                        onClick={() => handleShowPassword("password2")}
+                      />
+                    ) : (
+                      <img
+                        src={eye}
+                        className="absolute top-11 right-2 w-7 h-4 "
+                        alt="hide password icon"
+                        loading="lazy"
+                        onClick={() => handleShowPassword("password2")}
+                      />
+                    )}
                   </div>
 
                   <div>
                     <label
-                      htmlFor="ProfileImage"
+                      htmlFor="StoreURL"
                       className="block text-[16px] font-bold text-[#333333]"
                     >
                       Store URL
                     </label>
                     <div className="mt-1">
-                      {/* <label
-                        htmlFor="ProfileImage"
-                        className="block w-full p-3 text-sm text-gray-400 bg-white border-lightGreen border rounded-md cursor-pointer shadow-sm"
-                      >
-                       Add Store URL
-                      </label> */}
+                     
                       {/* changed the input field to a type of text to add a store URL */}
                       <input
                         type="text"
-                        id="ProfileImage"
+                        id="StoreURL"
                         name="image"
                         // accept="image/*"
                         // onChange={handleFileChange}
@@ -204,7 +212,7 @@ const SignUp = () => {
                       name="email"
                       placeholder="Enter your Email Address"
                       onChange={handleChange}
-                      className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
+                      className={"mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"}
                     />
                   </div>
                   <div>
@@ -241,12 +249,13 @@ const SignUp = () => {
                 </label>
               </div>
 
-              {/* Sign Up Button */}
+              {/* Sign Up Button  -- you can only continue if the step is true and the form is filled*/}
+
               {step ? (
                 <button
                   type="submit"
-                  className="text-[#ffffff] grid place-items-center bg-[#004324] w-full p-2 rounded-md mt-5"
-                  disabled={signUpIsPending}
+                  className={isFormValid?"text-[#ffffff] grid place-items-center bg-[#004324] w-full p-2 rounded-md mt-5":'  text-[#ffffff] grid place-items-center bg-[#004324] opacity-85 w-full p-2 rounded-md mt-5'}
+                  disabled={signUpIsPending||!isFormValid}
                 >
                   {signUpIsPending ? (
                     <div className="w-4 h-4 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -266,6 +275,8 @@ const SignUp = () => {
                   Continue
                 </button>
               )}
+              {/* if the input fields are not filled  and the step is true then show the error message */}
+              {/* {!isFormValid && <p className="text-red-600 font-medium">Input fields cannot be empty!</p>} */}
             </form>
             <CreateAccPaths
               text="Already Have An Account ?"

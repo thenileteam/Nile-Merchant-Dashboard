@@ -42,15 +42,16 @@ const LoginReviews = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 1 }}
       >
-        <img src={reviews[currentReview].img} className="w-[520px] h-[650px] object-cover rounded-lg" alt="lady smiling" />
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-800 via-transparent to-slate-800 opacity-50 rounded-lg"></div>
+        <img src={reviews[currentReview].img} className="w-[520px] h-[650px] object-cover rounded-lg" loading="lazy" alt="lady smiling" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-800 via-transparent to-slate-800 opacity-50 rounded-lg"></div>
         <div className="text-white absolute bottom-[120px] left-16 right-16">
           <p className="font-bold">{reviews[currentReview].text}</p>
           <h4 className="mt-2">{reviews[currentReview].author}</h4>
         </div>
           <img className="absolute  bottom-14 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
             src={reviews[currentReview].slide}
-            alt={`slide${reviews[currentReview]}`}
+          alt={`slide${reviews[currentReview]}`}
+          loading="lazy"
           />
       </motion.div>
     </div>
