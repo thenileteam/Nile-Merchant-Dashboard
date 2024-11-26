@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Links from "../Links";
+import PlaceholderImage from '../Components/PlaceholderImage/PlaceholderImage'
 import {
   image,
   nilelogowhite,
@@ -124,7 +125,8 @@ const Product = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <img src={image} alt="" />
+                      {/* <img src={image} alt="" /> */}
+                      <PlaceholderImage/>
                     </Link>
                   </div>
                 </div>

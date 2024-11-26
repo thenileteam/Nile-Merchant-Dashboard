@@ -10,7 +10,7 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData }) => {
   console.log(dashboardData);
   return (
     <>
-      <div className="px-24">
+      <div className="px-24 border-red-700">
         {isFetchingDashboardData ? (
           <div className=" w-full mt-10 flex flex-col gap-5">
             <Skeleton className=" h-[50px] w-full min-w-52" />
@@ -18,11 +18,11 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData }) => {
             <Skeleton className=" h-[50px] w-full min-w-52" />
           </div>
         ) : (
-          <table className=" w-full border-separate border-spacing-y-5">
+          <table className=" w-full border-separate border-spacing-y-5 ">
             <thead>
               <tr className="text-left bg-[#EAF4E2] shadow-lg">
-                <th className="px-2 py-3">Metrics</th>
-                <th className="px-2 py-3 text-center">Today</th>
+                <th className="px-2 py-3  ">Metrics</th>
+                <th className="px-2 py-3 text-center  ">Today</th>
                 <th className="px-2 py-3 text-center">This week</th>
                 <th className="px-2 py-3 text-center">This Month</th>
                 <th className="px-2 py-3 text-center">This Year So Far</th>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { addsquare } from "../../assets";
+import {useFileStore} from'../../zustandStore'
 
 const AddProduct = () => {
   // State to control the popup visibility and animation
@@ -8,23 +9,6 @@ const AddProduct = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isFinalConfirmationOpen, setIsFinalConfirmationOpen] = useState(false);
   const [fadeOut, setFadeOut] = useState(false); // State for fade-out animation
-
-  // Form fields state
-  const [productDetails, setProductDetails] = useState({
-    category: "",
-    name: "",
-    details: "",
-    stockQuantity: "",
-    size: "",
-    weight: "",
-    freeShipping: false,
-    price: "",
-    discountedPrice: "",
-    color: "",
-    dimensions: { length: "", width: "", height: "" },
-    packaging: "",
-    handlingTime: "",
-  });
 
   // Function to toggle the main popup visibility
   const togglePopup = () => {
@@ -69,31 +53,7 @@ const AddProduct = () => {
       setIsFinalConfirmationOpen(false);
     }, 1000);
   };
-
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-
-    if (name.startsWith("dimensions.")) {
-      const key = name.split(".")[1];
-      setProductDetails((prev) => ({
-        ...prev,
-        dimensions: {
-          ...prev.dimensions,
-          [key]: value,
-        },
-      }));
-    } else if (type === "checkbox") {
-      setProductDetails((prev) => ({
-        ...prev,
-        [name]: checked,
-      }));
-    } else {
-      setProductDetails((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
-  };
+ 
   return (
     <>
       {/* Button to trigger the popup */}
@@ -238,6 +198,7 @@ const AddProduct = () => {
                       <select
                         name="size"
                         id="size"
+                        isSearchable={true}
                         value={productDetails.size}
                         onChange={handleInputChange}
                         className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
@@ -361,6 +322,7 @@ const AddProduct = () => {
                         <option value="BL">Blue</option>
                         <option value="RD">Red</option>
                         <option value="PK">Pink</option>
+                        {/* <option value="PK">Custom</option> */}
                       </select>
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />

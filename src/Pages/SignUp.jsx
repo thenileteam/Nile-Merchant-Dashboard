@@ -159,27 +159,7 @@ const SignUp = () => {
                     )}
                   </div>
 
-                  <div>
-                    <label
-                      htmlFor="StoreURL"
-                      className="block text-[16px] font-bold text-[#333333]"
-                    >
-                      Store URL
-                    </label>
-                    <div className="mt-1">
-                     
-                      {/* changed the input field to a type of text to add a store URL */}
-                      <input
-                        type="text"
-                        id="StoreURL"
-                        name="image"
-                        // accept="image/*"
-                        // onChange={handleFileChange}
-                        className="block w-full p-3 text-sm text-gray-400 bg-white border-lightGreen border rounded-md"
-                        placeholder="Add Store URL"
-                      />
-                    </div>
-                  </div>
+                 
                 </>
               ) : (
                 <>

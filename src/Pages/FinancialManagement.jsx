@@ -16,6 +16,7 @@ import {
   moneysend,
 } from "../assets";
 import FinancialTable from "../Components/Financial/FinancialTable";
+import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
 
 const FinancialManagement = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -127,7 +128,7 @@ const FinancialManagement = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <img src={image} alt="" />
+                      <PlaceholderImage/>
                     </Link>
                   </div>
                 </div>

@@ -44,7 +44,7 @@ import containertruck from "./containertruck.png";
 import websecurity from "./websecurity.png";
 import delete1 from "./delete1.png"
 import arrowleft from "./arrowleft.png";
-import profileimage from "./profileimage.png";
+import profileimage from "./profileimage.svg";
 import logout from "./logout.png";
 import addlogo from "./addlogo.png";
 import coverimage from "./coverimage.png";
@@ -67,8 +67,9 @@ import dot3 from './dot3.svg'
 import eye from './Eye-icon.svg'
 import tadfarm from './tadFarm.jpg'
 import lashesIcon from './lashes-icon.svg'
+import addImage from './add-image.svg'
 
-export {
+export {addImage,
     nilelogosolid,
     nilelogowhite,
     notification,

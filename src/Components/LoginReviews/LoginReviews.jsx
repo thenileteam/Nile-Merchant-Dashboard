@@ -50,7 +50,7 @@ const LoginReviews = () => {
         </div>
           <img className="absolute  bottom-14 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
             src={reviews[currentReview].slide}
-          alt={`slide${reviews[currentReview]}`}
+          alt={`slide${currentReview}`}
           loading="lazy"
           />
       </motion.div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { addsquare } from "../../assets";
+import { addsquare, addImage } from "../../assets";
+import UploadImage from "../UploadImage/UploadImage";
 
 const EditProduct = () => {
   // State to control the popup visibility and animation
@@ -8,19 +9,21 @@ const EditProduct = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isFinalConfirmationOpen, setIsFinalConfirmationOpen] = useState(false);
   const [fadeOut, setFadeOut] = useState(false); // State for fade-out animation
+  //zustand state
 
   // Form fields state
   const [productDetails, setProductDetails] = useState({
-    category: "",
+    categoryName: "",
     name: "",
-    details: "",
-    stockQuantity: "",
-    size: "",
-    weight: "",
+    storeId: "",
+    description: "",
+    stock: "",
+    quantitySizes: "",
+    shippingWeight: "",
     freeShipping: false,
-    price: "",
-    discountedPrice: "",
-    color: "",
+    price: 0,
+    discountedPrice: 0,
+    productColorName: "",
     dimensions: { length: "", width: "", height: "" },
     packaging: "",
     handlingTime: "",
@@ -69,11 +72,21 @@ const EditProduct = () => {
       setIsFinalConfirmationOpen(false);
     }, 1000);
   };
-
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-
-    if (name.startsWith("dimensions.")) {
+    if (name === "productColorName" && value === "Custom") {
+      // When "Custom" is selected, reset customColor to empty
+      setProductDetails((prev) => ({
+        ...prev,
+        productColorName: value,
+      }));
+    } else if (name === "quantitySizes" && value === "Custom") {
+      // Handle  custom color input field
+      setProductDetails((prev) => ({
+        ...prev,
+        quantitySizes: value,
+      }));
+    } else if (name.startsWith("dimensions.")) {
       const key = name.split(".")[1];
       setProductDetails((prev) => ({
         ...prev,
@@ -236,21 +249,26 @@ const EditProduct = () => {
                       >
                         Product Size
                       </label>
-                      <select
-                        name="size"
-                        id="size"
-                        value={productDetails.size}
-                        onChange={handleInputChange}
-                        className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
-                      >
-                        <option value="">E.g:XXL</option>
-                        <option value="XL">XL</option>
-                        <option value="XXL">XXL</option>
-                        <option value="LG">LG</option>
-                        <option value="SM">SM</option>
-                        <option value="XS">XS</option>
-                        <option value="XXS">XXS</option>
-                      </select>
+                      <div className="flex flex-col w-full">
+                        <input
+                          list="size-options" // This connects to the datalist below
+                          name="quantitySizes"
+                          id="size"
+                          value={productDetails.quantitySizes}
+                          onChange={handleInputChange}
+                          className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
+                          placeholder="Select or enter a size"
+                        />
+                        <datalist id="size-options">
+                          <option value="XL" />
+                          <option value="XXL" />
+                          <option value="LG" />
+                          <option value="SM" />
+                          <option value="XS" />
+                          <option value="XXS" />
+                        </datalist>
+                      </div>
+
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
                       </span>
@@ -351,18 +369,24 @@ const EditProduct = () => {
                       >
                         Product Color
                       </label>
-                      <select
-                        name="color"
-                        id="color"
-                        value={productDetails.color}
-                        onChange={handleInputChange}
-                        className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
-                      >
-                        <option value="">E.g:Red</option>
-                        <option value="BL">Blue</option>
-                        <option value="RD">Red</option>
-                        <option value="PK">Pink</option>
-                      </select>
+                       {/* dropdown and manual input fields */}
+                      <div className="flex flex-col w-full">
+                        <input
+                          list="color-options" // Links to the datalist below
+                          name="productColorName"
+                          id="color"
+                          value={productDetails.productColorName}
+                          onChange={handleInputChange}
+                          className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
+                          placeholder="Select or enter a size"
+                        />
+                        {/* Datalist with predefined options */}
+                        <datalist id="color-options">
+                          <option value="Red" />
+                          <option value="Blue" />
+                          <option value="Pink" />
+                        </datalist>
+                      </div>
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
                       </span>
@@ -449,8 +473,7 @@ const EditProduct = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center mt-10">PRODUCT IMAGE</div>
-
+              <UploadImage image={addImage} />
               <div className="flex justify-center gap-4 mt-16">
                 {/* Edit Button */}
                 <button

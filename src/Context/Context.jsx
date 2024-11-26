@@ -6,7 +6,8 @@ const ShowPasswordContext = createContext();
 const FormContext= createContext()
 // Custom hook to use the context
 export const useShowPassword = () => useContext(ShowPasswordContext);
-export const useFormContext = ()=>useContext(FormContext)
+export const useFormContext = () => useContext(FormContext)
+
 //The provider component
 export const ShowPasswordProvider = ({ children }) => {
   const [inputErrorMsg, setInputErrorMsg] = useState("");
@@ -33,7 +34,7 @@ export const ShowPasswordProvider = ({ children }) => {
     const isValuePresent = !email|| !password||!confirmPassword||!newPassword
     if (isValuePresent){
       setInputErrorMsg('Input fields cannot be empty!')
-    }else{setInputErrprMsg('')}
+    }else{setInputErrorMsg('')}
   }
   return (
     <ShowPasswordContext.Provider value={{ showPassword, handleShowPassword}}>

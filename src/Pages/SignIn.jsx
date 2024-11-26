@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { nilelogosolid } from "../assets";
+import { nilelogosolid, eye, lashesIcon   } from "../assets";
 import { Link } from "react-router-dom";
 import { useLogUserIn } from "../datahooks/users/userhooks";
-
+import LoginReviews from "../Components/LoginReviews/LoginReviews";
+import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
+import {useShowPassword} from '../Context/Context'
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+const{showPassword, handleShowPassword} = useShowPassword()
   const { mutate, isPending } = useLogUserIn();
 
   const handleLogin = async (e) => {
@@ -76,7 +78,7 @@ const SignIn = () => {
                 required
               />
               <img
-                src={eye}
+                src={showPassword.password?  lashesIcon: eye}
                 className="absolute top-11 right-3 w-3 h-3"
                 alt="hide password icon"
                 onClick={() => handleShowPassword("password")}
