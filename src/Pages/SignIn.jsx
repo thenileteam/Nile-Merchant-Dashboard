@@ -6,25 +6,35 @@ import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
 import { useShowPassword } from "../Context/Context";
 import { useLogUserIn } from "../datahooks/users/userhooks";
 import Cookies from "js-cookie";
+
 const SignIn = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const accessToken = Cookies.get("accessToken");
     const store = localStorage.getItem("store");
     if (accessToken && store !== null) {
-      navigate("/dashboard");
+      navigate("/");
     }
   }, [navigate]);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // State for error messages
 
   const { showPassword, handleShowPassword } = useShowPassword();
-
   const { mutate, isPending } = useLogUserIn();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(isPending);
+
+    // Validation for empty fields
+    if (!email || !password) {
+      setError("Please enter both email and password.");
+      return;
+    }
+
+    setError(""); // Clear error if validation passes
+
     try {
       mutate({
         email,
@@ -36,11 +46,10 @@ const SignIn = () => {
   };
 
   return (
-    //update
     <section className="h-screen">
-      <div className="container md:max-w-[700px]  lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-2xl lg:shadow-md lg::shadow-gray-300 p-4 lg:p-16">
+      <div className="container md:max-w-[700px] lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-2xl lg:shadow-md lg:shadow-gray-300 p-4 lg:p-16">
         <div className="mb-10">
-          <div className="">
+          <div>
             <img
               src={nilelogosolid}
               alt="nile-logo"
@@ -50,9 +59,14 @@ const SignIn = () => {
               Welcome To The Merchant Dashboard
             </h1>
           </div>
-
-          <div className=" mx-auto">
+          <div className="mx-auto">
             <form onSubmit={handleLogin} className="space-y-6 mt-6">
+              {/* Display error message */}
+              {error && (
+                <div className="bg-red-100 text-red-700 p-2 rounded-md">
+                  {error}
+                </div>
+              )}
               <div>
                 <label
                   htmlFor="EmailAddress"
@@ -68,7 +82,6 @@ const SignIn = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Input email here"
                   className="mt-1 w-full lg:w-[450px] p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
-                  required
                 />
               </div>
 
@@ -85,9 +98,8 @@ const SignIn = () => {
                   name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="type password"
+                  placeholder="Type password"
                   className="mt-1 w-full lg:w-[450px] p-3 rounded-md border border-lightGreen bg-white text-sm text-gray-700 shadow-sm"
-                  required
                 />
                 <img
                   src={eye}
@@ -96,7 +108,7 @@ const SignIn = () => {
                   onClick={() => handleShowPassword("password")}
                 />
               </div>
-              {/* updates */}
+
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-center mx-auto md:gap-10">
                 <label
                   htmlFor="MarketingAccept"
@@ -112,7 +124,7 @@ const SignIn = () => {
                     Remember Me
                   </span>
                 </label>
-                <div className="flex items_center gap-1 ">
+                <div className="flex items-center gap-1">
                   <h1 className="text-[#333333] text-[14px]">
                     Forgotten Password?
                   </h1>
@@ -135,7 +147,7 @@ const SignIn = () => {
               </button>
 
               <CreateAccPaths
-                text="Don't Have An Account ?"
+                text="Don't Have An Account?"
                 path="/signup"
                 linkText="Click Here"
               />
