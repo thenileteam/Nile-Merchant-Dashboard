@@ -58,7 +58,7 @@ const Dashboard = () => {
           </div>
 
           {/* Navbar */}
-            {/* <nav className="bg-[#EAF4E2] p-[12px] lg:p-4 shadow-md flex items-center lg:gap-5 w-full fixed top-0 right-0 left-0 border-red-600 border-2">
+             <nav className="bg-[#EAF4E2] p-[12px] lg:p-4 shadow-md flex items-center lg:gap-5 w-full fixed top-0 right-0 left-0 border-red-600 border-2">
               <button
                 className="lg:hidden text-gray-800 z-20"
                 onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -81,9 +81,9 @@ const Dashboard = () => {
                     }
                   />
                 </svg>
-              </button> */}
+              </button> 
               {/* child two */}
-              {/* <div className="lg:flex lg:items-center lg:justify-between border-2 border-yellow-500 max-w-[1322px] mx-auto">
+               <div className="lg:flex lg:items-center lg:justify-between border-2 border-yellow-500 max-w-[1322px] mx-auto">
                 <div className=" ">
                   <h1 className="text-[32px] font-bold ml-20 hidden lg:block">Welcome User</h1>
                   <h1 className="text-xl text-pryGreen font-bold lg:hidden text-center">Dashboard Overview</h1>
@@ -138,7 +138,7 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-            </nav> */}
+            </nav> 
                {/* lg:fixed lg:h-screen lg:top-[113px] */}
           {/* Cards */}
           <div className="lg:flex-grow lg:right-0 overflow-y-scroll border-blue-600 border-2">
@@ -178,11 +178,11 @@ const Dashboard = () => {
 
             {/* Line */}
               <div className="mt-8 hidden lg:block lg:w-[1020px]  mx-auto border-2 border-white shadow-[0px_4px_10px_rgba(0,0,0,0.3)]"></div>
-
-            <div className="mt-8 border-2 border-red-700">
-              <div className="flex items-center gap-y-6 justify-between  border-2 border-yellow-500">
+ 
+              <div className="px-24 mt-10 space-y-7">
+              <div className="flex items-center justify-between">
                 <Link to="/storesetting">
-                  <div className="flex items-center justify-between w-[469px] h-[122px] border-[#8ED06C] border-2 bg-[#ffffff] p-3 rounded-lg ">
+                  <div className="flex items-center justify-between w-[469px] h-[122px] border-[#8ED06C] border-2 bg-[#ffffff] p-3 rounded-lg">
                     <div className="flex items-center gap-2">
                       <img src={store} alt="" />
                       <div>
@@ -212,9 +212,9 @@ const Dashboard = () => {
                     <img src={arrow} alt="" />
                   </div>
                 </Link>
-              
+              </div>
 
-              <div className="flex items-center justify-between border-2 border-purple-600">
+              <div className="flex items-center justify-between">
                 <Link to="/shippingsetting">
                   <div className="flex items-center justify-between w-[469px] h-[122px] border-[#8ED06C] border-2 bg-[#ffffff] p-3 rounded-lg">
                     <div className="flex items-center gap-2">
@@ -246,10 +246,9 @@ const Dashboard = () => {
                     <img src={arrow} alt="" />
                   </div>
                 </Link>
-                </div>
-                {/* the parent closing tag below    */}
               </div>
-              <div className="flex justify-center border-2 border-black">
+
+              <div className="flex justify-center">
                 <Link to="/banksetting">
                   <div className="flex items-center justify-between w-[469px] h-[122px] border-[#8ED06C] border-2 bg-[#ffffff] p-3 rounded-lg">
                     <div className="flex items-center gap-2">
@@ -267,7 +266,6 @@ const Dashboard = () => {
                 </Link>
               </div>
             </div>
-
             <div>
               <DashoardTabel
                 dashboardData={dashboardData}
