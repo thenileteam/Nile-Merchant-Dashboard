@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { nilelogosolid, eye } from "../assets";
+import { nilelogosolid, eye, lashesIcon } from "../assets";
 import { Link, useNavigate } from "react-router-dom";
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
@@ -90,7 +90,7 @@ const SignIn = () => {
                   required
                 />
                 <img
-                  src={eye}
+                  src={showPassword?lashesIcon:eye}
                   className="absolute top-11 right-3 w-3 h-3"
                   alt="hide password icon"
                   onClick={() => handleShowPassword("password")}
