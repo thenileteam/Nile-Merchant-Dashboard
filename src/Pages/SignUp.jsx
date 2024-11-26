@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { nilelogosolid, eye, lashesIcon } from "../assets";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios
@@ -7,6 +8,7 @@ import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
 import { useSignUserUp } from "../datahooks/users/userhooks";
 import { useShowPassword } from "../Context/Context";
+import { toast } from "sonner";
 
 const SignUp = () => {
   //custom context hook
@@ -29,8 +31,9 @@ const SignUp = () => {
   //   formData.passwordConfirm &&
   //   formData.storeName &&
   //   formData.storeURL;
-  
+
   //backend checks
+  const [stepData, setStepData] = useState(null);
   const { signUpMutate, signUpError, signUpIsPending } = useSignUserUp();
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -39,7 +42,6 @@ const SignUp = () => {
       [name]: type === "checkbox" ? checked : value,
     });
   };
-   
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,7 +59,43 @@ const SignUp = () => {
 
     signUpMutate(data);
   };
+  useEffect(() => {
+    const firstStepData = JSON.parse(localStorage.getItem("stepData"));
+    if (!firstStepData) return;
+    setStepData(firstStepData);
+    setFormData({
+      ...formData,
+      name: firstStepData.name,
+      email: firstStepData.email,
+      storeName: firstStepData.storeName,
+    });
+    toast.info("Data Populated");
+  }, []);
+  const validateForm = () => {
+    const { name, email, storeName } = formData;
 
+    // Check for empty fields
+    if (!name || !email || !storeName) {
+      toast.error("Please fill in all fields before proceeding.");
+      return false;
+    }
+
+    // Email validation regex
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    // Validate email format
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return false;
+    }
+    toast.success("Data Saved");
+    localStorage.setItem(
+      "stepData",
+      JSON.stringify({ name, email, storeName })
+    );
+    setStep(true);
+    return true;
+  };
   return (
     <section>
       <div className="container md:max-w-[700px] lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-lg p-8 lg:p-16 shadow-md shadow-gray-300">
@@ -90,7 +128,7 @@ const SignUp = () => {
           <div className="mx-auto">
             <form onSubmit={handleSubmit} className="space-y-6 mt-6">
               {/* conditionally rendering 3 input fields at a time for the sign up steps */}
-              {step? (
+              {step ? (
                 <>
                   <div className="relative">
                     <label
@@ -104,6 +142,7 @@ const SignUp = () => {
                       id="Password"
                       name="password"
                       placeholder="********"
+                      value={formData.password}
                       onChange={handleChange}
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                     />
@@ -136,6 +175,7 @@ const SignUp = () => {
                       type={showPassword.password2 ? "text" : "password"}
                       id="RepeatPassword"
                       name="passwordConfirm"
+                      value={formData.passwordConfirm}
                       placeholder="Type password again"
                       onChange={handleChange}
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
@@ -159,7 +199,26 @@ const SignUp = () => {
                     )}
                   </div>
 
-                 
+                  <div>
+                    <label
+                      htmlFor="StoreURL"
+                      className="block text-[16px] font-bold text-[#333333]"
+                    >
+                      Store URL
+                    </label>
+                    <div className="mt-1">
+                      {/* changed the input field to a type of text to add a store URL */}
+                      <input
+                        type="text"
+                        id="StoreURL"
+                        name="image"
+                        // accept="image/*"
+                        // onChange={handleFileChange}
+                        className="block w-full p-3 text-sm text-gray-400 bg-white border-lightGreen border rounded-md"
+                        placeholder="Add Store URL"
+                      />
+                    </div>
+                  </div>
                 </>
               ) : (
                 <>
@@ -174,6 +233,7 @@ const SignUp = () => {
                       type="text"
                       id="FullName"
                       name="name"
+                      value={formData.name || stepData?.name}
                       placeholder="Enter your Full Name"
                       onChange={handleChange}
                       className="mt-1 w-full p-3 rounded-md border border-lightGreen bg-white text-sm text-gray-700 shadow-sm"
@@ -190,9 +250,12 @@ const SignUp = () => {
                       type="email"
                       id="EmailAddress"
                       name="email"
+                      value={formData.email || stepData?.email}
                       placeholder="Enter your Email Address"
                       onChange={handleChange}
-                      className={"mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"}
+                      className={
+                        "mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
+                      }
                     />
                   </div>
                   <div>
@@ -206,6 +269,7 @@ const SignUp = () => {
                       type="text"
                       id="StoreName"
                       name="storeName"
+                      value={formData.storeName || stepData?.storeName}
                       placeholder="Enter Your Store Name"
                       onChange={handleChange}
                       className="mt-1 w-full p-3 rounded border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
@@ -234,8 +298,14 @@ const SignUp = () => {
               {step ? (
                 <button
                   type="submit"
-                  className={"text-[#ffffff] grid place-items-center bg-[#004324] w-full p-2 rounded-md mt-5"}
-                  disabled={signUpIsPending}
+                  className={
+                    "text-[#ffffff] disabled:bg-opacity-30 grid place-items-center bg-[#004324] w-full p-2 rounded-md mt-5"
+                  }
+                  disabled={
+                    signUpIsPending ||
+                    !formData.password ||
+                    !formData.passwordConfirm
+                  }
                 >
                   {signUpIsPending ? (
                     <div className="w-4 disabled:bg-opacity-30 h-4 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -248,8 +318,8 @@ const SignUp = () => {
                   type="button"
                   className="text-[#ffffff] bg-[#004324] w-full p-2 rounded-md mt-5"
                   onClick={(e) => {
-                    setStep(true);
                     e.preventDefault();
+                    validateForm();
                   }}
                 >
                   Continue
