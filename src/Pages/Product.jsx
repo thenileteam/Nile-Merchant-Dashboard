@@ -125,7 +125,6 @@ const Product = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      {/* <img src={image} alt="" /> */}
                       <PlaceholderImage/>
                     </Link>
                   </div>

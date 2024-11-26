@@ -13,11 +13,11 @@ export const useFileStore = create((set) => ({
         alert("Invalid file type. Please upload a JPG, PNG, SVG, or JPEG image.");
         return; // Exit without setting the file
       }
-      set((state) => {
-        state.setUploadedFile(file); // Use the existing setUploadedFile action
-      });
+       
+      set({ uploadedFile: file });
     }
   },
+  handleRemoveFile: () => set({ uploadedFile: null }),
 }));
 
 

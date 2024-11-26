@@ -2,7 +2,7 @@ import { useFileStore } from "../../zustandStore";
 
 const UploadImage = ({ image }) => {
   // product image upload and state in zustand store
-  const { uploadedFile, handleFileChange } = useFileStore();
+  const { uploadedFile, handleFileChange, handleRemoveFile } = useFileStore();
   return (
     <div className="relative text-center mt-10 lg:w-[308px] mx-auto">
       <input
@@ -21,7 +21,9 @@ const UploadImage = ({ image }) => {
           alt="add image icon"
         />
       </label>
-      {uploadedFile && <p>File name: {uploadedFile.name}</p>}
+      {uploadedFile && <p>File name: {uploadedFile.name}  </p>}
+      {uploadedFile&& <button className="font-bold cursor-pointer" onClick={handleRemoveFile}> remove image &times;</button>}
+      
     </div>
   );
 };

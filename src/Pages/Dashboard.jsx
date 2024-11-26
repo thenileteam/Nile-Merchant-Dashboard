@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
   bitcoin,
-  image,
   nilelogowhite,
   notification,
   packagemoving,

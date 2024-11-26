@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { addsquare } from "../../assets";
+import { addsquare, addImage } from "../../assets";
 import {useFileStore} from'../../zustandStore'
+import UploadImage from "../UploadImage/UploadImage";
 
 const AddProduct = () => {
   // State to control the popup visibility and animation
@@ -9,7 +10,7 @@ const AddProduct = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isFinalConfirmationOpen, setIsFinalConfirmationOpen] = useState(false);
   const [fadeOut, setFadeOut] = useState(false); // State for fade-out animation
-
+  const{uploadedFile, handleFileChange} = useFileStore()
   // Function to toggle the main popup visibility
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
@@ -411,7 +412,7 @@ const AddProduct = () => {
               </div>
 
               <div className="flex justify-center mt-10">PRODUCT IMAGE</div>
-
+              <UploadImage image={ addImage} />
               <div className="flex justify-center gap-4 mt-16">
                 {/* Edit Button */}
                 <button
