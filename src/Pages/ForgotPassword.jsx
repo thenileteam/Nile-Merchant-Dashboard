@@ -85,7 +85,7 @@ const ForgotPassword = () => {
 
               <div className="relative">
                 <label
-                  htmlFor="Repeat Password"
+                  htmlFor="RepeatPassword"
                   className="block text-[16px] font-bold text-[#333333]"
                 >
                   Repeat Password
@@ -121,6 +121,11 @@ const ForgotPassword = () => {
               </button>
             </form>
           </div>
+          <CreateAccPaths
+            text="Dont Have An Account ?"
+            path="/signup"
+            linkText="Create one"
+          />
           <CreateAccPaths
             text="Dont Have An Account ?"
             path="/signup"
