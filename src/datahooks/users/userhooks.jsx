@@ -34,6 +34,7 @@ export const useLogUserIn = () => {
       // Set cookies
       Cookies.set("accessToken", response?.data?.accessToken);
       Cookies.set("refreshToken", response?.data?.refreshToken);
+      Cookies.set("isUserLoggedIn", "yes");
       toast("Auth Success✔");
       // Navigate to dashboard
       navigate("/dashboard");

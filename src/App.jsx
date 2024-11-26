@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 import ForgotPassword from "./Pages/ForgotPassword";
@@ -25,42 +25,183 @@ import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ShowPasswordProvider } from "./Context/Context";
 import "react-loading-skeleton/dist/skeleton.css";
+import ProtectRoutes from "./Components/ProtectRoutes";
+import { Suspense } from "react";
+
 const App = () => {
   const queryClient = new QueryClient();
 
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <SignIn />,
+    },
+    {
+      path: "/signup",
+      element: <SignUp />,
+    },
+    {
+      path: "/email",
+      element: <Email />,
+    },
+    {
+      path: "/email/reset-password",
+      element: <ForgotPassword />,
+    },
+    {
+      path: "/",
+      // element: <ProtectRoutes />,
+      children: [
+        {
+          path: "/dashboard",
+          element: (
+            <ProtectRoutes>
+              <Dashboard />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/orders",
+          element: (
+            <ProtectRoutes>
+              <Orders />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/product",
+          element: (
+            <ProtectRoutes>
+              <Product />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/reviews",
+          element: (
+            <ProtectRoutes>
+              <Reviews />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/customer",
+          element: (
+            <ProtectRoutes>
+              <Customer />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/financial",
+          element: (
+            <ProtectRoutes>
+              <FinancialManagement />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/store",
+          element: (
+            <ProtectRoutes>
+              <Store />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/notification",
+          element: (
+            <ProtectRoutes>
+              <Notification />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/profilesetting",
+          element: (
+            <ProtectRoutes>
+              <ProfileSetting />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/storesetting",
+          element: (
+            <ProtectRoutes>
+              <StoreSetting />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/paymentsetting",
+          element: (
+            <ProtectRoutes>
+              <PaymentSetting />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/usersetting",
+          element: (
+            <ProtectRoutes>
+              <UserSetting />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/notificationsetting",
+          element: (
+            <ProtectRoutes>
+              <NotificationSetting />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/banksetting",
+          element: (
+            <ProtectRoutes>
+              <BankSetting />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/plansetting",
+          element: (
+            <ProtectRoutes>
+              <PlanSetting />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/shippingsetting",
+          element: (
+            <ProtectRoutes>
+              <ShippingSetting />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/domainsetting",
+          element: (
+            <ProtectRoutes>
+              <DomainSetting />
+            </ProtectRoutes>
+          ),
+        },
+      ],
+    },
+  ]);
+
   return (
     <QueryClientProvider client={queryClient}>
-      {/*  wrapped the components in ShowPasswordProvider for easy access to the shared state */}
       <ShowPasswordProvider>
         <div>
           <Toaster />
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/email" element={<Email />} />
-            <Route path="/email/reset-password" element={<ForgotPassword />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/product" element={<Product />} />
-            <Route path="/reviews" element={<Reviews />} />
-            <Route path="/customer" element={<Customer />} />
-            <Route path="/financial" element={<FinancialManagement />} />
-            <Route path="/store" element={<Store />} />
-            <Route path="/notification" element={<Notification />} />
-            <Route path="/profilesetting" element={<ProfileSetting />} />
-            <Route path="/storesetting" element={<StoreSetting />} />
-            <Route path="/paymentsetting" element={<PaymentSetting />} />
-            <Route path="/usersetting" element={<UserSetting />} />
-            <Route
-              path="/notificationsetting"
-              element={<NotificationSetting />}
-            />
-            <Route path="/banksetting" element={<BankSetting />} />
-            <Route path="/plansetting" element={<PlanSetting />} />
-            <Route path="/shippingsetting" element={<ShippingSetting />} />
-            <Route path="/domainsetting" element={<DomainSetting />} />
-          </Routes>
+          <Suspense fallback={<div>Loading...</div>}>
+            <RouterProvider router={router}>
+              <ScrollToTop />
+            </RouterProvider>
+          </Suspense>
         </div>
       </ShowPasswordProvider>
     </QueryClientProvider>
