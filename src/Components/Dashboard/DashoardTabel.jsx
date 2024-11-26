@@ -34,7 +34,7 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData }) => {
               <tr className="bg-[#ffffff] shadow-md">
                 <td className="px-2 py-3 bg-[#EAF4E2]">Your Orders</td>
                 <td className="px-2 py-3 text-center">
-                  {dashboardData?.orders?.today.length}
+                  {dashboardData?.orders?.today.length || 0}
                 </td>
                 <td className="px-2 py-3 text-center">
                   {dashboardData?.orders?.week?.length}

@@ -14,7 +14,7 @@ const AddProduct1 = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isFinalConfirmationOpen, setIsFinalConfirmationOpen] = useState(false);
   const [fadeOut, setFadeOut] = useState(false); // State for fade-out animation
-  const store = JSON.parse(localStorage.getItem("stores"))[0];
+  const store = JSON.parse(localStorage.getItem("store"));
 
   // Form fields state
   const [productDetails, setProductDetails] = useState({

@@ -27,7 +27,7 @@ const Orders = () => {
   const { addOrderToBackend, isAddingOrder } = useCreateNewOrder(() => {
     setCreateOrderForm(false);
   });
-
+  const store = JSON.parse(localStorage.getItem("store"));
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [createdAt, setCreatedAt] = useState(null);
   const closeSidebar = () => {
@@ -44,26 +44,26 @@ const Orders = () => {
     const selectedDate = new Date(e.target.value);
     setCreatedAt(selectedDate.toISOString());
   };
-
+  console.log(data);
   const addOrder = async () => {
     const itemsFromLocalStorage = JSON.parse(
       localStorage.getItem("orderItems")
     );
     const customerFromLocalStorage = JSON.parse(
       localStorage.getItem("customer")
-    )[0];
+    )?.[0];
 
     console.log(customerFromLocalStorage);
     const orderData = {
       totalAmount: itemsFromLocalStorage.totalAmount,
       items: itemsFromLocalStorage.items,
-      phoneNumber: customerFromLocalStorage.phoneNumber || null,
-      name: customerFromLocalStorage.name || null,
-      email: customerFromLocalStorage.email || null,
+      phoneNumber: customerFromLocalStorage?.phoneNumber || null,
+      name: customerFromLocalStorage?.name || null,
+      email: customerFromLocalStorage?.email || null,
       PaymentStatus: paymentStatus,
       createdAt: createdAt,
-      customerId: customerFromLocalStorage.id,
-      storeId: customerFromLocalStorage.storeId,
+      customerId: customerFromLocalStorage?.id,
+      storeId: store._id,
       salesChannel,
     };
     console.log(orderData);

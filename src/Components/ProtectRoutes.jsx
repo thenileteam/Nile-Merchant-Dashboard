@@ -11,7 +11,8 @@ const ProtectRoutes = ({ children }) => {
 
   useEffect(() => {
     const accessToken = Cookies.get("accessToken");
-    setIsLoggedIn(!!accessToken);
+    const store = localStorage.getItem("store");
+    setIsLoggedIn(!!accessToken && store !== null);
     setLoading(false);
   }, []);
 

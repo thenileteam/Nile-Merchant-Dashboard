@@ -10,7 +10,8 @@ const SignIn = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const accessToken = Cookies.get("accessToken");
-    if (accessToken) {
+    const store = localStorage.getItem("store");
+    if (accessToken && store !== null) {
       navigate("/dashboard");
     }
   }, [navigate]);

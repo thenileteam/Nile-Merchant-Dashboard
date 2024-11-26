@@ -24,7 +24,7 @@ const Dashboard = () => {
   const { dashboardData, isFetchingDashboardData, dashboardDataisError } =
     useFetchDashboardData();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  console.log(dashboardData, "dashboard data");
   const closeSidebar = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
