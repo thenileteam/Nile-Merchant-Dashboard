@@ -6,7 +6,7 @@ import { toast } from "sonner";
 const stores = JSON.parse(localStorage.getItem("stores"));
 export const useFetchProducts = () => {
   const { data, isFetching, isError } = useQuery({
-    queryKey: ["products", stores[0]._id],
+    queryKey: ["products", stores[0]?._id],
     queryFn: async () => {
       try {
         const res = await ApiInstance.get(`/products/store/${stores[0]._id}`);

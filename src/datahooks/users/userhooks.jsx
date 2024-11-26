@@ -72,6 +72,50 @@ export const useSignUserUp = () => {
     signUpError: error,
   };
 };
+export const useForgetPassword = () => {
+  const [error] = useState("");
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data) => {
+      return ApiInstance.post("/users/auth/forgotPassword", data);
+    },
+    onSuccess: () => {
+      toast("Password Reset Link Sent To Your Mail ");
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message || "An error occurred");
+    },
+  });
+
+  return {
+    mutate,
+    isPending,
+    error,
+  };
+};
+export const useResetPassword = (token) => {
+  console.log(token);
+  const nav = useNavigate();
+  const [error] = useState("");
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data) => {
+      const url = `/users/auth/reset-password?token=${token}`;
+      return ApiInstance.post(url, data);
+    },
+    onSuccess: () => {
+      toast("Password Successfully Changed,Proceed to login ");
+      nav("/");
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message || "An error occurred");
+    },
+  });
+
+  return {
+    mutate,
+    isPending,
+    error,
+  };
+};
 export const useAddCustomer = (onSuccess) => {
   const queryClient = useQueryClient();
   const [error] = useState("");
