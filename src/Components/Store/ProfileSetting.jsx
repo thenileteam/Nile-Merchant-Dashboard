@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   arrowleft,
   image,
@@ -5,9 +6,42 @@ import {
   notification,
   profileimage,
 } from "../../assets";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProfileSetting = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      // Call the logout API using Axios
+      const response = await axios.post(
+        "/users/auth/logout",
+        {}, // Request body (if any)
+        {
+          withCredentials: true, // Include cookies in the request
+        }
+      );
+
+      if (response.status !== 200) {
+        throw new Error("Failed to log out");
+      }
+
+      // Clear cookies (if applicable) and local storage
+      document.cookie.split(";").forEach((cookie) => {
+        const eqPos = cookie.indexOf("=");
+        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+      });
+      localStorage.clear();
+
+      // Navigate to the login or landing page
+      navigate("/");
+    } catch (error) {
+      console.error("Error during logout:", error);
+      alert("Failed to log out. Please try again.");
+    }
+  };
+
   return (
     <>
       <div>
@@ -16,31 +50,27 @@ const ProfileSetting = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 px-20">
               <Link to="/dashboard">
-                <img src={arrowleft} alt="" />
+                <img src={arrowleft} alt="Back to Dashboard" />
               </Link>
               <h1 className="text-[32px] font-bold">Profile Settings</h1>
             </div>
             <div className="flex items-center gap-10 ml-[500px]">
               <div className="relative">
                 <label htmlFor="Search" className="sr-only">
-                  {" "}
-                  Search{" "}
+                  Search
                 </label>
-
                 <input
                   type="text"
                   id="Search"
                   placeholder=""
                   className="w-[300px] rounded-md border-[#6E6E6E] border-2 p-8 py-2.5 pe-10 shadow-sm sm:text-sm"
                 />
-
                 <span className="absolute inset-y-0 start-0 grid w-10 place-content-center">
                   <button
                     type="button"
                     className="text-gray-600 hover:text-gray-700"
                   >
                     <span className="sr-only">Search</span>
-
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -60,12 +90,12 @@ const ProfileSetting = () => {
               </div>
               <div>
                 <Link to="/notification">
-                  <img src={notification} alt="" />
+                  <img src={notification} alt="Notifications" />
                 </Link>
               </div>
               <div>
                 <Link to="/profilesetting">
-                  <img src={image} alt="" />
+                  <img src={image} alt="Profile Settings" />
                 </Link>
               </div>
             </div>
@@ -82,7 +112,7 @@ const ProfileSetting = () => {
       {/* Input Fields */}
       <div>
         <div className="flex justify-center mx-auto">
-          <img src={profileimage} alt="" />
+          <img src={profileimage} alt="Profile" />
         </div>
         <div className="flex justify-center">
           <form action="#" className="space-y-5">
@@ -93,7 +123,6 @@ const ProfileSetting = () => {
               >
                 Name
               </label>
-
               <input
                 type="text"
                 id="Name"
@@ -109,7 +138,6 @@ const ProfileSetting = () => {
               >
                 E-Mail
               </label>
-
               <input
                 type="email"
                 id="EmailAddress"
@@ -125,7 +153,6 @@ const ProfileSetting = () => {
               >
                 Phone Number
               </label>
-
               <input
                 type="text"
                 id="PhoneNumber"
@@ -141,7 +168,6 @@ const ProfileSetting = () => {
               >
                 Password
               </label>
-
               <input
                 type="password"
                 id="Password"
@@ -162,12 +188,13 @@ const ProfileSetting = () => {
         </div>
         {/* Log Out Button */}
         <div>
-          <Link to="/">
-            <div className="flex items-center justify-end px-36">
-              <img src={logout} alt="" />
-              <h1 className="text-[#DC3545] font-bold">Log Out</h1>
-            </div>
-          </Link>
+          <div
+            className="flex items-center justify-end px-36 cursor-pointer"
+            onClick={handleLogout}
+          >
+            <img src={logout} alt="Log Out" />
+            <h1 className="text-[#DC3545] font-bold">Log Out</h1>
+          </div>
         </div>
       </div>
     </>
