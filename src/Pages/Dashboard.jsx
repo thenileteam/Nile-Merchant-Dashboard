@@ -18,6 +18,7 @@ import {
 import DashoardTabel from "../Components/Dashboard/DashoardTabel";
 import { useState } from "react";
 import { useFetchDashboardData } from "../datahooks/users/userhooks";
+import PlaceholderImage from "../Components/Popup Modals/PlaceholderImage";
 import Skeleton from "react-loading-skeleton";
 
 const Dashboard = () => {
@@ -130,7 +131,7 @@ const Dashboard = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <img src={image} alt="" />
+                       <PlaceholderImage/>
                     </Link>
                   </div>
                 </div>

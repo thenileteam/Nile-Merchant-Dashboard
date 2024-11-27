@@ -6,6 +6,8 @@ import {
   profileimage,
 } from "../../assets";
 import { Link } from "react-router-dom";
+import PlaceholderImage from "../Popup Modals/PlaceholderImage";
+import UploadImage from "../UploadImage/UploadImage";
 
 const ProfileSetting = () => {
   return (
@@ -65,7 +67,7 @@ const ProfileSetting = () => {
               </div>
               <div>
                 <Link to="/profilesetting">
-                  <img src={image} alt="" />
+                  <PlaceholderImage/>
                 </Link>
               </div>
             </div>
@@ -81,8 +83,8 @@ const ProfileSetting = () => {
 
       {/* Input Fields */}
       <div>
-        <div className="flex justify-center mx-auto">
-          <img src={profileimage} alt="" />
+        <div className="flex justify-center mx-auto w-[200px] h-[200px] rounded-full">
+          <UploadImage image={profileimage}  style='w-[120px] h-[120px] object-cover rounded-full' />
         </div>
         <div className="flex justify-center">
           <form action="#" className="space-y-5">

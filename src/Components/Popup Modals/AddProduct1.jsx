@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-
-import { addsquare } from "../../assets";
+import { addsquare,addImage } from "../../assets";
 import { useCreateNewProduct } from "../../datahooks/products/productshooks";
 import { BiLoaderCircle } from "react-icons/bi";
 import { toast } from "sonner";
+import UploadImage from "../UploadImage/UploadImage";
 
 const AddProduct1 = () => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
@@ -297,21 +297,25 @@ const AddProduct1 = () => {
                       >
                         Product Size
                       </label>
-                      <select
-                        name="quantitySizes"
-                        id="size"
-                        value={productDetails.quantitySizes}
-                        onChange={handleInputChange}
-                        className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
-                      >
-                        <option value="">E.g:XXL</option>
-                        <option value="XL">XL</option>
-                        <option value="XXL">XXL</option>
-                        <option value="LG">LG</option>
-                        <option value="SM">SM</option>
-                        <option value="XS">XS</option>
-                        <option value="XXS">XXS</option>
-                      </select>
+                      <div className="flex flex-col w-full">
+                        <input
+                          list="size-options" // This connects to the datalist below
+                          name="quantitySizes"
+                          id="size"
+                          value={productDetails.quantitySizes}
+                          onChange={handleInputChange}
+                          className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
+                          placeholder="Select or enter a size"
+                        />
+                        <datalist id="size-options">
+                          <option value="XL" />
+                          <option value="XXL" />
+                          <option value="LG" />
+                          <option value="SM" />
+                          <option value="XS" />
+                          <option value="XXS" />
+                        </datalist>
+                      </div>
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
                       </span>
@@ -412,18 +416,25 @@ const AddProduct1 = () => {
                       >
                         Product Color
                       </label>
-                      <select
-                        name="productColorName"
-                        id="color"
-                        value={productDetails.productColorName}
-                        onChange={handleInputChange}
-                        className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
-                      >
-                        <option value="">E.g:Red</option>
-                        <option value="Blue">Blue</option>
-                        <option value="Red">Red</option>
-                        <option value="Pink">Pink</option>
-                      </select>
+                       {/* dropdown and manual input fields */}
+                       <div className="flex flex-col w-full">
+                        <input
+                          list="color-options" // Links to the datalist below
+                          name="productColorName"
+                          id="color"
+                          value={productDetails.productColorName}
+                          onChange={handleInputChange}
+                          className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
+                          placeholder="Select or enter a color"
+                        />
+                        {/* Datalist with predefined options */}
+                        <datalist id="color-options">
+                          <option value="Red" />
+                          <option value="Blue" />
+                          <option value="Pink" />
+                        </datalist>
+                      </div>
+
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
                       </span>
@@ -510,8 +521,7 @@ const AddProduct1 = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center mt-10">PRODUCT IMAGE</div>
-
+              <UploadImage image={addImage } />
               <div className="flex justify-center gap-4 mt-16">
                 {/* Edit Button */}
                 <button
