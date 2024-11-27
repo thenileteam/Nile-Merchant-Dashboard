@@ -31,7 +31,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="bg-[#F5F5F5] pb-20">
+      <div className="bg-[#F5F5F5] pb-20 overflow-x-hidden">
         <div className="flex">
           {/* Overlay for small screens */}
           {sidebarOpen && (
@@ -56,7 +56,7 @@ const Dashboard = () => {
           </div>
 
           {/* Navbar */}
-          <div className="flex-grow lg:ml-64">
+          <div className="flex-grow lg:ml-52">
             <nav className="bg-[#EAF4E2] p-4 shadow-md flex items-center gap-5 fixed w-full">
               <button
                 className="lg:hidden text-gray-800 z-20"
@@ -85,7 +85,7 @@ const Dashboard = () => {
                 <div>
                   <h1 className="text-[32px] font-bold ml-20">Welcome User</h1>
                 </div>
-                <div className="flex items-center gap-10 ml-[450px]">
+                <div className="flex items-center gap-10 ml-[400px]">
                   <div className="relative">
                     <label htmlFor="Search" className="sr-only">
                       {" "}
@@ -145,8 +145,8 @@ const Dashboard = () => {
                 <div className=" h-[150px] bg-zinc-200 w-[300px]" />
               </div>
             ) : (
-              <div className="p-6 mt-28 px-32">
-                <div className="flex gap-28">
+              <div className="p-6 mt-28 px-36">
+                <div className="flex gap-20">
                   <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={transaction} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
@@ -177,7 +177,7 @@ const Dashboard = () => {
               <div className="border-2 border-white shadow-[0px_4px_10px_rgba(0,0,0,0.3)]"></div>
             </div>
 
-            <div className="px-24 mt-10 space-y-7">
+            <div className="px-36 mt-10 space-y-7">
               <div className="flex items-center justify-between">
                 <Link to="/storesetting">
                   <div className="flex items-center justify-between w-[469px] h-[122px] border-[#8ED06C] border-2 bg-[#ffffff] p-3 rounded-lg">

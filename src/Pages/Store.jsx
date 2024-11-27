@@ -53,7 +53,7 @@ const Store = () => {
           </div>
 
           {/* Navbar */}
-          <div className="flex-grow lg:ml-64">
+          <div className="flex-grow lg:ml-64 overflow-x-hidden">
             <nav className="bg-[#EAF4E2] p-4 shadow-md flex items-center gap-5 fixed w-full">
               <button
                 className="lg:hidden text-gray-800 z-20"
@@ -83,7 +83,7 @@ const Store = () => {
                   <img src={store1} alt="" />
                   <h1 className="text-[32px] font-bold">Store Settings</h1>
                 </div>
-                <div className="flex items-center gap-10 ml-[330px]">
+                <div className="flex items-center gap-10 ml-[130px]">
                   <div className="relative">
                     <label htmlFor="Search" className="sr-only">
                       {" "}
@@ -136,7 +136,7 @@ const Store = () => {
             </nav>
             
             {/* Cards */}
-            <div className="px-28 mt-40">
+            <div className="px-10 mt-40 ml-10">
               <div className="grid grid-cols-3 gap-6">
                 <Link to="/profilesetting">
                   <div className="flex items-center justify-between bg-[#EAF4E2] border-[#8ED06C] border-2 rounded-md w-[322.89px] h-[192px] p-5">

@@ -50,7 +50,7 @@ const FinancialManagement = () => {
           </div>
 
           {/* Navbar */}
-          <div className="flex-grow lg:ml-64">
+          <div className="flex-grow lg:ml-64 overflow-x-hidden">
             <nav className="bg-[#EAF4E2] p-4 shadow-md flex z-10 items-center gap-5 fixed w-full">
               <button
                 className="lg:hidden text-gray-800 z-20"
@@ -82,7 +82,7 @@ const FinancialManagement = () => {
                     Financial Management
                   </h1>
                 </div>
-                <div className="flex items-center gap-10 ml-[200px]">
+                <div className="flex items-center gap-10 ml-[10px]">
                   <div className="relative">
                     <label htmlFor="Search" className="sr-only">
                       {" "}

@@ -77,7 +77,7 @@ const Orders = () => {
   return (
     <>
       {createOrderForm && (
-        <div className=" w-full fixed z-40  justify-center items-center flex h-screen ">
+        <div className=" w-full fixed z-40  justify-center items-center flex h-screen">
           <div className=" w-full h-full bg-black/30 absolute top-0 left-0 "></div>
           <div
             className=" rounded-[8px] z-[400000000] mx-auto pt-[96px] pb-8 px-8 relative bg-white"
@@ -237,7 +237,7 @@ const Orders = () => {
           </div>
 
           {/* Navbar */}
-          <div className="flex-grow lg:ml-64">
+          <div className="flex-grow lg:ml-64 overflow-x-hidden">
             <nav className="bg-[#EAF4E2] p-4 z-10 shadow-md flex items-center gap-5 fixed w-full">
               <button
                 className="lg:hidden text-gray-800 z-20"
@@ -267,7 +267,7 @@ const Orders = () => {
                   <img src={trolley} alt="" />
                   <h1 className="text-[32px] font-bold">Orders & Shippings</h1>
                 </div>
-                <div className="flex items-center gap-10 ml-[250px]">
+                <div className="flex items-center gap-10 ml-[50px]">
                   <div className="relative">
                     <label htmlFor="Search" className="sr-only">
                       {" "}
