@@ -13,31 +13,27 @@ const ProfileSetting = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 px-20">
               <Link to="/dashboard">
-                <img src={arrowleft} alt="" />
+                <img src={arrowleft} alt="Back to Dashboard" />
               </Link>
               <h1 className="text-[32px] font-bold">Profile Settings</h1>
             </div>
             <div className="flex items-center gap-10 ml-[500px]">
               <div className="relative">
                 <label htmlFor="Search" className="sr-only">
-                  {" "}
-                  Search{" "}
+                  Search
                 </label>
-
                 <input
                   type="text"
                   id="Search"
                   placeholder=""
                   className="w-[300px] rounded-md border-[#6E6E6E] border-2 p-8 py-2.5 pe-10 shadow-sm sm:text-sm"
                 />
-
                 <span className="absolute inset-y-0 start-0 grid w-10 place-content-center">
                   <button
                     type="button"
                     className="text-gray-600 hover:text-gray-700"
                   >
                     <span className="sr-only">Search</span>
-
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -57,7 +53,7 @@ const ProfileSetting = () => {
               </div>
               <div>
                 <Link to="/notification">
-                  <img src={notification} alt="" />
+                  <img src={notification} alt="Notifications" />
                 </Link>
               </div>
               <div>
@@ -93,7 +89,6 @@ const ProfileSetting = () => {
               >
                 Name
               </label>
-
               <input
                 type="text"
                 id="Name"
@@ -109,7 +104,6 @@ const ProfileSetting = () => {
               >
                 E-Mail
               </label>
-
               <input
                 type="email"
                 id="EmailAddress"
@@ -125,7 +119,6 @@ const ProfileSetting = () => {
               >
                 Phone Number
               </label>
-
               <input
                 type="text"
                 id="PhoneNumber"
@@ -141,7 +134,6 @@ const ProfileSetting = () => {
               >
                 Password
               </label>
-
               <input
                 type="password"
                 id="Password"
