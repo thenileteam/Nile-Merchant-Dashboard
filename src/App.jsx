@@ -49,7 +49,7 @@ const App = () => {
       element: <ForgotPassword />,
     },
     {
-      path: "/",
+      //path: "/",
       // element: <ProtectRoutes />,
       children: [
         {
