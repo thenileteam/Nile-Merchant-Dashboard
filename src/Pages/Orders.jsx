@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import { useCreateNewOrder } from "../datahooks/orders/orderhooks";
 import { AiOutlineLoading } from "react-icons/ai";
 import Skeleton from "react-loading-skeleton";
+import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
 
 const Orders = () => {
   const { addOrderToBackend, isAddingOrder } = useCreateNewOrder(() => {
@@ -43,6 +44,7 @@ const Orders = () => {
   const handleDateChange = (e) => {
     const selectedDate = new Date(e.target.value);
     setCreatedAt(selectedDate.toISOString());
+
   };
   console.log(data);
   const addOrder = async () => {
@@ -98,7 +100,7 @@ const Orders = () => {
                     className=" font-black  text-[16px]  leading-5 "
                     htmlFor="Customer Name"
                   >
-                    Customer Name
+                    Customer Name <span className="opacity-50">(Optional)</span>
                   </label>
                   <div
                     onClick={() => setSelectCustomerForm(true)}
@@ -312,7 +314,7 @@ const Orders = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <img src={image} alt="" />
+                      <PlaceholderImage/>
                     </Link>
                   </div>
                 </div>

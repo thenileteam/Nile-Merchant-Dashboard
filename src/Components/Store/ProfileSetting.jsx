@@ -6,7 +6,7 @@ import {
   notification,
   profileimage,
 } from "../../assets";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ProfileSetting = () => {
   const navigate = useNavigate();
@@ -95,7 +95,7 @@ const ProfileSetting = () => {
               </div>
               <div>
                 <Link to="/profilesetting">
-                  <img src={image} alt="Profile Settings" />
+                  <img src={image} alt="" />
                 </Link>
               </div>
             </div>
@@ -112,7 +112,7 @@ const ProfileSetting = () => {
       {/* Input Fields */}
       <div>
         <div className="flex justify-center mx-auto">
-          <img src={profileimage} alt="Profile" />
+          <img src={profileimage} alt="" />
         </div>
         <div className="flex justify-center">
           <form action="#" className="space-y-5">

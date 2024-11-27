@@ -9,12 +9,15 @@ import Cookies from "js-cookie";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const [checkingUser, setCheckingUser] = useState(true);
   useEffect(() => {
     const accessToken = Cookies.get("accessToken");
     const store = localStorage.getItem("store");
     if (accessToken && store !== null) {
-      navigate("/");
+      setCheckingUser(false);
+      navigate("/dashboard");
     }
+    setCheckingUser(false);
   }, [navigate]);
 
   const [email, setEmail] = useState("");
@@ -44,7 +47,7 @@ const SignIn = () => {
       console.error("Login error:", error);
     }
   };
-
+  if (checkingUser) return null;
   return (
     <section className="h-screen">
       <div className="container md:max-w-[700px] lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-2xl lg:shadow-md lg:shadow-gray-300 p-4 lg:p-16">

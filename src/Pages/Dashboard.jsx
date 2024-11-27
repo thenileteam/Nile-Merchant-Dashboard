@@ -18,6 +18,7 @@ import {
 import DashoardTabel from "../Components/Dashboard/DashoardTabel";
 import { useState } from "react";
 import { useFetchDashboardData } from "../datahooks/users/userhooks";
+import PlaceholderImage from "../Components/Popup Modals/PlaceholderImage";
 import Skeleton from "react-loading-skeleton";
 
 const Dashboard = () => {
@@ -28,7 +29,7 @@ const Dashboard = () => {
   const closeSidebar = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
-
+  // const username = JSON.parse(localStorage.getItem("username")) || "User";
   return (
     <>
       <div className="bg-[#F5F5F5] pb-20 overflow-x-hidden">
@@ -83,7 +84,9 @@ const Dashboard = () => {
               </button>
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-[32px] font-bold ml-20">Welcome User</h1>
+                  <h1 className="text-[32px] font-bold ml-20">
+                    Welcome user
+                  </h1>
                 </div>
                 <div className="flex items-center gap-10 ml-[400px]">
                   <div className="relative">
@@ -130,7 +133,7 @@ const Dashboard = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <img src={image} alt="" />
+                      <PlaceholderImage />
                     </Link>
                   </div>
                 </div>

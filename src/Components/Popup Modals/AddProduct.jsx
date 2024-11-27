@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { addsquare } from "../../assets";
 
@@ -110,7 +110,7 @@ const AddProduct = () => {
               d="M12.5 8V16M16.5 12H8.5"
               stroke="currentcolor"
               strokeWidth="1.5"
-              strokLinecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
             <path
