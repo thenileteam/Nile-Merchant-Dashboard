@@ -59,9 +59,12 @@ export const useSignUserUp = () => {
     mutationFn: (data) => {
       return ApiInstance.post("/users/auth/register", data);
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
       toast("Auth Success✔");
       // Navigate to dashboard
+      // localStorage.setItem("username", JSON.stringify(response.data.name));
+      console.log(response.data);
+      
       navigate("/");
     },
     onError: (err) => {
