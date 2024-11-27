@@ -4,6 +4,7 @@ import { useState } from "react";
 import { addsquare } from "../../assets";
 import { useCreateNewProduct } from "../../datahooks/products/productshooks";
 import { BiLoaderCircle } from "react-icons/bi";
+import { toast } from "sonner";
 
 const AddProduct1 = () => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
@@ -33,7 +34,31 @@ const AddProduct1 = () => {
     packaging: "",
     handlingTime: "",
   });
+  const validateForm = () => {
+    const requiredFields = [
+      "name",
+      "price",
+      "stock",
+      "description",
+      "productColorName",
+      "categoryName",
+      "packaging",
+    ];
+    const errors = [];
 
+    requiredFields.forEach((field) => {
+      if (!productDetails[field]) {
+        errors.push(`Please provide ${field.replace("_", " ").toUpperCase()}`);
+      }
+    });
+
+    if (errors.length > 0) {
+      errors.forEach((error) => toast.error(error));
+      return false;
+    }
+
+    return true;
+  };
   // Function to toggle the main popup visibility
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
@@ -54,7 +79,9 @@ const AddProduct1 = () => {
   };
   const handleAddProduct = () => {
     try {
+      console.log(validateForm());
       if (!store) return;
+      if (!validateForm()) return;
       const dataToBackend = {
         name: productDetails.name,
         storeId: store._id,
