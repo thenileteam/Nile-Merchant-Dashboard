@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { download, preference1 } from "../../assets";
-// import ShippingConfirm from "../Popup Modals/ShippingConfirm";
+// import ShippingConfirm from "../PopupModals/ShippingConfirm";
 import { format, parseISO } from "date-fns";
 
 const OrdersTable = ({ data }) => {

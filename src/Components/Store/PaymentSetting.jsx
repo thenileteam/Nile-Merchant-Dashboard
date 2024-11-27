@@ -10,7 +10,7 @@ import {
   store1,
 } from "../../assets";
 import { Link } from "react-router-dom";
-import SaveChanges from "../Popup Modals/SaveChanges";
+import SaveChanges from "../PopupModals/SaveChanges";
 
 const PaymentSetting = () => {
   return (

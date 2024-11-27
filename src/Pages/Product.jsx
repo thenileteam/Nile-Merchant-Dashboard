@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
-  image,
   nilelogowhite,
   notification,
   timer,
@@ -12,10 +11,10 @@ import {
   packageoutofstock,
 } from "../assets";
 import ProductTable from "../Components/Products/ProductTable";
-import AddProduct1 from "../Components/Popup Modals/AddProduct1";
+import AddProduct1 from "../Components/PopupModals/AddProduct1";
 import { useFetchProducts } from "../datahooks/products/productshooks";
 import Skeleton from "react-loading-skeleton";
-import PlaceholderImage from "../Components/Popup Modals/PlaceholderImage";
+import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
 
 const Product = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -125,7 +124,7 @@ const Product = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <PlaceholderImage/>
+                      <PlaceholderImage />
                     </Link>
                   </div>
                 </div>

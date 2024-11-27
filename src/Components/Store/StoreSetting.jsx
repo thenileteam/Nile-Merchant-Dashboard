@@ -7,7 +7,7 @@ import {
   notification,
 } from "../../assets";
 import { Link } from "react-router-dom";
-import SaveChanges from "../Popup Modals/SaveChanges";
+import SaveChanges from "../PopupModals/SaveChanges";
 
 const StoreSetting = () => {
   return (

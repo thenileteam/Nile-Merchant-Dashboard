@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Links from "../Links";
@@ -11,7 +12,7 @@ import {
   commentblock,
 } from "../assets";
 import ReviewTables from "../Components/Review/ReviewTables";
-import PlaceholderImage from "../Components/Popup Modals/PlaceholderImage";
+import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
 
 const Reviews = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -121,13 +122,13 @@ const Reviews = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <Placeholder/>
+                      <PlaceholderImage />
                     </Link>
                   </div>
                 </div>
               </div>
             </nav>
-            
+
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
               <div className="flex gap-28">

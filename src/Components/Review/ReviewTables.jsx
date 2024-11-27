@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { download, preference1 } from "../../assets";
-import ReviewText from "../Popup Modals/ReviewText";
-import Respond from "../Popup Modals/Respond";
-import Publish from "../Popup Modals/Publish";
+import ReviewText from "../PopupModals/ReviewText";
+import Respond from "../PopupModals/Respond";
+import Publish from "../PopupModals/Publish";
 
 const ReviewTable = () => {
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);

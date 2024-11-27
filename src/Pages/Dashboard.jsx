@@ -18,8 +18,8 @@ import {
 import DashoardTabel from "../Components/Dashboard/DashoardTabel";
 import { useState } from "react";
 import { useFetchDashboardData } from "../datahooks/users/userhooks";
-import PlaceholderImage from "../Components/Popup Modals/PlaceholderImage";
 import Skeleton from "react-loading-skeleton";
+import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
 
 const Dashboard = () => {
   const { dashboardData, isFetchingDashboardData, dashboardDataisError } =
@@ -84,9 +84,7 @@ const Dashboard = () => {
               </button>
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-[32px] font-bold ml-20">
-                    Welcome user
-                  </h1>
+                  <h1 className="text-[32px] font-bold ml-20">Welcome user</h1>
                 </div>
                 <div className="flex items-center gap-10 ml-[400px]">
                   <div className="relative">

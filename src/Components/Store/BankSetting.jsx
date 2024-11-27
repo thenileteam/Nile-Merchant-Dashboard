@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { addsquare, arrowleft, image, notification } from "../../assets";
 import { Link } from "react-router-dom";
-import SaveChanges from "../Popup Modals/SaveChanges";
+import SaveChanges from "../PopupModals/SaveChanges";
 
 const BankSetting = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -184,7 +184,7 @@ const BankSetting = () => {
                 className="mt-1 w-[325px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
               />
             </div>
-            
+
             {/* Checkbox Option */}
             <div className="space-y-3">
               <h1 className="text-[#333333] text-[16px] font-bold">

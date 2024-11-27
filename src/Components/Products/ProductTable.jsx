@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { download, preference1 } from "../../assets";
-import EditProduct from "../Popup Modals/EditProduct";
-import DeleteProduct from "../Popup Modals/DeleteProduct";
-// import AddProduct from "../Popup Modals/AddProduct";
+import EditProduct from "../PopupModals/EditProduct";
+import DeleteProduct from "../PopupModals/DeleteProduct";
+// import AddProduct from "../PopupModals/AddProduct";
 import Skeleton from "react-loading-skeleton";
-import AddProduct1 from "../Popup Modals/AddProduct1";
+import AddProduct1 from "../PopupModals/AddProduct1";
 
 // code start
 const ProductTable = ({ data, isFetching, isError }) => {

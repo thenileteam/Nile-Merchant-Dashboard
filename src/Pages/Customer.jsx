@@ -12,7 +12,7 @@ import {
   userblock,
 } from "../assets";
 import CustomerTable from "../Components/Customers/CustomerTable";
-import AddCustomer1 from "../Components/Popup Modals/AddCustomer1";
+import AddCustomer1 from "../Components/PopupModals/AddCustomer1";
 import { useFetchStoreCustomers } from "../datahooks/users/userhooks";
 import CustomAwaitCard from "../Components/uicomps/customawaitcard";
 

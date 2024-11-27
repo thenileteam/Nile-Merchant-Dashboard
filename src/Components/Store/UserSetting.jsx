@@ -1,8 +1,8 @@
 import React from "react";
 import { arrowleft, image, notification, roundedimage } from "../../assets";
 import { Link } from "react-router-dom";
-import SaveChanges from "../Popup Modals/SaveChanges";
-import SendInvite from "../Popup Modals/SendInvite";
+import SaveChanges from "../PopupModals/SaveChanges";
+import SendInvite from "../PopupModals/SendInvite";
 
 const UserSetting = () => {
   return (

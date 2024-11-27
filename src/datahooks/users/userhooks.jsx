@@ -52,6 +52,39 @@ export const useLogUserIn = () => {
     error,
   };
 };
+export const useLogOut = () => {
+  console.log("attempting new logout");
+  const navigate = useNavigate();
+  const [error] = useState("");
+  const { mutate, isPending } = useMutation({
+    mutationFn: () => {
+      console.log();
+      return ApiInstance.post("/users/auth/logout");
+    },
+    onSuccess: () => {
+      // Set data in localStorage
+      localStorage.setItem("Id", "");
+      localStorage.setItem("store", JSON.stringify([]));
+
+      // Set cookies
+      Cookies.set("accessToken", "");
+      Cookies.set("refreshToken", "");
+      Cookies.set("isUserLoggedIn", "no");
+      toast("Logout Successful✔");
+      // Navigate to dashboard
+      navigate("/");
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message || "An error occurred");
+    },
+  });
+
+  return {
+    mutate,
+    isPending,
+    error,
+  };
+};
 export const useSignUserUp = () => {
   const navigate = useNavigate();
   const [error] = useState("");
@@ -64,7 +97,7 @@ export const useSignUserUp = () => {
       // Navigate to dashboard
       // localStorage.setItem("username", JSON.stringify(response.data.name));
       console.log(response.data);
-      
+
       navigate("/");
     },
     onError: (err) => {

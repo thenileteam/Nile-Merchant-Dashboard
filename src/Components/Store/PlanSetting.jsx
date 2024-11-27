@@ -12,8 +12,8 @@ import {
   store1,
 } from "../../assets";
 import { Link } from "react-router-dom";
-import SaveCard from "../Popup Modals/SaveCard";
-import Upgrade from "../Popup Modals/Upgrade";
+import SaveCard from "../PopupModals/SaveCard";
+import Upgrade from "../PopupModals/Upgrade";
 
 const PlanSetting = () => {
   return (

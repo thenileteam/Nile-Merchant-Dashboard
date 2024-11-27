@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { download, preference1, withdraw } from "../../assets";
-import DownloadInvoice from "../Popup Modals/DownloadInvoice";
-import RequestPayout from "../Popup Modals/RequestPayout";
+import DownloadInvoice from "../PopupModals/DownloadInvoice";
+import RequestPayout from "../PopupModals/RequestPayout";
 
 const FinancialTable = () => {
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
@@ -25,7 +25,6 @@ const FinancialTable = () => {
   };
   return (
     <>
-
       {/* Filter section dropdown */}
       <div className="flex items-center justify-end px-24 mt-10 relative">
         <h1 className="text-[#333333] font-bold text-[16px]">Filter By :</h1>

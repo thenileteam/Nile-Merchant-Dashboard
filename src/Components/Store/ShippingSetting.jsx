@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { arrowleft, image, notification } from "../../assets";
 import { Link } from "react-router-dom";
-import SaveChanges from "../Popup Modals/SaveChanges";
+import SaveChanges from "../PopupModals/SaveChanges";
 
 const ShippingSetting = () => {
   return (

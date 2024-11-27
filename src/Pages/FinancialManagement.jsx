@@ -1,14 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
-  image,
   nilelogowhite,
   notification,
-  starhalf,
-  starsquare,
-  star,
-  commentblock,
   bitcoingraph,
   bitcoinbag,
   bitcoin,
@@ -16,7 +12,7 @@ import {
   moneysend,
 } from "../assets";
 import FinancialTable from "../Components/Financial/FinancialTable";
-import PlaceholderImage from "../Components/Popup Modals/PlaceholderImage";
+import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
 const FinancialManagement = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -127,7 +123,7 @@ const FinancialManagement = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <PlaceholderImage/>
+                      <PlaceholderImage />
                     </Link>
                   </div>
                 </div>

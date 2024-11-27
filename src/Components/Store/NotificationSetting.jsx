@@ -1,7 +1,7 @@
 import React from "react";
 import { arrowleft, image, notification, roundedimage } from "../../assets";
 import { Link } from "react-router-dom";
-import SaveChanges from "../Popup Modals/SaveChanges";
+import SaveChanges from "../PopupModals/SaveChanges";
 
 const NotificationSetting = () => {
   return (

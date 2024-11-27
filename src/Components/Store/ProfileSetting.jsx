@@ -1,15 +1,10 @@
-import {
-  arrowleft,
-  image,
-  logout,
-  notification,
-  profileimage,
-} from "../../assets";
+import { arrowleft, logout, notification, profileimage } from "../../assets";
 import { Link } from "react-router-dom";
-import PlaceholderImage from "../Popup Modals/PlaceholderImage";
 import UploadImage from "../UploadImage/UploadImage";
-
+import { useLogOut } from "../../datahooks/users/userhooks";
+import PlaceholderImage from "../PlaceholderImage/PlaceholderImage";
 const ProfileSetting = () => {
+  const { mutate } = useLogOut();
   return (
     <>
       <div>
@@ -67,7 +62,7 @@ const ProfileSetting = () => {
               </div>
               <div>
                 <Link to="/profilesetting">
-                  <PlaceholderImage/>
+                  <PlaceholderImage />
                 </Link>
               </div>
             </div>
@@ -84,7 +79,10 @@ const ProfileSetting = () => {
       {/* Input Fields */}
       <div>
         <div className="flex justify-center mx-auto w-[200px] h-[200px] rounded-full">
-          <UploadImage image={profileimage}  style='w-[120px] h-[120px] object-cover rounded-full' />
+          <UploadImage
+            image={profileimage}
+            style="w-[120px] h-[120px] object-cover rounded-full"
+          />
         </div>
         <div className="flex justify-center">
           <form action="#" className="space-y-5">
@@ -163,13 +161,16 @@ const ProfileSetting = () => {
           </button>
         </div>
         {/* Log Out Button */}
-        <div>
-          <Link to="/">
-            <div className="flex items-center justify-end px-36">
-              <img src={logout} alt="" />
-              <h1 className="text-[#DC3545] font-bold">Log Out</h1>
-            </div>
-          </Link>
+
+        <div
+          onClick={() => {
+            console.log("Log out");
+            mutate();
+          }}
+          className="flex cursor-pointer items-center justify-end px-36"
+        >
+          <img src={logout} alt="" />
+          <h1 className="text-[#DC3545] font-bold">Log Out</h1>
         </div>
       </div>
     </>

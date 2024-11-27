@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { download, preference1 } from "../../assets";
-import SendDiscount from "../Popup Modals/SendDiscount";
-// import AddCustomer from "../Popup Modals/AddCustomer";
+import SendDiscount from "../PopupModals/SendDiscount";
+// import AddCustomer from "../PopupModals/AddCustomer";
 import CustomAwaitTable from "../uicomps/customawaittable";
-import AddCustomer1 from "../Popup Modals/AddCustomer1";
+import AddCustomer1 from "../PopupModals/AddCustomer1";
 
 const CustomerTable = ({ customers, isLoading, error }) => {
   console.log(customers);
