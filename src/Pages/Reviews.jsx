@@ -45,7 +45,7 @@ const Reviews = () => {
           </div>
 
           {/* Navbar */}
-          <div className="flex-grow lg:ml-64">
+          <div className="flex-grow lg:ml-64 overflow-x-hidden">
             <nav className="bg-[#EAF4E2] p-4 shadow-md z-10 flex items-center gap-5 fixed w-full">
               <button
                 className="lg:hidden text-gray-800 z-20"
@@ -75,7 +75,7 @@ const Reviews = () => {
                   <img src={starhalf} alt="" />
                   <h1 className="text-[32px] font-bold">Reviews & Ratings</h1>
                 </div>
-                <div className="flex items-center gap-10 ml-[250px]">
+                <div className="flex items-center gap-10 ml-[70px]">
                   <div className="relative">
                     <label htmlFor="Search" className="sr-only">
                       {" "}
