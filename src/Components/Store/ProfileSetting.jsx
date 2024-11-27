@@ -1,11 +1,9 @@
-import React from "react";
 import {
   arrowleft,
   image,
   logout,
   notification,
   profileimage,
-  store1,
 } from "../../assets";
 import { Link } from "react-router-dom";
 
