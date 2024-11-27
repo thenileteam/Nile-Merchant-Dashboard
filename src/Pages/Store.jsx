@@ -19,6 +19,7 @@ import {
   delete1,
 } from "../assets";
 import DeleteAccount from "../Components/Store/DeleteAccount";
+import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
 
 const Store = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -128,7 +129,7 @@ const Store = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <img src={image} alt="" />
+                      <PlaceholderImage/>
                     </Link>
                   </div>
                 </div>

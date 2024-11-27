@@ -4,8 +4,9 @@ import { useState } from "react";
 import { download, preference1 } from "../../assets";
 import EditProduct from "../Popup Modals/EditProduct";
 import DeleteProduct from "../Popup Modals/DeleteProduct";
-import AddProduct from "../Popup Modals/AddProduct";
+// import AddProduct from "../Popup Modals/AddProduct";
 import Skeleton from "react-loading-skeleton";
+import AddProduct1 from "../Popup Modals/AddProduct1";
 
 // code start
 const ProductTable = ({ data, isFetching, isError }) => {
@@ -180,7 +181,7 @@ const ProductTable = ({ data, isFetching, isError }) => {
                   <td className="px-2 py-3 text-center">{product.id}</td>
                   <td className="px-2 py-3 text-center">{product.name}</td>
                   <td className="px-2 py-3 text-center">
-                    {product.categoryId.slice(0, 5)}
+                    {product.category.name}
                   </td>
                   <td className="px-2 py-3 text-center">{product.price}</td>
                   <td className="px-2 py-3 text-center">{product.unitsSold}</td>
@@ -293,7 +294,7 @@ const ProductTable = ({ data, isFetching, isError }) => {
 
       {/* Add Product & Export CSV Button */}
       <div className=" flex px-28 justify-end items-center mt-10 gap-24">
-        <AddProduct />
+        <AddProduct1 />
         <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
           <img src={download} alt="" />
           Export CSV

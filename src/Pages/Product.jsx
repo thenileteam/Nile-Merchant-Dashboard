@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Links from "../Links";
+import PlaceholderImage from '../Components/PlaceholderImage/PlaceholderImage'
 import {
   image,
   nilelogowhite,
@@ -124,7 +125,7 @@ const Product = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <img src={image} alt="" />
+                      <PlaceholderImage/>
                     </Link>
                   </div>
                 </div>
@@ -136,9 +137,9 @@ const Product = () => {
               {isFetching ? (
                 <div className=" grid grid-cols-3 gap-10">
                   {" "}
-                  <Skeleton className=" w-[60px] h-[150px] rounded-sm" />{" "}
-                  <Skeleton className=" w-[60px] h-[150px] rounded-sm" />{" "}
-                  <Skeleton className=" w-[60px] h-[150px] rounded-sm" />{" "}
+                  <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
+                  <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
+                  <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
                 </div>
               ) : (
                 <div className="flex gap-28">

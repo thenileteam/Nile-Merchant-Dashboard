@@ -1,19 +1,32 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import { useFetchStoreCustomers } from "../../datahooks/users/userhooks";
+import {
+  useAddCustomer,
+  useFetchStoreCustomers,
+} from "../../datahooks/users/userhooks";
 import { toast } from "sonner";
+import { LuLoader2 } from "react-icons/lu";
 
 const SelectCustomerForm = ({
   setSelectCustomerForm,
   selectedCustomer,
   setSelectedCustomer,
 }) => {
+  const { addCustomerQuery, addCustomerQueryError, addCustomerQueryIsPending } =
+    useAddCustomer(() => {
+      setShowAddCustomerSec(false);
+    });
   const { customers, isError, isFetchingCustomers } = useFetchStoreCustomers();
   console.log(customers);
+  const [customerData, setCustomerData] = useState({
+    name: "",
+    phoneNumber: "",
+    email: "",
+  });
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-
+  const [showAddCustomerSec, setShowAddCustomerSec] = useState(false);
   // Debounce the search term
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -25,6 +38,10 @@ const SelectCustomerForm = ({
     };
   }, [searchTerm]);
 
+  const handleCustomerDataChange = (event) => {
+    const { name, value } = event.target;
+    setCustomerData((prevData) => ({ ...prevData, [name]: value }));
+  };
   // Filter customers based on the debounced search term
   const filteredCustomers = customers?.filter(
     (customer) =>
@@ -36,9 +53,7 @@ const SelectCustomerForm = ({
 
   // Handle checkbox change
   const handleCheckboxChange = (customer) => {
-    const isInCart = selectedCustomer.some(
-      (item) => item.name === customer.name
-    );
+    const isInCart = selectedCustomer.some((item) => item.id === customer.id);
     if (isInCart) {
       setSelectedCustomer(
         selectedCustomer.filter(
@@ -55,6 +70,17 @@ const SelectCustomerForm = ({
     toast.success(" Added");
     setSelectCustomerForm(false);
   };
+  const addCustomer = () => {
+    if (
+      !customerData.name ||
+      !customerData.email ||
+      !customerData.phoneNumber
+    ) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+    addCustomerQuery(customerData);
+  };
   return (
     <div className="fixed z-[100000] w-full right-0 left-0 h-screen grid place-items-center">
       <div
@@ -65,7 +91,7 @@ const SelectCustomerForm = ({
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="bg-white flex flex-col pb-8 justify-center items-center relative rounded-[8px]"
+        className="bg-white flex flex-col pb-4 justify-center items-center relative rounded-[8px]"
       >
         <img
           onClick={() => setSelectCustomerForm(false)}
@@ -105,7 +131,7 @@ const SelectCustomerForm = ({
                       type="checkbox"
                       checked={selectedCustomer.some(
                         (item) =>
-                          item.name === customer.name ||
+                          item.id === customer.id ||
                           item.email === customer.email
                       )}
                       onChange={() => handleCheckboxChange(customer)}
@@ -118,12 +144,69 @@ const SelectCustomerForm = ({
             </ul>
           </div>
         </div>
-        <button
-          className="mt-8 bg-[#004324] rounded px-2 py-1 text-white"
-          onClick={addCustomerData}
-        >
-          Add Selected
-        </button>
+        <div className="  flex items-center justify-center w-full gap-4">
+          {filteredCustomers?.length > 0 && (
+            <button
+              className=" bg-[#004324] rounded px-2 py-1 text-white"
+              onClick={addCustomerData}
+            >
+              Add Selected
+            </button>
+          )}
+          <button
+            className=" bg-[#004324] rounded px-2 py-1 text-white"
+            onClick={() =>
+              showAddCustomerSec
+                ? setShowAddCustomerSec(false)
+                : setShowAddCustomerSec(true)
+            }
+          >
+            {showAddCustomerSec ? "Close Form" : "Create Customer"}
+          </button>
+        </div>
+        {showAddCustomerSec && (
+          <form className=" mt-3 p-3 shadow-sm shadow-zinc-700 rounded-md">
+            <h1 className=" mb-1">Customer Creation Form</h1>
+            <div className=" grid md:grid-cols-2 gap-3 place-items-center  grid-cols-1">
+              <input
+                name="name"
+                className="bg-transparent border border-primary p-1 rounded-md text-[#6E6E6E80] leading-[18px] px-1 font-[700] text-[14px]  w-full h-full"
+                type="text"
+                placeholder="Enter Customer Name"
+                onChange={handleCustomerDataChange}
+              />
+              <input
+                name="email"
+                className="bg-transparent border border-primary p-1 rounded-md text-[#6E6E6E80] leading-[18px] px-1 font-[700] text-[14px]  w-full h-full"
+                type="email"
+                required
+                placeholder="Enter Customer Email"
+                onChange={handleCustomerDataChange}
+              />
+            </div>
+            <input
+              name="phoneNumber"
+              className="bg-transparent mt-4 border border-primary p-1 rounded-md text-[#6E6E6E80] leading-[18px] px-1 font-[700] text-[14px]  w-full h-full"
+              type="number"
+              placeholder=" Enter Phone number"
+              onChange={handleCustomerDataChange}
+            />
+            <button
+              disabled={addCustomerQueryIsPending}
+              className=" mt-2 w-full flex justify-center items-center rounded-md bg-[#004324] px-2 py-2 text-white"
+              onClick={(e) => {
+                e.preventDefault();
+                addCustomer();
+              }}
+            >
+              {addCustomerQueryIsPending ? (
+                <LuLoader2 className=" animate-spin transition-all duration-300" />
+              ) : (
+                "Add Customer"
+              )}
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );

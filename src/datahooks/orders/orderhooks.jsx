@@ -3,7 +3,7 @@ import ApiInstance from "../../Api/ApiInstance";
 import { toast } from "sonner";
 
 export const useCreateNewOrder = (onSuccessCallback) => {
-  const queryClient = useQueryClient(); // Get the query client to manage cache
+  const queryClient = useQueryClient();
 
   const { mutate, isLoading: isAddingOrder } = useMutation({
     mutationFn: (data) => ApiInstance.post("/orders/orders", data),
@@ -11,7 +11,7 @@ export const useCreateNewOrder = (onSuccessCallback) => {
       toast.success("Order Added Successfully");
       if (onSuccessCallback) onSuccessCallback();
       // Invalidate the 'orders' query to refetch all orders
-      queryClient.invalidateQueries(["orders"]);
+      queryClient.invalidateQueries(["orders", "dashboard"]);
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "An error occurred");

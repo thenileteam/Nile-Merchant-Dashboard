@@ -1,9 +1,20 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom"; // Make sure this is imported if using React Router
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { toast } from "sonner";
 import ApiInstance from "../../Api/ApiInstance";
+import {
+  endOfDay,
+  endOfMonth,
+  endOfWeek,
+  endOfYear,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+  startOfYear,
+} from "date-fns";
+const store = JSON.parse(localStorage.getItem("store"));
 
 export const useLogUserIn = () => {
   const navigate = useNavigate();
@@ -16,13 +27,14 @@ export const useLogUserIn = () => {
       // Set data in localStorage
       localStorage.setItem("Id", response?.data?.data?.user?._id);
       localStorage.setItem(
-        "stores",
-        JSON.stringify(response?.data?.data?.stores)
+        "store",
+        JSON.stringify(response?.data?.data?.stores[0])
       );
 
       // Set cookies
       Cookies.set("accessToken", response?.data?.accessToken);
       Cookies.set("refreshToken", response?.data?.refreshToken);
+      Cookies.set("isUserLoggedIn", "yes");
       toast("Auth Success✔");
       // Navigate to dashboard
       navigate("/dashboard");
@@ -61,51 +73,225 @@ export const useSignUserUp = () => {
     signUpError: error,
   };
 };
-
-export const useFetchDashboardData = () => {
-  const [customDashboardData, setCustomDashboardData] = useState({});
-  const stores = JSON.parse(localStorage.getItem("stores"));
-  console.log(stores);
-  const { data, isFetching, isError } = useQuery({
-    queryKey: ["dashboard"],
-    queryFn: async () => {
-      const { data: ordersData } = await ApiInstance.get(
-        `/orders/orders/stores/${stores[0]._id}`
-      );
-      const { data: storesData } = await ApiInstance.get("/users/stores", {
-        params: {
-          status: "ACTIVE",
-        },
-      });
-      console.log(ordersData, storesData);
-      return { orders: ordersData, stores: storesData };
+export const useForgetPassword = () => {
+  const [error] = useState("");
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data) => {
+      return ApiInstance.post("/users/auth/forgotPassword", data);
     },
-    staleTime: Infinity,
-    cacheTime: Infinity,
+    onSuccess: () => {
+      toast("Password Reset Link Sent To Your Mail ");
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message || "An error occurred");
+    },
   });
 
   return {
-    data,
-    isFetching,
-    isError,
-    customDashboardData,
-    setCustomDashboardData,
+    mutate,
+    isPending,
+    error,
+  };
+};
+export const useResetPassword = (token) => {
+  console.log(token);
+  const nav = useNavigate();
+  const [error] = useState("");
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data) => {
+      const url = `/users/auth/reset-password?token=${token}`;
+      return ApiInstance.post(url, data);
+    },
+    onSuccess: () => {
+      toast("Password Successfully Changed,Proceed to login ");
+      nav("/");
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message || "An error occurred");
+    },
+  });
+
+  return {
+    mutate,
+    isPending,
+    error,
+  };
+};
+export const useAddCustomer = (onSuccess) => {
+  const queryClient = useQueryClient();
+  const [error] = useState("");
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data) => {
+      return ApiInstance.post(
+        `/orders/orders/customers/create/${store._id}`,
+        data
+      );
+    },
+    onSuccess: () => {
+      toast("Customer Successfully Created ✔");
+      onSuccess ? onSuccess() : null;
+      queryClient.invalidateQueries(["customers"]);
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message || "An error occurred");
+    },
+  });
+
+  return {
+    addCustomerQuery: mutate,
+    addCustomerQueryIsPending: isPending,
+    addCustomerQueryError: error,
+  };
+};
+
+export const useFetchDashboardData = () => {
+  // Memoize stores to prevent unnecessary re-renders
+  const store = useMemo(() => {
+    try {
+      const storedStore = localStorage.getItem("store");
+      console.log("Raw stores from localStorage:", storedStore);
+      return storedStore ? JSON.parse(storedStore) : null;
+    } catch (error) {
+      console.error("Error parsing stores from localStorage", error);
+      return [];
+    }
+  }, []);
+
+  const fetchDashboardData = useCallback(async () => {
+    console.group("Dashboard Data Fetching");
+    console.log("Stores:", store);
+
+    if (!store) {
+      console.error("No store found in localStorage");
+      throw new Error("No store found in localStorage.");
+    }
+
+    const storeId = store._id;
+    console.log("Store ID:", storeId);
+
+    try {
+      // Fetch sales data first to get most sold product
+      const salesResponse = await ApiInstance.get(
+        `/orders/orders/stores/salesdata/${storeId}`
+      );
+      console.log("Sales Data Response:", salesResponse);
+
+      // Validate sales data
+      if (!salesResponse.data || !salesResponse.data.responseObject) {
+        console.warn("Invalid sales data response");
+        throw new Error("Invalid sales data response");
+      }
+
+      const salesData = salesResponse.data;
+      console.log(salesData);
+      // Concurrent fetching for orders and product data
+      const [ordersResponse, productResponse] = await Promise.all([
+        ApiInstance.get(`/orders/orders/stores/${storeId}`, {
+          params: { storeId },
+        }),
+        // Only fetch product if mostSoldToday exists
+        salesData.responseObject?.mostSoldToday
+          ? ApiInstance.get(
+              `/products/${salesData.responseObject.mostSoldToday}`
+            )
+          : Promise.resolve({ data: { responseObject: null } }),
+      ]);
+
+      console.log("Orders Response:", ordersResponse);
+      console.log("Product Response:", productResponse);
+
+      // Validate orders data
+      if (!ordersResponse.data || !ordersResponse.data.responseObject) {
+        console.warn("Invalid orders data response");
+        throw new Error("Invalid orders data response");
+      }
+
+      // Date calculations
+      const now = new Date();
+      const dateRanges = {
+        today: { start: startOfDay(now), end: endOfDay(now) },
+        week: { start: startOfWeek(now), end: endOfWeek(now) },
+        month: { start: startOfMonth(now), end: endOfMonth(now) },
+        year: { start: startOfYear(now), end: endOfYear(now) },
+      };
+
+      // Filter orders more efficiently
+      const filterOrdersByDateRange = (orders, range) =>
+        orders.filter((order) => {
+          const orderDate = new Date(order.createdAt);
+          return orderDate >= range.start && orderDate <= range.end;
+        });
+
+      const orders = ordersResponse.data.responseObject.orders;
+
+      const result = {
+        orders: {
+          today: filterOrdersByDateRange(orders, dateRanges.today),
+          week: filterOrdersByDateRange(orders, dateRanges.week),
+          month: filterOrdersByDateRange(orders, dateRanges.month),
+          year: filterOrdersByDateRange(orders, dateRanges.year),
+          totalOrders: orders.length,
+        },
+        salesData: salesData.responseObject,
+        product: productResponse.data?.responseObject || null,
+      };
+
+      console.log("Final Result:", result);
+      console.groupEnd();
+
+      return result;
+    } catch (error) {
+      console.error("Error in fetchDashboardData:", error);
+      console.groupEnd();
+      throw error;
+    }
+  }, [store]);
+
+  const storeId = store._id;
+
+  const {
+    data: dashboardData,
+    isFetching: isFetchingDashboardData,
+    isError: dashboardDataisError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["dashboard", storeId],
+    queryFn: fetchDashboardData,
+    enabled: !!storeId,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    cacheTime: 30 * 60 * 1000, // 30 minutes
+    // Optional: Add retry logic
+    retry: 2,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    onSuccess: (data) => {
+      console.log("Dashboard Data Fetched Successfully:", data);
+    },
+    onError: (error) => {
+      console.error("Error fetching dashboard data:", error);
+    },
+  });
+
+  return {
+    dashboardData,
+    isFetchingDashboardData,
+    dashboardDataisError,
+    error, // Added to help with debugging
+    refetch,
   };
 };
 export const useFetchOrders = () => {
-  const stores = JSON.parse(localStorage.getItem("stores"));
-  console.log(stores);
+  const store = JSON.parse(localStorage.getItem("store"));
+  console.log("storeId etch orders", store._id);
+  console.log(store);
   const { data, isFetching, isError } = useQuery({
     queryKey: ["orders"],
     queryFn: async () => {
-      const res = await ApiInstance.get(
-        `/orders/orders/stores/${stores[0]._id}`,
-        {
-          params: {
-            storeId: stores[0]._id,
-          },
-        }
-      );
+      const res = await ApiInstance.get(`/orders/orders/stores/${store._id}`, {
+        params: {
+          storeId: store._id,
+        },
+      });
 
       return res.data?.responseObject?.orders;
     },
@@ -120,13 +306,13 @@ export const useFetchOrders = () => {
   };
 };
 export const useFetchStoreCustomers = () => {
-  const stores = JSON.parse(localStorage.getItem("stores"));
-  console.log(stores);
+  const store = JSON.parse(localStorage.getItem("store"));
+  console.log(store);
   const { data, isFetching, isError } = useQuery({
     queryKey: ["customers"],
     queryFn: async () => {
       const res = await ApiInstance.get(
-        `/orders/orders/customers/${stores[0]._id}`
+        `/orders/orders/customers/${store._id}`
       );
 
       return res.data?.responseObject;
@@ -141,3 +327,21 @@ export const useFetchStoreCustomers = () => {
     isError,
   };
 };
+// export const useFetchStoreManageMentData = () => {
+//   const { data, isFetching, isError } = useQuery({
+//     queryKey: ["dashboard"],
+//     queryFn: async () => {
+//       const res = await ApiInstance.get(`/users/users/stores/storemanagement`);
+
+//       return res.data?.responseObject;
+//     },
+//     staleTime: Infinity,
+//     cacheTime: Infinity,
+//   });
+
+//   return {
+//     dashboardData: data,
+//     isFetchingDashboardData: isFetching,
+//     isError,
+//   };
+// };

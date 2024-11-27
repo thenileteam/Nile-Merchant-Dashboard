@@ -1,21 +1,21 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
-
-import { addsquare } from "../../assets";
+import { addsquare, addImage } from "../../assets";
 import { useCreateNewProduct } from "../../datahooks/products/productshooks";
+import { BiLoaderCircle } from "react-icons/bi";
+import UploadImage from "../UploadImage/UploadImage";
 
 const AddProduct1 = () => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
-    setIsFinalConfirmationOpen(true);
-    setTimeout(() => {
-      setIsFinalConfirmationOpen(false);
-    }, 2000);
+    setIsPopupOpen(false); // close the popup after adding product
   });
+
   // State to control the popup visibility and animation
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isFinalConfirmationOpen, setIsFinalConfirmationOpen] = useState(false);
   const [fadeOut, setFadeOut] = useState(false); // State for fade-out animation
-  const store = JSON.parse(localStorage.getItem("stores"))[0];
+  const store = JSON.parse(localStorage.getItem("store"));
 
   // Form fields state
   const [productDetails, setProductDetails] = useState({
@@ -53,7 +53,36 @@ const AddProduct1 = () => {
   const toggleConfirmation = () => {
     setIsConfirmationOpen(false);
   };
-
+  const handleAddProduct = () => {
+    try {
+      if (!store) return;
+      const dataToBackend = {
+        name: productDetails.name,
+        storeId: store._id,
+        userId: store.userId,
+        length: productDetails.dimensions.length,
+        width: productDetails.dimensions.width,
+        description: productDetails.description,
+        height: productDetails.dimensions.height,
+        shippingWeight: productDetails.shippingWeight,
+        price: productDetails.price,
+        discountedPrice: productDetails.discountedPrice,
+        freeShipping: productDetails.freeShipping,
+        packaging: productDetails.packaging,
+        productColorName: productDetails.productColorName,
+        categoryName: productDetails.categoryName,
+        imageUrl: "sss",
+        handlingTime: productDetails.handlingTime,
+        stock: productDetails.stock,
+        productStatus: "AVAILABLE",
+        productSizes: productDetails.quantitySizes,
+      };
+      // console.log(dataToBackend);
+      addProductToBackend(dataToBackend);
+    } catch (error) {
+      console.error("Error adding product:", error);
+    }
+  };
   // Function to handle confirmation and send data to API
   const handleConfirm = async () => {
     setFadeOut(true);
@@ -99,8 +128,18 @@ const AddProduct1 = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-
-    if (name.startsWith("dimensions.")) {
+    if (name === "productColorName") {
+      setProductDetails((prev) => ({
+        ...prev,
+        productColorName: value,
+      }));
+    } else if (name === "quantitySizes") {
+      // Handling quantity sizes
+      setProductDetails((prev) => ({
+        ...prev,
+        quantitySizes: value,
+      }));
+    } else if (name.startsWith("dimensions.")) {
       const key = name.split(".")[1];
       setProductDetails((prev) => ({
         ...prev,
@@ -121,6 +160,7 @@ const AddProduct1 = () => {
       }));
     }
   };
+
   return (
     <>
       {/* Button to trigger the popup */}
@@ -242,21 +282,26 @@ const AddProduct1 = () => {
                       >
                         Product Size
                       </label>
-                      <select
-                        name="quantitySizes"
-                        id="size"
-                        value={productDetails.quantitySizes}
-                        onChange={handleInputChange}
-                        className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
-                      >
-                        <option value="">E.g:XXL</option>
-                        <option value="XL">XL</option>
-                        <option value="XXL">XXL</option>
-                        <option value="LG">LG</option>
-                        <option value="SM">SM</option>
-                        <option value="XS">XS</option>
-                        <option value="XXS">XXS</option>
-                      </select>
+                      <div className="flex flex-col w-full">
+                        <input
+                          list="size-options" // This connects to the datalist below
+                          name="quantitySizes"
+                          id="size"
+                          value={productDetails.quantitySizes}
+                          onChange={handleInputChange}
+                          className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
+                          placeholder="Select or enter a size"
+                        />
+                        <datalist id="size-options">
+                          <option value="XL" />
+                          <option value="XXL" />
+                          <option value="LG" />
+                          <option value="SM" />
+                          <option value="XS" />
+                          <option value="XXS" />
+                        </datalist>
+                      </div>
+
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
                       </span>
@@ -357,20 +402,30 @@ const AddProduct1 = () => {
                       >
                         Product Color
                       </label>
-                      <select
-                        name="productColorName"
-                        id="color"
-                        value={productDetails.productColorName}
-                        onChange={handleInputChange}
-                        className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
-                      >
-                        <option value="">E.g:Red</option>
-                        <option value="Blue">Blue</option>
-                        <option value="Red">Red</option>
-                        <option value="Pink">Pink</option>
-                      </select>
+                      {/* dropdown and manual input fields */}
+                      <div className="flex flex-col w-full">
+                        <input
+                          list="color-options" // Links to the datalist below
+                          name="productColorName"
+                          id="color"
+                          value={productDetails.productColorName}
+                          onChange={handleInputChange}
+                          className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
+                          placeholder="Select or enter a color"
+                        />
+                        {/* Datalist with predefined options */}
+                        <datalist id="color-options">
+                          <option value="Red" />
+                          <option value="Blue" />
+                          <option value="Pink" />
+                        </datalist>
+                      </div>
+
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
-                        <img src={addsquare} alt="" />
+                        <img
+                          src={addsquare}
+                          alt="square icon for the dropdown options"
+                        />
                       </span>
                     </div>
                   </div>
@@ -431,7 +486,10 @@ const AddProduct1 = () => {
                         <option value="MATERIAL">Packaging Materials</option>
                       </select>
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
-                        <img src={addsquare} alt="" />
+                        <img
+                          src={addsquare}
+                          alt="plus sign that shows a drop down to select from"
+                        />
                       </span>
                     </div>
                   </div>
@@ -455,18 +513,20 @@ const AddProduct1 = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center mt-10">PRODUCT IMAGE</div>
-
+              <UploadImage image={addImage } />
               <div className="flex justify-center gap-4 mt-16">
                 {/* Edit Button */}
                 <button
                   disabled={isAddingProduct}
                   className="px-2 py-2 hover:bg-[#004324] bg-[#f5f5f5] border-[#004324] border-2 text-[#004324] font-medium rounded-md shadow-lg hover:text-[#ffffff] transition ease-out duration-700"
-                  onClick={showConfirmation}
+                  onClick={handleAddProduct}
                   type="button"
                 >
                   {isAddingProduct ? (
-                    <div className="w-4 h-4 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-[100px] grid justify-center h-[40px] border-4 border-white border-t-transparent rounded-full ">
+                      {" "}
+                      <BiLoaderCircle className=" animate-spin duration-300 transition-all" />
+                    </div>
                   ) : (
                     <div className="flex items-center gap-1">
                       <svg

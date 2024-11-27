@@ -1,27 +1,28 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from "react";
-import { nilelogosolid, eye } from "../assets";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios"; // Import axios
-import LoginReviews from "../Components/LoginReviews/LoginReviews";
-import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
+import { useEffect, useState } from "react";
+import { nilelogosolid, eye, lashesIcon } from "../assets";
 import { useSignUserUp } from "../datahooks/users/userhooks";
 import { useShowPassword } from "../Context/Context";
+import { toast } from "sonner";
+import LoginReviews from "../Components/LoginReviews/LoginReviews";
+import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
 
 const SignUp = () => {
-  //custom context hook
+  // Custom context hook
   const { showPassword, handleShowPassword } = useShowPassword();
-  const [step, setStep] = useState(false);
+  const [step, setStep] = useState(false); // Default to Step 1
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     passwordConfirm: "",
     storeName: "",
-    image: null,
+    storeURL: "",
     marketing_accept: false,
   });
-  const { signUpMutate, signUpError, signUpIsPending } = useSignUserUp();
+
+  const { signUpMutate, } = useSignUserUp();
+
+  // Handle input change
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -30,19 +31,12 @@ const SignUp = () => {
     });
   };
 
-  const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      image: e.target.files[0],
-    });
-  };
-
+  // Form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Make sure passwords match
     if (formData.password !== formData.passwordConfirm) {
-      alert("Passwords do not match.");
+      toast.error("Passwords do not match.");
       return;
     }
 
@@ -53,6 +47,41 @@ const SignUp = () => {
 
     signUpMutate(data);
   };
+
+  // Validate form before proceeding to Step 2
+  const validateForm = () => {
+    const { name, email, storeName } = formData;
+
+    if (!name || !email || !storeName) {
+      toast.error("Please fill in all fields before proceeding.");
+      return false;
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return false;
+    }
+
+    toast.success("Proceeding to Step 2...");
+    setStep(true); // Move to Step 2
+    return true;
+  };
+
+  // Reset formData when step changes
+  useEffect(() => {
+    if (!step) {
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        passwordConfirm: "",
+        storeName: "",
+        storeURL: "",
+        marketing_accept: false,
+      });
+    }
+  }, [step]);
 
   return (
     <section>
@@ -70,43 +99,33 @@ const SignUp = () => {
             <p className="text-center text-[#6E6E6E] text-[20px] font-semibold">
               Join Our platform And Start Managing Your Store Effortlessly!
             </p>
-            {/* conditionally rendering the text to show for each steps that is rendered */}
-            {step ? (
-              <strong className="text-lightGreen text-center block mt-2">
-                Step 2 of 2
-              </strong>
-            ) : (
-              <strong className="text-lightGreen text-center block mt-2">
-                Step 1 of 2
-              </strong>
-            )}
+            <strong className="text-lightGreen text-center block mt-2">
+              {step ? "Step 2 of 2" : "Step 1 of 2"}
+            </strong>
           </div>
 
-          {/* Input Fields */}
           <div className="mx-auto">
             <form onSubmit={handleSubmit} className="space-y-6 mt-6">
-              {/* conditionally rendering 3 input fields at a time for the sign up steps */}
               {step ? (
                 <>
+                  {/* Step 2 Inputs */}
                   <div className="relative">
-                    <label
-                      htmlFor="Password"
-                      className="block text-[16px] font-bold text-[#333333]"
-                    >
+                    <label htmlFor="Password" className="block text-[16px] font-bold text-[#333333]">
                       Password
                     </label>
                     <input
                       type={showPassword.password1 ? "text" : "password"}
                       id="Password"
                       name="password"
-                      placeholder="********"
+                      value={formData.password}
                       onChange={handleChange}
+                      placeholder="********"
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                     />
                     <img
-                      src={eye}
-                      className="absolute top-11 right-3 w-3 h-3 "
-                      alt="hide password icon"
+                      src={showPassword.password1 ? lashesIcon : eye}
+                      alt="toggle password visibility"
+                      className="absolute top-11 right-2 w-7 h-4 cursor-pointer"
                       onClick={() => handleShowPassword("password1")}
                     />
                   </div>
@@ -121,59 +140,48 @@ const SignUp = () => {
                       type={showPassword.password2 ? "text" : "password"}
                       id="RepeatPassword"
                       name="passwordConfirm"
-                      placeholder="Type password again"
+                      value={formData.passwordConfirm}
                       onChange={handleChange}
+                      placeholder="Type password again"
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                     />
                     <img
-                      src={eye}
-                      className="absolute top-11 right-3 w-3 h-3"
-                      alt="hide password icon"
+                      src={showPassword.password2 ? lashesIcon : eye}
+                      alt="toggle password visibility"
+                      className="absolute top-11 right-2 w-7 h-4 cursor-pointer"
                       onClick={() => handleShowPassword("password2")}
                     />
                   </div>
-
                   <div>
-                    <label
-                      htmlFor="ProfileImage"
-                      className="block text-[16px] font-bold text-[#333333]"
-                    >
-                      Add Profile Image
+                    <label htmlFor="StoreURL" className="block text-[16px] font-bold text-[#333333]">
+                      Store URL
                     </label>
-                    <div className="mt-1">
-                      <label
-                        htmlFor="ProfileImage"
-                        className="block w-full p-3 text-sm text-gray-400 bg-white border-lightGreen border rounded-md cursor-pointer shadow-sm"
-                      >
-                        Choose Image
-                      </label>
-                      <input
-                        type="file"
-                        id="ProfileImage"
-                        name="image"
-                        accept="image/*"
-                        onChange={handleFileChange}
-                        className="hidden"
-                      />
-                    </div>
+                    <input
+                      type="text"
+                      id="StoreURL"
+                      name="storeURL"
+                      value={formData.storeURL}
+                      onChange={handleChange}
+                      placeholder="Add Store URL"
+                      className="mt-1 w-full p-3 text-sm text-gray-400 bg-white border-lightGreen border rounded-md"
+                    />
                   </div>
                 </>
               ) : (
                 <>
-                  <div className=" ">
-                    <label
-                      htmlFor="FullName"
-                      className="block text-[16px] font-bold text-[#333333]"
-                    >
+                  {/* Step 1 Inputs */}
+                  <div>
+                    <label htmlFor="FullName" className="block text-[16px] font-bold text-[#333333]">
                       Full Name
                     </label>
                     <input
                       type="text"
                       id="FullName"
                       name="name"
-                      placeholder="Enter your Full Name"
+                      value={formData.name}
                       onChange={handleChange}
-                      className="mt-1 w-full p-3 rounded-md border border-lightGreen bg-white text-sm text-gray-700 shadow-sm"
+                      placeholder="Enter your Full Name"
+                      className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                     />
                   </div>
                   <div>
@@ -187,36 +195,35 @@ const SignUp = () => {
                       type="email"
                       id="EmailAddress"
                       name="email"
-                      placeholder="Enter your Email Address"
+                      value={formData.email}
                       onChange={handleChange}
+                      placeholder="Enter your Email Address"
                       className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                     />
                   </div>
                   <div>
-                    <label
-                      htmlFor="StoreName"
-                      className="block text-[16px] font-bold text-[#333333]"
-                    >
+                    <label htmlFor="StoreName" className="block text-[16px] font-bold text-[#333333]">
                       Store Name
                     </label>
                     <input
                       type="text"
                       id="StoreName"
                       name="storeName"
-                      placeholder="Enter Your Store Name"
+                      value={formData.storeName}
                       onChange={handleChange}
+                      placeholder="Enter Your Store Name"
                       className="mt-1 w-full p-3 rounded border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
                     />
                   </div>
                 </>
               )}
-
               <div className="mx-auto justify-center flex">
                 <label htmlFor="MarketingAccept" className="flex gap-1">
                   <input
                     type="checkbox"
                     id="MarketingAccept"
                     name="marketing_accept"
+                    checked={formData.marketing_accept}
                     onChange={handleChange}
                     className="size-5 rounded-md border-gray-200 bg-white shadow-sm"
                   />
@@ -226,24 +233,18 @@ const SignUp = () => {
                 </label>
               </div>
 
-              {/* Sign Up Button */}
               {step ? (
                 <button
                   type="submit"
-                  className="text-[#ffffff] bg-[#004324] w-full p-2 rounded-md mt-5"
-                  disabled={signUpIsPending}
+                  className="text-[#ffffff] bg-[#004324] w-full py-4 text-center text-[14px] font-semibold rounded-md shadow-md"
                 >
-                  {signUpIsPending ? (
-                    <div className="w-4 h-4 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-                  ) : (
-                    "       Sign Up"
-                  )}
+                  Sign Up
                 </button>
               ) : (
                 <button
                   type="button"
-                  className="text-[#ffffff] bg-[#004324] w-full p-2 rounded-md mt-5"
-                  onClick={() => setStep(true)}
+                  onClick={validateForm}
+                  className="text-[#ffffff] bg-[#004324] w-full py-4 text-center text-[14px] font-semibold rounded-md shadow-md"
                 >
                   Continue
                 </button>
@@ -256,6 +257,7 @@ const SignUp = () => {
             />
           </div>
         </article>
+
         <LoginReviews />
       </div>
     </section>

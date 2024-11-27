@@ -1,13 +1,14 @@
-import React from "react";
 import {
   arrowleft,
   image,
   logout,
   notification,
+  profile,
   profileimage,
-  store1,
 } from "../../assets";
 import { Link } from "react-router-dom";
+import PlaceholderImage from '../PlaceholderImage/PlaceholderImage'
+import UploadImage from "../UploadImage/UploadImage";
 
 const ProfileSetting = () => {
   return (
@@ -67,7 +68,7 @@ const ProfileSetting = () => {
               </div>
               <div>
                 <Link to="/profilesetting">
-                  <img src={image} alt="" />
+                  <PlaceholderImage/>
                 </Link>
               </div>
             </div>
@@ -84,7 +85,7 @@ const ProfileSetting = () => {
       {/* Input Fields */}
       <div>
         <div className="flex justify-center mx-auto">
-          <img src={profileimage} alt="" />
+          <UploadImage image={ profileimage} />
         </div>
         <div className="flex justify-center">
           <form action="#" className="space-y-5">

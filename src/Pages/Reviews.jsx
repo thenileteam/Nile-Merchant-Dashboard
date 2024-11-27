@@ -11,6 +11,7 @@ import {
   commentblock,
 } from "../assets";
 import ReviewTables from "../Components/Review/ReviewTables";
+import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
 
 const Reviews = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -120,7 +121,7 @@ const Reviews = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <img src={image} alt="" />
+                      <PlaceholderImage/>
                     </Link>
                   </div>
                 </div>

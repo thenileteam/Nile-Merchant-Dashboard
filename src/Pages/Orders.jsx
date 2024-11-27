@@ -21,12 +21,14 @@ import SelectProductForm from "../Components/Orders/selectproductform";
 import { toast } from "sonner";
 import { useCreateNewOrder } from "../datahooks/orders/orderhooks";
 import { AiOutlineLoading } from "react-icons/ai";
+import Skeleton from "react-loading-skeleton";
+import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
 
 const Orders = () => {
   const { addOrderToBackend, isAddingOrder } = useCreateNewOrder(() => {
     setCreateOrderForm(false);
   });
-
+  const store = JSON.parse(localStorage.getItem("store"));
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [createdAt, setCreatedAt] = useState(null);
   const closeSidebar = () => {
@@ -43,26 +45,26 @@ const Orders = () => {
     const selectedDate = new Date(e.target.value);
     setCreatedAt(selectedDate.toISOString());
   };
-
+  console.log(data);
   const addOrder = async () => {
     const itemsFromLocalStorage = JSON.parse(
       localStorage.getItem("orderItems")
     );
     const customerFromLocalStorage = JSON.parse(
       localStorage.getItem("customer")
-    )[0];
+    )?.[0];
 
     console.log(customerFromLocalStorage);
     const orderData = {
       totalAmount: itemsFromLocalStorage.totalAmount,
       items: itemsFromLocalStorage.items,
-      phoneNumber: customerFromLocalStorage.phoneNumber || null,
-      name: customerFromLocalStorage.name || null,
-      email: customerFromLocalStorage.email || null,
+      phoneNumber: customerFromLocalStorage?.phoneNumber || null,
+      name: customerFromLocalStorage?.name || null,
+      email: customerFromLocalStorage?.email || null,
       PaymentStatus: paymentStatus,
       createdAt: createdAt,
-      customerId: customerFromLocalStorage.id,
-      storeId: customerFromLocalStorage.storeId,
+      customerId: customerFromLocalStorage?.id,
+      storeId: store._id,
       salesChannel,
     };
     console.log(orderData);
@@ -97,7 +99,7 @@ const Orders = () => {
                     className=" font-black  text-[16px]  leading-5 "
                     htmlFor="Customer Name"
                   >
-                    Customer Name
+                    Customer Name <span className="opacity-50">(Optional)</span> 
                   </label>
                   <div
                     onClick={() => setSelectCustomerForm(true)}
@@ -311,7 +313,7 @@ const Orders = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <img src={image} alt="" />
+                      <PlaceholderImage/>
                     </Link>
                   </div>
                 </div>
@@ -321,27 +323,38 @@ const Orders = () => {
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
               <div className="flex gap-28 justify-center">
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={shoppingcart} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    {data?.length || 0}
-                  </h1>
-                  <p className="text-[#6E6E6E]">Total Orders</p>
-                </div>
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={truck1} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Pending Shipment</p>
-                </div>
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={timer} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Average Deliver Time</p>
-                </div>
+                {isFetching ? (
+                  <div className=" grid grid-cols-3 gap-10">
+                    {" "}
+                    <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
+                    <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
+                    <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
+                  </div>
+                ) : (
+                  <>
+                    <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                      <img src={shoppingcart} alt="" />
+                      <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                        {data?.length || 0}
+                      </h1>
+                      <p className="text-[#6E6E6E]">Total Orders</p>
+                    </div>
+                    <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                      <img src={truck1} alt="" />
+                      <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                        0
+                      </h1>
+                      <p className="text-[#6E6E6E]">Pending Shipment</p>
+                    </div>
+                    <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                      <img src={timer} alt="" />
+                      <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                        0
+                      </h1>
+                      <p className="text-[#6E6E6E]">Average Deliver Time</p>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 

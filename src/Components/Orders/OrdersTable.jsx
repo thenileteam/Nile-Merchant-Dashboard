@@ -147,7 +147,9 @@ const OrdersTable = ({ data }) => {
             {data?.map((order) => (
               <tr key={order._id} className="bg-[#ffffff] shadow-md">
                 <td className="px-2 py-3 bg-[#EAF4E2]">
-                  {order.customer.name || order.customer.id.slice(0, 2)}
+                  {order?.customer?.name ||
+                    order?.customer?.id.slice(0, 2) ||
+                    "Unassigned"}
                 </td>
                 <td className="px-2 py-3 text-center">{order.id}</td>
                 <td className="px-2 py-3 text-center">{order.items[0].name}</td>
@@ -172,6 +174,7 @@ const OrdersTable = ({ data }) => {
                 </td>
               </tr>
             ))}
+
             {/* Row 1 */}
 
             {/* Row 6 */}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
@@ -13,8 +13,16 @@ import {
 } from "../assets";
 import CustomerTable from "../Components/Customers/CustomerTable";
 import AddCustomer1 from "../Components/Popup Modals/AddCustomer1";
+import { useFetchStoreCustomers } from "../datahooks/users/userhooks";
+import CustomAwaitCard from "../Components/uicomps/customawaitcard";
+import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
 
 const Customer = () => {
+  const {
+    customers,
+    isFetchingCustomers: isLoading,
+    isError: error,
+  } = useFetchStoreCustomers();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const closeSidebar = () => {
@@ -124,62 +132,70 @@ const Customer = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <img src={image} alt="" />
+                      <PlaceholderImage/>
                     </Link>
                   </div>
                 </div>
               </div>
             </nav>
-            
+
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
-              <div className="flex gap-28">
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={usergroup} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Total Customers</p>
+              <CustomAwaitCard isLoading={isLoading} error={error}>
+                <div className="flex gap-28">
+                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                    <img src={usergroup} alt="" />
+                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                      {customers?.length}
+                    </h1>
+                    <p className="text-[#6E6E6E]">Total Customers</p>
+                  </div>
+                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                    <img src={usercheck} alt="" />
+                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                      {customers?.length}
+                    </h1>
+                    <p className="text-[#6E6E6E]">Active Customers</p>
+                  </div>
+                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                    <img src={userarrow} alt="" />
+                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
+                      0
+                    </h1>
+                    <p className="text-[#6E6E6E]">Repeat Customers</p>
+                  </div>
                 </div>
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={usercheck} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Active Customers</p>
-                </div>
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={userarrow} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Repeat Customers</p>
-                </div>
-              </div>
+              </CustomAwaitCard>
             </div>
 
-            <div className="px-24 mt-20">
-              <div>
-                <img
-                  src={userblock}
-                  alt=""
-                  className="flex justify-center mx-auto"
-                />
-                <h1 className="text-[24px] font-extrabold text-center">
-                  You Have No Customers
-                </h1>
-                <p className="text-[#6E6E6E] font-bold text-center">
-                  Once a customer buy from you or you <br /> added a customer
-                  manually,they will <br /> appear here.
-                </p>
+            {customers?.length === 0 && (
+              <div className="px-24 mt-20">
+                <div>
+                  <img
+                    src={userblock}
+                    alt=""
+                    className="flex justify-center mx-auto"
+                  />
+                  <h1 className="text-[24px] font-extrabold text-center">
+                    You Have No Customers
+                  </h1>
+                  <p className="text-[#6E6E6E] font-bold text-center">
+                    Once a customer buy from you or you <br /> added a customer
+                    manually,they will <br /> appear here.
+                  </p>
+                </div>
+                <div className="flex justify-center mt-3">
+                  <AddCustomer1 transparent={false} />
+                </div>
               </div>
-              <div className="flex justify-center mt-3">
-                <AddCustomer1 />
-              </div>
-            </div>
+            )}
 
             <div>
-              <CustomerTable />
+              <CustomerTable
+                customers={customers}
+                error={error}
+                isLoading={isLoading}
+              />
             </div>
           </div>
         </div>
