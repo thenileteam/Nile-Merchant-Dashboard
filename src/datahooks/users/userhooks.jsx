@@ -17,10 +17,12 @@ import {
 const store = JSON.parse(localStorage.getItem("store"));
 
 export const useLogUserIn = () => {
+  console.log("attempting new login");
   const navigate = useNavigate();
   const [error] = useState("");
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
+      console.log(data);
       return ApiInstance.post("/users/auth/login", data);
     },
     onSuccess: (response) => {
