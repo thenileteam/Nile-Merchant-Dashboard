@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { addsquare } from "../../assets";
+import { addsquare,addImage } from "../../assets";
 
 const EditProduct = () => {
   // State to control the popup visibility and animation
@@ -449,8 +449,7 @@ const EditProduct = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center mt-10">PRODUCT IMAGE</div>
-
+              <UploadImage image={addImage} />
               <div className="flex justify-center gap-4 mt-16">
                 {/* Edit Button */}
                 <button

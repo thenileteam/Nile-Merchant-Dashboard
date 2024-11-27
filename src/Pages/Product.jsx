@@ -15,6 +15,7 @@ import ProductTable from "../Components/Products/ProductTable";
 import AddProduct1 from "../Components/Popup Modals/AddProduct1";
 import { useFetchProducts } from "../datahooks/products/productshooks";
 import Skeleton from "react-loading-skeleton";
+import PlaceholderImage from "../Components/Popup Modals/PlaceholderImage";
 
 const Product = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -124,7 +125,7 @@ const Product = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <img src={image} alt="" />
+                      <PlaceholderImage/>
                     </Link>
                   </div>
                 </div>

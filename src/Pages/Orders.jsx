@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import { useCreateNewOrder } from "../datahooks/orders/orderhooks";
 import { AiOutlineLoading } from "react-icons/ai";
 import Skeleton from "react-loading-skeleton";
+import PlaceholderImage from "../Components/Popup Modals/PlaceholderImage";
 
 const Orders = () => {
   const { addOrderToBackend, isAddingOrder } = useCreateNewOrder(() => {
@@ -312,7 +313,7 @@ const Orders = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <img src={image} alt="" />
+                      <PlaceholderImage/>
                     </Link>
                   </div>
                 </div>
