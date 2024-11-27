@@ -1,4 +1,3 @@
-import React from "react";
 import {
   arrowleft,
   image,
@@ -6,7 +5,6 @@ import {
   notification,
   profile,
   profileimage,
-  store1,
 } from "../../assets";
 import { Link } from "react-router-dom";
 import PlaceholderImage from '../PlaceholderImage/PlaceholderImage'
