@@ -33,7 +33,7 @@ export const ShowPasswordProvider = ({ children }) => {
     const isValuePresent = !email|| !password||!confirmPassword||!newPassword
     if (isValuePresent){
       setInputErrorMsg('Input fields cannot be empty!')
-    }else{setInputErrprMsg('')}
+    }else{setInputErrorMsg('')}
   }
   return (
     <ShowPasswordContext.Provider value={{ showPassword, handleShowPassword}}>

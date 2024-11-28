@@ -20,7 +20,7 @@ import { useState } from "react";
 import { useFetchDashboardData } from "../datahooks/users/userhooks";
 import Skeleton from "react-loading-skeleton";
 import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
-
+import { useUserStore } from "../zustandStore";
 const Dashboard = () => {
   const { dashboardData, isFetchingDashboardData, dashboardDataisError } =
     useFetchDashboardData();
@@ -29,7 +29,10 @@ const Dashboard = () => {
   const closeSidebar = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
-  // const username = JSON.parse(localStorage.getItem("username")) || "User";
+  //getting username from zustand store
+  const username = useUserStore((state) => state.username);
+  console.log(username);
+  
   return (
     <>
       <div className="bg-[#F5F5F5] pb-20 overflow-x-hidden">
@@ -84,7 +87,7 @@ const Dashboard = () => {
               </button>
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-[32px] font-bold ml-20">Welcome user</h1>
+                  <h1 className="text-[32px] font-bold ml-20">{`Welcome ${username || `user`} `}</h1>
                 </div>
                 <div className="flex items-center gap-10 ml-[400px]">
                   <div className="relative">
@@ -178,7 +181,7 @@ const Dashboard = () => {
               <div className="border-2 border-white shadow-[0px_4px_10px_rgba(0,0,0,0.3)]"></div>
             </div>
 
-            <div className="px-36 mt-10 space-y-7">
+            {/* <div className="px-36 mt-10 space-y-7">
               <div className="flex items-center justify-between">
                 <Link to="/storesetting">
                   <div className="flex items-center justify-between w-[469px] h-[122px] border-[#8ED06C] border-2 bg-[#ffffff] p-3 rounded-lg">
@@ -264,7 +267,7 @@ const Dashboard = () => {
                   </div>
                 </Link>
               </div>
-            </div>
+            </div> */}
 
             <div>
               <DashoardTabel

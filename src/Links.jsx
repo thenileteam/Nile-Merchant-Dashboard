@@ -99,7 +99,7 @@ const Links = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-              Orders & Shipping
+              Orders
             </div>
           </div>
         </li>
@@ -161,11 +161,10 @@ const Links = () => {
       </Link>
 
       {/* Reviews & Ratings */}
-      <Link to="/reviews">
+      {/* <Link to="/reviews">
         <li className="cursor-pointer mt-5">
           <div className={getLinkClasses("/reviews")}>
             <div className="flex items-center gap-3">
-              {/* SVG icon */}
               <svg
                 width="24"
                 height="25"
@@ -185,7 +184,7 @@ const Links = () => {
             </div>
           </div>
         </li>
-      </Link>
+      </Link> */}
 
       {/* Customer Management */}
       <Link to="/customer">
@@ -241,11 +240,10 @@ const Links = () => {
       </Link>
 
       {/* Financial Management */}
-      <Link to="/financial">
+      {/* <Link to="/financial">
         <li className="cursor-pointer mt-5">
           <div className={getLinkClasses("/financial")}>
             <div className="flex items-center gap-3">
-              {/* SVG icon */}
               <svg
                 width="24"
                 height="24"
@@ -286,14 +284,13 @@ const Links = () => {
             </div>
           </div>
         </li>
-      </Link>
+      </Link> */}
 
       {/* Store Setting */}
-      <Link to="/store">
+      {/* <Link to="/store">
         <li className="cursor-pointer mt-5">
           <div className={getLinkClasses("/store")}>
             <div className="flex items-center gap-3">
-              {/* SVG icon */}
               <svg
                 width="24"
                 height="24"
@@ -324,7 +321,7 @@ const Links = () => {
             </div>
           </div>
         </li>
-      </Link>
+      </Link> */}
 
       {/* Footer */}
       <div className="mt-44">
