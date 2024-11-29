@@ -15,7 +15,6 @@ import {
   startOfWeek,
   startOfYear,
 } from "date-fns";
-import axios from "axios";
 const store = JSON.parse(localStorage.getItem("store"));
 
 export const useLogUserIn = () => {
@@ -388,6 +387,26 @@ export const useFetchStoreCustomers = () => {
   return {
     customers: data,
     isFetchingCustomers: isFetching,
+    isError,
+  };
+};
+export const useFetchUser = () => {
+  const id = localStorage.getItem("Id");
+
+  const { data, isFetching, isError } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await ApiInstance.get(`/users/user/${id}`);
+
+      return res.data?.responseObject;
+    },
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+
+  return {
+    user: data,
+    isFetchingUser: isFetching,
     isError,
   };
 };
