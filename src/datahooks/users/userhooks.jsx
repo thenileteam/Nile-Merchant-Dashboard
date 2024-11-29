@@ -106,6 +106,30 @@ export const useModifyProfile = () => {
   };
 };
 
+export const useLogOut = () => {
+  const navigate = useNavigate();
+  const { mutate, isPending } = useMutation({
+    mutationFn: () => ApiInstance.post("/users/auth/logout"),
+    onSuccess: () => {
+      localStorage.removeItem("Id");
+      localStorage.removeItem("store");
+
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
+      Cookies.remove("isUserLoggedIn");
+      toast("Logout Successful✔");
+      navigate("/");
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message || "An error occurred");
+    },
+  });
+
+  return {
+    mutate,
+    isPending,
+  };
+};
 export const useSignUserUp = () => {
   const navigate = useNavigate();
   //access state from zustand store
