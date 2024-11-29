@@ -32,7 +32,8 @@ const Dashboard = () => {
   //getting username from zustand store
   const username = useUserStore((state) => state.username);
   console.log(username);
-  
+  const userImage = useUserStore((state) => state.userImage);
+
   return (
     <>
       <div className="bg-[#F5F5F5] pb-20 overflow-x-hidden">
@@ -87,7 +88,9 @@ const Dashboard = () => {
               </button>
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-[32px] font-bold ml-20">{`Welcome ${username || `user`} `}</h1>
+                  <h1 className="text-[32px] font-bold ml-20">{`Welcome ${
+                    username || `user`
+                  } `}</h1>
                 </div>
                 <div className="flex items-center gap-10 ml-[400px]">
                   <div className="relative">
@@ -134,7 +137,16 @@ const Dashboard = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <PlaceholderImage />
+                      {/* If userImage is available, display the uploaded image. Otherwise, show the placeholder */}
+                      {userImage ? (
+                        <img
+                          src={userImage}
+                          alt="Profile"
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                      ) : (
+                        <PlaceholderImage />
+                      )}
                     </Link>
                   </div>
                 </div>

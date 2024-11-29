@@ -1,3 +1,5 @@
+ /* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useUserStore } from "../../zustandStore";
 import { useModifyProfile } from "../../datahooks/users/userhooks";
 

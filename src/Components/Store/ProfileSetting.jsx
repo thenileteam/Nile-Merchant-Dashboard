@@ -1,43 +1,40 @@
 import { arrowleft, logout, notification, profileimage } from "../../assets";
 import { Link } from "react-router-dom";
 import UploadImage from "../UploadImage/UploadImage";
-import { useLogOut, useModifyProfile } from "../../datahooks/users/userhooks";
+import {
+  useFetchUser,
+  useLogOut,
+  useModifyProfile,
+} from "../../datahooks/users/userhooks";
 import PlaceholderImage from "../PlaceholderImage/PlaceholderImage";
 import { useUserStore } from "../../zustandStore";
 import { useState } from "react";
+import Skeleton from "react-loading-skeleton";
+
 const ProfileSetting = () => {
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const { user, isFetchingUser, isError } = useFetchUser();
+  const [phoneNumber, setPhoneNumber] = useState(
+    (user && user.phoneNumber) || ""
+  );
   const { mutate } = useLogOut();
-  const { modifyProfile } = useModifyProfile();
+  const { modifyProfile, isPending } = useModifyProfile();
   const [image, setImage] = useState(null);
   const username = useUserStore((state) => state.username);
+  console.log(user);
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setImage(file);
   };
 
   const handleSaveChanges = async () => {
-    if (!image) {
-      console.error("No image uploaded!");
+    if (!image && !phoneNumber) {
+      console.error("No changes made!");
       return;
     }
-    if (!phoneNumber) {
-      console.error("Phone number is missing!");
-      return;
-    }
-
-    // Log the image and phoneNumber
-    console.log("Image:", image);
-    console.log("Phone Number:", phoneNumber);
 
     const formData = new FormData();
-    formData.append("phoneNumber", phoneNumber); // Append the phone number
-    formData.append("image", image); // Append the image file
-
-    // Log the FormData for debugging
-    for (let pair of formData.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
+    if (image) formData.append("image", image);
+    if (phoneNumber) formData.append("phoneNumber", phoneNumber);
 
     try {
       modifyProfile(formData);
@@ -46,7 +43,8 @@ const ProfileSetting = () => {
     }
   };
 
-  console.log(image);
+  if (isError) return <div>Something went wrong</div>;
+
   return (
     <>
       <div>
@@ -117,11 +115,38 @@ const ProfileSetting = () => {
       {/* Input Fields */}
       <div>
         <div className="flex justify-center mx-auto w-[200px] h-[200px] rounded-full">
-          <UploadImage
-            image={profileimage}
-            handleFileChange={handleFileChange}
-            style="w-[120px] h-[120px] object-cover rounded-full"
-          />
+          {isFetchingUser ? (
+            <Skeleton className=" size-[100px] rounded-full" />
+          ) : user.image ? (
+            <>
+              <label
+                className=" border size-[100px] mt-10 border-zinc-500 rounded-full shrink-0"
+                htmlFor="fileInput"
+              >
+                {" "}
+                <img
+                  src={user.image}
+                  className=" cursor-pointer shrink-0 rounded-full object-cover"
+                  alt="User Image"
+                />
+              </label>
+              <input
+                type="file"
+                name="fileInput"
+                id="fileInput"
+                accept=".jpg,.png,.jpeg"
+                className=" hidden"
+                required
+                onChange={handleFileChange}
+              />
+            </>
+          ) : (
+            <UploadImage
+              image={profileimage}
+              handleFileChange={handleFileChange}
+              style="w-[120px] h-[120px] object-cover rounded-full"
+            />
+          )}
         </div>
         <div className="flex justify-center">
           <form action="#" className="space-y-5">
@@ -164,14 +189,19 @@ const ProfileSetting = () => {
               >
                 Phone Number
               </label>
-              <input
-                type="text"
-                id="PhoneNumber"
-                name="phone_number"
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="0000000000000"
-                className="mt-1 w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-              />
+              {isFetchingUser ? (
+                <Skeleton className=" w-[450px] py-2 rounded-md " />
+              ) : (
+                <input
+                  type="text"
+                  id="PhoneNumber"
+                  value={phoneNumber}
+                  name="phone_number"
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="0000000000000"
+                  className="mt-1 w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                />
+              )}
             </div>
           </form>
         </div>
@@ -180,12 +210,13 @@ const ProfileSetting = () => {
             Cancel Changes
           </button>
           <button
+            disabled={isPending}
             onClick={() => {
               handleSaveChanges();
             }}
-            className="border-[#004324] border-2 text-[#ffffff] bg-[#004324] font-bold p-3 rounded-lg w-[192px]"
+            className="border-[#004324] disabled:bg-opacity-40 border-2 text-[#ffffff] bg-[#004324] font-bold p-3 rounded-lg w-[192px]"
           >
-            Save Changes
+            {isPending ? "Saving..." : "Save Changes"}
           </button>
         </div>
         {/* Log Out Button */}
