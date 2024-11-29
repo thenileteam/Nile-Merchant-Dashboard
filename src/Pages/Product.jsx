@@ -14,9 +14,11 @@ import ProductTable from "../Components/Products/ProductTable";
 import AddProduct1 from "../Components/PopupModals/AddProduct1";
 import { useFetchProducts } from "../datahooks/products/productshooks";
 import Skeleton from "react-loading-skeleton";
-import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
-
+import ProfileImage from "../Components/PlaceholderImage/PlaceholderImage";
+import {useFetchUser} from '../datahooks/users/userhooks'
 const Product = () => {
+  //user image
+  const { user } = useFetchUser();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { data, isFetching, isError } = useFetchProducts();
   const closeSidebar = () => {
@@ -124,7 +126,7 @@ const Product = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <PlaceholderImage />
+                      <ProfileImage  profileImage={user&&user.image?user.image: ''}  />
                     </Link>
                   </div>
                 </div>

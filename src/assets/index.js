@@ -68,7 +68,7 @@ import eye from './Eye-icon.svg'
 import tadfarm from './tadFarm.jpg'
 import lashesIcon from './lashes-icon.svg'
 import addImage from './add-image.svg'
-
+import placeholderImage from './placeholderImage.svg'
 export {
     nilelogosolid,
     nilelogowhite,
@@ -135,5 +135,5 @@ export {
     donBaci,
     dot1,
     dot2, dot3, eye
-    ,tadfarm,lashesIcon,addImage
+    ,tadfarm,lashesIcon,addImage,placeholderImage
 }

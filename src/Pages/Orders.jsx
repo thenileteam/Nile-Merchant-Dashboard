@@ -13,18 +13,19 @@ import {
   shoppingcartremove,
 } from "../assets";
 import OrdersTable from "../Components/Orders/OrdersTable";
-import { useFetchOrders } from "../datahooks/users/userhooks";
+import { useFetchOrders, useFetchUser } from "../datahooks/users/userhooks";
 import CustomDropdown from "../Components/uicomps/customdropdown";
 import CustomSalesChannelDropdown from "../Components/uicomps/customsaleschannel";
 import SelectCustomerform from "../Components/Orders/selectcustomerform";
 import SelectProductForm from "../Components/Orders/selectproductform";
-import { toast } from "sonner";
 import { useCreateNewOrder } from "../datahooks/orders/orderhooks";
 import { AiOutlineLoading } from "react-icons/ai";
 import Skeleton from "react-loading-skeleton";
-import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
+import ProfileImage from "../Components/PlaceholderImage/PlaceholderImage";
 
 const Orders = () => {
+  //user profile image
+  const { user } = useFetchUser();
   const { addOrderToBackend, isAddingOrder } = useCreateNewOrder(() => {
     setCreateOrderForm(false);
   });
@@ -314,7 +315,7 @@ const Orders = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <PlaceholderImage/>
+                      <ProfileImage profileImage={user && user.image ? user.image : ''}  />
                     </Link>
                   </div>
                 </div>

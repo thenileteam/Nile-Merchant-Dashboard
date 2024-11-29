@@ -53,7 +53,7 @@ export const useLogUserIn = () => {
     error,
   };
 };
- 
+
 export const useModifyProfile = () => {
   const queryClient = useQueryClient();
   const id = localStorage.getItem("Id");
@@ -421,7 +421,7 @@ export const useFetchUser = () => {
     queryKey: ["user"],
     queryFn: async () => {
       const res = await ApiInstance.get(`/users/user/${id}`);
-
+      console.log(res.data);
       return res.data?.responseObject;
     },
     staleTime: Infinity,

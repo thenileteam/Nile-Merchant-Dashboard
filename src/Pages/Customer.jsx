@@ -13,11 +13,13 @@ import {
 } from "../assets";
 import CustomerTable from "../Components/Customers/CustomerTable";
 import AddCustomer1 from "../Components/PopupModals/AddCustomer1";
-import { useFetchStoreCustomers } from "../datahooks/users/userhooks";
+import { useFetchStoreCustomers, useFetchUser } from "../datahooks/users/userhooks";
 import CustomAwaitCard from "../Components/uicomps/customawaitcard";
-import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
+import ProfileImage from "../Components/PlaceholderImage/PlaceholderImage";
 
 const Customer = () => {
+  //show user profile image
+  const { user } = useFetchUser();
   const {
     customers,
     isFetchingCustomers: isLoading,
@@ -132,7 +134,7 @@ const Customer = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <PlaceholderImage/>
+                      <ProfileImage profileImage={user && user.image ? user.image : ''} />
                     </Link>
                   </div>
                 </div>

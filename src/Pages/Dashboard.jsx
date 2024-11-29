@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
   bitcoin,
-  image,
   nilelogowhite,
   notification,
   packagemoving,
@@ -17,11 +16,13 @@ import {
 } from "../assets";
 import DashoardTabel from "../Components/Dashboard/DashoardTabel";
 import { useState } from "react";
-import { useFetchDashboardData } from "../datahooks/users/userhooks";
+import { useFetchDashboardData,useFetchUser } from "../datahooks/users/userhooks";
 import Skeleton from "react-loading-skeleton";
-import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
+import ProfileImage from "../Components/PlaceholderImage/PlaceholderImage";
 import { useUserStore } from "../zustandStore";
 const Dashboard = () => {
+  //users image
+  const { user } = useFetchUser();
   const { dashboardData, isFetchingDashboardData, dashboardDataisError } =
     useFetchDashboardData();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -30,9 +31,9 @@ const Dashboard = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
   //getting username from zustand store
-  const username = useUserStore((state) => state.username);
+  const username =  user&&user.name?user.name.split(' ')[0].toUpperCase():'User';
   console.log(username);
-  const userImage = useUserStore((state) => state.userImage);
+   
 
   return (
     <>
@@ -89,7 +90,7 @@ const Dashboard = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <h1 className="text-[32px] font-bold ml-20">{`Welcome ${
-                    username || `user`
+                    username
                   } `}</h1>
                 </div>
                 <div className="flex items-center gap-10 ml-[400px]">
@@ -137,16 +138,7 @@ const Dashboard = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      {/* If userImage is available, display the uploaded image. Otherwise, show the placeholder */}
-                      {userImage ? (
-                        <img
-                          src={userImage}
-                          alt="Profile"
-                          className="w-10 h-10 rounded-full object-cover"
-                        />
-                      ) : (
-                        <PlaceholderImage />
-                      )}
+                      <ProfileImage profileImage={user && user.image ? user.image : ''} />
                     </Link>
                   </div>
                 </div>
