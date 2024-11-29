@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export const useFileStore = create((set) => ({
+export const useUserStore = create((set) => ({
   uploadedFile: null,
   setUploadedFile: (file) => set({ uploadedFile: file }),
   //handling file uploads
@@ -18,6 +18,17 @@ export const useFileStore = create((set) => ({
     }
   },
   handleRemoveFile: () => set({ uploadedFile: null }),
+
+  //username functionalities
+  username: "", // Initial state
+  setUsername: (name) => set({ username: name }),
+
+  loadUsernameFromLocalStorage: () => {
+    const storedUsername = localStorage.getItem("ownerName");
+    if (storedUsername) {
+      set({ username: JSON.parse(storedUsername) });
+    }
+  },
 }));
 
 

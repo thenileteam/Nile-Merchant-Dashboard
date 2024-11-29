@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom"; // Make sure this is imported if using React Router
 import { useCallback, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { useUserStore } from "../../zustandStore";
 import ApiInstance from "../../Api/ApiInstance";
 import {
   endOfDay,
@@ -14,6 +15,7 @@ import {
   startOfWeek,
   startOfYear,
 } from "date-fns";
+import axios from "axios";
 const store = JSON.parse(localStorage.getItem("store"));
 
 export const useLogUserIn = () => {
@@ -52,26 +54,76 @@ export const useLogUserIn = () => {
     error,
   };
 };
-export const useLogOut = () => {
-  console.log("attempting new logout");
-  const navigate = useNavigate();
-  const [error] = useState("");
-  const { mutate, isPending } = useMutation({
-    mutationFn: () => {
-      console.log();
-      return ApiInstance.post("/users/auth/logout");
-    },
-    onSuccess: () => {
-      // Set data in localStorage
-      localStorage.setItem("Id", "");
-      localStorage.setItem("store", JSON.stringify([]));
 
-      // Set cookies
-      Cookies.set("accessToken", "");
-      Cookies.set("refreshToken", "");
-      Cookies.set("isUserLoggedIn", "no");
+export const useModifyProfile = () => {
+  const id = localStorage.getItem("Id");
+  const { mutate: modifyProfile, isPending } = useMutation({
+    mutationFn: async (data) => {
+      console.log("Data received in mutationFn:", data);
+
+      if (!data) {
+        console.log("No data provided to the mutation function.");
+        return;
+      }
+
+      let awaitedUrl;
+
+      if (data.get("image")) {
+        console.log("Uploading image...");
+        try {
+          const response = await ApiInstance.post(
+            "/users/upload-profile-image",
+            data.get("image"),
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          console.log("Image upload response:", response);
+          awaitedUrl = response.data.data;
+        } catch (err) {
+          console.error("Image upload failed:", err);
+          throw err;
+        }
+      }
+
+      console.log("Image URL after upload:", awaitedUrl);
+
+      // Update profile
+      return ApiInstance.put(`/users/user/update/${id}`, {
+        phoneNumber: data.get("phoneNumber") || "",
+        imageUrl: awaitedUrl,
+      });
+    },
+    onSuccess: (response) => {
+      console.log("Profile update successful:", response);
+      toast("Profile updated Successfully✔");
+    },
+    onError: (err) => {
+      console.error("Profile update failed:", err);
+      toast.error(err.response?.data?.message || "An error occurred");
+    },
+  });
+
+  return {
+    modifyProfile,
+    isPending,
+  };
+};
+
+export const useLogOut = () => {
+  const navigate = useNavigate();
+  const { mutate, isPending } = useMutation({
+    mutationFn: () => ApiInstance.post("/users/auth/logout"),
+    onSuccess: () => {
+      localStorage.removeItem("Id");
+      localStorage.removeItem("store");
+
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
+      Cookies.remove("isUserLoggedIn");
       toast("Logout Successful✔");
-      // Navigate to dashboard
       navigate("/");
     },
     onError: (err) => {
@@ -82,22 +134,26 @@ export const useLogOut = () => {
   return {
     mutate,
     isPending,
-    error,
   };
 };
+
 export const useSignUserUp = () => {
   const navigate = useNavigate();
+  //access state from zustand store
+  const setUsername = useUserStore((state) => state.setUsername);
   const [error] = useState("");
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
       return ApiInstance.post("/users/auth/register", data);
     },
     onSuccess: (response) => {
+      const username = response.data.ownerName;
       toast("Auth Success✔");
-      // Navigate to dashboard
-      // localStorage.setItem("username", JSON.stringify(response.data.name));
+      //store and set users name
+      localStorage.setItem("ownerName", JSON.stringify(username));
+      setUsername(username);
       console.log(response.data);
-
+      // Navigate to dashboard
       navigate("/");
     },
     onError: (err) => {

@@ -15,6 +15,7 @@ import CustomerTable from "../Components/Customers/CustomerTable";
 import AddCustomer1 from "../Components/PopupModals/AddCustomer1";
 import { useFetchStoreCustomers } from "../datahooks/users/userhooks";
 import CustomAwaitCard from "../Components/uicomps/customawaitcard";
+import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
 
 const Customer = () => {
   const {
@@ -131,7 +132,7 @@ const Customer = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <img src={image} alt="" />
+                      <PlaceholderImage/>
                     </Link>
                   </div>
                 </div>

@@ -1,15 +1,57 @@
 import { arrowleft, logout, notification, profileimage } from "../../assets";
 import { Link } from "react-router-dom";
 import UploadImage from "../UploadImage/UploadImage";
-import { useLogOut } from "../../datahooks/users/userhooks";
+import { useLogOut, useModifyProfile } from "../../datahooks/users/userhooks";
 import PlaceholderImage from "../PlaceholderImage/PlaceholderImage";
+import { useUserStore } from "../../zustandStore";
+import { useState } from "react";
 const ProfileSetting = () => {
+  const [phoneNumber, setPhoneNumber] = useState("");
   const { mutate } = useLogOut();
+  const { modifyProfile } = useModifyProfile();
+  const [image, setImage] = useState(null);
+  const username = useUserStore((state) => state.username);
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setImage(file);
+  };
+
+  const handleSaveChanges = async () => {
+    if (!image) {
+      console.error("No image uploaded!");
+      return;
+    }
+    if (!phoneNumber) {
+      console.error("Phone number is missing!");
+      return;
+    }
+
+    // Log the image and phoneNumber
+    console.log("Image:", image);
+    console.log("Phone Number:", phoneNumber);
+
+    const formData = new FormData();
+    formData.append("phoneNumber", phoneNumber); // Append the phone number
+    formData.append("image", image); // Append the image file
+
+    // Log the FormData for debugging
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+
+    try {
+      modifyProfile(formData);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
+
+  console.log(image);
   return (
     <>
       <div>
         {/* Navbar */}
-        <nav className="bg-[#EAF4E2] p-4 shadow-md flex items-center justify-center gap-5 fixed w-full">
+        <nav className="bg-[#EAF4E2] p-4 shadow-md flex items-center justify-center gap-5 fixed z-50 w-full">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 px-20">
               <Link to="/dashboard">
@@ -77,6 +119,7 @@ const ProfileSetting = () => {
         <div className="flex justify-center mx-auto w-[200px] h-[200px] rounded-full">
           <UploadImage
             image={profileimage}
+            handleFileChange={handleFileChange}
             style="w-[120px] h-[120px] object-cover rounded-full"
           />
         </div>
@@ -93,8 +136,9 @@ const ProfileSetting = () => {
                 type="text"
                 id="Name"
                 name="name"
-                placeholder="Ahmad Diallo"
-                className="mt-1 w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                placeholder={`${username || "Ahmad Diallo"}`}
+                className="mt-1 w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm cursor-not-allowed"
+                readOnly
               />
             </div>
             <div>
@@ -109,7 +153,8 @@ const ProfileSetting = () => {
                 id="EmailAddress"
                 name="email_address"
                 placeholder="Ashimiuade@gmail.com"
-                className="mt-1 w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm cursor-not-allowed"
+                readOnly
               />
             </div>
             <div>
@@ -123,21 +168,7 @@ const ProfileSetting = () => {
                 type="text"
                 id="PhoneNumber"
                 name="phone_number"
-                placeholder="0000000000000"
-                className="mt-1 w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="Password"
-                className="block text-[16px] font-bold text-[#333333]"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                id="Password"
-                name="password"
+                onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="0000000000000"
                 className="mt-1 w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
               />
@@ -148,7 +179,12 @@ const ProfileSetting = () => {
           <button className="border-[#004324] border-2 text-[#004324] font-bold p-3 rounded-lg w-[192px]">
             Cancel Changes
           </button>
-          <button className="border-[#004324] border-2 text-[#ffffff] bg-[#004324] font-bold p-3 rounded-lg w-[192px]">
+          <button
+            onClick={() => {
+              handleSaveChanges();
+            }}
+            className="border-[#004324] border-2 text-[#ffffff] bg-[#004324] font-bold p-3 rounded-lg w-[192px]"
+          >
             Save Changes
           </button>
         </div>

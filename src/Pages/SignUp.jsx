@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import { nilelogosolid, eye, lashesIcon } from "../assets";
 import { useSignUserUp } from "../datahooks/users/userhooks";
 import { useShowPassword } from "../Context/Context";
@@ -50,9 +50,9 @@ const SignUp = () => {
 
   // Validate form before proceeding to Step 2
   const validateForm = () => {
-    const { name, email, storeName } = formData;
-
-    if (!name || !email || !storeName) {
+    const { name, email, storeName,marketing_accept } = formData;
+    //check if checkbox is clicked too
+    if (!name || !email || !storeName || marketing_accept!==true) {
       toast.error("Please fill in all fields before proceeding.");
       return false;
     }
@@ -152,20 +152,7 @@ const SignUp = () => {
                       onClick={() => handleShowPassword("password2")}
                     />
                   </div>
-                  <div>
-                    <label htmlFor="StoreURL" className="block text-[16px] font-bold text-[#333333]">
-                      Store URL
-                    </label>
-                    <input
-                      type="text"
-                      id="StoreURL"
-                      name="storeURL"
-                      value={formData.storeURL}
-                      onChange={handleChange}
-                      placeholder="Add Store URL"
-                      className="mt-1 w-full p-3 text-sm text-gray-400 bg-white border-lightGreen border rounded-md"
-                    />
-                  </div>
+                 
                 </>
               ) : (
                 <>
