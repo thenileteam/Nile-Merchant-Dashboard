@@ -15,7 +15,6 @@ import {
   startOfWeek,
   startOfYear,
 } from "date-fns";
-import axios from "axios";
 const store = JSON.parse(localStorage.getItem("store"));
 
 export const useLogUserIn = () => {
@@ -56,48 +55,43 @@ export const useLogUserIn = () => {
 };
 
 export const useModifyProfile = () => {
+  const queryClient = useQueryClient();
   const id = localStorage.getItem("Id");
+
   const { mutate: modifyProfile, isPending } = useMutation({
     mutationFn: async (data) => {
-      console.log("Data received in mutationFn:", data);
-
-      if (!data) {
-        console.log("No data provided to the mutation function.");
-        return;
+      if (!id) throw new Error("User ID is missing. Please log in again.");
+      if (!data || !(data instanceof FormData)) {
+        throw new Error("Invalid form data.");
       }
 
-      let awaitedUrl;
-
-      if (data.get("image")) {
-        console.log("Uploading image...");
-        try {
+      let imageUrl = "";
+      try {
+        // Handle image upload
+        if (data.get("image")) {
           const response = await ApiInstance.post(
-            "/users/upload-profile-image",
-            data.get("image"),
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
+            "/users/users/upload-profile-image",
+            data,
+            { headers: { "Content-Type": "multipart/form-data" } }
           );
-          console.log("Image upload response:", response);
-          awaitedUrl = response.data.data;
-        } catch (err) {
-          console.error("Image upload failed:", err);
-          throw err;
+
+          imageUrl = response.data.profileImageUrl || "";
         }
+        console.log(imageUrl, "ur;");
+        //  Update profile
+        return await ApiInstance.put(`/users/user/update/${id}`, {
+          phoneNumber: data.get("phoneNumber") || "",
+          imageUrl: imageUrl,
+        });
+      } catch (err) {
+        console.error("Error in profile modification:", err);
+        throw err;
       }
-
-      console.log("Image URL after upload:", awaitedUrl);
-
-      // Update profile
-      return ApiInstance.put(`/users/user/update/${id}`, {
-        phoneNumber: data.get("phoneNumber") || "",
-        imageUrl: awaitedUrl,
-      });
     },
     onSuccess: (response) => {
       console.log("Profile update successful:", response);
+      queryClient.invalidateQueries(["user"]);
+
       toast("Profile updated Successfully✔");
     },
     onError: (err) => {
@@ -418,6 +412,26 @@ export const useFetchStoreCustomers = () => {
   return {
     customers: data,
     isFetchingCustomers: isFetching,
+    isError,
+  };
+};
+export const useFetchUser = () => {
+  const id = localStorage.getItem("Id");
+
+  const { data, isFetching, isError } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await ApiInstance.get(`/users/user/${id}`);
+
+      return res.data?.responseObject;
+    },
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+
+  return {
+    user: data,
+    isFetchingUser: isFetching,
     isError,
   };
 };
