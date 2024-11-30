@@ -19,7 +19,6 @@ import { useState } from "react";
 import { useFetchDashboardData,useFetchUser } from "../datahooks/users/userhooks";
 import Skeleton from "react-loading-skeleton";
 import ProfileImage from "../Components/PlaceholderImage/PlaceholderImage";
-import { useUserStore } from "../zustandStore";
 const Dashboard = () => {
   //users image
   const { user } = useFetchUser();
@@ -131,11 +130,11 @@ const Dashboard = () => {
                       </button>
                     </span>
                   </div>
-                  <div>
-                    <Link to="/notification">
+                  {/* <div>
+                     <Link to="/notification">
                       <img src={notification} alt="" />
-                    </Link>
-                  </div>
+                    </Link> 
+                  </div> */}
                   <div>
                     <Link to="/profilesetting">
                       <ProfileImage profileImage={user && user.image ? user.image : ''} />

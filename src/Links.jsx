@@ -324,8 +324,8 @@ const Links = () => {
       </Link> */}
 
       {/* Footer */}
-      <div className="mt-44">
-        <div className="flex items-center gap-3">
+      <footer className="mt-80" >
+        {/* <div className="flex items-center gap-3">
           <h1 className="text-sm">Terms & Conditions</h1>
           <p className="text-sm">Home</p>
           <p className="text-sm">About Us</p>
@@ -333,8 +333,9 @@ const Links = () => {
         <div className="flex items-center gap-1 justify-center">
           <img src={copyright} alt="" />
           <h1 className="text-sm">By Dorisa Technology LTD</h1>
-        </div>
-      </div>
+        </div> */}
+        <a href="https://nile.ng/" target="_blank"  rel="noopener noreferrer" className="font-bold" >@Nile Technologies</a>
+      </footer>
     </ul>
   );
 };
