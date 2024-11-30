@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
   bitcoin,
-  image,
   nilelogowhite,
   notification,
   packagemoving,
@@ -17,11 +16,12 @@ import {
 } from "../assets";
 import DashoardTabel from "../Components/Dashboard/DashoardTabel";
 import { useState } from "react";
-import { useFetchDashboardData } from "../datahooks/users/userhooks";
+import { useFetchDashboardData,useFetchUser } from "../datahooks/users/userhooks";
 import Skeleton from "react-loading-skeleton";
-import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
-import { useUserStore } from "../zustandStore";
+import ProfileImage from "../Components/PlaceholderImage/PlaceholderImage";
 const Dashboard = () => {
+  //users image
+  const { user } = useFetchUser();
   const { dashboardData, isFetchingDashboardData, dashboardDataisError } =
     useFetchDashboardData();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -30,9 +30,10 @@ const Dashboard = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
   //getting username from zustand store
-  const username = useUserStore((state) => state.username);
+  const username =  user&&user.name?user.name.split(' ')[0].toUpperCase():'User';
   console.log(username);
-  
+   
+
   return (
     <>
       <div className="bg-[#F5F5F5] pb-20 overflow-x-hidden">
@@ -87,7 +88,9 @@ const Dashboard = () => {
               </button>
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-[32px] font-bold ml-20">{`Welcome ${username || `user`} `}</h1>
+                  <h1 className="text-[32px] font-bold ml-20">{`Welcome ${
+                    username
+                  } `}</h1>
                 </div>
                 <div className="flex items-center gap-10 ml-[400px]">
                   <div className="relative">
@@ -127,14 +130,14 @@ const Dashboard = () => {
                       </button>
                     </span>
                   </div>
-                  <div>
-                    <Link to="/notification">
+                  {/* <div>
+                     <Link to="/notification">
                       <img src={notification} alt="" />
-                    </Link>
-                  </div>
+                    </Link> 
+                  </div> */}
                   <div>
                     <Link to="/profilesetting">
-                      <PlaceholderImage />
+                      <ProfileImage profileImage={user && user.image ? user.image : ''} />
                     </Link>
                   </div>
                 </div>

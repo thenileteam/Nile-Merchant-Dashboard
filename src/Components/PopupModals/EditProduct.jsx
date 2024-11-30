@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { addsquare,addImage } from "../../assets";
+import { addsquare, addImage } from "../../assets";
+import UploadImage from "../UploadImage/UploadImage";
 
 const EditProduct = () => {
   // State to control the popup visibility and animation
