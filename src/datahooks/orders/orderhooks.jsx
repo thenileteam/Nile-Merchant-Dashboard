@@ -5,7 +5,7 @@ import { toast } from "sonner";
 export const useCreateNewOrder = (onSuccessCallback) => {
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading: isAddingOrder } = useMutation({
+  const { mutate, isPending: isAddingOrder } = useMutation({
     mutationFn: (data) => ApiInstance.post("/orders/orders", data),
     onSuccess: () => {
       toast.success("Order Added Successfully");

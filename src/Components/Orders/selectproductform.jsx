@@ -5,17 +5,35 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 import { useFetchProducts } from "../../datahooks/products/productshooks";
 import { toast } from "sonner";
 
-const SelectProductForm = ({ setSelectProductForm }) => {
+const SelectProductForm = ({ cart, setCart, setSelectProductForm }) => {
   const { data, isFetching, isError } = useFetchProducts();
   console.log(data);
   const [products, setProducts] = useState();
 
-  const [cart, setCart] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   useEffect(() => {
     setProducts(data);
   }, [data]);
+  useEffect(() => {
+    const products = JSON.parse(localStorage.getItem("orderItems"));
+    if (!products) return;
+    console.log(products.items, "products in storage on open");
+    if (products?.items && products.timeSaved) {
+      const fiveMinutes = 5 * 60 * 1000;
+      if (Date.now() - products.timeSaved > fiveMinutes) {
+        console.log(
+          "More than 5 minutes have passed since products were saved."
+        );
+        // Perform your desired action here, like clearing localStorage or refreshing the data
+        localStorage.removeItem("orderItems");
+      } else {
+        console.log(products.items);
+        setCart(products.items);
+      }
+    }
+  }, [setCart]);
+
   // Debounce the search term
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -37,14 +55,14 @@ const SelectProductForm = ({ setSelectProductForm }) => {
   );
   // Handle checkbox change
   const handleCheckboxChange = (product) => {
-    const isInCart = cart.some((item) => item.name === product.name);
+    console.log(product);
+    const isInCart = cart.some((item) => item.id === product.id);
     if (isInCart) {
-      setCart(cart.filter((item) => item.name !== product.name));
+      setCart(cart.filter((item) => item.id !== product.id));
     } else {
       setCart([...cart, { ...product }]);
     }
   };
-
   // Handle quantity change for a specific product in the cart
   const handleQuantityChange = (productName, increment = true) => {
     setCart((prevCart) =>
@@ -60,7 +78,13 @@ const SelectProductForm = ({ setSelectProductForm }) => {
       )
     );
   };
-  const addProductData = () => {
+  const addProductData = (close) => {
+    if (close && cart.length > 0) {
+      toast.error(
+        "You have items in your cart. Please remove them before proceeding."
+      );
+      return;
+    }
     const itemsArray = cart.map((item) => {
       const {
         imageUrl,
@@ -73,17 +97,23 @@ const SelectProductForm = ({ setSelectProductForm }) => {
         discountedPrice,
         productStatus,
         id,
+        productId,
         uuid,
         ...rest
       } = item;
-      return { ...rest, productId: uuid };
+      return { ...rest, productId: uuid || productId, id };
     });
     const itemsData = {
       items: itemsArray,
       totalAmount: total_cart_price,
+      timeSaved: Date.now(),
     };
+    console.log(itemsData, "items dataa");
     localStorage.setItem("orderItems", JSON.stringify(itemsData));
-    toast.success("Order Items Added");
+    if (!close) {
+      toast.success("Order Items Added");
+    }
+
     setSelectProductForm(false);
   };
 
@@ -95,7 +125,9 @@ const SelectProductForm = ({ setSelectProductForm }) => {
       ></div>
       <div className="bg-white max-w-fit flex flex-col pb-8 justify-center items-center  relative rounded-[8px]">
         <img
-          onClick={() => setSelectProductForm(false)}
+          onClick={() => {
+            addProductData(true);
+          }}
           src="/public/Cancel.svg"
           className=" cursor-pointer size-6 absolute top-2 right-2"
           alt=""
@@ -126,7 +158,7 @@ const SelectProductForm = ({ setSelectProductForm }) => {
                     <span>{product.name}</span>
                     <input
                       type="checkbox"
-                      checked={cart.some((item) => item.name === product.name)}
+                      checked={cart.some((item) => item.id === product.id)}
                       onChange={() => handleCheckboxChange(product)}
                     />
                   </li>
@@ -187,13 +219,17 @@ const SelectProductForm = ({ setSelectProductForm }) => {
             </div>
           </div>
         </div>
-        <button
-          onClick={addProductData}
-          type="submit"
-          className="  mt-8 bg-[#004324]  rounded  px-2 py-1 text-white"
-        >
-          Add Selected{" "}
-        </button>
+        {cart.length > 0 && (
+          <button
+            onClick={() => {
+              addProductData(false);
+            }}
+            type="submit"
+            className="  mt-8 bg-[#004324]  rounded  px-2 py-1 text-white"
+          >
+            Add Selected
+          </button>
+        )}
       </div>
     </div>
   );

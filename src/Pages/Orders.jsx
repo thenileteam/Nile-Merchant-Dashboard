@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
@@ -46,37 +46,51 @@ const Orders = () => {
   const handleDateChange = (e) => {
     const selectedDate = new Date(e.target.value);
     setCreatedAt(selectedDate.toISOString());
-
   };
-  console.log(data);
+  // console.log(data);
   const addOrder = async () => {
-    const itemsFromLocalStorage = JSON.parse(
-      localStorage.getItem("orderItems")
-    );
-    const customerFromLocalStorage = JSON.parse(
-      localStorage.getItem("customer")
-    )?.[0];
-
-    console.log(customerFromLocalStorage);
-    const orderData = {
-      totalAmount: itemsFromLocalStorage.totalAmount,
-      items: itemsFromLocalStorage.items,
-      phoneNumber: customerFromLocalStorage?.phoneNumber || null,
-      name: customerFromLocalStorage?.name || null,
-      email: customerFromLocalStorage?.email || null,
-      PaymentStatus: paymentStatus,
-      createdAt: createdAt,
-      customerId: customerFromLocalStorage?.id,
-      storeId: store._id,
-      salesChannel,
-    };
-    console.log(orderData);
     try {
-      addOrderToBackend(orderData);
+      const itemsFromLocalStorage = JSON.parse(
+        localStorage.getItem("orderItems")
+      );
+      const customerFromLocalStorage = JSON.parse(
+        localStorage.getItem("customer")
+      )?.[0];
+
+      if (!itemsFromLocalStorage || itemsFromLocalStorage.items.length === 0) {
+        toast.success("Please add products to order");
+        return;
+      }
+      if (!paymentStatus) {
+        toast.success("Please add a payment status");
+        return;
+      }
+      if (!createdAt) {
+        toast.success("Please add a date order was placed");
+        return;
+      }
+      const newProducts = itemsFromLocalStorage.items.map(
+        ({ id, ...rest }) => rest
+      );
+      const orderData = {
+        totalAmount: itemsFromLocalStorage.totalAmount,
+        items: newProducts,
+        phoneNumber: customerFromLocalStorage?.phoneNumber || null,
+        name: customerFromLocalStorage?.name || null,
+        email: customerFromLocalStorage?.email || null,
+        paymentStatus: paymentStatus,
+        createdAt: createdAt,
+        customerId: customerFromLocalStorage?.id,
+        storeId: store._id,
+        salesChannel,
+      };
+
+      await addOrderToBackend(orderData);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
+  const [cart, setCart] = useState([]);
 
   return (
     <>
@@ -139,7 +153,7 @@ const Orders = () => {
                     className=" font-black  text-[16px]  leading-5 "
                     htmlFor="Product Name"
                   >
-                    Product Name
+                    Product Select
                   </label>
                   <div
                     onClick={() => setSelectProductForm(true)}
@@ -147,7 +161,9 @@ const Orders = () => {
                     type="text"
                     className="flex items-center  cursor-pointer bg-[#F5F5F5]  h-[50px] rounded-[4px]  border-[#8ED06C] border-[1px] px-4 placeholder:text-[#6E6E6E80]"
                   >
-                    Product Name
+                    {cart.length > 0
+                      ? "Product In Cart , View"
+                      : "Select Product"}
                   </div>
                 </div>
                 <div className=" flex flex-col gap-2">
@@ -214,7 +230,11 @@ const Orders = () => {
         />
       )}
       {selectProductForm && (
-        <SelectProductForm setSelectProductForm={setSelectProductForm} />
+        <SelectProductForm
+          cart={cart}
+          setCart={setCart}
+          setSelectProductForm={setSelectProductForm}
+        />
       )}
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
@@ -243,6 +263,87 @@ const Orders = () => {
           {/* Navbar */}
           <div className="flex-grow lg:ml-64 overflow-x-hidden">
             < Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} title='Orders' icon={trolley} />
+            <nav className="bg-[#EAF4E2] p-4 z-10 shadow-md flex items-center gap-5 fixed w-full">
+              <button
+                className="lg:hidden text-gray-800 z-20"
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d={
+                      sidebarOpen
+                        ? "M6 18L18 6M6 6l12 12" // Close icon
+                        : "M4 6h16M4 12h16M4 18h16" // Menu icon
+                    }
+                  />
+                </svg>
+              </button>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 px-20">
+                  <img src={trolley} alt="" />
+                  <h1 className="text-[32px] font-bold">Orders & Shippings</h1>
+                </div>
+                <div className="flex items-center gap-10 ml-[50px]">
+                  <div className="relative">
+                    <label htmlFor="Search" className="sr-only">
+                      {" "}
+                      Search{" "}
+                    </label>
+
+                    <input
+                      type="text"
+                      id="Search"
+                      placeholder=""
+                      className="w-[300px] rounded-md border-[#6E6E6E] border-2 p-8 py-2.5 pe-10 shadow-sm sm:text-sm"
+                    />
+
+                    <span className="absolute inset-y-0 start-0 grid w-10 place-content-center">
+                      <button
+                        type="button"
+                        className="text-gray-600 hover:text-gray-700"
+                      >
+                        <span className="sr-only">Search</span>
+
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="size-4"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                          />
+                        </svg>
+                      </button>
+                    </span>
+                  </div>
+                  <div>
+                    <Link to="/notification">
+                      <img src={notification} alt="" />
+                    </Link>
+                  </div>
+                  <div>
+                    <Link to="/profilesetting">
+                      <PlaceholderImage />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </nav>
+
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
               <div className="flex gap-28 justify-center">
