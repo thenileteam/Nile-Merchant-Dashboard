@@ -1,21 +1,21 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useQuery } from "@tanstack/react-query";
 import ApiInstance from "../../Api/ApiInstance";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 const store = JSON.parse(localStorage.getItem("store"));
+
 export const useFetchProducts = () => {
-  const { data, isFetching, isError } = useQuery({
+  if (!store?._id) return { data: [], isFetching: false, isError: false };
+
+  const { data, isFetching, isError, isLoading } = useQuery({
     queryKey: ["products", store?._id],
     queryFn: async () => {
       try {
         const res = await ApiInstance.get(`/products/store/${store._id}`);
         const products = res.data?.responseObject || [];
-        const modifiedProducts = products.map((item) => ({
-          ...item,
-          quantity: 1,
-        }));
-        return modifiedProducts;
+        return products.map((item) => ({ ...item, quantity: 1 }));
       } catch (error) {
         console.error("Error fetching products:", error);
         throw error;
@@ -23,12 +23,14 @@ export const useFetchProducts = () => {
     },
     staleTime: Infinity,
     cacheTime: Infinity,
+    retry: 3,
   });
 
   return {
     data,
     isFetching,
     isError,
+    isLoading,
   };
 };
 

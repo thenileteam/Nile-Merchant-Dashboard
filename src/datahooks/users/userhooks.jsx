@@ -29,6 +29,7 @@ export const useLogUserIn = () => {
     onSuccess: (response) => {
       // Set data in localStorage
       localStorage.setItem("Id", response?.data?.data?.user?._id);
+      localStorage.setItem("refreshToken", response?.data?.refreshToken);
       localStorage.setItem(
         "store",
         JSON.stringify(response?.data?.data?.stores[0])
