@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
@@ -44,37 +44,51 @@ const Orders = () => {
   const handleDateChange = (e) => {
     const selectedDate = new Date(e.target.value);
     setCreatedAt(selectedDate.toISOString());
-
   };
-  console.log(data);
+  // console.log(data);
   const addOrder = async () => {
-    const itemsFromLocalStorage = JSON.parse(
-      localStorage.getItem("orderItems")
-    );
-    const customerFromLocalStorage = JSON.parse(
-      localStorage.getItem("customer")
-    )?.[0];
-
-    console.log(customerFromLocalStorage);
-    const orderData = {
-      totalAmount: itemsFromLocalStorage.totalAmount,
-      items: itemsFromLocalStorage.items,
-      phoneNumber: customerFromLocalStorage?.phoneNumber || null,
-      name: customerFromLocalStorage?.name || null,
-      email: customerFromLocalStorage?.email || null,
-      PaymentStatus: paymentStatus,
-      createdAt: createdAt,
-      customerId: customerFromLocalStorage?.id,
-      storeId: store._id,
-      salesChannel,
-    };
-    console.log(orderData);
     try {
-      addOrderToBackend(orderData);
+      const itemsFromLocalStorage = JSON.parse(
+        localStorage.getItem("orderItems")
+      );
+      const customerFromLocalStorage = JSON.parse(
+        localStorage.getItem("customer")
+      )?.[0];
+
+      if (!itemsFromLocalStorage || itemsFromLocalStorage.items.length === 0) {
+        toast.success("Please add products to order");
+        return;
+      }
+      if (!paymentStatus) {
+        toast.success("Please add a payment status");
+        return;
+      }
+      if (!createdAt) {
+        toast.success("Please add a date order was placed");
+        return;
+      }
+      const newProducts = itemsFromLocalStorage.items.map(
+        ({ id, ...rest }) => rest
+      );
+      const orderData = {
+        totalAmount: itemsFromLocalStorage.totalAmount,
+        items: newProducts,
+        phoneNumber: customerFromLocalStorage?.phoneNumber || null,
+        name: customerFromLocalStorage?.name || null,
+        email: customerFromLocalStorage?.email || null,
+        paymentStatus: paymentStatus,
+        createdAt: createdAt,
+        customerId: customerFromLocalStorage?.id,
+        storeId: store._id,
+        salesChannel,
+      };
+
+      await addOrderToBackend(orderData);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
+  const [cart, setCart] = useState([]);
 
   return (
     <>
@@ -137,7 +151,7 @@ const Orders = () => {
                     className=" font-black  text-[16px]  leading-5 "
                     htmlFor="Product Name"
                   >
-                    Product Name
+                    Product Select
                   </label>
                   <div
                     onClick={() => setSelectProductForm(true)}
@@ -145,7 +159,9 @@ const Orders = () => {
                     type="text"
                     className="flex items-center  cursor-pointer bg-[#F5F5F5]  h-[50px] rounded-[4px]  border-[#8ED06C] border-[1px] px-4 placeholder:text-[#6E6E6E80]"
                   >
-                    Product Name
+                    {cart.length > 0
+                      ? "Product In Cart , View"
+                      : "Select Product"}
                   </div>
                 </div>
                 <div className=" flex flex-col gap-2">
@@ -212,7 +228,11 @@ const Orders = () => {
         />
       )}
       {selectProductForm && (
-        <SelectProductForm setSelectProductForm={setSelectProductForm} />
+        <SelectProductForm
+          cart={cart}
+          setCart={setCart}
+          setSelectProductForm={setSelectProductForm}
+        />
       )}
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
@@ -314,7 +334,7 @@ const Orders = () => {
                   </div>
                   <div>
                     <Link to="/profilesetting">
-                      <PlaceholderImage/>
+                      <PlaceholderImage />
                     </Link>
                   </div>
                 </div>

@@ -5,10 +5,10 @@ const CustomDropdown = ({ paymentStatus, setPaymentStatus }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const options = [
     { value: "", label: "Choose Payment Status", color: "text-zinc-600" },
-    { value: "Paid", label: "Paid", color: "text-[#34C759]" },
-    { value: "Unpaid", label: "Unpaid", color: "text-[#DC3545]" },
+    { value: "PAID", label: "Paid", color: "text-[#34C759]" },
+    { value: "UNPAID", label: "Unpaid", color: "text-[#DC3545]" },
     {
-      value: "Partially Paid",
+      value: "PARTIALLY_FAILED",
       label: "Partially Paid",
       color: "text-[#FFCC00]",
     },
