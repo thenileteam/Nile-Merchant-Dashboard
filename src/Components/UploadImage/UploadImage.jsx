@@ -20,8 +20,8 @@ const UploadImage = ({ handleFileChange, style, image }) => {
       <label htmlFor="fileInput" className="cursor-pointer">
         <img
           src={image}
-          className={`block mx-auto ${style}`}
-          alt="add image icon"
+          className={`block mx-auto ${style} `}
+          alt="add image placeholder icon"
         />
       </label>
       {/* {uploadedFile && (

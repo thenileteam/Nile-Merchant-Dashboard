@@ -23,7 +23,6 @@ import DomainSetting from "./Components/Store/DomainSetting";
 import Email from "./Pages/Email";
 import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ShowPasswordProvider } from "./Context/Context";
 import "react-loading-skeleton/dist/skeleton.css";
 import ProtectRoutes from "./Components/ProtectRoutes";
 import { Suspense } from "react";
@@ -194,7 +193,6 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ShowPasswordProvider>
         <div>
           <Toaster />
           <Suspense fallback={<div>Loading...</div>}>
@@ -203,7 +201,6 @@ const App = () => {
             </RouterProvider>
           </Suspense>
         </div>
-      </ShowPasswordProvider>
     </QueryClientProvider>
   );
 };

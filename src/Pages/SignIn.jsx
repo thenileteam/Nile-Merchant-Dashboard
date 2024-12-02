@@ -3,10 +3,9 @@ import { nilelogosolid, eye } from "../assets";
 import { Link, useNavigate } from "react-router-dom";
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
-import { useShowPassword } from "../Context/Context";
 import { useLogUserIn } from "../datahooks/users/userhooks";
 import Cookies from "js-cookie";
-
+import {useUserStore} from '../zustandStore'
 const SignIn = () => {
   const navigate = useNavigate();
   const [checkingUser, setCheckingUser] = useState(true);
@@ -24,7 +23,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // State for error messages
 
-  const { showPassword, handleShowPassword } = useShowPassword();
+  const { showPassword, handleShowPassword } = useUserStore();
   const { mutate, isPending } = useLogUserIn();
 
   const handleLogin = async (e) => {

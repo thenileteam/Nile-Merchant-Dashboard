@@ -23,6 +23,11 @@ const ProfileSetting = () => {
   const username = user&&user.name? user.name:'User'
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    const validExtensions = /\.(jpg|jpeg|png|svg)$/i;
+    if (!validExtensions.test(file.name)) {
+      alert("Invalid file type. Please upload a JPG, PNG, SVG, or JPEG image.");
+      return;
+    }
     setImage(file);
   };
   // const handleRemoveFile = async () => {
@@ -33,7 +38,7 @@ const ProfileSetting = () => {
     
   // };
   const handleSaveChanges = async () => {
-    if (!image && !phoneNumber) {
+    if ((!image || !phoneNumber))   {
       console.error("No changes made!");
       return;
     }
@@ -97,11 +102,11 @@ const ProfileSetting = () => {
                   </button>
                 </span>
               </div>
-              <div>
+              {/* <div>
                 <Link to="/notification">
                   <img src={notification} alt="Notifications" />
                 </Link>
-              </div>
+              </div> */}
               <div>
                 <Link to="/profilesetting">
                   <ProfileImage profileImage={user&&user.image?user.image: ''} />
@@ -119,7 +124,7 @@ const ProfileSetting = () => {
       <br />
 
       {/* Input Fields */}
-      <div className="relative  ">
+      <div className="relative">
         
         <div className="flex justify-center mx-auto w-[200px] h-[200px] rounded-full">
           {isFetchingUser ? (
@@ -133,7 +138,7 @@ const ProfileSetting = () => {
                 {" "}
                 <img
                   src={user.image}
-                  className=" cursor-pointer shrink-0 rounded-full object-cover"
+                  className=" cursor-pointer shrink-0 rounded-full object-cover w-[100px] h-[100px]"
                   alt="User Image"
                   />
                    {/* <button className="block border-0 mx-auto font-bold" onClick={handleRemoveFile}>remove image &times;</button> */}
@@ -153,13 +158,13 @@ const ProfileSetting = () => {
             <UploadImage
               image={profileimage}
               handleFileChange={handleFileChange}
-              style="w-[120px] h-[120px] object-cover rounded-full"
+              style="w-[100px] h-[100px] object-cover rounded-full"
             />
           )}
         </div>
-        <div className="flex justify-center">
-          <form action="#" className="space-y-5">
-            <div>
+        <div className="sm:flex sm:justify-center">
+          <form action="#" className="px-4 lg:px-0">
+            <div className="mt-4">
               <label
                 htmlFor="Name"
                 className="block text-[16px] font-bold text-[#333333]"
@@ -172,11 +177,11 @@ const ProfileSetting = () => {
                 name="name"
                 placeholder={"Ahmad Diallo"}
                 value={username}
-                className="mt-1 w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm cursor-not-allowed"
+                className="mt-1 w-full sm:w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm cursor-not-allowed"
                 readOnly
               />
             </div>
-            <div>
+            <div className="mt-4"> 
               <label
                 htmlFor="EmailAddress"
                 className="block text-[16px] font-bold text-[#333333]"
@@ -189,11 +194,11 @@ const ProfileSetting = () => {
                 name="email_address"
                 placeholder="Ashimiuade@gmail.com"
                 value={user&&user.email?user.email:''}
-                className="mt-1 w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm cursor-not-allowed"
+                className="mt-1  w-full sm:w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm cursor-not-allowed"
                 readOnly
               />
             </div>
-            <div>
+            <div className="mt-4">
               <label
                 htmlFor="PhoneNumber"
                 className="block text-[16px] font-bold text-[#333333]"
@@ -210,14 +215,14 @@ const ProfileSetting = () => {
                   name="phone_number"
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   placeholder="0000000000000"
-                  className="mt-1 w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className="mt-1 w-full sm:max-w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
               )}
             </div>
           </form>
         </div>
-        <div className="flex items-center justify-center gap-16 mt-10">
-          <button className="border-[#004324] border-2 text-[#004324] font-bold p-3 rounded-lg w-[192px]">
+        <div className="flex items-center justify-center gap-4  md:gap-16 mt-10 px-4 md:px-0">
+          <button className="border-[#004324] border-2 text-[#004324] font-bold p-3 rounded-lg max-w-[192px] text-sm">
             Cancel Changes
           </button>
           <button
@@ -225,23 +230,23 @@ const ProfileSetting = () => {
             onClick={() => {
               handleSaveChanges();
             }}
-            className="border-[#004324] disabled:bg-opacity-40 border-2 text-[#ffffff] bg-[#004324] font-bold p-3 rounded-lg w-[192px]"
+            className="border-[#004324] disabled:bg-opacity-40 border-2 text-[#ffffff] bg-[#004324] font-bold p-3 rounded-lg max-w-[192px] text-sm"
           >
             {isPending ? "Saving..." : "Save Changes"}
           </button>
         </div>
         {/* Log Out Button */}
 
-        <div
+        <button
           onClick={() => {
             console.log("Log out");
             mutate();
           }}
-          className="flex cursor-pointer items-center justify-end px-36"
+          className="flex cursor-pointer items-center float-right mt-6 px-16"
         >
           <img src={logout} alt="" />
           <h1 className="text-[#DC3545] font-bold">Log Out</h1>
-        </div>
+        </button>
       </div>
     </>
   );
