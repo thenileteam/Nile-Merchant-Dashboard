@@ -1,14 +1,14 @@
 import { useEffect, useState,useRef } from "react";
 import { nilelogosolid, eye, lashesIcon } from "../assets";
 import { useSignUserUp } from "../datahooks/users/userhooks";
-import { useShowPassword } from "../Context/Context";
+import { useUserStore } from "../zustandStore";
 import { toast } from "sonner";
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
 
 const SignUp = () => {
   // Custom context hook
-  const { showPassword, handleShowPassword } = useShowPassword();
+  const { showPassword, handleShowPassword } = useUserStore();
   const [step, setStep] = useState(false); // Default to Step 1
   const [formData, setFormData] = useState({
     name: "",

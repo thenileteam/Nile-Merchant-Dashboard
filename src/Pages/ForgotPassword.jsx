@@ -3,13 +3,13 @@ import { nilelogosolid, eye } from "../assets";
 import { useSearchParams } from "react-router-dom";
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
-import { useShowPassword } from "../Context/Context";
+import { useUserStore } from "../zustandStore";
 import { toast } from "sonner";
 import { useState } from "react";
 import { useResetPassword } from "../datahooks/users/userhooks";
 
 const ForgotPassword = () => {
-  const { showPassword, handleShowPassword } = useShowPassword();
+  const { showPassword, handleShowPassword } = useUserStore();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const [newPassword, setNewPassword] = useState("");
