@@ -1,4 +1,4 @@
-import { arrowleft, logout, notification, profileimage } from "../../assets";
+import { arrowleft, logout, profileimage } from "../../assets";
 import { Link } from "react-router-dom";
 import UploadImage from "../UploadImage/UploadImage";
 import {
@@ -38,7 +38,7 @@ const ProfileSetting = () => {
 
   // };
   const handleSaveChanges = async () => {
-    if ((!image || !phoneNumber))   {
+    if (!image || !phoneNumber) {
       console.error("No changes made!");
       return;
     }
@@ -127,7 +127,6 @@ const ProfileSetting = () => {
 
       {/* Input Fields */}
       <div className="relative">
-        
         <div className="flex justify-center mx-auto w-[200px] h-[200px] rounded-full">
           {isFetchingUser ? (
             <Skeleton className=" size-[100px] rounded-full" />
@@ -182,7 +181,7 @@ const ProfileSetting = () => {
                 readOnly
               />
             </div>
-            <div className="mt-4"> 
+            <div className="mt-4">
               <label
                 htmlFor="EmailAddress"
                 className="block text-[16px] font-bold text-[#333333]"
@@ -194,7 +193,7 @@ const ProfileSetting = () => {
                 id="EmailAddress"
                 name="email_address"
                 placeholder="Ashimiuade@gmail.com"
-                value={user&&user.email?user.email:''}
+                value={user && user.email ? user.email : ""}
                 className="mt-1  w-full sm:w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm cursor-not-allowed"
                 readOnly
               />
