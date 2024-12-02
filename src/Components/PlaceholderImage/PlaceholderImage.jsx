@@ -1,11 +1,11 @@
-import { FaUserCircle } from 'react-icons/fa';
-
-const PlaceholderImage = () => {
+import { placeholderImage } from "../../assets";
+const ProfileImage = ({ profileImage }) => {
   return (
     <>
-      <FaUserCircle className='text-gray-400 w-8 h-8 className="border-2 border-gray-400 rounded-md"' />
+      <img src={profileImage?profileImage:placeholderImage  } alt="profile picture" className="w-8 h-8 rounded-full object-cover" />
     </>
   );
 };
 
-export default PlaceholderImage;
+export default ProfileImage;
+ 

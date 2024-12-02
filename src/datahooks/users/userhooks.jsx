@@ -131,7 +131,6 @@ export const useLogOut = () => {
     isPending,
   };
 };
-
 export const useSignUserUp = () => {
   const navigate = useNavigate();
   //access state from zustand store
@@ -423,7 +422,7 @@ export const useFetchUser = () => {
     queryKey: ["user"],
     queryFn: async () => {
       const res = await ApiInstance.get(`/users/user/${id}`);
-
+      console.log(res.data);
       return res.data?.responseObject;
     },
     staleTime: Infinity,
