@@ -272,7 +272,7 @@ const Orders = () => {
                     {" "}
                     <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
                     <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
-                    <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
+                    {/* <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "} */}
                   </div>
                 ) : (
                   <>
@@ -290,34 +290,34 @@ const Orders = () => {
                       </h1>
                       <p className="text-[#6E6E6E]">Pending Shipment</p>
                     </div>
-                    <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                    {/* <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                       <img src={timer} alt="" />
                       <h1 className="text-[#333333] text-[22px] font-bold mt-1">
                         0
                       </h1>
                       <p className="text-[#6E6E6E]">Average Deliver Time</p>
-                    </div>
+                    </div> */}
                   </>
                 )}
               </div>
             </div>
 
-            <div className="px-24 mt-32">
-              {data && (
-                <div className="flex  items-center gap-16">
+            <div className="max-w-[650px] mx-auto mt-4">
+               
+                <div className="flex items-center gap-16 ">
                   <button
                     onClick={() => setCreateOrderForm(true)}
                     className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px]  text-white "
                   >
-                    <img src="/public/plus.svg" alt="" />
+                    <img src="/public/plus.svg" alt="plus icon" />
                     Create Order
                   </button>
-                  <button className=" flex bg-white rounded-[4px] border border-[#8ED06C] gap-1 p-[10.5px]  text-[#8ED06C] ">
+                  {/* <button className=" flex bg-white rounded-[4px] border border-[#8ED06C] gap-1 p-[10.5px]  text-[#8ED06C] ">
                     <img src="/public/export.svg" alt="" />
                     Export CSV
-                  </button>
+                  </button> */}
                 </div>
-              )}
+              
               {data && data.length === 0 && (
                 <>
                   <div>
@@ -335,7 +335,7 @@ const Orders = () => {
                   </div>
 
                   <div className="flex justify-center mt-3">
-                    <button className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md">
+                    <button type='button' className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md">
                       Check Your Customers
                     </button>
                   </div>

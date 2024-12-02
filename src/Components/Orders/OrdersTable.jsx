@@ -8,6 +8,7 @@ const OrdersTable = ({ data }) => {
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedText, setSelectedText] = useState("");
+console.log(data);
 
   const toggleFilterDropdown = () => {
     setFilterDropdownOpen(!filterDropdownOpen);
@@ -66,7 +67,7 @@ const OrdersTable = ({ data }) => {
                 Store Name
               </h1>
               <h1
-                className="text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer"
+                className="text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer "
                 onClick={() => handleFilterClick("Input Product Name")}
               >
                 Product Name
@@ -113,7 +114,7 @@ const OrdersTable = ({ data }) => {
               <th className="px-2 py-3 text-center">Shipping Status</th>
               <th className="px-2 py-3 text-center">Track Order</th>
               <th className="px-2 py-3 text-center">Payment Status</th>
-              <th className="px-2 py-3 text-center">Actions</th>
+              {/* <th className="px-2 py-3 text-center">Actions </th>
               <th className="px-2 py-3 text-center">
                 Bulk Action
                 <svg
@@ -140,7 +141,7 @@ const OrdersTable = ({ data }) => {
                 <h1 className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
                   Mark As Shipped
                 </h1>
-              </th>
+              </th> */}
             </tr>
           </thead>
           <tbody>
@@ -153,17 +154,17 @@ const OrdersTable = ({ data }) => {
                 </td>
                 <td className="px-2 py-3 text-center">{order.id}</td>
                 <td className="px-2 py-3 text-center">{order.items[0].name}</td>
-                <td className="px-2 py-3 text-center">57</td>
+                <td className="px-2 py-3 text-center">{ order.items[0].price}</td>
                 <td className="px-2 py-3 text-center">${order.totalAmount}</td>
                 <td className="px-2 py-3 text-center">
                   {format(parseISO(order?.createdAt), "dd MMMM yyyy")}
                 </td>
-                <td className="px-2 py-3 text-center">NA</td>
-                <td className="px-2 py-3 text-center">Completed</td>
+                <td className="px-2 py-3 text-center">{ order.status}</td>
+                <td className="px-2 py-3 text-center">N/A</td>
                 <td className="px-2 py-3 text-center">
-                  {order.payment || "Pending"}
+                  {order.paymentStatus || "Pending"}
                 </td>
-                <td className="px-2 py-3 text-center">{order.status}</td>
+                <td className="px-2 py-3 text-center">{ order.status}</td>
                 <td className="px-2 py-3 text-center">
                   <input
                     type="checkbox"
@@ -356,12 +357,12 @@ const OrdersTable = ({ data }) => {
       </div>
 
       {/* Export CSV Button */}
-      <div className=" flex px-28 justify-end mt-10">
+      {/* <div className=" flex px-28 justify-end mt-10">
         <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
           <img src={download} alt="" />
           Export CSV
         </h1>
-      </div>
+      </div> */}
     </>
   );
 };

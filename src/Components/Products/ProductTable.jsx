@@ -137,7 +137,7 @@ const ProductTable = ({ data, isFetching, isError }) => {
                 <th className="px-2 py-3 text-center">Unit Sold</th>
                 <th className="px-2 py-3 text-center">Stock Level</th>
                 <th className="px-2 py-3 text-center">Actions</th>
-                <th className="px-2 py-3 text-center flex items-center gap-1 justify-center">
+                {/* <th className="px-2 py-3 text-center flex items-center gap-1 justify-center">
                   Bulk Action
                   <svg
                     width="32"
@@ -171,7 +171,7 @@ const ProductTable = ({ data, isFetching, isError }) => {
                       strokeLinecap="round"
                     />
                   </svg>
-                </th>
+                </th> */}
               </tr>
             </thead>
 
@@ -186,18 +186,18 @@ const ProductTable = ({ data, isFetching, isError }) => {
                   <td className="px-2 py-3 text-center">{product.price}</td>
                   <td className="px-2 py-3 text-center">{product.unitsSold}</td>
                   <td className="px-2 py-3 text-center">{product.stock}</td>
-                  <td className="px-2 py-3 text-center flex items-center gap-2 justify-center">
+                  <td className="px-2 py-3 text-center flex items-center gap-2 justify-center ">
                     <EditProduct product={product} />
                     <DeleteProduct product={product} />
                   </td>
-                  <td className="px-2 py-3 text-center">
+                  {/* <td className="px-2 py-3 text-center">
                     <input
                       type="checkbox"
                       id={`product-${product.id}`}
                       name={`product-${product.id}`}
                       className="size-5 rounded-md bg-white shadow-sm"
                     />
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>
@@ -295,10 +295,10 @@ const ProductTable = ({ data, isFetching, isError }) => {
       {/* Add Product & Export CSV Button */}
       <div className=" flex px-28 justify-end items-center mt-10 gap-24">
         <AddProduct1 />
-        <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
+        {/* <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
           <img src={download} alt="" />
           Export CSV
-        </h1>
+        </h1> */}
       </div>
     </>
   );

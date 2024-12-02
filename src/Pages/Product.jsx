@@ -61,7 +61,7 @@ const Product = () => {
                   {" "}
                   <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
                   <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
-                  <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
+                  {/* <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "} */}
                 </div>
               ) : (
                 <div className="flex gap-28">
@@ -79,13 +79,13 @@ const Product = () => {
                     </h1>
                     <p className="text-[#6E6E6E]">Total Products View</p>
                   </div>
-                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                  {/* <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={timer} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
                       0
                     </h1>
                     <p className="text-[#6E6E6E]">Average View Per Hour</p>
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>

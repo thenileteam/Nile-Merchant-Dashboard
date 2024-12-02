@@ -1,4 +1,5 @@
 import { arrowleft, logout, notification, profileimage } from "../../assets";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import UploadImage from "../UploadImage/UploadImage";
 import {
@@ -20,7 +21,10 @@ const ProfileSetting = () => {
   const { mutate } = useLogOut();
   const { modifyProfile, isPending } = useModifyProfile();
   const [image, setImage] = useState(null);
+  const [cancelMessage, setCancelMessage] = useState('');
+  const [timeoutId, setTimeoutId] = useState(null);
   const username = user && user.name ? user.name : "User";
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     const validExtensions = /\.(jpg|jpeg|png|svg)$/i;
@@ -28,17 +32,35 @@ const ProfileSetting = () => {
       alert("Invalid file type. Please upload a JPG, PNG, SVG, or JPEG image.");
       return;
     }
+    
     setImage(file);
   };
-  // const handleRemoveFile = async () => {
-  //   if (image) {
-  //     setImage(null)
-  //     return
-  //   }
 
-  // };
+  const cancelChanges = () => {
+    console.log("Changes canceled!");
+
+    if (user) {
+      setImage(user.image);
+      setPhoneNumber(user.phoneNumber);
+      setCancelMessage("Changes canceled!");
+
+      // Set the timeout and store the ID
+      const id = setTimeout(() => setCancelMessage(''), 3000);
+      setTimeoutId(id);
+    }
+  };
+
+  // Cleanup the timeout when the component unmounts
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId); // Clears the timeout on component unmount
+      }
+    };
+  }, [timeoutId]);
+
   const handleSaveChanges = async () => {
-    if ((!image || !phoneNumber))   {
+    if (!image  || !phoneNumber) {
       console.error("No changes made!");
       return;
     }
@@ -127,7 +149,6 @@ const ProfileSetting = () => {
 
       {/* Input Fields */}
       <div className="relative">
-        
         <div className="flex justify-center mx-auto w-[200px] h-[200px] rounded-full">
           {isFetchingUser ? (
             <Skeleton className=" size-[100px] rounded-full" />
@@ -182,7 +203,7 @@ const ProfileSetting = () => {
                 readOnly
               />
             </div>
-            <div className="mt-4"> 
+            <div className="mt-4">
               <label
                 htmlFor="EmailAddress"
                 className="block text-[16px] font-bold text-[#333333]"
@@ -194,7 +215,7 @@ const ProfileSetting = () => {
                 id="EmailAddress"
                 name="email_address"
                 placeholder="Ashimiuade@gmail.com"
-                value={user&&user.email?user.email:''}
+                value={user && user.email ? user.email : ""}
                 className="mt-1  w-full sm:w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm cursor-not-allowed"
                 readOnly
               />
@@ -223,7 +244,10 @@ const ProfileSetting = () => {
           </form>
         </div>
         <div className="flex items-center justify-center gap-4  md:gap-16 mt-10 px-4 md:px-0">
-          <button className="border-[#004324] border-2 text-[#004324] font-bold p-3 rounded-lg max-w-[192px] text-sm">
+          <button
+            className="border-[#004324] border-2 text-[#004324] font-bold p-3 rounded-lg max-w-[192px] text-sm"
+            onClick={cancelChanges}
+          >
             Cancel Changes
           </button>
           <button
@@ -248,6 +272,7 @@ const ProfileSetting = () => {
           <img src={logout} alt="" />
           <h1 className="text-[#DC3545] font-bold">Log Out</h1>
         </button>
+        {cancelMessage && <p className="text-xl text-center mt-4">{ cancelMessage}</p>}
       </div>
     </>
   );
