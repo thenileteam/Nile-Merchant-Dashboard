@@ -13,14 +13,14 @@ import Skeleton from "react-loading-skeleton";
 const ProfileSetting = () => {
   const { user, isFetchingUser, isError } = useFetchUser();
   console.log(user);
-  
+
   const [phoneNumber, setPhoneNumber] = useState(
     (user && user.phoneNumber) || ""
   );
   const { mutate } = useLogOut();
   const { modifyProfile, isPending } = useModifyProfile();
   const [image, setImage] = useState(null);
-  const username = user&&user.name? user.name:'User'
+  const username = user && user.name ? user.name : "User";
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setImage(file);
@@ -30,7 +30,7 @@ const ProfileSetting = () => {
   //     setImage(null)
   //     return
   //   }
-    
+
   // };
   const handleSaveChanges = async () => {
     if (!image && !phoneNumber) {
@@ -104,7 +104,9 @@ const ProfileSetting = () => {
               </div>
               <div>
                 <Link to="/profilesetting">
-                  <ProfileImage profileImage={user&&user.image?user.image: ''} />
+                  <ProfileImage
+                    profileImage={user && user.image ? user.image : ""}
+                  />
                 </Link>
               </div>
             </div>
@@ -120,7 +122,6 @@ const ProfileSetting = () => {
 
       {/* Input Fields */}
       <div className="relative  ">
-        
         <div className="flex justify-center mx-auto w-[200px] h-[200px] rounded-full">
           {isFetchingUser ? (
             <Skeleton className=" size-[100px] rounded-full" />
@@ -133,10 +134,10 @@ const ProfileSetting = () => {
                 {" "}
                 <img
                   src={user.image}
-                  className=" cursor-pointer shrink-0 rounded-full object-cover"
+                  className=" cursor-pointer shrink-0 size-[100px] rounded-full object-cover"
                   alt="User Image"
-                  />
-                   {/* <button className="block border-0 mx-auto font-bold" onClick={handleRemoveFile}>remove image &times;</button> */}
+                />
+                {/* <button className="block border-0 mx-auto font-bold" onClick={handleRemoveFile}>remove image &times;</button> */}
               </label>
               <input
                 type="file"
@@ -146,10 +147,9 @@ const ProfileSetting = () => {
                 className=" hidden"
                 required
                 onChange={handleFileChange}
-                />
+              />
             </>
           ) : (
-            
             <UploadImage
               image={profileimage}
               handleFileChange={handleFileChange}
@@ -188,7 +188,7 @@ const ProfileSetting = () => {
                 id="EmailAddress"
                 name="email_address"
                 placeholder="Ashimiuade@gmail.com"
-                value={user&&user.email?user.email:''}
+                value={user && user.email ? user.email : ""}
                 className="mt-1 w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm cursor-not-allowed"
                 readOnly
               />

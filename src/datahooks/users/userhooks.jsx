@@ -82,7 +82,7 @@ export const useModifyProfile = () => {
         //  Update profile
         return await ApiInstance.put(`/users/user/update/${id}`, {
           phoneNumber: data.get("phoneNumber") || "",
-          imageUrl: imageUrl,
+          ...(imageUrl && { imageUrl }),
         });
       } catch (err) {
         console.error("Error in profile modification:", err);
