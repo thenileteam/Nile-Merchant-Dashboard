@@ -13,14 +13,14 @@ import Skeleton from "react-loading-skeleton";
 const ProfileSetting = () => {
   const { user, isFetchingUser, isError } = useFetchUser();
   console.log(user);
-  
+
   const [phoneNumber, setPhoneNumber] = useState(
     (user && user.phoneNumber) || ""
   );
   const { mutate } = useLogOut();
   const { modifyProfile, isPending } = useModifyProfile();
   const [image, setImage] = useState(null);
-  const username = user&&user.name? user.name:'User'
+  const username = user && user.name ? user.name : "User";
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     const validExtensions = /\.(jpg|jpeg|png|svg)$/i;
@@ -35,7 +35,7 @@ const ProfileSetting = () => {
   //     setImage(null)
   //     return
   //   }
-    
+
   // };
   const handleSaveChanges = async () => {
     if ((!image || !phoneNumber))   {
@@ -109,7 +109,9 @@ const ProfileSetting = () => {
               </div> */}
               <div>
                 <Link to="/profilesetting">
-                  <ProfileImage profileImage={user&&user.image?user.image: ''} />
+                  <ProfileImage
+                    profileImage={user && user.image ? user.image : ""}
+                  />
                 </Link>
               </div>
             </div>
@@ -140,8 +142,8 @@ const ProfileSetting = () => {
                   src={user.image}
                   className=" cursor-pointer shrink-0 rounded-full object-cover w-[100px] h-[100px]"
                   alt="User Image"
-                  />
-                   {/* <button className="block border-0 mx-auto font-bold" onClick={handleRemoveFile}>remove image &times;</button> */}
+                />
+                {/* <button className="block border-0 mx-auto font-bold" onClick={handleRemoveFile}>remove image &times;</button> */}
               </label>
               <input
                 type="file"
@@ -151,10 +153,9 @@ const ProfileSetting = () => {
                 className=" hidden"
                 required
                 onChange={handleFileChange}
-                />
+              />
             </>
           ) : (
-            
             <UploadImage
               image={profileimage}
               handleFileChange={handleFileChange}
