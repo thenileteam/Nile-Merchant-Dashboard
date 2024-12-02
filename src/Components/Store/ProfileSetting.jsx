@@ -12,7 +12,7 @@ import Skeleton from "react-loading-skeleton";
 
 const ProfileSetting = () => {
   const { user, isFetchingUser, isError } = useFetchUser();
-  console.log(user);
+  // console.log(user);
 
   const [phoneNumber, setPhoneNumber] = useState(
     (user && user.phoneNumber) || ""
