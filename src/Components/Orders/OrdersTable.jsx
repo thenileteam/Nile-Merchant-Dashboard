@@ -156,7 +156,7 @@ console.log(data);
                 <td className="px-2 py-3 text-center">{order.id}</td>
                 <td className="px-2 py-3 text-center">{order.items[0].name}</td>
                 <td className="px-2 py-3 text-center">{ order.items[0].price}</td>
-                <td className="px-2 py-3 text-center">${order.totalAmount}</td>
+                <td className="px-2 py-3 text-center">&#8358;{order.totalAmount}</td>
                 <td className="px-2 py-3 text-center">
                   {format(parseISO(order?.createdAt), "dd MMMM yyyy")}
                 </td>
