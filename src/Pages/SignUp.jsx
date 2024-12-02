@@ -1,10 +1,11 @@
-import { useEffect, useState,useRef } from "react";
+import { useEffect, useState } from "react";
 import { nilelogosolid, eye, lashesIcon } from "../assets";
 import { useSignUserUp } from "../datahooks/users/userhooks";
 import { useUserStore } from "../zustandStore";
 import { toast } from "sonner";
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
+import { LuLoader2 } from "react-icons/lu";
 
 const SignUp = () => {
   // Custom context hook
@@ -20,7 +21,7 @@ const SignUp = () => {
     marketing_accept: false,
   });
 
-  const { signUpMutate, } = useSignUserUp();
+  const { signUpMutate, signUpIsPending } = useSignUserUp();
 
   // Handle input change
   const handleChange = (e) => {
@@ -50,9 +51,9 @@ const SignUp = () => {
 
   // Validate form before proceeding to Step 2
   const validateForm = () => {
-    const { name, email, storeName,marketing_accept } = formData;
+    const { name, email, storeName, marketing_accept } = formData;
     //check if checkbox is clicked too
-    if (!name || !email || !storeName || marketing_accept!==true) {
+    if (!name || !email || !storeName || marketing_accept !== true) {
       toast.error("Please fill in all fields before proceeding.");
       return false;
     }
@@ -110,7 +111,10 @@ const SignUp = () => {
                 <>
                   {/* Step 2 Inputs */}
                   <div className="relative">
-                    <label htmlFor="Password" className="block text-[16px] font-bold text-[#333333]">
+                    <label
+                      htmlFor="Password"
+                      className="block text-[16px] font-bold text-[#333333]"
+                    >
                       Password
                     </label>
                     <input
@@ -152,13 +156,15 @@ const SignUp = () => {
                       onClick={() => handleShowPassword("password2")}
                     />
                   </div>
-                 
                 </>
               ) : (
                 <>
                   {/* Step 1 Inputs */}
                   <div>
-                    <label htmlFor="FullName" className="block text-[16px] font-bold text-[#333333]">
+                    <label
+                      htmlFor="FullName"
+                      className="block text-[16px] font-bold text-[#333333]"
+                    >
                       Full Name
                     </label>
                     <input
@@ -189,7 +195,10 @@ const SignUp = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="StoreName" className="block text-[16px] font-bold text-[#333333]">
+                    <label
+                      htmlFor="StoreName"
+                      className="block text-[16px] font-bold text-[#333333]"
+                    >
                       Store Name
                     </label>
                     <input
@@ -231,9 +240,14 @@ const SignUp = () => {
                 <button
                   type="button"
                   onClick={validateForm}
-                  className="text-[#ffffff] bg-[#004324] w-full py-4 text-center text-[14px] font-semibold rounded-md shadow-md"
+                  disabled={signUpIsPending}
+                  className="text-[#ffffff] flex justify-center disabled:bg-opacity-50 bg-[#004324] w-full py-4 text-center text-[14px] font-semibold rounded-md shadow-md"
                 >
-                  Continue
+                  {signUpIsPending ? (
+                    <LuLoader2 className=" animate-spin duration-300 transition-all" />
+                  ) : (
+                    "Continue"
+                  )}
                 </button>
               )}
             </form>

@@ -1,5 +1,6 @@
 import { arrowleft, logout, notification, profileimage } from "../../assets";
 import { useEffect } from "react";
+import { arrowleft, logout, profileimage } from "../../assets";
 import { Link } from "react-router-dom";
 import UploadImage from "../UploadImage/UploadImage";
 import {
@@ -13,7 +14,7 @@ import Skeleton from "react-loading-skeleton";
 
 const ProfileSetting = () => {
   const { user, isFetchingUser, isError } = useFetchUser();
-  console.log(user);
+  // console.log(user);
 
   const [phoneNumber, setPhoneNumber] = useState(
     (user && user.phoneNumber) || ""
