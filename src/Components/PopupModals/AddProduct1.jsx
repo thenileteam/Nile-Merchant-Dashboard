@@ -322,7 +322,7 @@ const AddProduct1 = () => {
                     </div>
                   </div>
 
-                  <div className="mb-4">
+                  {/* <div className="mb-4">
                     <label
                       htmlFor="weight"
                       className="block text-[16px] font-bold text-[#333333]"
@@ -338,8 +338,8 @@ const AddProduct1 = () => {
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="E.g:20kg"
                     />
-                  </div>
-                  <div>
+                  </div> */}
+                  {/* <div>
                     <h1 className="block text-[16px] font-bold text-[#333333]">
                       Offer Free Shipping ?
                     </h1>
@@ -371,7 +371,7 @@ const AddProduct1 = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="space-y-3">
                   <div className="mb-4">
@@ -440,7 +440,7 @@ const AddProduct1 = () => {
                       </span>
                     </div>
                   </div>
-                  <div>
+                  {/* <div>
                     <label
                       htmlFor="dimensionsLength"
                       className="block text-[16px] font-bold text-[#333333]"
@@ -517,11 +517,11 @@ const AddProduct1 = () => {
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
-              <UploadImage image={addImage } />
+              {/* <UploadImage image={addImage } /> */}
               <div className="flex justify-center gap-4 mt-16">
                 {/* Edit Button */}
                 <button

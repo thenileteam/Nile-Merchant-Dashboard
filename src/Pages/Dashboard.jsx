@@ -149,7 +149,7 @@ const Dashboard = () => {
               <div className=" w-full mt-28 px-32  h-40 flex flex-row gap-28">
                 <div className=" h-[150px] bg-zinc-200  w-[300px]" />
                 <div className=" h-[150px] bg-zinc-200 w-[300px]" />
-                <div className=" h-[150px] bg-zinc-200 w-[300px]" />
+                {/* <div className=" h-[150px] bg-zinc-200 w-[300px]" /> */}
               </div>
             ) : (
               <div className="p-6 mt-28 px-36">
@@ -159,7 +159,7 @@ const Dashboard = () => {
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
                       0
                     </h1>
-                    <p className="text-[#6E6E6E]">Avalaible Balance</p>
+                    <p className="text-[#6E6E6E]">Revenue</p>
                   </div>
                   <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={packagemoving} alt="" />
@@ -168,13 +168,13 @@ const Dashboard = () => {
                     </h1>
                     <p className="text-[#6E6E6E]">Total sales</p>
                   </div>
-                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                  {/* <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={bitcoin} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
                       0
                     </h1>
                     <p className="text-[#6E6E6E]">Total Payouts</p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             )}

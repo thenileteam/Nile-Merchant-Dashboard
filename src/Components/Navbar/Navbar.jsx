@@ -79,7 +79,7 @@ const Navbar = ({ setSidebarOpen, sidebarOpen, title, icon }) => {
             </div>
             <div>
               <Link to="/profilesetting">
-                <ProfileImage profileImage={user && user.image ? user.image : ''}  />
+                <ProfileImage profileImage={user && user.image ? user.image : ''} />
               </Link>
             </div>
           </div>
