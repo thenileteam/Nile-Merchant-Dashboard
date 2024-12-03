@@ -4,6 +4,7 @@ import { useState } from "react";
 import { addsquare, addImage } from "../../assets";
 import UploadImage from "../UploadImage/UploadImage";
 import { useEditProduct } from "../../datahooks/products/productshooks";
+import { LuLoader2 } from "react-icons/lu";
 
 const EditProduct = ({ product }) => {
   console.log(product);
@@ -24,7 +25,7 @@ const EditProduct = ({ product }) => {
     quantitySizes: product.quantitySizes || "",
     weight: product.shippingWeight || "",
     freeShipping: product.freeShipping || false,
-    price: product.price || "",
+    price: product.price || 0,
     discountedPrice: product.discountedPrice || "",
     color: product.productColorName || "",
     dimensions: {
@@ -54,15 +55,19 @@ const EditProduct = ({ product }) => {
   const toggleConfirmation = () => {
     setIsConfirmationOpen(false);
   };
-  const { addProductToBackend, isEditingProduct } = useEditProduct();
+  const { addProductToBackend, isEditingProduct } = useEditProduct(() => {
+    setIsConfirmationOpen(false);
+  });
   // Function to handle confirmation and send data to API
   const handleConfirm = async () => {
     try {
+      const { price, ...rest } = productDetails;
       const data = {
         productId: product.uuid,
         stock: Number(productDetails.stockQuantity),
         description: productDetails.details,
-        ...productDetails,
+        price: Number(price),
+        ...rest,
       };
       console.log(data);
 
@@ -70,30 +75,6 @@ const EditProduct = ({ product }) => {
     } catch (error) {
       console.log(error);
     }
-    // setFadeOut(true);
-    // setTimeout(async () => {
-    //   setIsConfirmationOpen(false);
-    //   setIsFinalConfirmationOpen(true);
-    //   setFadeOut(false);
-
-    //   try {
-    //     console.log(productDetails);
-    //     return;
-    //     // Replace with your actual API endpoint
-    //     const response = await axios.post(
-    //       "https://nile-microservices.onrender.com/edit",
-    //       productDetails
-    //     );
-    //     console.log("Product updated:", response.data);
-    //   } catch (error) {
-    //     console.error("Error updating product:", error);
-    //   }
-    // }, 300);
-
-    // setTimeout(() => {
-    //   setIsFinalConfirmationOpen(false);
-    // }, 1000);
-    console.log(productDetails);
   };
 
   const handleInputChange = (e) => {
@@ -179,7 +160,7 @@ const EditProduct = ({ product }) => {
               <div className="grid grid-cols-2 gap-12">
                 <div className="space-y-3">
                   <div className="flex items-center gap-5">
-                    <div className="mb-4">
+                    <div className="mb-4 hidden">
                       <label
                         htmlFor="category"
                         className="block text-[16px] text-left font-bold text-[#333333]"
@@ -245,7 +226,8 @@ const EditProduct = ({ product }) => {
                       <input
                         id="stockQunatity"
                         name="stockQuantity"
-                        type="text"
+                        type="number"
+                        min={1}
                         value={productDetails.stockQuantity}
                         onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
@@ -254,7 +236,7 @@ const EditProduct = ({ product }) => {
                     </div>
                   </div>
 
-                  <div>
+                  <div className=" hidden">
                     <div className="relative">
                       <label
                         htmlFor="size"
@@ -283,7 +265,7 @@ const EditProduct = ({ product }) => {
                     </div>
                   </div>
 
-                  <div className="mb-4">
+                  <div className="mb-4 hidden">
                     <label
                       htmlFor="weight"
                       className="block text-[16px] text-left font-bold text-[#333333]"
@@ -293,14 +275,15 @@ const EditProduct = ({ product }) => {
                     <input
                       id="weight"
                       name="weight"
-                      type="text"
+                      type="number"
+                      min={0}
                       value={productDetails.weight}
                       onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="E.g:20kg"
                     />
                   </div>
-                  <div>
+                  <div className=" hidden">
                     <h1 className="block text-[16px] text-left font-bold text-[#333333]">
                       Offer Free Shipping ?
                     </h1>
@@ -345,7 +328,8 @@ const EditProduct = ({ product }) => {
                     <input
                       id="price"
                       name="price"
-                      type="text"
+                      type="number"
+                      min={1}
                       value={productDetails.price}
                       onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
@@ -362,14 +346,15 @@ const EditProduct = ({ product }) => {
                     <input
                       id="discountedPrice"
                       name="discountedPrice"
-                      type="text"
+                      type="number"
+                      min={0}
                       value={productDetails.discountedPrice}
                       onChange={handleInputChange}
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
                   </div>
-                  <div>
+                  <div className=" hidden">
                     <div className="relative">
                       <label
                         htmlFor="color"
@@ -394,7 +379,7 @@ const EditProduct = ({ product }) => {
                       </span>
                     </div>
                   </div>
-                  <div>
+                  <div className=" hidden">
                     <label
                       htmlFor="dimensionsLength"
                       className="block text-[16px] text-left font-bold text-[#333333]"
@@ -405,7 +390,8 @@ const EditProduct = ({ product }) => {
                       <input
                         id="dimensionsLength"
                         name="dimensions.length"
-                        type="text"
+                        type="number"
+                        min={0}
                         value={productDetails.dimensions.length}
                         onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
@@ -414,7 +400,8 @@ const EditProduct = ({ product }) => {
                       <input
                         id="dimensionsWidth"
                         name="dimensions.width"
-                        type="text"
+                        type="number"
+                        min={0}
                         value={productDetails.dimensions.width}
                         onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
@@ -423,7 +410,8 @@ const EditProduct = ({ product }) => {
                       <input
                         id="dimensionsHeight"
                         name="dimensions.height"
-                        type="text"
+                        type="number"
+                        min={0}
                         value={productDetails.dimensions.height}
                         onChange={handleInputChange}
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
@@ -431,7 +419,7 @@ const EditProduct = ({ product }) => {
                       />
                     </div>
                   </div>
-                  <div>
+                  <div className=" hidden">
                     <div className="relative">
                       <label
                         htmlFor="packaging"
@@ -455,7 +443,7 @@ const EditProduct = ({ product }) => {
                       </span>
                     </div>
                   </div>
-                  <div className="mb-4">
+                  <div className="mb-4 hidden">
                     <label
                       htmlFor="handlingTime"
                       className="block text-[16px] text-left font-bold text-[#333333]"
@@ -475,8 +463,8 @@ const EditProduct = ({ product }) => {
                 </div>
               </div>
 
-              <UploadImage image={addImage} />
-              <div className="flex justify-center gap-4 mt-16">
+              {/* <UploadImage image={addImage} /> */}
+              <div className="flex justify-center gap-4 mt-8">
                 {/* Edit Button */}
                 <button
                   className="px-2 py-2 hover:bg-[#004324] bg-[#f5f5f5] border-[#004324] border-2 text-[#004324] font-medium rounded-md shadow-lg hover:text-[#ffffff] transition ease-out duration-700"
@@ -538,22 +526,26 @@ const EditProduct = ({ product }) => {
             <h1 className="text-[#333333] font-bold text-[18px] text-center">
               Are You Sure You Want To Edit This Product?
             </h1>
-            <div className="flex justify-center gap-20">
-              <button onClick={handleConfirm}>
-                <div className="flex mt-10">
-                  <h1 className="text-[#333333] flex font-bold gap-1 items-center hover:border-[#ffffff] hover:bg-[#E2E8F0] transition ease-out duration-500 border-[#004324] border-2 p-2 px-6 rounded-md">
-                    Yes
-                  </h1>
-                </div>
-              </button>
-              <button onClick={toggleConfirmation}>
-                <div className="flex mt-10">
-                  <h1 className="text-[#ffffff] hover:text-[#333333] transition ease-out duration-700 flex font-bold gap-1 items-center border-[#004324] hover:bg-[#E2E8F0] bg-[#004324] border-2 p-2 px-6 rounded-md">
-                    No
-                  </h1>
-                </div>
-              </button>
-            </div>
+            {isEditingProduct ? (
+              <LuLoader2 className=" mx-auto animate-spin duration-300 transition-all" />
+            ) : (
+              <div className="flex justify-center gap-20">
+                <button onClick={handleConfirm}>
+                  <div className="flex mt-10">
+                    <h1 className="text-[#333333] flex font-bold gap-1 items-center hover:border-[#ffffff] hover:bg-[#E2E8F0] transition ease-out duration-500 border-[#004324] border-2 p-2 px-6 rounded-md">
+                      Yes
+                    </h1>
+                  </div>
+                </button>
+                <button onClick={toggleConfirmation}>
+                  <div className="flex mt-10">
+                    <h1 className="text-[#ffffff] hover:text-[#333333] transition ease-out duration-700 flex font-bold gap-1 items-center border-[#004324] hover:bg-[#E2E8F0] bg-[#004324] border-2 p-2 px-6 rounded-md">
+                      No
+                    </h1>
+                  </div>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
