@@ -1,6 +1,5 @@
 import { arrowleft, logout, notification, profileimage } from "../../assets";
 import { useEffect } from "react";
-import { arrowleft, logout, profileimage } from "../../assets";
 import { Link } from "react-router-dom";
 import UploadImage from "../UploadImage/UploadImage";
 import {
@@ -87,7 +86,7 @@ const ProfileSetting = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 px-20">
               <Link to="/dashboard">
-                <img src={arrowleft} alt="Back to Dashboard" />
+                <img src={arrowleft} alt="Back to Dashboard" loading="lazy" />
               </Link>
               <h1 className="text-[32px] font-bold">Profile Settings</h1>
             </div>

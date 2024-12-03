@@ -49,15 +49,15 @@ const Customer = () => {
           >
             <img
               src={nilelogowhite}
-              alt=""
-              className="w-[170px] flex mx-auto"
+              alt="nile logo"
+              className="w-[130px] flex mx-auto"
             />
             <Links />
           </div>
 
           {/* Navbar */}
           <div className="flex-grow lg:ml-64 overflow-x-hidden">
-            < Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} title='Customers Management' icon={userlist} /> 
+            < Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} title='Customers Management' icon={userlist} profilePic={user && user.image ? user.image : ""} /> 
 
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
@@ -77,13 +77,13 @@ const Customer = () => {
                     </h1>
                     <p className="text-[#6E6E6E]">Active Customers</p>
                   </div>
-                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                  {/*<div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={userarrow} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
                       0
                     </h1>
                     <p className="text-[#6E6E6E]">Repeat Customers</p>
-                  </div>
+                  </div>*/}
                 </div>
               </CustomAwaitCard>
             </div>

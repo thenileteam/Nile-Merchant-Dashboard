@@ -235,28 +235,32 @@ const AddProduct = () => {
                       >
                         Product Size
                       </label>
-                      <select
-                        name="size"
-                        id="size"
-                        value={productDetails.size}
-                        onChange={handleInputChange}
-                        className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
-                      >
-                        <option value="">E.g:XXL</option>
-                        <option value="XL">XL</option>
-                        <option value="XXL">XXL</option>
-                        <option value="LG">LG</option>
-                        <option value="SM">SM</option>
-                        <option value="XS">XS</option>
-                        <option value="XXS">XXS</option>
-                      </select>
+                      <div className="flex flex-col w-full">
+                        <input
+                          list="size-options" // This connects to the datalist below
+                          name="quantitySizes"
+                          id="size"
+                          value={productDetails.quantitySizes}
+                          onChange={handleInputChange}
+                          className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
+                          placeholder="Select or enter a size"
+                        />
+                        <datalist id="size-options">
+                          <option value="XL" />
+                          <option value="XXL" />
+                          <option value="LG" />
+                          <option value="SM" />
+                          <option value="XS" />
+                          <option value="XXS" />
+                        </datalist>
+                      </div>
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
                       </span>
                     </div>
                   </div>
 
-                  <div className="mb-4">
+                  {/* <div className="mb-4">
                     <label
                       htmlFor="weight"
                       className="block text-[16px] font-bold text-[#333333]"
@@ -272,8 +276,8 @@ const AddProduct = () => {
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="E.g:20kg"
                     />
-                  </div>
-                  <div>
+                  </div> */}
+                  {/* <div>
                     <h1 className="block text-[16px] font-bold text-[#333333]">
                       Offer Free Shipping ?
                     </h1>
@@ -305,7 +309,7 @@ const AddProduct = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="space-y-3">
                   <div className="mb-4">
@@ -367,7 +371,7 @@ const AddProduct = () => {
                       </span>
                     </div>
                   </div>
-                  <div>
+                  {/* <div>
                     <label
                       htmlFor="dimensionsLength"
                       className="block text-[16px] font-bold text-[#333333]"
@@ -403,8 +407,8 @@ const AddProduct = () => {
                         placeholder="Height"
                       />
                     </div>
-                  </div>
-                  <div>
+                  </div> */}
+                  {/* <div>
                     <div className="relative">
                       <label
                         htmlFor="packaging"
@@ -427,8 +431,8 @@ const AddProduct = () => {
                         <img src={addsquare} alt="" />
                       </span>
                     </div>
-                  </div>
-                  <div className="mb-4">
+                  </div> */}
+                  {/* <div className="mb-4">
                     <label
                       htmlFor="handlingTime"
                       className="block text-[16px] font-bold text-[#333333]"
@@ -444,12 +448,10 @@ const AddProduct = () => {
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
-
-              <div className="flex justify-center mt-10">PRODUCT IMAGE</div>
-
+               {/* do not remove! space for product image */}
               <div className="flex justify-center gap-4 mt-16">
                 {/* Edit Button */}
                 <button

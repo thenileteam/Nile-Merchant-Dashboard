@@ -21,7 +21,6 @@ import SelectProductForm from "../Components/Orders/selectproductform";
 import { useCreateNewOrder } from "../datahooks/orders/orderhooks";
 import { AiOutlineLoading } from "react-icons/ai";
 import Skeleton from "react-loading-skeleton";
-import ProfileImage from "../Components/PlaceholderImage/PlaceholderImage";
 import Navbar from "../Components/Navbar/Navbar";
 
 const Orders = () => {
@@ -95,7 +94,7 @@ const Orders = () => {
   return (
     <>
       {createOrderForm && (
-        <div className=" w-full fixed z-40  justify-center items-center flex h-screen">
+        <div className=" w-full fixed z-40  justify-center items-center flex h-screen border-2 border-blue-500" onClick={() => setCreateOrderForm(false)}>
           <div className=" w-full h-full bg-black/30 absolute top-0 left-0 "></div>
           <div
             className=" rounded-[8px] z-[400000000] mx-auto pt-[96px] pb-8 px-8 relative bg-white"
@@ -255,14 +254,14 @@ const Orders = () => {
             <img
               src={nilelogowhite}
               alt=""
-              className="w-[170px] flex mx-auto"
+              className="w-[130px] flex mx-auto"
             />
             <Links />
           </div>
 
           {/* Navbar */}
           <div className="flex-grow lg:ml-64 overflow-x-hidden">
-            < Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} title='Orders' icon={trolley} />
+            < Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} title='Orders' icon={trolley} profilePic={user && user.image ? user.image : ""}/>
 
             {/* Cards */}
             <div className="p-6 mt-28 px-32">

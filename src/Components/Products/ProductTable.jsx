@@ -32,7 +32,7 @@ const ProductTable = ({ data, isFetching, isError }) => {
   return (
     <>
       {/* Filter Dropdown Section */}
-      <div className="flex items-center justify-end px-24 mt-10 relative">
+      <div className="flex items-center justify-end px-24 relative">
         <h1 className="text-[#333333] font-bold text-[16px]">Filter By :</h1>
         <button
           onClick={toggleFilterDropdown}
@@ -130,13 +130,13 @@ const ProductTable = ({ data, isFetching, isError }) => {
           <table className=" w-full border-separate border-spacing-y-5">
             <thead>
               <tr className="text-left bg-[#EAF4E2] shadow-lg">
-                <th className="px-2 py-3 text-center">Product ID</th>
-                <th className="px-2 py-3 text-center">Product Name</th>
-                <th className="px-2 py-3 text-center">Category</th>
-                <th className="px-2 py-3 text-center">Price</th>
-                <th className="px-2 py-3 text-center">Unit Sold</th>
-                <th className="px-2 py-3 text-center">Stock Level</th>
-                <th className="px-2 py-3 text-center">Actions</th>
+                <th className=" py-3 text-center">Product ID</th>
+                <th className=" py-3 text-center">Product Name</th>
+                <th className=" py-3 text-center">Category</th>
+                <th className=" py-3 text-center">Price</th>
+                <th className=" py-3 text-center">Unit Sold</th>
+                <th className=" py-3 text-center">Stock Level</th>
+                <th className=" py-3 text-center">Actions</th>
                 {/* <th className="px-2 py-3 text-center flex items-center gap-1 justify-center">
                   Bulk Action
                   <svg
@@ -179,8 +179,8 @@ const ProductTable = ({ data, isFetching, isError }) => {
               {data?.map((product) => (
                 <tr key={product.id} className="bg-[#ffffff] shadow-md">
                   <td className="px-2 py-3 text-center">{product.id}</td>
-                  <td className="px-2 py-3 text-center">{product.name}</td>
-                  <td className="px-2 py-3 text-center">
+                  <td className="px-2 py-3 text-center capitalize">{product.name}</td>
+                  <td className="px-2 py-3 text-center capitalize">
                     {product.category.name}
                   </td>
                   <td className="px-2 py-3 text-center">{product.price}</td>
