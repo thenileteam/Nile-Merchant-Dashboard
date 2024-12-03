@@ -21,7 +21,6 @@ import SelectProductForm from "../Components/Orders/selectproductform";
 import { useCreateNewOrder } from "../datahooks/orders/orderhooks";
 import { AiOutlineLoading } from "react-icons/ai";
 import Skeleton from "react-loading-skeleton";
-import ProfileImage from "../Components/PlaceholderImage/PlaceholderImage";
 import Navbar from "../Components/Navbar/Navbar";
 
 const Orders = () => {
@@ -95,7 +94,7 @@ const Orders = () => {
   return (
     <>
       {createOrderForm && (
-        <div className=" w-full fixed z-40  justify-center items-center flex h-screen">
+        <div className=" w-full fixed z-40  justify-center items-center flex h-screen border-2 border-blue-500" onClick={() => setCreateOrderForm(false)}>
           <div className=" w-full h-full bg-black/30 absolute top-0 left-0 "></div>
           <div
             className=" rounded-[8px] z-[400000000] mx-auto pt-[96px] pb-8 px-8 relative bg-white"
@@ -255,14 +254,14 @@ const Orders = () => {
             <img
               src={nilelogowhite}
               alt=""
-              className="w-[170px] flex mx-auto"
+              className="w-[130px] flex mx-auto"
             />
             <Links />
           </div>
 
           {/* Navbar */}
           <div className="flex-grow lg:ml-64 overflow-x-hidden">
-            < Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} title='Orders' icon={trolley} />
+            < Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} title='Orders' icon={trolley} profilePic={user && user.image ? user.image : ""}/>
 
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
@@ -272,7 +271,7 @@ const Orders = () => {
                     {" "}
                     <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
                     <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
-                    <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
+                    {/* <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "} */}
                   </div>
                 ) : (
                   <>
@@ -290,34 +289,34 @@ const Orders = () => {
                       </h1>
                       <p className="text-[#6E6E6E]">Pending Shipment</p>
                     </div>
-                    <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                    {/* <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                       <img src={timer} alt="" />
                       <h1 className="text-[#333333] text-[22px] font-bold mt-1">
                         0
                       </h1>
                       <p className="text-[#6E6E6E]">Average Deliver Time</p>
-                    </div>
+                    </div> */}
                   </>
                 )}
               </div>
             </div>
 
-            <div className="px-24 mt-32">
-              {data && (
-                <div className="flex  items-center gap-16">
+            <div className="max-w-[650px] mx-auto mt-4">
+               
+                <div className="flex items-center gap-16 ">
                   <button
                     onClick={() => setCreateOrderForm(true)}
                     className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px]  text-white "
                   >
-                    <img src="/public/plus.svg" alt="" />
+                    <img src="/public/plus.svg" alt="plus icon" />
                     Create Order
                   </button>
-                  <button className=" flex bg-white rounded-[4px] border border-[#8ED06C] gap-1 p-[10.5px]  text-[#8ED06C] ">
+                  {/* <button className=" flex bg-white rounded-[4px] border border-[#8ED06C] gap-1 p-[10.5px]  text-[#8ED06C] ">
                     <img src="/public/export.svg" alt="" />
                     Export CSV
-                  </button>
+                  </button> */}
                 </div>
-              )}
+              
               {data && data.length === 0 && (
                 <>
                   <div>
@@ -335,7 +334,7 @@ const Orders = () => {
                   </div>
 
                   <div className="flex justify-center mt-3">
-                    <button className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md">
+                    <button type='button' className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md">
                       Check Your Customers
                     </button>
                   </div>

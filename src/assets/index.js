@@ -1,5 +1,5 @@
 import nilelogosolid from "./nilelogosolid.png";
-import nilelogowhite from "./nilelogowhite.png";
+import nilelogowhite from "./nile-logo-thin-white.png";
 import notification from "./notification.png";
 import image from "./image.png";
 import transaction from "./transaction.png";

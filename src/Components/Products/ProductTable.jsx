@@ -32,7 +32,7 @@ const ProductTable = ({ data, isFetching, isError }) => {
   return (
     <>
       {/* Filter Dropdown Section */}
-      <div className="flex items-center justify-end px-24 mt-10 relative">
+      <div className="flex items-center justify-end px-24 relative">
         <h1 className="text-[#333333] font-bold text-[16px]">Filter By :</h1>
         <button
           onClick={toggleFilterDropdown}
@@ -130,14 +130,14 @@ const ProductTable = ({ data, isFetching, isError }) => {
           <table className=" w-full border-separate border-spacing-y-5">
             <thead>
               <tr className="text-left bg-[#EAF4E2] shadow-lg">
-                <th className="px-2 py-3 text-center">Product ID</th>
-                <th className="px-2 py-3 text-center">Product Name</th>
-                <th className="px-2 py-3 text-center">Category</th>
-                <th className="px-2 py-3 text-center">Price</th>
-                <th className="px-2 py-3 text-center">Unit Sold</th>
-                <th className="px-2 py-3 text-center">Stock Level</th>
-                <th className="px-2 py-3 text-center">Actions</th>
-                <th className="px-2 py-3 text-center flex items-center gap-1 justify-center">
+                <th className=" py-3 text-center">Product ID</th>
+                <th className=" py-3 text-center">Product Name</th>
+                <th className=" py-3 text-center">Category</th>
+                <th className=" py-3 text-center">Price</th>
+                <th className=" py-3 text-center">Unit Sold</th>
+                <th className=" py-3 text-center">Stock Level</th>
+                <th className=" py-3 text-center">Actions</th>
+                {/* <th className="px-2 py-3 text-center flex items-center gap-1 justify-center">
                   Bulk Action
                   <svg
                     width="32"
@@ -171,7 +171,7 @@ const ProductTable = ({ data, isFetching, isError }) => {
                       strokeLinecap="round"
                     />
                   </svg>
-                </th>
+                </th> */}
               </tr>
             </thead>
 
@@ -179,25 +179,25 @@ const ProductTable = ({ data, isFetching, isError }) => {
               {data?.map((product) => (
                 <tr key={product.id} className="bg-[#ffffff] shadow-md">
                   <td className="px-2 py-3 text-center">{product.id}</td>
-                  <td className="px-2 py-3 text-center">{product.name}</td>
-                  <td className="px-2 py-3 text-center">
+                  <td className="px-2 py-3 text-center capitalize">{product.name}</td>
+                  <td className="px-2 py-3 text-center capitalize">
                     {product.category.name}
                   </td>
                   <td className="px-2 py-3 text-center">{product.price}</td>
                   <td className="px-2 py-3 text-center">{product.unitsSold}</td>
                   <td className="px-2 py-3 text-center">{product.stock}</td>
-                  <td className="px-2 py-3 text-center flex items-center gap-2 justify-center">
+                  <td className="px-2 py-3 text-center flex items-center gap-2 justify-center ">
                     <EditProduct product={product} />
                     <DeleteProduct product={product} />
                   </td>
-                  <td className="px-2 py-3 text-center">
+                  {/* <td className="px-2 py-3 text-center">
                     <input
                       type="checkbox"
                       id={`product-${product.id}`}
                       name={`product-${product.id}`}
                       className="size-5 rounded-md bg-white shadow-sm"
                     />
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>
@@ -295,10 +295,10 @@ const ProductTable = ({ data, isFetching, isError }) => {
       {/* Add Product & Export CSV Button */}
       <div className=" flex px-28 justify-end items-center mt-10 gap-24">
         <AddProduct1 />
-        <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
+        {/* <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
           <img src={download} alt="" />
           Export CSV
-        </h1>
+        </h1> */}
       </div>
     </>
   );

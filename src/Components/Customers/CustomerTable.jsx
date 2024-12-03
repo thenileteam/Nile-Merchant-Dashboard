@@ -34,7 +34,7 @@ const CustomerTable = ({ customers, isLoading, error }) => {
   return (
     <>
       {/* Filter Dropdown Section */}
-      <div className="flex items-center justify-end px-24 mt-10 relative">
+      <div className="flex items-center justify-end px-24 relative">
         <h1 className="text-[#333333] font-bold text-[16px]">Filter By :</h1>
         <button
           onClick={toggleFilterDropdown}
@@ -118,11 +118,11 @@ const CustomerTable = ({ customers, isLoading, error }) => {
                 <th className="px-2 py-3 text-center">Total Orders</th>
                 <th className="px-2 py-3 text-center">Total Spend</th>
                 <th className="px-2 py-3 text-center">Last Purchase Date</th>
-                <th className="px-2 py-3 text-center">Actions</th>
+                {/* <th className="px-2 py-3 text-center">Actions</th>
                 <th className="px-2 py-3 text-center">
                   Bulk Action
                   <p className="text-center text-[#8ED06C]">Send Discount</p>
-                </th>
+                </th> */}
               </tr>
             </thead>
             <tbody>
@@ -130,19 +130,19 @@ const CustomerTable = ({ customers, isLoading, error }) => {
               {customers &&
                 customers.map((customer) => (
                   <tr key={customer.id} className="bg-[#ffffff] shadow-md">
-                    <td className="px-2 py-3 text-center">
+                    <td className="py-2 text-[14px] text-center">
                       {customer.id.slice(0, 3)}
                     </td>
-                    <td className="px-2 py-3 text-center">{customer.name}</td>
-                    <td className="px-2 py-3 text-center">{customer.email}</td>
-                    <td className="px-2 py-3 text-center">
+                    <td className="py-2 text-[14px] text-center">{customer.name}</td>
+                    <td className="py-2 text-[14px] text-center">{customer.email}</td>
+                    <td className="py-2 text-[14px] text-center">
                       {customer.order?.length || 0}
                     </td>
-                    <td className="px-2 py-3 text-center">
+                    <td className="px-2 text-[14px] text-center">
                       ${getTotalAmountSpent(customer.order)}
                     </td>
-                    <td className="px-2 py-3 text-center">12/09/2024</td>
-                    <SendDiscount />
+                    <td className="px-2 text-[14px] text-center">{ customer.updatedAt.slice(0,10)}</td>
+                    {/* <SendDiscount />
                     <td className="px-2 py-3 text-center">
                       <input
                         type="checkbox"
@@ -150,7 +150,7 @@ const CustomerTable = ({ customers, isLoading, error }) => {
                         name="marketing_accept"
                         className="size-5 rounded-md bg-white shadow-sm"
                       />
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
             </tbody>
@@ -249,10 +249,10 @@ const CustomerTable = ({ customers, isLoading, error }) => {
       <div className=" flex px-28 justify-end items-center mt-10 gap-24">
         <AddCustomer1 transparent={true} />
 
-        <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
+        {/* <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
           <img src={download} alt="" />
           Export CSV
-        </h1>
+        </h1> */}
       </div>
     </>
   );

@@ -8,6 +8,8 @@ const OrdersTable = ({ data }) => {
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedText, setSelectedText] = useState("");
+console.log(data);
+
   // 6fwrI8EmItlIXpT5
   const toggleFilterDropdown = () => {
     setFilterDropdownOpen(!filterDropdownOpen);
@@ -27,7 +29,7 @@ const OrdersTable = ({ data }) => {
   return (
     <>
       {/* Filter Dropdown Section */}
-      <div className="flex items-center justify-end px-24 mt-10 relative">
+      <div className="flex items-center justify-end px-24  relative">
         <h1 className="text-[#333333] font-bold text-[16px]">Filter By :</h1>
         <button
           onClick={toggleFilterDropdown}
@@ -66,7 +68,7 @@ const OrdersTable = ({ data }) => {
                 Store Name
               </h1>
               <h1
-                className="text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer"
+                className="text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer "
                 onClick={() => handleFilterClick("Input Product Name")}
               >
                 Product Name
@@ -101,19 +103,19 @@ const OrdersTable = ({ data }) => {
 
       {/* Tables */}
       <div className="px-24">
-        <table className=" w-full border-separate border-spacing-y-5">
+        <table className="w-full border-separate border-spacing-y-5">
           <thead>
             <tr className="text-left bg-[#EAF4E2] shadow-lg">
-              <th className="px-2 py-3">Customer Name</th>
-              <th className="px-2 py-3 text-center">Order ID</th>
-              <th className="px-2 py-3 text-center">Product Name</th>
-              <th className="px-2 py-3 text-center">Price</th>
-              <th className="px-2 py-3 text-center">Total P. With Shipping</th>
-              <th className="px-2 py-3 text-center">Order Date</th>
-              <th className="px-2 py-3 text-center">Shipping Status</th>
-              <th className="px-2 py-3 text-center">Track Order</th>
-              <th className="px-2 py-3 text-center">Payment Status</th>
-              <th className="px-2 py-3 text-center">Actions</th>
+              <th className="px-2 text-[14px]">Customer Name</th>
+              <th className="px-2 text-[14px] text-center">Order ID</th>
+              <th className="px-2 text-[14px] text-center">Product Name</th>
+              <th className="px-2 text-[14px] text-center">Price</th>
+              <th className="px-2 text-[14px] text-center">Total P. With Shipping</th>
+              <th className="px-2 text-[14px] text-center">Order Date</th>
+              <th className="px-2 text-[14px] text-center">Shipping Status</th>
+              <th className="px-2 text-[14px]  text-center">Track Order</th>
+              <th className="px-2 text-[14px] text-center">Payment Status</th>
+              {/* <th className="px-2 py-3 text-center">Actions </th>
               <th className="px-2 py-3 text-center">
                 Bulk Action
                 <svg
@@ -140,38 +142,38 @@ const OrdersTable = ({ data }) => {
                 <h1 className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
                   Mark As Shipped
                 </h1>
-              </th>
+              </th> */}
             </tr>
           </thead>
           <tbody>
             {data?.map((order) => (
               <tr key={order._id} className="bg-[#ffffff] shadow-md">
-                <td className="px-2 py-3 bg-[#EAF4E2]">
+                <td className="px-2  bg-[#EAF4E2] text-[13px]">
                   {order?.customer?.name ||
                     order?.customer?.id.slice(0, 2) ||
                     "Unassigned"}
                 </td>
-                <td className="px-2 py-3 text-center">{order.id}</td>
-                <td className="px-2 py-3 text-center">{order.items[0].name}</td>
-                <td className="px-2 py-3 text-center">57</td>
-                <td className="px-2 py-3 text-center">${order.totalAmount}</td>
-                <td className="px-2 py-3 text-center">
+                <td className="px-2 text-center text-[13px]">{order.id}</td>
+                <td className="px-2  text-center text-[13px]">{order.items[0].name}</td>
+                <td className="px-2  text-center text-[13px]">{ order.items[0].price}</td>
+                <td className="px-2  text-center text-[13px]">&#8358;{order.totalAmount}</td>
+                <td className="px-2 text-center text-[13px]">
                   {format(parseISO(order?.createdAt), "dd MMMM yyyy")}
                 </td>
-                <td className="px-2 py-3 text-center">NA</td>
-                <td className="px-2 py-3 text-center">Completed</td>
-                <td className="px-2 py-3 text-center">
-                  {order.payment || "Pending"}
+                <td className="px-2  text-center text-[13px]">{ order.status}</td>
+                <td className="px-2 text-center text-[13px]">N/A</td>
+                <td className="px-2 text-center text-[13px]">
+                  {order.paymentStatus || "Pending"}
                 </td>
-                <td className="px-2 py-3 text-center">{order.status}</td>
-                <td className="px-2 py-3 text-center">
+                {/* <td className="px-2  text-center">{ order.status}</td> */}
+                {/* <td className="px-2   text-center">
                   <input
                     type="checkbox"
                     id="MarketingAccept"
                     name="marketing_accept"
                     className="size-5 rounded-md bg-white shadow-sm"
                   />
-                </td>
+                </td> */}
               </tr>
             ))}
 
@@ -356,12 +358,12 @@ const OrdersTable = ({ data }) => {
       </div>
 
       {/* Export CSV Button */}
-      <div className=" flex px-28 justify-end mt-10">
+      {/* <div className=" flex px-28 justify-end mt-10">
         <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
           <img src={download} alt="" />
           Export CSV
         </h1>
-      </div>
+      </div> */}
     </>
   );
 };

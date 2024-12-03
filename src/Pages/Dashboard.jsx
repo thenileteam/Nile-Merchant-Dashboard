@@ -18,7 +18,7 @@ import DashoardTabel from "../Components/Dashboard/DashoardTabel";
 import { useState } from "react";
 import { useFetchDashboardData,useFetchUser } from "../datahooks/users/userhooks";
 import Skeleton from "react-loading-skeleton";
-import ProfileImage from "../Components/PlaceholderImage/PlaceholderImage";
+import Navbar from '../Components/Navbar/Navbar'
 const Dashboard = () => {
   //users image
   const { user } = useFetchUser();
@@ -48,108 +48,29 @@ const Dashboard = () => {
 
           {/* Sidebar */}
           <div
-            className={`fixed top-0 left-0 h-full w-[290px] z-10 bg-[#004324] border-2 text-white p-5 transition-transform transform ${
+            className={`fixed top-0 left-0 h-full w-[290px] z-20 bg-[#004324] border-2 text-white p-5 transition-transform transform ${
               sidebarOpen ? "translate-x-0" : "-translate-x-full"
             } lg:translate-x-0`}
           >
             <img
               src={nilelogowhite}
               alt=""
-              className="w-[170px] flex mx-auto"
+              className="w-[130px] flex mx-auto"
             />
             <Links />
           </div>
 
           {/* Navbar */}
           <div className="flex-grow lg:ml-52">
-            <nav className="bg-[#EAF4E2] p-4 shadow-md flex items-center gap-5 fixed w-full">
-              <button
-                className="lg:hidden text-gray-800 z-20"
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d={
-                      sidebarOpen
-                        ? "M6 18L18 6M6 6l12 12" // Close icon
-                        : "M4 6h16M4 12h16M4 18h16" // Menu icon
-                    }
-                  />
-                </svg>
-              </button>
-              <div className="flex items-center justify-between">
-                <div>
-                  <h1 className="text-[32px] font-bold ml-20">{`Welcome ${
-                    username
-                  } `}</h1>
-                </div>
-                <div className="flex items-center gap-10 ml-[400px]">
-                  <div className="relative">
-                    <label htmlFor="Search" className="sr-only">
-                      {" "}
-                      Search{" "}
-                    </label>
-
-                    <input
-                      type="text"
-                      id="Search"
-                      placeholder=""
-                      className="w-[300px] rounded-md border-[#6E6E6E] border-2 p-8 py-2.5 pe-10 shadow-sm sm:text-sm"
-                    />
-
-                    <span className="absolute inset-y-0 start-0 grid w-10 place-content-center">
-                      <button
-                        type="button"
-                        className="text-gray-600 hover:text-gray-700"
-                      >
-                        <span className="sr-only">Search</span>
-
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="size-4"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                          />
-                        </svg>
-                      </button>
-                    </span>
-                  </div>
-                  {/* <div>
-                     <Link to="/notification">
-                      <img src={notification} alt="" />
-                    </Link> 
-                  </div> */}
-                  <div>
-                    <Link to="/profilesetting">
-                      <ProfileImage profileImage={user && user.image ? user.image : ''} />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </nav>
+          < Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} title={`Welcome ${username}`} profilePic={user && user.image ? user.image : ""} />
+            
 
             {/* Cards */}
             {isFetchingDashboardData ? (
               <div className=" w-full mt-28 px-32  h-40 flex flex-row gap-28">
                 <div className=" h-[150px] bg-zinc-200  w-[300px]" />
                 <div className=" h-[150px] bg-zinc-200 w-[300px]" />
-                <div className=" h-[150px] bg-zinc-200 w-[300px]" />
+                {/* <div className=" h-[150px] bg-zinc-200 w-[300px]" /> */}
               </div>
             ) : (
               <div className="p-6 mt-28 px-36">
@@ -159,7 +80,7 @@ const Dashboard = () => {
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
                       0
                     </h1>
-                    <p className="text-[#6E6E6E]">Avalaible Balance</p>
+                    <p className="text-[#6E6E6E]">Revenue</p>
                   </div>
                   <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={packagemoving} alt="" />
@@ -168,13 +89,13 @@ const Dashboard = () => {
                     </h1>
                     <p className="text-[#6E6E6E]">Total sales</p>
                   </div>
-                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                  {/* <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={bitcoin} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
                       0
                     </h1>
                     <p className="text-[#6E6E6E]">Total Payouts</p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             )}

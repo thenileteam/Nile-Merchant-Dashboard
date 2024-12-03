@@ -13,7 +13,7 @@ const Links = () => {
     ${isActive(path) ? "bg-[#ffffff] text-[#004324]" : "text-[#ffffff]"}`;
   };
   return (
-    <ul className="mt-10">
+    <ul className="mt-10  ">
       {/* Dashboard overview */}
       <Link to="/dashboard">
         <li className="cursor-pointer">
@@ -324,7 +324,7 @@ const Links = () => {
       </Link> */}
 
       {/* Footer */}
-      <footer className="mt-80" >
+      <footer className="mt-20  " >
         {/* <div className="flex items-center gap-3">
           <h1 className="text-sm">Terms & Conditions</h1>
           <p className="text-sm">Home</p>
@@ -334,7 +334,8 @@ const Links = () => {
           <img src={copyright} alt="" />
           <h1 className="text-sm">By Dorisa Technology LTD</h1>
         </div> */}
-        <a href="https://nile.ng/" target="_blank"  rel="noopener noreferrer" className="font-bold" >@Nile Technologies</a>
+        <a href="https://nile.ng/" target="_blank" rel="noopener noreferrer" className="font-bold block absolute bottom-3" >@Nile Technologies</a>
+        <span className="bg-blue-500 p-1 rounded-md absolute bottom-3 right-20">beta</span>
       </footer>
     </ul>
   );
