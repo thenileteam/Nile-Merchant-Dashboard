@@ -18,7 +18,7 @@ import CustomAwaitCard from "../Components/uicomps/customawaitcard";
 import Navbar from "../Components/Navbar/Navbar";
 const Customer = () => {
   //show user profile image
-  useFetchUser();
+  const { user} = useFetchUser();
   const {
     customers,
     isFetchingCustomers: isLoading,
