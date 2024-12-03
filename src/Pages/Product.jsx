@@ -17,7 +17,7 @@ import Skeleton from "react-loading-skeleton";
 import { useFetchUser } from '../datahooks/users/userhooks'
 import Navbar from "../Components/Navbar/Navbar";
 const Product = () => {
-  //user image
+  //get profile image from the user
   const { user } = useFetchUser();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { data, isFetching, isError } = useFetchProducts();
@@ -45,14 +45,14 @@ const Product = () => {
             <img
               src={nilelogowhite}
               alt=""
-              className="w-[170px] flex mx-auto"
+              className="w-[130px] flex mx-auto"
             />
             <Links />
           </div>
 
           {/* Navbar */}
           <div className="flex-grow lg:ml-64 overflow-x-hidden">
-            <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={ setSidebarOpen} title='Products' icon={packagemoving} />
+            <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={ setSidebarOpen} title='Products' icon={packagemoving} profilePic={user && user.image ? user.image : ""}/>
 
             {/* Cards */}
             <div className="p-6 mt-28 px-32">

@@ -21,34 +21,34 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData }) => {
           <table className=" w-full border-separate border-spacing-y-5">
             <thead>
               <tr className="text-left bg-[#EAF4E2] shadow-lg">
-                <th className="px-2 py-3">Metrics</th>
-                <th className="px-2 py-3 text-center">Today</th>
-                <th className="px-2 py-3 text-center">This week</th>
-                <th className="px-2 py-3 text-center">This Month</th>
-                <th className="px-2 py-3 text-center">This Year So Far</th>
-                <th className="px-2 py-3 text-center">Action</th>
+                <th className=" py-3">Metrics</th>
+                <th className=" py-3 text-center">Today</th>
+                <th className=" py-3 text-center">This week</th>
+                <th className=" py-3 text-center">This Month</th>
+                <th className=" py-3 text-center">This Year So Far</th>
+                <th className=" py-3 text-center">Action</th>
               </tr>
             </thead>
             <tbody>
               {/* Row 1 */}
               <tr className="bg-[#ffffff] shadow-md">
-                <td className="px-2 py-3 bg-[#EAF4E2]">Your Orders</td>
-                <td className="px-2 py-3 text-center">
+                <td className="py-2 bg-[#EAF4E2]">Your Orders</td>
+                <td className=" py-2 text-center">
                   {dashboardData?.orders?.today.length || 0}
                 </td>
-                <td className="px-2 py-3 text-center">
+                <td className=" py-2 text-center">
                   {dashboardData?.orders?.week?.length}
                 </td>
-                <td className="px-2 py-3 text-center">
+                <td className=" py-2 text-center">
                   {dashboardData?.orders?.month?.length}
                 </td>
-                <td className="px-2 py-3 text-center">
+                <td className=" py-2 text-center">
                   {" "}
                   {dashboardData?.orders?.year?.length}
                 </td>
-                <td className="px-2 py-3 text-center bg-[#F5F5F5] text-[#8ED06C] font-extrabold">
+                <td className="py-2 text-center bg-[#F5F5F5] text-[#8ED06C] font-extrabold">
                   <Link
-                    to="#"
+                    to="/orders"
                     className="hover:border-[#8ED06C] border-[#f5f5f5] border-b-2 transition duration-300 underline-offset-4 decoration-[2px] inline-block hover:-translate-x-1"
                   >
                     View Orders
@@ -76,7 +76,7 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData }) => {
                 </td>
                 <td className="px-2 py-3 text-center bg-[#F5F5F5] text-[#8ED06C] font-extrabold">
                   <Link
-                    to="#"
+                    to="/orders"
                     className="hover:border-[#8ED06C] border-[#f5f5f5] border-b-2 transition duration-300 underline-offset-4 decoration-[2px] inline-block hover:-translate-x-1"
                   >
                     View
@@ -106,12 +106,12 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData }) => {
       </div>{" "}
       {/* Tables */}
       {/* Export CSV Button */}
-      <div className=" flex px-28 justify-end mt-10">
+      {/* <div className=" flex px-28 justify-end mt-10">
         <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
           <img src={download} alt="" />
           Export CSV
         </h1>
-      </div>
+      </div> */}
     </>
   );
 };
