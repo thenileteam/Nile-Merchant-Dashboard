@@ -10,7 +10,8 @@ import { LuLoader2 } from "react-icons/lu";
 const AddCustomer1 = ({ transparent }) => {
   const { addCustomerQuery, addCustomerQueryError, addCustomerQueryIsPending } =
     useAddCustomer(() => {
-      setIsFinalConfirmationOpen(false);
+      setIsConfirmationOpen(false);
+      setFadeOut(false);
     });
   const [customerData, setCustomerData] = useState({
     name: "",
@@ -47,18 +48,24 @@ const AddCustomer1 = ({ transparent }) => {
     }, 200); // Match this duration with your CSS transition duration
   };
   const addCustomer = () => {
+    // console.log("clicked", customerData);
+
     if (
       !customerData.name ||
       !customerData.email ||
       !customerData.phoneNumber
     ) {
+      setIsFinalConfirmationOpen(false);
       toast.error("Please fill in all required fields");
+      // console.log("are we here");
       return;
+    } else {
+      setIsFinalConfirmationOpen(false);
+      // console.log("here");
+      addCustomerQuery(customerData);
     }
-
-    addCustomerQuery(customerData);
   };
-  console.log(customerData);
+  // console.log(customerData);
   // const handleConfirm = async () => {
   //   setFadeOut(true);
   //   setTimeout(async () => {

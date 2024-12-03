@@ -1,10 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
-  image,
   nilelogowhite,
-  notification,
   userlist,
   usergroup,
   usercheck,
@@ -13,12 +10,15 @@ import {
 } from "../assets";
 import CustomerTable from "../Components/Customers/CustomerTable";
 import AddCustomer1 from "../Components/PopupModals/AddCustomer1";
-import { useFetchStoreCustomers, useFetchUser } from "../datahooks/users/userhooks";
+import {
+  useFetchStoreCustomers,
+  useFetchUser,
+} from "../datahooks/users/userhooks";
 import CustomAwaitCard from "../Components/uicomps/customawaitcard";
 import Navbar from "../Components/Navbar/Navbar";
 const Customer = () => {
   //show user profile image
-  const { user } = useFetchUser();
+  useFetchUser();
   const {
     customers,
     isFetchingCustomers: isLoading,
@@ -57,7 +57,12 @@ const Customer = () => {
 
           {/* Navbar */}
           <div className="flex-grow lg:ml-64 overflow-x-hidden">
-            < Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} title='Customers Management' icon={userlist} /> 
+            <Navbar
+              sidebarOpen={sidebarOpen}
+              setSidebarOpen={setSidebarOpen}
+              title="Customers Management"
+              icon={userlist}
+            />
 
             {/* Cards */}
             <div className="p-6 mt-28 px-32">

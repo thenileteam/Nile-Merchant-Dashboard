@@ -53,6 +53,26 @@ export const useCreateNewProduct = (onSuccessCallback) => {
     isAddingProduct,
   };
 };
+export const useEditProduct = (onSuccessCallback) => {
+  const queryClient = useQueryClient();
+  const { mutate, isPending: isEditingProduct } = useMutation({
+    mutationFn: (data) =>
+      ApiInstance.put(`/products/edit/${data.productId}`, data),
+    onSuccess: () => {
+      toast.success("Product Edited Successfully");
+      if (onSuccessCallback) onSuccessCallback();
+      queryClient.invalidateQueries(["products", store._id]);
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "An error occurred");
+    },
+  });
+
+  return {
+    addProductToBackend: mutate,
+    isEditingProduct,
+  };
+};
 export const useDeleteProduct = (onSuccessDelete) => {
   const queryClient = useQueryClient();
   const { mutate } = useMutation({

@@ -4,11 +4,27 @@ import Cookies from "js-cookie";
 // Create an Axios instance
 const ApiInstance = axios.create({
   baseURL: "https://api.nile.ng",
-  withCredentials: true, // Enable cookies to be sent with requests
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
+
+// Track retry attempts separately
+const retryAttempts = new WeakMap();
+
+// Function to check if user is in login or authentication process
+const isAuthenticatingPage = () => {
+  const currentPath = window.location.pathname;
+  const authPaths = [
+    "/",
+    "/signup",
+    "/auth",
+    "/authentication",
+    "/reset-password",
+  ];
+  return authPaths.some((path) => currentPath.includes(path));
+};
 
 // Function to refresh access token
 const refreshAccessToken = async () => {
@@ -18,21 +34,40 @@ const refreshAccessToken = async () => {
       Cookies.get("refreshToken") || localStorage.getItem("refreshToken");
 
     if (!refreshToken) {
-      throw new Error("Refresh token is missing.");
+      throw new Error("No refresh token available");
     }
 
-    const response = await ApiInstance.post("/users/auth/refresh", {
-      refreshToken,
-      userId: id,
-    });
+    const response = await axios.post(
+      "https://api.nile.ng/users/auth/refresh",
+      {
+        refreshToken,
+        userId: id,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!response.data?.accessToken) {
-      throw new Error("Failed to retrieve access token.");
+      throw new Error("Failed to retrieve new access token");
     }
 
     const newAccessToken = response.data.accessToken;
+
+    // Update storage and cookies
     localStorage.setItem("accessToken", newAccessToken);
-    ApiInstance.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
+    Cookies.set("accessToken", newAccessToken, {
+      expires: 1 / 24,
+      secure: true,
+      sameSite: "strict",
+    });
+
+    // Update default authorization header
+    ApiInstance.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${newAccessToken}`;
 
     return newAccessToken;
   } catch (error) {
@@ -43,63 +78,75 @@ const refreshAccessToken = async () => {
 
 // Function to handle refresh token failure
 const handleRefreshTokenFailure = () => {
-  console.warn("Session expired. Logging out the user...");
+  // Only redirect if not already on an authentication page
+  if (!isAuthenticatingPage()) {
+    console.warn("Session expired. Logging out the user...");
 
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("refreshToken");
-  localStorage.removeItem("store");
-  Cookies.remove("refreshToken");
-  Cookies.remove("accessToken");
+    // Clear all authentication-related storage
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("Id");
+    localStorage.removeItem("store");
 
-  window.location.href = "/"; // Adjust the path as needed
+    // Remove cookies
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+
+    // Redirect to login page
+    window.location.href = "/";
+  }
 };
 
-// Function to get token from cookies
-const getTokenFromCookies = () => {
-  return Cookies.get("accessToken");
-};
-
-// Add request interceptor to handle token refresh
+// Add request interceptor
 ApiInstance.interceptors.request.use(
   (config) => {
-    const token = getTokenFromCookies();
+    // Check both cookies and localStorage, but be more lenient
+    const token =
+      Cookies.get("accessToken") || localStorage.getItem("accessToken");
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  async (error) => {
-    const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        const newAccessToken = await refreshAccessToken();
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return ApiInstance(originalRequest);
-      } catch (refreshError) {
-        return Promise.reject(refreshError);
-      }
-    }
-
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
-// first access token
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDVjZjMyZDhkOGQ4NzNjYmE0ODM0NyIsImlhdCI6MTczMzE0MTMwMCwiZXhwIjoxNzMzMTUyMTAwfQ.p4ghDXqXLEccElWrM5faXKYRAHMId2tkdqZRPpas2OQ
-// Add response interceptor to handle token refresh
+
+// Add response interceptor
 ApiInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+
+    // Check if we've already attempted to retry this request
+    const currentAttempts = retryAttempts.get(originalRequest) || 0;
+
+    // Check for unauthorized access and limit retries
+    if (
+      (error.response?.status === 401 || error.response?.status === 403) &&
+      currentAttempts < 1
+    ) {
+      // Increment retry attempts
+      retryAttempts.set(originalRequest, currentAttempts + 1);
 
       try {
+        // Attempt to refresh the token
         const newAccessToken = await refreshAccessToken();
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return ApiInstance(originalRequest);
+
+        // Create a new config object with updated headers
+        const newConfig = {
+          ...originalRequest,
+          headers: {
+            ...originalRequest.headers,
+            Authorization: `Bearer ${newAccessToken}`,
+          },
+        };
+
+        // Retry the original request
+        return ApiInstance(newConfig);
       } catch (refreshError) {
+        // If refresh fails, handle logout
+        handleRefreshTokenFailure();
         return Promise.reject(refreshError);
       }
     }

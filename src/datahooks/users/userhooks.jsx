@@ -23,7 +23,7 @@ export const useLogUserIn = () => {
   const [error] = useState("");
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
-      console.log(data);
+      // console.log(data);
       return ApiInstance.post("/users/auth/login", data);
     },
     onSuccess: (response) => {
@@ -44,6 +44,7 @@ export const useLogUserIn = () => {
       navigate("/dashboard");
     },
     onError: (err) => {
+      console.log(err);
       toast.error(err.response.data.message || "An error occurred");
     },
   });
@@ -146,7 +147,7 @@ export const useSignUserUp = () => {
       //store and set users name
       localStorage.setItem("ownerName", JSON.stringify(username));
       setUsername(username);
-      console.log(response.data);
+      // console.log(response.data);
       // Navigate to dashboard
       navigate("/");
     },
@@ -221,6 +222,7 @@ export const useAddCustomer = (onSuccess) => {
       queryClient.invalidateQueries(["customers"]);
     },
     onError: (err) => {
+      onSuccess ? onSuccess() : null;
       toast.error(err.response.data.message || "An error occurred");
     },
   });
@@ -285,8 +287,8 @@ export const useFetchDashboardData = () => {
           : Promise.resolve({ data: { responseObject: null } }),
       ]);
 
-      console.log("Orders Response:", ordersResponse);
-      console.log("Product Response:", productResponse);
+      // console.log("Orders Response:", ordersResponse);
+      // console.log("Product Response:", productResponse);
 
       // Validate orders data
       if (!ordersResponse.data || !ordersResponse.data.responseObject) {

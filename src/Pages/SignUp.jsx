@@ -231,23 +231,26 @@ const SignUp = () => {
 
               {step ? (
                 <button
-                  type="submit"
-                  className="text-[#ffffff] bg-[#004324] w-full py-4 text-center text-[14px] font-semibold rounded-md shadow-md"
-                >
-                  Sign Up
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={validateForm}
                   disabled={signUpIsPending}
-                  className="text-[#ffffff] flex justify-center disabled:bg-opacity-50 bg-[#004324] w-full py-4 text-center text-[14px] font-semibold rounded-md shadow-md"
+                  type="submit"
+                  className="text-[#ffffff] grid place-items-center bg-[#004324] w-full py-4 text-center text-[14px] font-semibold rounded-md shadow-md"
                 >
                   {signUpIsPending ? (
                     <LuLoader2 className=" animate-spin duration-300 transition-all" />
                   ) : (
-                    "Continue"
+                    "Sign Up"
                   )}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    validateForm();
+                  }}
+                  className="text-[#ffffff] flex justify-center disabled:bg-opacity-50 bg-[#004324] w-full py-4 text-center text-[14px] font-semibold rounded-md shadow-md"
+                >
+                  Continue
                 </button>
               )}
             </form>
