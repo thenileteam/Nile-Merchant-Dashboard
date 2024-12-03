@@ -32,7 +32,7 @@ const Navbar = ({ setSidebarOpen, sidebarOpen, title, icon, profilePic }) => {
             </svg>
           </button>
           {/* parent second child */}
-          <div className="page-head flex items-center  gap-4 lg:gap-0 lg:justify-between lg:max-w-[1000px] lg:w-[80%]">
+          <div className="page-head flex items-center gap-16  lg:gap-0 justify-between lg:max-w-[1000px] lg:w-[80%]">
             {/* first */}
             <div className="flex gap-2 items-center">
               {icon &&<img src={icon} alt={`${title} icon`} />}
