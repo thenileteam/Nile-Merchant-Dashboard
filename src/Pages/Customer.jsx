@@ -72,8 +72,8 @@ const Customer = () => {
                 </div>
               </CustomAwaitCard>
             </div>
-            {/* Add Cutomer & Export CSV Button */}
-            <div className=" flex ml-32 items-center gap-24">
+            {/* Add Customer & Export CSV Button */}
+            <div className=" flex ml-32 items-center gap-24  ">
               <AddCustomer1 transparent={true} />
 
               {/* <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">

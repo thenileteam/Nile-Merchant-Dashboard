@@ -113,8 +113,8 @@ const AddCustomer1 = ({ transparent }) => {
         onClick={togglePopup}
         className={
           transparent
-            ? "text-[#004324] flex flex-row font-bold gap-1 items-center border-[#004324] hover:bg-[#004324] hover:text-[#ffffff] duration-500 border-2 p-2 rounded-md"
-            : "text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md"
+          ? "text-[#ffffff] bg-[#004324] p-3 flex flex-row font-bold rounded-md transitions border-[#004324] border-2"
+            : "text-[#004324] flex flex-row font-bold gap-1 items-center hover:bg-[#004324] hover:text-[#ffffff] duration-500 p-2 rounded-md"
         }
       >
         {transparent && (

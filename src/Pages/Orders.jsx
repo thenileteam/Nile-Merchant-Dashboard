@@ -282,11 +282,11 @@ const Orders = () => {
               </div>
             </div>
 
-            <div className="max-w-[760px] mx-auto">
-                <div className="flex items-center gap-16 ">
+            <div className="mx-auto">
+                <div className="flex items-center ml-32 gap-16">
                   <button type="button"
                     onClick={() => setCreateOrderForm(true)}
-                    className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px]  text-white "
+                    className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px] text-white "
                   >
                     <img src="/public/plus.svg" alt="plus icon" />
                     Create Order

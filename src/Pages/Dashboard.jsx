@@ -57,7 +57,7 @@ const Dashboard = () => {
                   <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={transaction} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                      0
+                      {dashboardData?.salesData?.totalSales}
                     </h1>
                     <p className="text-[#6E6E6E]">Revenue</p>
                   </div>
@@ -66,7 +66,7 @@ const Dashboard = () => {
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
                       {dashboardData?.orders?.totalOrders}
                     </h1>
-                    <p className="text-[#6E6E6E]">Total sales</p>
+                    <p className="text-[#6E6E6E]">Total Orders</p>
                   </div>
                   {/* <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={bitcoin} alt="" />
