@@ -49,17 +49,23 @@ const AddCustomer1 = ({ transparent }) => {
   };
   const addCustomer = () => {
     // console.log("clicked", customerData);
-
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const phoneRegex = /^\d{11}$/
     if (
       !customerData.name ||
-      !customerData.email ||
-      !customerData.phoneNumber
+      !customerData.email||
+      !customerData.phoneNumber &&phoneRegex
     ) {
       setIsFinalConfirmationOpen(false);
       toast.error("Please fill in all required fields");
       // console.log("are we here");
       return;
-    } else {
+    }else if (customerData.email && !emailRegex.test(customerData.email)) {
+      toast.error('Please include @ in your email');
+    } else if (customerData.phoneNumber && !phoneRegex.test(customerData.phoneNumber)) {
+      toast.error('Phone number must not be more that 11 digits');
+    }
+    else {
       setIsFinalConfirmationOpen(false);
       // console.log("here");
       addCustomerQuery(customerData);
@@ -196,8 +202,12 @@ const AddCustomer1 = ({ transparent }) => {
                         id="phoneNumber"
                         type="text"
                         name="phoneNumber"
+                        pattern="\d{11}"
+                        maxlength="11"
+                        title="Phone number must be exactly 11 digits"
+                        required
+                        placeholder="Enter 11-digit Phone number"
                         className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
-                        placeholder="Add The Customer's Phone Number"
                         value={customerData.phoneNumber}
                         onChange={handleCustomerDataChange}
                       />
@@ -216,6 +226,7 @@ const AddCustomer1 = ({ transparent }) => {
                       id="email"
                       type="email"
                       name="email"
+                      title="email must include '@' "
                       className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="Add The Customer's Email"
                       value={customerData.email}

@@ -21,7 +21,7 @@ const ProfileSetting = () => {
   const { mutate } = useLogOut();
   const { modifyProfile, isPending } = useModifyProfile();
   const [image, setImage] = useState(null);
-  const [cancelMessage, setCancelMessage] = useState('');
+  const [cancelMessage, setCancelMessage] = useState("");
   const [timeoutId, setTimeoutId] = useState(null);
   const username = user && user.name ? user.name : "User";
 
@@ -32,20 +32,21 @@ const ProfileSetting = () => {
       alert("Invalid file type. Please upload a JPG, PNG, SVG, or JPEG image.");
       return;
     }
-    
+
     setImage(file);
   };
 
   const cancelChanges = () => {
-    console.log("Changes canceled!");
-
     if (user) {
       setImage(user.image);
       setPhoneNumber(user.phoneNumber);
-      setCancelMessage("Changes canceled!");
-
+      if (user.image !== image || user.phoneNumber !==phoneNumber) {
+        setCancelMessage("Changes canceled!");
+      } else {
+        setCancelMessage("You didn't make any new changes")
+      }
       // Set the timeout and store the ID
-      const id = setTimeout(() => setCancelMessage(''), 3000);
+      const id = setTimeout(() => setCancelMessage(""), 3000);
       setTimeoutId(id);
     }
   };
@@ -60,7 +61,7 @@ const ProfileSetting = () => {
   }, [timeoutId]);
 
   const handleSaveChanges = async () => {
-    if (!image  || !phoneNumber) {
+    if (!image || !phoneNumber) {
       console.error("No changes made!");
       return;
     }
@@ -91,39 +92,6 @@ const ProfileSetting = () => {
               <h1 className="text-[32px] font-bold">Profile Settings</h1>
             </div>
             <div className="flex items-center gap-10 ml-[500px]">
-              <div className="relative">
-                <label htmlFor="Search" className="sr-only">
-                  Search
-                </label>
-                <input
-                  type="text"
-                  id="Search"
-                  placeholder=""
-                  className="w-[300px] rounded-md border-[#6E6E6E] border-2 p-8 py-2.5 pe-10 shadow-sm sm:text-sm"
-                />
-                <span className="absolute inset-y-0 start-0 grid w-10 place-content-center">
-                  <button
-                    type="button"
-                    className="text-gray-600 hover:text-gray-700"
-                  >
-                    <span className="sr-only">Search</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="size-4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                      />
-                    </svg>
-                  </button>
-                </span>
-              </div>
               {/* <div>
                 <Link to="/notification">
                   <img src={notification} alt="Notifications" />
@@ -237,6 +205,9 @@ const ProfileSetting = () => {
                   name="phone_number"
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   placeholder="0000000000000"
+                  pattern="\d{11}"
+                  maxlength="11"
+                  title="Phone number must be exactly 11 digits"
                   className="mt-1 w-full sm:max-w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
               )}
@@ -272,7 +243,9 @@ const ProfileSetting = () => {
           <img src={logout} alt="" />
           <h1 className="text-[#DC3545] font-bold">Log Out</h1>
         </button>
-        {cancelMessage && <p className="text-xl text-center mt-4">{ cancelMessage}</p>}
+        {cancelMessage && (
+          <p className="text-xl text-center mt-4">{cancelMessage}</p>
+        )}
       </div>
     </>
   );
