@@ -106,15 +106,15 @@ console.log(data);
         <table className="w-full border-separate border-spacing-y-5">
           <thead>
             <tr className="text-left bg-[#EAF4E2] shadow-lg">
-              <th className="px-2 text-[14px]">Customer Name</th>
-              <th className="px-2 text-[14px] text-center">Order ID</th>
-              <th className="px-2 text-[14px] text-center">Product Name</th>
-              <th className="px-2 text-[14px] text-center">Price</th>
-              <th className="px-2 text-[14px] text-center">Total P. With Shipping</th>
-              <th className="px-2 text-[14px] text-center">Order Date</th>
-              <th className="px-2 text-[14px] text-center">Shipping Status</th>
-              <th className="px-2 text-[14px]  text-center">Track Order</th>
-              <th className="px-2 text-[14px] text-center">Payment Status</th>
+              <th className="p-2 text-[14px]">Customer Name</th>
+              <th className="p-2 text-[14px] text-center">Order ID</th>
+              <th className="p-2 text-[14px] text-center">Product Name</th>
+              <th className="p-2 text-[14px] text-center">Price</th>
+              <th className="p-2 text-[14px] text-center">Total P. With Shipping</th>
+              <th className="p-2 text-[14px] text-center">Order Date</th>
+              <th className="p-2 text-[14px] text-center">Shipping Status</th>
+              <th className="p-2 text-[14px]  text-center">Track Order</th>
+              <th className="p-2 text-[14px] text-center">Payment Status</th>
               {/* <th className="px-2 py-3 text-center">Actions </th>
               <th className="px-2 py-3 text-center">
                 Bulk Action

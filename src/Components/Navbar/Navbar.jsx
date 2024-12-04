@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Navbar = ({ setSidebarOpen, sidebarOpen, title, icon, profilePic }) => {
   return (
     <nav className="bg-[#EAF4E2] fixed top-0 shadow-md z-10 w-full py-2">
-      <div className="container mx-auto lg:mx-0 lg:px-10 px-4">
+      <div className="container mx-auto lg:mx-0 lg:px-20 px-4">
         <div className="flex-container flex gap-4 lg:gap-10">
           {/*parent first child */}
           <button
@@ -32,11 +32,11 @@ const Navbar = ({ setSidebarOpen, sidebarOpen, title, icon, profilePic }) => {
             </svg>
           </button>
           {/* parent second child */}
-          <div className="page-head flex items-center gap-16  lg:gap-0 justify-between lg:max-w-[1000px] lg:w-[80%]">
+          <div className="page-head flex items-center gap-16  lg:gap-0 justify-between lg:max-w-[1000px] lg:w-[80%] ">
             {/* first */}
             <div className="flex gap-2 items-center">
-              {icon &&<img src={icon} alt={`${title} icon`} />}
-              <h1 className={icon?"lg:text-[32px] text-[24px]  font-bold" : 'lg:text-[32px] text-[24px]  font-bold pl-12'}>{title}</h1>
+              {icon &&<img src={icon} alt={`${title} icon`} className="hidden lg:block" />}
+              <h1 className={icon?"lg:text-[32px] text-[24px]  font-bold" : 'lg:text-[32px] text-[24px]  font-bold pl-6'}>{title}</h1>
             </div>
             {/* second */}
             <div className="flex gap-4 items-center">
