@@ -3,8 +3,7 @@ import { useState } from "react";
 import { download, preference1 } from "../../assets";
 import SendDiscount from "../PopupModals/SendDiscount";
 // import AddCustomer from "../PopupModals/AddCustomer";
-import CustomAwaitTable from "../uicomps/customawaittable";
-import AddCustomer1 from "../PopupModals/AddCustomer1";
+import CustomAwaitTable from "../uicomps/customawaittable"
 
 const CustomerTable = ({ customers, isLoading, error }) => {
   console.log(customers);
@@ -243,16 +242,6 @@ const CustomerTable = ({ customers, isLoading, error }) => {
             </a>
           </li>
         </ol>
-      </div>
-
-      {/* Add Cutomer & Export CSV Button */}
-      <div className=" flex px-28 justify-end items-center mt-10 gap-24">
-        <AddCustomer1 transparent={true} />
-
-        {/* <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
-          <img src={download} alt="" />
-          Export CSV
-        </h1> */}
       </div>
     </>
   );

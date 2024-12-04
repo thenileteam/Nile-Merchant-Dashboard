@@ -20,7 +20,7 @@ const Sidebar = ({sidebarOpen, closeSidebar}) => {
             <img
               src={nilelogowhite}
               alt=""
-              className="w-[130px] flex"
+              className="w-[100px] flex"
             />
             <Links />
           </div>

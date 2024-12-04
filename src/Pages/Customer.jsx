@@ -14,10 +14,10 @@ import {
 } from "../datahooks/users/userhooks";
 import CustomAwaitCard from "../Components/uicomps/customawaitcard";
 import Navbar from "../Components/Navbar/Navbar";
-import Sidebar from '../Components/Sidebar/Sidebar'
+import Sidebar from "../Components/Sidebar/Sidebar";
 const Customer = () => {
   //show user profile image
-  const { user} = useFetchUser();
+  const { user } = useFetchUser();
   const {
     customers,
     isFetchingCustomers: isLoading,
@@ -32,8 +32,8 @@ const Customer = () => {
     <>
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
-         {/* Sidebar */}
-            <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar}/>
+          {/* Sidebar */}
+          <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
           {/* Navbar */}
           <div className="flex-grow lg:ml-56 overflow-x-hidden">
             <Navbar
@@ -72,7 +72,15 @@ const Customer = () => {
                 </div>
               </CustomAwaitCard>
             </div>
+            {/* Add Cutomer & Export CSV Button */}
+            <div className=" flex ml-32 items-center gap-24">
+              <AddCustomer1 transparent={true} />
 
+              {/* <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
+          <img src={download} alt="" />
+          Export CSV
+        </h1> */}
+            </div>
             {customers?.length === 0 && (
               <div className="px-24 mt-20">
                 <div>

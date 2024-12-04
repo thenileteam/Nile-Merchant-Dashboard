@@ -282,7 +282,7 @@ const Orders = () => {
               </div>
             </div>
 
-            <div className="max-w-[780px] mx-auto">
+            <div className="max-w-[760px] mx-auto">
                 <div className="flex items-center gap-16 ">
                   <button type="button"
                     onClick={() => setCreateOrderForm(true)}
