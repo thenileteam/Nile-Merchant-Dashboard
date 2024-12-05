@@ -22,6 +22,7 @@ import { useCreateNewOrder } from "../datahooks/orders/orderhooks";
 import { AiOutlineLoading } from "react-icons/ai";
 import Skeleton from "react-loading-skeleton";
 import Navbar from "../Components/Navbar/Navbar";
+import Sidebar from "../Components/Sidebar/Sidebar";
 import { toast } from "sonner";
 import CreateOrderForm from "../Components/createorderform";
 
@@ -162,9 +163,9 @@ const Orders = () => {
 
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
-              <div className="flex gap-28 justify-center">
+              <div className="flex flex-col lg:flex-row gap-20">
                 {isFetching ? (
-                  <div className=" grid grid-cols-3 gap-10">
+                  <div className=" grid grid-cols-3 gap-20">
                     {" "}
                     <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
                     <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}

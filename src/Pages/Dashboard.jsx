@@ -1,9 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom";
-import Links from "../Links";
 import {
   bitcoin,
-  nilelogowhite,
   notification,
   packagemoving,
   store,
@@ -18,6 +16,7 @@ import DashoardTabel from "../Components/Dashboard/DashoardTabel";
 import { useState } from "react";
 import { useFetchDashboardData,useFetchUser } from "../datahooks/users/userhooks";
 import Skeleton from "react-loading-skeleton";
+import Sidebar from '../Components/Sidebar/Sidebar'
 import Navbar from '../Components/Navbar/Navbar'
 const Dashboard = () => {
   //users image
@@ -37,29 +36,9 @@ const Dashboard = () => {
   return (
     <>
       <div className="bg-[#F5F5F5] pb-20 overflow-x-hidden">
-        <div className="flex">
-          {/* Overlay for small screens */}
-          {sidebarOpen && (
-            <div
-              className="fixed inset-0 bg-black opacity-50 lg:hidden"
-              onClick={closeSidebar}
-            ></div>
-          )}
-
+        <div className="flex  ">
           {/* Sidebar */}
-          <div
-            className={`fixed top-0 left-0 h-full w-[290px] z-20 bg-[#004324] border-2 text-white p-5 transition-transform transform ${
-              sidebarOpen ? "translate-x-0" : "-translate-x-full"
-            } lg:translate-x-0`}
-          >
-            <img
-              src={nilelogowhite}
-              alt=""
-              className="w-[130px] flex mx-auto"
-            />
-            <Links />
-          </div>
-
+          <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar}/>
           {/* Navbar */}
           <div className="flex-grow lg:ml-52">
           < Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} title={`Welcome ${username}`} profilePic={user && user.image ? user.image : ""} />
@@ -67,7 +46,7 @@ const Dashboard = () => {
 
             {/* Cards */}
             {isFetchingDashboardData ? (
-              <div className=" w-full mt-28 px-32  h-40 flex flex-row gap-28">
+              <div className=" w-full mt-28 px-32  h-40 flex lg:flex-row gap-20">
                 <div className=" h-[150px] bg-zinc-200  w-[300px]" />
                 <div className=" h-[150px] bg-zinc-200 w-[300px]" />
                 {/* <div className=" h-[150px] bg-zinc-200 w-[300px]" /> */}

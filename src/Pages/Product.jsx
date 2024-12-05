@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
-  nilelogowhite,
   notification,
   timer,
   packagemoving2,
@@ -16,6 +14,7 @@ import { useFetchProducts } from "../datahooks/products/productshooks";
 import Skeleton from "react-loading-skeleton";
 import { useFetchUser } from '../datahooks/users/userhooks'
 import Navbar from "../Components/Navbar/Navbar";
+import Sidebar from '../Components/Sidebar/Sidebar'
 const Product = () => {
   //get profile image from the user
   const { user } = useFetchUser();
@@ -28,43 +27,24 @@ const Product = () => {
     <>
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
-          {/* Overlay for small screens */}
-          {sidebarOpen && (
-            <div
-              className="fixed inset-0 bg-black opacity-50 lg:hidden"
-              onClick={closeSidebar}
-            ></div>
-          )}
-
-          {/* Sidebar */}
-          <div
-            className={`fixed top-0 left-0 h-full w-[290px] z-20 bg-[#004324] border-2 text-white p-5 transition-transform transform ${
-              sidebarOpen ? "translate-x-0" : "-translate-x-full"
-            } lg:translate-x-0`}
-          >
-            <img
-              src={nilelogowhite}
-              alt=""
-              className="w-[130px] flex mx-auto"
-            />
-            <Links />
-          </div>
+         {/* Sidebar */}
+         <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar}/>
 
           {/* Navbar */}
-          <div className="flex-grow lg:ml-64 overflow-x-hidden">
+          <div className="flex-grow lg:ml-56 overflow-x-hidden">
             <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={ setSidebarOpen} title='Products' icon={packagemoving} profilePic={user && user.image ? user.image : ""}/>
 
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
               {isFetching ? (
-                <div className=" grid grid-cols-3 gap-10">
+                <div className=" grid grid-cols-3 gap-20">
                   {" "}
                   <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
                   <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
                   {/* <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "} */}
                 </div>
               ) : (
-                <div className="flex gap-28">
+                <div className="flex gap-20">
                   <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={packagemoving} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">

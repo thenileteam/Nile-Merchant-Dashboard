@@ -1,7 +1,5 @@
 import { useState } from "react";
-import Links from "../Links";
 import {
-  nilelogowhite,
   userlist,
   usergroup,
   usercheck,
@@ -16,9 +14,10 @@ import {
 } from "../datahooks/users/userhooks";
 import CustomAwaitCard from "../Components/uicomps/customawaitcard";
 import Navbar from "../Components/Navbar/Navbar";
+import Sidebar from '../Components/Sidebar/Sidebar'
 const Customer = () => {
   //show user profile image
-  useFetchUser();
+  const { user} = useFetchUser();
   const {
     customers,
     isFetchingCustomers: isLoading,
@@ -33,30 +32,10 @@ const Customer = () => {
     <>
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
-          {/* Overlay for small screens */}
-          {sidebarOpen && (
-            <div
-              className="fixed inset-0 bg-black opacity-50 lg:hidden"
-              onClick={closeSidebar}
-            ></div>
-          )}
-
-          {/* Sidebar */}
-          <div
-            className={`fixed top-0 left-0 h-full w-[290px] z-20 bg-[#004324] border-2 text-white p-5 transition-transform transform ${
-              sidebarOpen ? "translate-x-0" : "-translate-x-full"
-            } lg:translate-x-0`}
-          >
-            <img
-              src={nilelogowhite}
-              alt="nile logo"
-              className="w-[130px] flex mx-auto"
-            />
-            <Links />
-          </div>
-
+         {/* Sidebar */}
+            <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar}/>
           {/* Navbar */}
-          <div className="flex-grow lg:ml-64 overflow-x-hidden">
+          <div className="flex-grow lg:ml-56 overflow-x-hidden">
             <Navbar
               sidebarOpen={sidebarOpen}
               setSidebarOpen={setSidebarOpen}
@@ -68,7 +47,7 @@ const Customer = () => {
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
               <CustomAwaitCard isLoading={isLoading} error={error}>
-                <div className="flex gap-28">
+                <div className="flex gap-20">
                   <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={usergroup} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">

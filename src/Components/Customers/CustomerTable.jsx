@@ -139,7 +139,7 @@ const CustomerTable = ({ customers, isLoading, error }) => {
                       {customer.order?.length || 0}
                     </td>
                     <td className="px-2 text-[14px] text-center">
-                      ${getTotalAmountSpent(customer.order)}
+                      &#8358;{getTotalAmountSpent(customer.order)}
                     </td>
                     <td className="px-2 text-[14px] text-center">{ customer.updatedAt.slice(0,10)}</td>
                     {/* <SendDiscount />

@@ -197,7 +197,7 @@ const SelectProductForm = ({ cart, setCart, setSelectProductForm }) => {
                         </span>
                       </div>
                       <span className="text-[14px] text-[#333333] font-bold leading-[18px]">
-                        ${item.price * item.quantity}
+                        &#8358;{item.price * item.quantity}
                       </span>
                     </div>
                   </li>
@@ -213,7 +213,7 @@ const SelectProductForm = ({ cart, setCart, setSelectProductForm }) => {
                   {cart.reduce((total, item) => total + item.quantity, 0)}
                 </span>
                 <span className="text-[14px] w-[59px] text-[#333333] font-bold leading-[18px]">
-                  ${total_cart_price}
+                  &#8358;{total_cart_price}
                 </span>
               </div>
             </div>

@@ -26,6 +26,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "react-loading-skeleton/dist/skeleton.css";
 import ProtectRoutes from "./Components/ProtectRoutes";
 import { Suspense } from "react";
+import ErrorCustomer from "./Components/ErrorElements/ErrorCustomer"
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -90,6 +91,7 @@ const App = () => {
               <Customer />
             </ProtectRoutes>
           ),
+          errorElement:<ErrorCustomer/>
         },
         {
           path: "/financial",
