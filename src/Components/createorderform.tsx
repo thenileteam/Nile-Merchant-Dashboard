@@ -27,14 +27,25 @@ const CreateOrderForm = ({
       <div className=" w-full h-full bg-black/30 absolute top-0 left-0 "></div>
       <div
         style={{
-          width: "80%",
+          width: "65%",
+          paddingLeft: "32px",
+          paddingRight: "32px",
+          paddingTop: "32px",
+          position: "relative",
+          zIndex: "50000",
+          backgroundColor: "white",
         }}
-        className=" rounded-[8px]  z-[400000000] mx-auto pt-[96px] pb-8 px-8 relative bg-white"
+        className=" rounded-[8px]  z-50 mx-auto pt-[96px] pb-8 px-8 relative "
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
         <img
+          style={{
+            position: "absolute",
+            right: "22px",
+            top: "10px",
+          }}
           onClick={() => setCreateOrderForm(false)}
           src="/public/Cancel.svg"
           className=" cursor-pointer size-8 absolute top-8 right-8"

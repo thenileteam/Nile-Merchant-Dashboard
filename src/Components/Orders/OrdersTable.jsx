@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { download, preference1 } from "../../assets";
+import { preference1 } from "../../assets";
 // import ShippingConfirm from "../PopupModals/ShippingConfirm";
 import { format, parseISO } from "date-fns";
 
@@ -8,7 +8,7 @@ const OrdersTable = ({ data }) => {
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedText, setSelectedText] = useState("");
-console.log(data);
+  // console.log(data);
 
   // 6fwrI8EmItlIXpT5
   const toggleFilterDropdown = () => {
@@ -110,7 +110,9 @@ console.log(data);
               <th className="p-2 text-[14px] text-center">Order ID</th>
               <th className="p-2 text-[14px] text-center">Product Name</th>
               <th className="p-2 text-[14px] text-center">Price</th>
-              <th className="p-2 text-[14px] text-center">Total P. With Shipping</th>
+              <th className="p-2 text-[14px] text-center">
+                Total P. With Shipping
+              </th>
               <th className="p-2 text-[14px] text-center">Order Date</th>
               <th className="p-2 text-[14px] text-center">Shipping Status</th>
               <th className="p-2 text-[14px]  text-center">Track Order</th>
@@ -154,13 +156,21 @@ console.log(data);
                     "Unassigned"}
                 </td>
                 <td className="px-2 text-center text-[13px]">{order.id}</td>
-                <td className="px-2  text-center text-[13px]">{order.items[0].name}</td>
-                <td className="px-2  text-center text-[13px]">{ order.items[0].price}</td>
-                <td className="px-2  text-center text-[13px]">&#8358;{order.totalAmount}</td>
+                <td className="px-2  text-center text-[13px]">
+                  {order.items[0].name}
+                </td>
+                <td className="px-2  text-center text-[13px]">
+                  {order.items[0].price}
+                </td>
+                <td className="px-2  text-center text-[13px]">
+                  &#8358;{order.totalAmount}
+                </td>
                 <td className="px-2 text-center text-[13px]">
                   {format(parseISO(order?.createdAt), "dd MMMM yyyy")}
                 </td>
-                <td className="px-2  text-center text-[13px]">{ order.status}</td>
+                <td className="px-2  text-center text-[13px]">
+                  {order.status}
+                </td>
                 <td className="px-2 text-center text-[13px]">N/A</td>
                 <td className="px-2 text-center text-[13px]">
                   {order.paymentStatus || "Pending"}

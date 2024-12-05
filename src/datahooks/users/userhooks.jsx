@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom"; // Make sure this is imported if using React Router
@@ -239,7 +240,7 @@ export const useFetchDashboardData = () => {
   const store = useMemo(() => {
     try {
       const storedStore = localStorage.getItem("store");
-      console.log("Raw stores from localStorage:", storedStore);
+      // console.log("Raw stores from localStorage:", storedStore);
       return storedStore ? JSON.parse(storedStore) : null;
     } catch (error) {
       console.error("Error parsing stores from localStorage", error);
@@ -349,13 +350,13 @@ export const useFetchDashboardData = () => {
     queryKey: ["dashboard", storeId],
     queryFn: fetchDashboardData,
     enabled: !!storeId,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 30 * 60 * 1000, // 30 minutes
+    staleTime: 30 * 60 * 1000, // 5 minutes
+    cacheTime: 60 * 60 * 1000, // 100 minutes
     // Optional: Add retry logic
     retry: 2,
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-    onSuccess: (data) => {
-      console.log("Dashboard Data Fetched Successfully:", data);
+    onSuccess: (_data) => {
+      // console.log("Dashboard Data Fetched Successfully:", data);
     },
     onError: (error) => {
       console.error("Error fetching dashboard data:", error);
@@ -372,8 +373,8 @@ export const useFetchDashboardData = () => {
 };
 export const useFetchOrders = () => {
   const store = JSON.parse(localStorage.getItem("store"));
-  console.log("storeId etch orders", store._id);
-  console.log(store);
+  // console.log("storeId etch orders", store._id);
+  // console.log(store);
   const { data, isFetching, isError } = useQuery({
     queryKey: ["orders"],
     queryFn: async () => {
@@ -397,7 +398,7 @@ export const useFetchOrders = () => {
 };
 export const useFetchStoreCustomers = () => {
   const store = JSON.parse(localStorage.getItem("store"));
-  console.log(store);
+  // console.log(store);
   const { data, isFetching, isError } = useQuery({
     queryKey: ["customers"],
     queryFn: async () => {

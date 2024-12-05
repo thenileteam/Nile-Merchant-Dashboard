@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  userlist,
-  usergroup,
-  usercheck,
-  userarrow,
-  userblock,
-} from "../assets";
+import { userlist, usergroup, usercheck, userblock } from "../assets";
 import CustomerTable from "../Components/Customers/CustomerTable";
 import AddCustomer1 from "../Components/PopupModals/AddCustomer1";
 import {
@@ -14,10 +8,10 @@ import {
 } from "../datahooks/users/userhooks";
 import CustomAwaitCard from "../Components/uicomps/customawaitcard";
 import Navbar from "../Components/Navbar/Navbar";
-import Sidebar from '../Components/Sidebar/Sidebar'
+import Sidebar from "../Components/Sidebar/Sidebar";
 const Customer = () => {
   //show user profile image
-  const { user} = useFetchUser();
+  const { user } = useFetchUser();
   const {
     customers,
     isFetchingCustomers: isLoading,
@@ -32,8 +26,8 @@ const Customer = () => {
     <>
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
-         {/* Sidebar */}
-            <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar}/>
+          {/* Sidebar */}
+          <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
           {/* Navbar */}
           <div className="flex-grow lg:ml-56 overflow-x-hidden">
             <Navbar

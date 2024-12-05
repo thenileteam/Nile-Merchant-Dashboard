@@ -7,7 +7,7 @@ import Skeleton from "react-loading-skeleton";
 
 const DashoardTabel = ({ isFetchingDashboardData, dashboardData }) => {
   // const { orders, product, salesData } = dashboardData;
-  console.log(dashboardData);
+  // console.log(dashboardData);
   return (
     <>
       <div className="px-24">
