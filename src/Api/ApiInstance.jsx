@@ -29,6 +29,7 @@ const isAuthenticatingPage = () => {
 // Function to refresh access token
 const refreshAccessToken = async () => {
   try {
+    // console.log("Trying to get kini");
     const id = localStorage.getItem("Id");
     const refreshToken =
       Cookies.get("refreshToken") || localStorage.getItem("refreshToken");
