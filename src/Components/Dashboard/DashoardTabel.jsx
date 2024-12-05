@@ -10,7 +10,7 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData }) => {
   // console.log(dashboardData);
   return (
     <>
-      <div className="px-24">
+      <div className="lg:px-24 px-2">
         {isFetchingDashboardData ? (
           <div className=" w-full mt-10 flex flex-col gap-5">
             <Skeleton className=" h-[50px] w-full min-w-52" />
@@ -18,8 +18,8 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData }) => {
             <Skeleton className=" h-[50px] w-full min-w-52" />
           </div>
         ) : (
-          <table className=" w-full border-separate border-spacing-y-5">
-            <thead>
+          <table className="w-full border-separate border-spacing-y-5  ">
+            <thead  >
               <tr className="text-left bg-[#EAF4E2] shadow-lg">
                 <th className=" py-3">Metrics</th>
                 <th className=" py-3 text-center">Today</th>
@@ -29,24 +29,24 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData }) => {
                 <th className=" py-3 text-center">Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="border-2 border-blue-500 ">
               {/* Row 1 */}
-              <tr className="bg-[#ffffff] shadow-md">
-                <td className="py-2 bg-[#EAF4E2]">Your Orders</td>
-                <td className=" py-2 text-center">
+              <tr className="bg-[#ffffff] shadow-md  ">
+                <td className="lg:p-3 p-2 bg-[#EAF4E2]">Your Orders</td>
+                <td className="lg:p-3 p-2 text-center">
                   {dashboardData?.orders?.today.length || 0}
                 </td>
-                <td className=" py-2 text-center">
+                <td className="lg:p-3 p-2 text-center">
                   {dashboardData?.orders?.week?.length}
                 </td>
-                <td className=" py-2 text-center">
+                <td className="lg:p-3 p-2 text-center">
                   {dashboardData?.orders?.month?.length}
                 </td>
-                <td className=" py-2 text-center">
+                <td className="lg:p-3 p-2 text-center">
                   {" "}
                   {dashboardData?.orders?.year?.length}
                 </td>
-                <td className="py-2 text-center bg-[#F5F5F5] text-[#8ED06C] font-extrabold">
+                <td className="lg:p-3 p-2 text-center bg-[#F5F5F5] text-[#8ED06C] font-extrabold">
                   <Link
                     to="/orders"
                     className="hover:border-[#8ED06C] border-[#f5f5f5] border-b-2 transition duration-300 underline-offset-4 decoration-[2px] inline-block hover:-translate-x-1"
@@ -58,23 +58,23 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData }) => {
 
               {/* Row 2 */}
               <tr className="bg-[#ffffff] shadow-md">
-                <td className="px-2 py-3 bg-[#EAF4E2]">
+                <td className="lg:p-3 p-2 bg-[#EAF4E2]">
                   Best-selling Products
                 </td>
-                <td className="px-2 py-3 text-center">
+                <td className="lg:p-3 p-2 text-center">
                   {" "}
                   {dashboardData?.product?.name}
                 </td>
-                <td className="px-2 py-3 text-center">
+                <td className="lg:p-3 p-2 text-center">
                   {dashboardData?.salesData?.quantitySoldThisWeek} Units
                 </td>
-                <td className="px-2 py-3 text-center">
+                <td className="lg:p-3 p-2 text-center">
                   #{dashboardData?.salesData?.totalSalesThisMonth}
                 </td>
-                <td className="px-2 py-3 text-center">
+                <td className="lg:p-3 p-2  text-center">
                   {dashboardData?.salesData?.totalUnitsSoldThisYear} Units
                 </td>
-                <td className="px-2 py-3 text-center bg-[#F5F5F5] text-[#8ED06C] font-extrabold">
+                <td className="lg:p-3 p-2  text-center bg-[#F5F5F5] text-[#8ED06C] font-extrabold">
                   <Link
                     to="/orders"
                     className="hover:border-[#8ED06C] border-[#f5f5f5] border-b-2 transition duration-300 underline-offset-4 decoration-[2px] inline-block hover:-translate-x-1"

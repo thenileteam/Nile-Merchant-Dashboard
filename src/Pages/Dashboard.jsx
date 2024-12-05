@@ -38,8 +38,8 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="bg-[#F5F5F5] pb-20 overflow-x-hidden">
-        <div className="flex  ">
+      <div className="bg-[#F5F5F5] pb-20 lg:overflow-x-hidden">
+        <div className="flex flex-col lg:flex-row">
           {/* Sidebar */}
           <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
           {/* Navbar */}
@@ -59,12 +59,12 @@ const Dashboard = () => {
                 {/* <div className=" h-[150px] bg-zinc-200 w-[300px]" /> */}
               </div>
             ) : (
-              <div className="p-6 mt-28 px-36">
-                <div className="flex gap-20">
-                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+              <div className="mt-20 lg:mt-28 mb-6 px-2 lg:px-32 lg:mx-w-[1128px]">
+                <div className="flex gap-8 lg:gap-20">
+                  <div className="bg-[#FFFFFF] shadow-sm w-[273px] p-5 rounded-md">
                     <img src={transaction} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                      {dashboardData?.salesData?.totalSales}
+                      {dashboardData?.salesData?.totalSales || 0}
                     </h1>
                     <p className="text-[#6E6E6E]">Revenue</p>
                   </div>
@@ -87,7 +87,7 @@ const Dashboard = () => {
             )}
 
             {/* Line */}
-            <div className="px-32">
+            <div className="lg:px-32 w-full px-2">
               <div className="border-2 border-white shadow-[0px_4px_10px_rgba(0,0,0,0.3)]"></div>
             </div>
 

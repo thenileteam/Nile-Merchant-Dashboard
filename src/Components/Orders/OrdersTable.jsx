@@ -102,7 +102,7 @@ const OrdersTable = ({ data }) => {
       )}
 
       {/* Tables */}
-      <div className="px-24">
+      <div className="lg:px-24 px-2">
         <table className="w-full border-separate border-spacing-y-5">
           <thead>
             <tr className="text-left bg-[#EAF4E2] shadow-lg">
