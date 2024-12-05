@@ -146,11 +146,11 @@ export const useSignUserUp = () => {
       const username = response.data.ownerName;
       toast("Auth Success✔");
       //store and set users name
+      // Navigate to dashboard
+      navigate("/");
       localStorage.setItem("ownerName", JSON.stringify(username));
       setUsername(username);
       // console.log(response.data);
-      // Navigate to dashboard
-      navigate("/");
     },
     onError: (err) => {
       toast.error(err.response.data.message || "An error occurred");

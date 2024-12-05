@@ -19,7 +19,7 @@ import Skeleton from "react-loading-skeleton";
 import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import { toast } from "sonner";
-import CreateOrderForm from "../Components/CreateorderForm";
+import CreateOrderForm from "../Components/createorderform";
 
 const Orders = () => {
   //user profile image
@@ -133,7 +133,7 @@ const Orders = () => {
           )}
 
           {/* Sidebar */}
-          <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar}/>
+          <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
 
           {/* Navbar */}
           <div className="flex-grow lg:ml-64 overflow-x-hidden">
@@ -184,15 +184,16 @@ const Orders = () => {
             </div>
 
             <div className="mx-auto">
-                <div className="flex items-center ml-32 gap-16">
-                  <button type="button"
-                    onClick={() => setCreateOrderForm(true)}
-                    className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px] text-white "
-                  >
-                    <img src="/public/plus.svg" alt="plus icon" />
-                    Create Order
-                  </button>
-                  {/* <button className=" flex bg-white rounded-[4px] border border-[#8ED06C] gap-1 p-[10.5px]  text-[#8ED06C] ">
+              <div className="flex items-center ml-32 gap-16">
+                <button
+                  type="button"
+                  onClick={() => setCreateOrderForm(true)}
+                  className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px] text-white "
+                >
+                  <img src="/public/plus.svg" alt="plus icon" />
+                  Create Order
+                </button>
+                {/* <button className=" flex bg-white rounded-[4px] border border-[#8ED06C] gap-1 p-[10.5px]  text-[#8ED06C] ">
             <div className="max-w-[650px] mx-auto mt-4">
               <div className="flex items-center gap-16 ">
                 <button
