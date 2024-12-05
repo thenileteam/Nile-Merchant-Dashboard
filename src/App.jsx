@@ -27,6 +27,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import ProtectRoutes from "./Components/ProtectRoutes";
 import { Suspense } from "react";
 import ErrorCustomer from "./Components/ErrorElements/ErrorCustomer"
+import Sidebar from "./Components/Sidebar/Sidebar";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -49,8 +50,8 @@ const App = () => {
       element: <ForgotPassword />,
     },
     {
-      //path: "/",
-      // element: <ProtectRoutes />,
+      // path: "/",
+      // element: <Sidebar />,
       children: [
         {
           path: "/dashboard",

@@ -43,7 +43,7 @@ const Dashboard = () => {
           {/* Sidebar */}
           <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
           {/* Navbar */}
-          <div className="flex-grow lg:ml-52">
+          <div className="flex-grow lg:ml-56">
             <Navbar
               sidebarOpen={sidebarOpen}
               setSidebarOpen={setSidebarOpen}
