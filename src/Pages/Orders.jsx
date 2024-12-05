@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Links from "../Links";
 import {
   image,
   nilelogowhite,
