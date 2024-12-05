@@ -124,19 +124,10 @@ const Orders = () => {
       )}
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
-          {/* Overlay for small screens */}
-          {sidebarOpen && (
-            <div
-              className="fixed inset-0 bg-black opacity-50 lg:hidden"
-              onClick={closeSidebar}
-            ></div>
-          )}
-
           {/* Sidebar */}
           <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar}/>
-
           {/* Navbar */}
-          <div className="flex-grow lg:ml-64 overflow-x-hidden">
+          <div className="flex-grow lg:ml-56 overflow-x-hidden">
             <Navbar
               sidebarOpen={sidebarOpen}
               setSidebarOpen={setSidebarOpen}
