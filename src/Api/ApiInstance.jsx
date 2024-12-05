@@ -120,10 +120,12 @@ ApiInstance.interceptors.response.use(
 
     // Check if we've already attempted to retry this request
     const currentAttempts = retryAttempts.get(originalRequest) || 0;
-
+    console.log(currentAttempts, error.response);
     // Check for unauthorized access and limit retries
     if (
-      (error.response?.status === 401 || error.response?.status === 403) &&
+      (error.response?.status === 401 ||
+        error.response?.status === 403 ||
+        error.response?.data.message === "Authorization failed.") &&
       currentAttempts < 1
     ) {
       // Increment retry attempts

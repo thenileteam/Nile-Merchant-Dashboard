@@ -22,6 +22,8 @@ import { useCreateNewOrder } from "../datahooks/orders/orderhooks";
 import { AiOutlineLoading } from "react-icons/ai";
 import Skeleton from "react-loading-skeleton";
 import Navbar from "../Components/Navbar/Navbar";
+import { toast } from "sonner";
+import CreateOrderForm from "../Components/createorderform";
 
 const Orders = () => {
   //user profile image
@@ -94,132 +96,21 @@ const Orders = () => {
   return (
     <>
       {createOrderForm && (
-        <div className=" w-full fixed z-40  justify-center items-center flex h-screen border-2 border-blue-500" onClick={() => setCreateOrderForm(false)}>
-          <div className=" w-full h-full bg-black/30 absolute top-0 left-0 "></div>
-          <div
-            className=" rounded-[8px] z-[400000000] mx-auto pt-[96px] pb-8 px-8 relative bg-white"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <img
-              onClick={() => setCreateOrderForm(false)}
-              src="/public/Cancel.svg"
-              className=" cursor-pointer size-8 absolute top-8 right-8"
-              alt=""
-            />
-            <div className=" flex flex-col gap-4">
-              <div className=" grid grid-cols-2 gap-16">
-                <div className=" flex flex-col gap-2">
-                  <label
-                    className=" font-black  text-[16px]  leading-5 "
-                    htmlFor="Customer Name"
-                  >
-                    Customer Name <span className="opacity-50">(Optional)</span>
-                  </label>
-                  <div
-                    onClick={() => setSelectCustomerForm(true)}
-                    className=" bg-[#F5F5F5] cursor-pointer flex items-center px-4 rounded-[4px]  border-[#8ED06C] border-[1px] h-[50px] placeholder:text-[#6E6E6E80]"
-                  >
-                    {selectedCustomer.length > 0
-                      ? selectedCustomer[0]?.name || selectedCustomer[0]?.email
-                      : "Customer Name"}
-                  </div>
-                </div>
-                <div className=" flex flex-col gap-2">
-                  <label
-                    className=" font-black  text-[16px]  leading-5 "
-                    htmlFor="Sales Channel"
-                  >
-                    Sales Channel
-                  </label>
-                  <div className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px]  placeholder:text-[#6E6E6E80]">
-                    <CustomSalesChannelDropdown
-                      setSalesChannel={setSalesChannel}
-                      salesChannel={salesChannel}
-                    />
-                    <img
-                      className=" absolute  top-1/2 -translate-y-1/2 right-4"
-                      src="/public/plus.svg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className=" grid grid-cols-2 gap-16">
-                <div className=" flex flex-col gap-2">
-                  <label
-                    className=" font-black  text-[16px]  leading-5 "
-                    htmlFor="Product Name"
-                  >
-                    Product Select
-                  </label>
-                  <div
-                    onClick={() => setSelectProductForm(true)}
-                    placeholder="Select Product"
-                    type="text"
-                    className="flex items-center  cursor-pointer bg-[#F5F5F5]  h-[50px] rounded-[4px]  border-[#8ED06C] border-[1px] px-4 placeholder:text-[#6E6E6E80]"
-                  >
-                    {cart.length > 0
-                      ? "Product In Cart , View"
-                      : "Select Product"}
-                  </div>
-                </div>
-                <div className=" flex flex-col gap-2">
-                  <label
-                    className=" font-black  text-[16px]  leading-5 "
-                    htmlFor="Sales Channel"
-                  >
-                    Payment Status
-                  </label>
-                  <div className=" bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px]  placeholder:text-[#6E6E6E80]">
-                    <CustomDropdown
-                      paymentStatus={paymentStatus}
-                      setPaymentStatus={setPaymentStatus}
-                    />
-                    <img
-                      className=" absolute  top-1/2 -translate-y-1/2 right-4"
-                      src="/public/plus.svg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className=" grid grid-cols-2 gap-16">
-                <div className=" flex flex-col gap-2">
-                  <label
-                    className=" font-black  text-[16px]  leading-5 "
-                    htmlFor="Order Date"
-                  >
-                    Order Date
-                  </label>
-                  <input
-                    onChange={(e) => handleDateChange(e)}
-                    placeholder="DD/MM/YY"
-                    type="date"
-                    className="bg-[#F5F5F5] rounded-[4px] border-[#8ED06C] border-[1px] h-[50px] px-4 placeholder:text-[#6E6E6E80]"
-                    max={new Date().toISOString().split("T")[0]}
-                  />
-                </div>
-              </div>
-            </div>
-            <button
-              disabled={isAddingOrder}
-              type="submit"
-              onClick={addOrder}
-              className=" flex bg-[#004324] justify-center items-center mx-auto mt-16 rounded-[4px] gap-1 p-[10.5px]  text-white "
-            >
-              {isAddingOrder ? (
-                <AiOutlineLoading className=" animate-spin transition-all" />
-              ) : (
-                <>
-                  <img src="/plus.svg" alt="Plus Icon" />
-                  <span>Create Order</span>
-                </>
-              )}
-            </button>
-          </div>
-        </div>
+        <CreateOrderForm
+          addOrder={addOrder}
+          isAddingOrder={isAddingOrder}
+          handleDateChange={handleDateChange}
+          cart={cart}
+          setPaymentStatus={setPaymentStatus}
+          paymentStatus={paymentStatus}
+          setSelectProductForm={setSelectProductForm}
+          salesChannel={salesChannel}
+          setSalesChannel={setSalesChannel}
+          selectedCustomer={selectedCustomer}
+          setSelectCustomerForm={setSelectCustomerForm}
+          setCreateOrderForm={setCreateOrderForm}
+          setSelectedCustomer={setSelectedCustomer}
+        />
       )}
       {selectCustomerForm && (
         <SelectCustomerform
@@ -261,7 +152,13 @@ const Orders = () => {
 
           {/* Navbar */}
           <div className="flex-grow lg:ml-64 overflow-x-hidden">
-            < Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} title='Orders' icon={trolley} profilePic={user && user.image ? user.image : ""}/>
+            <Navbar
+              sidebarOpen={sidebarOpen}
+              setSidebarOpen={setSidebarOpen}
+              title="Orders"
+              icon={trolley}
+              profilePic={user && user.image ? user.image : ""}
+            />
 
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
@@ -302,21 +199,20 @@ const Orders = () => {
             </div>
 
             <div className="max-w-[650px] mx-auto mt-4">
-               
-                <div className="flex items-center gap-16 ">
-                  <button
-                    onClick={() => setCreateOrderForm(true)}
-                    className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px]  text-white "
-                  >
-                    <img src="/public/plus.svg" alt="plus icon" />
-                    Create Order
-                  </button>
-                  {/* <button className=" flex bg-white rounded-[4px] border border-[#8ED06C] gap-1 p-[10.5px]  text-[#8ED06C] ">
+              <div className="flex items-center gap-16 ">
+                <button
+                  onClick={() => setCreateOrderForm(true)}
+                  className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px]  text-white "
+                >
+                  <img src="/public/plus.svg" alt="plus icon" />
+                  Create Order
+                </button>
+                {/* <button className=" flex bg-white rounded-[4px] border border-[#8ED06C] gap-1 p-[10.5px]  text-[#8ED06C] ">
                     <img src="/public/export.svg" alt="" />
                     Export CSV
                   </button> */}
-                </div>
-              
+              </div>
+
               {data && data.length === 0 && (
                 <>
                   <div>
@@ -334,7 +230,10 @@ const Orders = () => {
                   </div>
 
                   <div className="flex justify-center mt-3">
-                    <button type='button' className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md">
+                    <button
+                      type="button"
+                      className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md"
+                    >
                       Check Your Customers
                     </button>
                   </div>
