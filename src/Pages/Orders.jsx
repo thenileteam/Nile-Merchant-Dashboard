@@ -138,18 +138,7 @@ const Orders = () => {
           )}
 
           {/* Sidebar */}
-          <div
-            className={`fixed top-0 left-0 h-full w-[290px] z-20 bg-[#004324] border-2 text-white p-5 transition-transform transform ${
-              sidebarOpen ? "translate-x-0" : "-translate-x-full"
-            } lg:translate-x-0`}
-          >
-            <img
-              src={nilelogowhite}
-              alt=""
-              className="w-[130px] flex mx-auto"
-            />
-            <Links />
-          </div>
+          <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar}/>
 
           {/* Navbar */}
           <div className="flex-grow lg:ml-64 overflow-x-hidden">
