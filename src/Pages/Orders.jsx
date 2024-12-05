@@ -20,7 +20,6 @@ import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import { toast } from "sonner";
 import CreateOrderForm from "../Components/createorderform";
-import CreateOrderForm from "../Components/createorderform";
 
 const Orders = () => {
   //user profile image
