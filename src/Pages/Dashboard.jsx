@@ -14,35 +14,42 @@ import {
 } from "../assets";
 import DashoardTabel from "../Components/Dashboard/DashoardTabel";
 import { useState } from "react";
-import { useFetchDashboardData,useFetchUser } from "../datahooks/users/userhooks";
+import {
+  useFetchDashboardData,
+  useFetchUser,
+} from "../datahooks/users/userhooks";
 import Skeleton from "react-loading-skeleton";
-import Sidebar from '../Components/Sidebar/Sidebar'
-import Navbar from '../Components/Navbar/Navbar'
+import Sidebar from "../Components/Sidebar/Sidebar";
+import Navbar from "../Components/Navbar/Navbar";
 const Dashboard = () => {
   //users image
   const { user } = useFetchUser();
   const { dashboardData, isFetchingDashboardData, dashboardDataisError } =
     useFetchDashboardData();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  console.log(dashboardData, "dashboard data");
+  // console.log(dashboardData, "dashboard data");
   const closeSidebar = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
   //getting username from zustand store
-  const username =  user&&user.name?user.name.split(' ')[0].toUpperCase():'User';
-  console.log(username);
-   
+  const username =
+    user && user.name ? user.name.split(" ")[0].toUpperCase() : "User";
+  // console.log(username);
 
   return (
     <>
       <div className="bg-[#F5F5F5] pb-20 overflow-x-hidden">
         <div className="flex  ">
           {/* Sidebar */}
-          <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar}/>
+          <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
           {/* Navbar */}
           <div className="flex-grow lg:ml-52">
-          < Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} title={`Welcome ${username}`} profilePic={user && user.image ? user.image : ""} />
-            
+            <Navbar
+              sidebarOpen={sidebarOpen}
+              setSidebarOpen={setSidebarOpen}
+              title={`Welcome ${username}`}
+              profilePic={user && user.image ? user.image : ""}
+            />
 
             {/* Cards */}
             {isFetchingDashboardData ? (

@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { download, preference1 } from "../../assets";
-import SendDiscount from "../PopupModals/SendDiscount";
+import { preference1 } from "../../assets";
 // import AddCustomer from "../PopupModals/AddCustomer";
 import CustomAwaitTable from "../uicomps/customawaittable"
 
 const CustomerTable = ({ customers, isLoading, error }) => {
-  console.log(customers);
+  // console.log(customers);
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedText, setSelectedText] = useState("");
@@ -132,15 +131,21 @@ const CustomerTable = ({ customers, isLoading, error }) => {
                     <td className="py-2 text-[14px] text-center">
                       {customer.id.slice(0, 3)}
                     </td>
-                    <td className="py-2 text-[14px] text-center">{customer.name}</td>
-                    <td className="py-2 text-[14px] text-center">{customer.email}</td>
+                    <td className="py-2 text-[14px] text-center">
+                      {customer.name}
+                    </td>
+                    <td className="py-2 text-[14px] text-center">
+                      {customer.email}
+                    </td>
                     <td className="py-2 text-[14px] text-center">
                       {customer.order?.length || 0}
                     </td>
                     <td className="px-2 text-[14px] text-center">
                       &#8358;{getTotalAmountSpent(customer.order)}
                     </td>
-                    <td className="px-2 text-[14px] text-center">{ customer.updatedAt.slice(0,10)}</td>
+                    <td className="px-2 text-[14px] text-center">
+                      {customer.updatedAt.slice(0, 10)}
+                    </td>
                     {/* <SendDiscount />
                     <td className="px-2 py-3 text-center">
                       <input

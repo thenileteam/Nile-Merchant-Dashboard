@@ -95,15 +95,22 @@ const CustomSearchInput = ({ setSelectedCustomer, selectedCustomer }) => {
       {/* Input field */}
       <input
         value={input}
-        placeholder="Enter Customer Name"
+        placeholder={selectedCustomer[0]?.name || "Enter Customer Name"}
         type="text"
-        className="w-full bg-[#F5F5F5]  rounded-[4px]  border-[#8ED06C] border-[1px]  placeholder:text-[#6E6E6E80] h-full px-4 py-2  focus:outline-none focus:ring-2 focus:ring-blue-500"
-        // value={input}
+        className={`w-full bg-[#F5F5F5] rounded-[4px] border-[#8ED06C] border-[1px] placeholder:text-[#6E6E6E80] h-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+          selectedCustomer[0]?.name
+            ? "placeholder:text-black"
+            : "placeholder:text-[#6E6E6E80]"
+        }`} // value={input}
         onChange={(e) => setInput(e.target.value)} // Updates input state
       />
       <BiSearchAlt2
+        style={{
+          top: "50%",
+          transform: "translateY(-50%)",
+        }}
         size={20}
-        className=" absolute top-1/2 -translate-y-1/2 right-2"
+        className=" absolute top-1/2S -translate-y-1/2 right-2"
       />
       {/* Display filtered results */}
       {debouncedSearchTerm && (

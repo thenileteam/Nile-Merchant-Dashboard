@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  userlist,
-  usergroup,
-  usercheck,
-  userarrow,
-  userblock,
-} from "../assets";
+import { userlist, usergroup, usercheck, userblock } from "../assets";
 import CustomerTable from "../Components/Customers/CustomerTable";
 import AddCustomer1 from "../Components/PopupModals/AddCustomer1";
 import {
