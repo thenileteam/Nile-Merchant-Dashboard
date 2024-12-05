@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { AiOutlineLoading } from "react-icons/ai";
 import CustomDropdown from "./uicomps/customdropdown";
 import CustomSalesChannelDropdown from "./uicomps/customsaleschannel";
