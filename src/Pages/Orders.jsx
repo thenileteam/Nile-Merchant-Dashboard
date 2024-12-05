@@ -19,7 +19,7 @@ import Skeleton from "react-loading-skeleton";
 import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import { toast } from "sonner";
-import CreateOrderForm from "../Components/CreateorderForm";
+import CreateOrderForm from "../Components/createorderform";
 
 const Orders = () => {
   //user profile image
