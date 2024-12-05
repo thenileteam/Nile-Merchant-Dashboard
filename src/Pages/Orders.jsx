@@ -12,17 +12,14 @@ import {
 } from "../assets";
 import OrdersTable from "../Components/Orders/OrdersTable";
 import { useFetchOrders, useFetchUser } from "../datahooks/users/userhooks";
-import CustomDropdown from "../Components/uicomps/customdropdown";
-import CustomSalesChannelDropdown from "../Components/uicomps/customsaleschannel";
 import SelectCustomerform from "../Components/Orders/selectcustomerform";
 import SelectProductForm from "../Components/Orders/selectproductform";
 import { useCreateNewOrder } from "../datahooks/orders/orderhooks";
-import { AiOutlineLoading } from "react-icons/ai";
 import Skeleton from "react-loading-skeleton";
 import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import { toast } from "sonner";
-import CreateOrderForm from "../Components/createorderform";
+import CreateOrderForm from "../Components/CreateorderForm";
 
 const Orders = () => {
   //user profile image
