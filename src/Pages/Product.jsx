@@ -12,9 +12,9 @@ import ProductTable from "../Components/Products/ProductTable";
 import AddProduct1 from "../Components/PopupModals/AddProduct1";
 import { useFetchProducts } from "../datahooks/products/productshooks";
 import Skeleton from "react-loading-skeleton";
-import { useFetchUser } from '../datahooks/users/userhooks'
+import { useFetchUser } from "../datahooks/users/userhooks";
 import Navbar from "../Components/Navbar/Navbar";
-import Sidebar from '../Components/Sidebar/Sidebar'
+import Sidebar from "../Components/Sidebar/Sidebar";
 const Product = () => {
   //get profile image from the user
   const { user } = useFetchUser();
@@ -27,12 +27,18 @@ const Product = () => {
     <>
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
-         {/* Sidebar */}
-         <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar}/>
+          {/* Sidebar */}
+          <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
 
           {/* Navbar */}
           <div className="flex-grow lg:ml-56 overflow-x-hidden">
-            <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={ setSidebarOpen} title='Products' icon={packagemoving} profilePic={user && user.image ? user.image : ""}/>
+            <Navbar
+              sidebarOpen={sidebarOpen}
+              setSidebarOpen={setSidebarOpen}
+              title="Products"
+              icon={packagemoving}
+              profilePic={user && user.image ? user.image : ""}
+            />
 
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
@@ -69,7 +75,14 @@ const Product = () => {
                 </div>
               )}
             </div>
-
+            {/* Add Product & Export CSV Button */}
+            <div className=" flex ml-32 items-center gap-24">
+              <AddProduct1 />
+              {/* <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
+          <img src={download} alt="" />
+          Export CSV
+        </h1> */}
+            </div>
             {data && data.length === 0 && (
               <div className="px-24 mt-28">
                 <div>

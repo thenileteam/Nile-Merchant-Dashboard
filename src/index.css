@@ -25,6 +25,11 @@ body{
   scroll-behavior: smooth;
 }
 
+@layer component{
+  .transitions {
+    @apply transition-all delay-100 duration-200 ease-in;
+  }
+}
 .text-gradient {
   background: radial-gradient(
     64.18% 64.18% at 71.16% 35.69%,
@@ -78,6 +83,7 @@ body{
     #14101d 95.11%
   );
 }
+
 
 .bg-discount-gradient {
   background: linear-gradient(125.17deg, #272727 0%, #11101d 100%);

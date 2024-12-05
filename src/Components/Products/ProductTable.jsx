@@ -5,8 +5,7 @@ import { download, preference1 } from "../../assets";
 import EditProduct from "../PopupModals/EditProduct";
 import DeleteProduct from "../PopupModals/DeleteProduct";
 // import AddProduct from "../PopupModals/AddProduct";
-import Skeleton from "react-loading-skeleton";
-import AddProduct1 from "../PopupModals/AddProduct1";
+import Skeleton from "react-loading-skeleton"
 
 // code start
 const ProductTable = ({ data, isFetching, isError }) => {
@@ -292,14 +291,7 @@ const ProductTable = ({ data, isFetching, isError }) => {
         </ol>
       </div>
 
-      {/* Add Product & Export CSV Button */}
-      <div className=" flex px-28 justify-end items-center mt-10 gap-24">
-        <AddProduct1 />
-        {/* <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
-          <img src={download} alt="" />
-          Export CSV
-        </h1> */}
-      </div>
+       
     </>
   );
 };
