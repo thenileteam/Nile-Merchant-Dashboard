@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Links from "../Links";
 import {
   image,
   nilelogowhite,
@@ -14,17 +12,14 @@ import {
 } from "../assets";
 import OrdersTable from "../Components/Orders/OrdersTable";
 import { useFetchOrders, useFetchUser } from "../datahooks/users/userhooks";
-import CustomDropdown from "../Components/uicomps/customdropdown";
-import CustomSalesChannelDropdown from "../Components/uicomps/customsaleschannel";
 import SelectCustomerform from "../Components/Orders/selectcustomerform";
 import SelectProductForm from "../Components/Orders/selectproductform";
 import { useCreateNewOrder } from "../datahooks/orders/orderhooks";
-import { AiOutlineLoading } from "react-icons/ai";
 import Skeleton from "react-loading-skeleton";
 import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import { toast } from "sonner";
-import CreateOrderForm from "../Components/createorderform";
+import CreateOrderForm from "../Components/CreateorderForm";
 
 const Orders = () => {
   //user profile image
@@ -138,18 +133,7 @@ const Orders = () => {
           )}
 
           {/* Sidebar */}
-          <div
-            className={`fixed top-0 left-0 h-full w-[290px] z-20 bg-[#004324] border-2 text-white p-5 transition-transform transform ${
-              sidebarOpen ? "translate-x-0" : "-translate-x-full"
-            } lg:translate-x-0`}
-          >
-            <img
-              src={nilelogowhite}
-              alt=""
-              className="w-[130px] flex mx-auto"
-            />
-            <Links />
-          </div>
+          <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar}/>
 
           {/* Navbar */}
           <div className="flex-grow lg:ml-64 overflow-x-hidden">
@@ -199,6 +183,16 @@ const Orders = () => {
               </div>
             </div>
 
+            <div className="mx-auto">
+                <div className="flex items-center ml-32 gap-16">
+                  <button type="button"
+                    onClick={() => setCreateOrderForm(true)}
+                    className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px] text-white "
+                  >
+                    <img src="/public/plus.svg" alt="plus icon" />
+                    Create Order
+                  </button>
+                  {/* <button className=" flex bg-white rounded-[4px] border border-[#8ED06C] gap-1 p-[10.5px]  text-[#8ED06C] ">
             <div className="max-w-[650px] mx-auto mt-4">
               <div className="flex items-center gap-16 ">
                 <button

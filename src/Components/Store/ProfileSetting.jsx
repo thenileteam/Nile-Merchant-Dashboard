@@ -32,7 +32,6 @@ const ProfileSetting = () => {
       alert("Invalid file type. Please upload a JPG, PNG, SVG, or JPEG image.");
       return;
     }
-
     setImage(file);
   };
 
@@ -244,7 +243,7 @@ const ProfileSetting = () => {
           <h1 className="text-[#DC3545] font-bold">Log Out</h1>
         </button>
         {cancelMessage && (
-          <p className="text-xl text-center mt-4">{cancelMessage}</p>
+          <p className="text-xl text-center my-4 shadow-sm bg-pry2 transitions">{cancelMessage}</p>
         )}
       </div>
     </>
