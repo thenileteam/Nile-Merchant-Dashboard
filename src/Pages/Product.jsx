@@ -41,7 +41,7 @@ const Product = () => {
             />
 
             {/* Cards */}
-            <div className="p-6 mt-28 px-32">
+            <div className="mt-28 mb-6 px-32">
               {isFetching ? (
                 <div className=" grid grid-cols-3 gap-20">
                   {" "}
@@ -76,7 +76,7 @@ const Product = () => {
               )}
             </div>
             {/* Add Product & Export CSV Button */}
-            <div className=" flex ml-32 items-center gap-24">
+            <div className="flex ml-32 items-center gap-24">
               <AddProduct1 />
               {/* <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
           <img src={download} alt="" />
