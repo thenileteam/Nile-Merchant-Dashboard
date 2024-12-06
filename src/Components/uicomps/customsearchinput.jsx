@@ -138,14 +138,14 @@ const CustomSearchInput = ({ setSelectedCustomer, selectedCustomer }) => {
             <p className="text-gray-500">No customers related to name found.</p>
           )}
           <button
-            className=" bg-[#004324] rounded px-2 py-1 text-white"
+            className=" text-[#004324] mt-10  font-bold rounded px-2 py-1 "
             onClick={() =>
               showAddCustomerSec
                 ? setShowAddCustomerSec(false)
                 : setShowAddCustomerSec(true)
             }
           >
-            {showAddCustomerSec ? "Close Form" : "Create Customer"}
+            {showAddCustomerSec ? "Close Form" : "Create Customer?"}
           </button>
           {showAddCustomerSec && (
             <form className=" mt-3 p-3 relative bg-white z-[1000000] shadow-sm shadow-zinc-700 rounded-md">

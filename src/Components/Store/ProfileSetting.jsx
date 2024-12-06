@@ -1,4 +1,4 @@
-import { arrowleft, logout, notification, profileimage } from "../../assets";
+import { arrowleft, logout, profileimage } from "../../assets";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import UploadImage from "../UploadImage/UploadImage";
@@ -39,10 +39,10 @@ const ProfileSetting = () => {
     if (user) {
       setImage(user.image);
       setPhoneNumber(user.phoneNumber);
-      if (user.image !== image || user.phoneNumber !==phoneNumber) {
+      if (user.image !== image || user.phoneNumber !== phoneNumber) {
         setCancelMessage("Changes canceled!");
       } else {
-        setCancelMessage("You didn't make any new changes")
+        setCancelMessage("You didn't make any new changes");
       }
       // Set the timeout and store the ID
       const id = setTimeout(() => setCancelMessage(""), 3000);
@@ -205,7 +205,7 @@ const ProfileSetting = () => {
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   placeholder="0000000000000"
                   pattern="\d{11}"
-                  maxlength="11"
+                  maxLength="11"
                   title="Phone number must be exactly 11 digits"
                   className="mt-1 w-full sm:max-w-[450px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
@@ -243,7 +243,9 @@ const ProfileSetting = () => {
           <h1 className="text-[#DC3545] font-bold">Log Out</h1>
         </button>
         {cancelMessage && (
-          <p className="text-xl text-center my-4 shadow-sm bg-pry2 transitions">{cancelMessage}</p>
+          <p className="text-xl text-center my-4 shadow-sm bg-pry2 transitions">
+            {cancelMessage}
+          </p>
         )}
       </div>
     </>
