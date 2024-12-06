@@ -114,7 +114,7 @@ const CustomSearchInput = ({ setSelectedCustomer, selectedCustomer }) => {
       />
       {/* Display filtered results */}
       {debouncedSearchTerm && (
-        <div className=" bg-white border border-zinc-200 shadow shadow-zinc-200 p-2 absolute top-[110%] left-0 right-0 w-full h-fit">
+        <div className=" bg-white border border-zinc-200  shadow shadow-zinc-200 p-2 absolute top-[110%] left-0 right-0 w-full h-[300px] overflow-y-scroll">
           {filteredCustomers.length > 0 ? (
             <ul>
               {filteredCustomers.map((customer, index) => (

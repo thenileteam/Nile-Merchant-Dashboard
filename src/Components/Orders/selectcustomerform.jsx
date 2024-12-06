@@ -104,6 +104,7 @@ const SelectCustomerForm = ({
             <div className="flex mb-2 w-full justify-between items-center">
               <p>Select Customer</p>
               <div className="border h-[26px] bg-[#F5F5F5] border-[#8ED06C] rounded-[4px]">
+                {/* search input */}
                 <input
                   type="text"
                   className="bg-transparent text-[#6E6E6E80] leading-[18px] px-1 font-[700] text-[14px] outline-none w-full h-full"
@@ -167,7 +168,7 @@ const SelectCustomerForm = ({
         {showAddCustomerSec && (
           <form className=" mt-3 p-3 shadow-sm shadow-zinc-700 rounded-md">
             <h1 className=" mb-1">Customer Creation Form</h1>
-            <div className=" grid md:grid-cols-2 gap-3 place-items-center  grid-cols-1">
+            <div className=" grid md:grid-cols-2 gap-3 place-items-center grid-cols-1">
               <input
                 name="name"
                 className="bg-transparent border border-primary p-1 rounded-md text-[#6E6E6E80] leading-[18px] px-1 font-[700] text-[14px]  w-full h-full"
