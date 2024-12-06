@@ -39,7 +39,7 @@ const Customer = () => {
             />
 
             {/* Cards */}
-            <div className="p-6 mt-28 px-32">
+            <div className="mt-28 mb-6 px-32">
               <CustomAwaitCard isLoading={isLoading} error={error}>
                 <div className="flex gap-20">
                   <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">

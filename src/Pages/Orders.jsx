@@ -124,19 +124,11 @@ const Orders = () => {
       )}
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
-          {/* Overlay for small screens */}
-          {sidebarOpen && (
-            <div
-              className="fixed inset-0 bg-black opacity-50 lg:hidden"
-              onClick={closeSidebar}
-            ></div>
-          )}
-
           {/* Sidebar */}
           <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
 
           {/* Navbar */}
-          <div className="flex-grow lg:ml-64 overflow-x-hidden">
+          <div className="flex-grow lg:ml-56 lg:overflow-x-hidden">
             <Navbar
               sidebarOpen={sidebarOpen}
               setSidebarOpen={setSidebarOpen}
@@ -146,10 +138,10 @@ const Orders = () => {
             />
 
             {/* Cards */}
-            <div className="p-6 mt-28 px-32">
-              <div className="flex flex-col lg:flex-row gap-20">
+            <div className="mt-20 lg:mt-28 mb-6 px-2 lg:px-32 lg:mx-w-[1128px] max-w-full">
+              <div className="flex gap-8 lg:gap-20">
                 {isFetching ? (
-                  <div className=" grid grid-cols-3 gap-20">
+                  <div className="grid grid-cols-3 gap-20">
                     {" "}
                     <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
                     <Skeleton className=" w-[300px] h-[150px] rounded-sm" />{" "}
@@ -157,14 +149,14 @@ const Orders = () => {
                   </div>
                 ) : (
                   <>
-                    <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                    <div className="bg-[#FFFFFF] border-2 shadow-sm lg:w-[273px] p-5 rounded-md">
                       <img src={shoppingcart} alt="" />
                       <h1 className="text-[#333333] text-[22px] font-bold mt-1">
                         {data?.length || 0}
                       </h1>
                       <p className="text-[#6E6E6E]">Total Orders</p>
                     </div>
-                    <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+                    <div className="bg-[#FFFFFF] border-2 shadow-sm lg:w-[273px] p-5 rounded-md">
                       <img src={truck1} alt="" />
                       <h1 className="text-[#333333] text-[22px] font-bold mt-1">
                         0
