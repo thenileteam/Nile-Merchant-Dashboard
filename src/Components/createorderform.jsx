@@ -75,7 +75,7 @@ const CreateOrderForm = ({
                 className=" font-black  text-[16px]  leading-5 "
                 htmlFor="Sales Channel"
               >
-                Select Customer
+                Select Customer <span className="text-[#6e6e6e]">(Optional)</span> 
               </label>
               <CustomSearchInput
                 setSelectedCustomer={setSelectedCustomer}
