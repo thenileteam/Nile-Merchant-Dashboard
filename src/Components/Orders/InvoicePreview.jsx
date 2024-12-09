@@ -1,12 +1,12 @@
+/* eslint-disable react/prop-types */
 
 import "jspdf-autotable";
 
-const InvoicePreview = (pdfUrl,) => {
+const InvoicePreview = ({pdfUrl}) => {
 
   return (
-    <div>
-      <h1>Invoice Preview</h1>
- 
+    <div className=" w-full h-full">
+   
       {pdfUrl && (
         <div>
           <h2>Preview:</h2>

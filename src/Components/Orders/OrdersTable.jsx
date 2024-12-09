@@ -1,27 +1,60 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { preference1 } from "../../assets";
 // import ShippingConfirm from "../PopupModals/ShippingConfirm";
 import { format, parseISO } from "date-fns";
 import { FaEllipsisV } from "react-icons/fa";
 import { UseGenerateInvoiceGenerator } from "../../utils/generateInvoice";
 import { useFetchUser } from "../../datahooks/users/userhooks";
+import InvoicePreview from "./InvoicePreview";
+import { FaX } from "react-icons/fa6";
 
 const OrdersTable = ({ data }) => {
-  const [displayDropDown, setDisplayDropDown] = useState(false)
+  const [displayDropDown, setDisplayDropDown] = useState({
+    id: null,
+    active: false,
+  });
+  const [previewView, setPreviewView] = useState({
+    url: "",
+    display: false,
+  });
   const { user, isFetchingUser, isError } = useFetchUser();
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedText, setSelectedText] = useState("");
   // console.log(data);
- const handleInvoice = (order) => {
-   const  {url} = UseGenerateInvoiceGenerator(order,user)
-   console.log(url)
- }
-// const handleInvoice = (order) => {
-//   console.log(order)
-// }
+  const handleInvoice = (order) => {
+    const { url } = UseGenerateInvoiceGenerator(order, user);
+    console.log(url);
+    setPreviewView({
+      url,
+      display:true
+    })
+  };
+
+  const ellipsisRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        ellipsisRef.current &&
+        !ellipsisRef.current.contains(event.target)
+      ) {
+        setDisplayDropDown({
+          id:null,
+          active:false
+        }); // Close the list when clicking outside
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  // const handleInvoice = (order) => {
+  //   console.log(order)
+  // }
   // 6fwrI8EmItlIXpT5
   const toggleFilterDropdown = () => {
     setFilterDropdownOpen(!filterDropdownOpen);
@@ -40,6 +73,46 @@ const OrdersTable = ({ data }) => {
   };
   return (
     <>
+      {previewView.display && previewView.url && (
+        <div className=" fixed grid z-[3000000] place-items-center w-full h-screen left-0 right-0 bottom-0 top-0">
+          <div onClick={ () => {
+            //clear state of visibility et al
+            setPreviewView({
+              url:'',
+              display:false
+            })
+            setDisplayDropDown({
+              id:null,
+              active:false
+            })
+          }
+          
+          } className="absolute top-0 left-0 w-full bg-white bg-opacity-50  h-full blur-sm">
+
+            
+          </div>
+          <div onClick={ () => {
+            //clear state of visibility et al
+            setPreviewView({
+              url:'',
+              display:false
+            })
+            setDisplayDropDown({
+              id:null,
+              active:false
+            })
+          }
+          
+          }
+            
+            className=" absolute z-[3000001] top-4 right-6 bg-red-300 cursor-pointer size-10 rounded-full grid place-items-center">
+              <FaX className=" " size={15} color="white" />
+            </div>
+         <div onClick={(e) => e.stopPropagation()} className=" relative h-[86%] w-[80%]">
+            <InvoicePreview pdfUrl={previewView.url}/>
+          </div>
+        </div>
+      )}
       {/* Filter Dropdown Section */}
       <div className="flex items-center justify-end px-24  relative">
         <h1 className="text-[#333333] font-bold text-[16px]">Filter By :</h1>
@@ -115,7 +188,7 @@ const OrdersTable = ({ data }) => {
 
       {/* Tables */}
       <div className="lg:px-24 px-2">
-        <table className="w-full border-separate border-spacing-y-5">
+        <table className="w-full border-separate h-fit border-spacing-y-5">
           <thead>
             <tr className="text-left bg-[#EAF4E2] shadow-lg">
               <th className="p-2 text-[14px]">Customer Name</th>
@@ -161,7 +234,7 @@ const OrdersTable = ({ data }) => {
           </thead>
           <tbody>
             {data?.map((order) => (
-              <tr key={order._id} className="bg-[#ffffff] shadow-md">
+              <tr key={order._id} className="bg-[#ffffff] h-[60px] shadow-md">
                 <td className="px-2  bg-[#EAF4E2] text-[13px]">
                   {order?.customer?.name ||
                     order?.customer?.id.slice(0, 2) ||
@@ -189,18 +262,34 @@ const OrdersTable = ({ data }) => {
                 </td>
                 <td className=" relative">
                   <div className=" relative">
-                    <FaEllipsisV onClick={ () => setDisplayDropDown(!displayDropDown)} className=" cursor-pointer" />
-                    { displayDropDown && <div className=" absolute px-2 py-3 w-fit -translate-x-1/2 left-1/2 top-[140%] rounded-md bg-white shadow-zinc-200">
-                      <p onClick={ () => handleInvoice(order)} className=" hover:bg-zinc-200 py-2  cursor-pointer w-fit text-nowrap px-3">Preview Order Invoice</p>
-                    </div>}
+                    <FaEllipsisV
+                      onClick={() =>
+                        setDisplayDropDown({
+                          ...displayDropDown,
+                          id: order.id,
+                          active: !displayDropDown.active,
+                        })
+                      }
+                      ref={ellipsisRef} 
+                      className=" cursor-pointer"
+                    />
+                    {displayDropDown.id === order.id &&
+                      displayDropDown.active && (
+                        <div className=" absolute p-6 w-fit z-[1000000] shadow-lg shadow-zinc-300 right-full top-[140%] rounded-md bg-white ">
+                          <p
+                            onClick={() => handleInvoice(order)}
+                            className=" hover:bg-zinc-200 py-2  cursor-pointer w-fit text-nowrap px-3"
+                          >
+                            Preview Order Invoice
+                          </p>
+                        </div>
+                      )}
                   </div>
                 </td>
-             
               </tr>
             ))}
 
             {/* Row 1 */}
-
           </tbody>
         </table>
       </div>

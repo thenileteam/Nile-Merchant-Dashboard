@@ -124,7 +124,7 @@ const Orders = () => {
           setSelectProductForm={setSelectProductForm}
         />
       )}
-      <div className="bg-[#F5F5F5] pb-20">
+      <div className="bg-[#F5F5F5] overflow-y-hidden pb-20">
         <div className="flex">
           {/* Sidebar */}
           <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
