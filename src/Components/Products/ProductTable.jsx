@@ -1,120 +1,16 @@
 /* eslint-disable react/prop-types */
-
 import { useState } from "react";
 import { download, preference1 } from "../../assets";
 import EditProduct from "../PopupModals/EditProduct";
 import DeleteProduct from "../PopupModals/DeleteProduct";
 // import AddProduct from "../PopupModals/AddProduct";
-import Skeleton from "react-loading-skeleton"
+import Skeleton from "react-loading-skeleton";
 
 // code start
 const ProductTable = ({ data, isFetching, isError }) => {
-  const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
-  const [popupVisible, setPopupVisible] = useState(false);
-  const [selectedText, setSelectedText] = useState("");
-
-  const toggleFilterDropdown = () => {
-    setFilterDropdownOpen(!filterDropdownOpen);
-  };
-
-  const handleFilterClick = (text) => {
-    // Close the dropdown and show the popup with the selected text
-    setFilterDropdownOpen(false);
-    setSelectedText(text);
-    setPopupVisible(true);
-  };
-
-  const closePopup = () => {
-    setPopupVisible(false);
-    setSelectedText("");
-  };
+  
   return (
     <>
-      {/* Filter Dropdown Section */}
-      <div className="flex items-center justify-end px-24 relative">
-        <h1 className="text-[#333333] font-bold text-[16px]">Filter By :</h1>
-        <button
-          onClick={toggleFilterDropdown}
-          className="flex items-center focus:outline-none"
-        >
-          <img src={preference1} alt="Filter" className="cursor-pointer" />
-        </button>
-
-        {filterDropdownOpen && (
-          <div
-            className="absolute right-10 mt-2 w-[230px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none p-5"
-            style={{ top: "100%" }}
-          >
-            <div
-              className="py-1 space-y-3"
-              role="menu"
-              aria-orientation="vertical"
-              aria-labelledby="options-menu"
-            >
-              <h1
-                className="text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer"
-                onClick={() => handleFilterClick("Input Product Name")}
-              >
-                Product Name
-              </h1>
-              <h1
-                className="text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer"
-                onClick={() => handleFilterClick("Input Product ID")}
-              >
-                Product ID
-              </h1>
-              <h1
-                className="text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer"
-                onClick={() => handleFilterClick("Input Store Name")}
-              >
-                Store Name
-              </h1>
-              <h1
-                className="text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer"
-                onClick={() => handleFilterClick("Input Category")}
-              >
-                Category
-              </h1>
-              <h1
-                className="text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer"
-                onClick={() => handleFilterClick("Input Price")}
-              >
-                Price
-              </h1>
-              <h1
-                className="text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer"
-                onClick={() => handleFilterClick("DD/MM/YYR")}
-              >
-                Date
-              </h1>
-              <h1
-                className="text-[#6E6E6E] font-bold text-[16px] border-[#6E6E6E] border-2 p-2 rounded-lg cursor-pointer"
-                onClick={() => handleFilterClick("Input Stock Level")}
-              >
-                Stock Level
-              </h1>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Popup Component */}
-      {popupVisible && (
-        <div className="absolute right-10 w-[230px] p-4 bg-white shadow-lg rounded-md">
-          <input
-            type="text"
-            placeholder={selectedText}
-            className="mt-2 p-2 border rounded-md w-full"
-          />
-          <button
-            onClick={closePopup}
-            className="mt-4 text-white bg-[#004324] p-2 font-bold px-5 rounded-md justify-center mx-auto flex"
-          >
-            Enter
-          </button>
-        </div>
-      )}
-
       {/* Table */}
       <div className="px-24">
         {isFetching ? (
@@ -178,12 +74,16 @@ const ProductTable = ({ data, isFetching, isError }) => {
               {data?.map((product) => (
                 <tr key={product.id} className="bg-[#ffffff] shadow-md">
                   <td className="lg:p-3 px-2 text-center">{product.id}</td>
-                  <td className="lg:p-3 px-2 text-center capitalize">{product.name}</td>
+                  <td className="lg:p-3 px-2 text-center capitalize">
+                    {product.name}
+                  </td>
                   <td className="lg:p-3 px-2  text-center capitalize">
                     {product.category.name}
                   </td>
                   <td className="lg:p-3 px-2 text-center">{product.price}</td>
-                  <td className="lg:p-3 px-2  text-center">{product.unitsSold}</td>
+                  <td className="lg:p-3 px-2  text-center">
+                    {product.unitsSold}
+                  </td>
                   <td className="lg:p-3 px-2  text-center">{product.stock}</td>
                   <td className="lg:p-3 px-2 text-center flex items-center gap-2 justify-center ">
                     <EditProduct product={product} />
@@ -290,8 +190,6 @@ const ProductTable = ({ data, isFetching, isError }) => {
           </li>
         </ol>
       </div>
-
-       
     </>
   );
 };
