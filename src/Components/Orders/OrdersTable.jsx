@@ -1,15 +1,27 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { preference1 } from "../../assets";
 // import ShippingConfirm from "../PopupModals/ShippingConfirm";
 import { format, parseISO } from "date-fns";
+import { FaEllipsisV } from "react-icons/fa";
+import { UseGenerateInvoiceGenerator } from "../../utils/generateInvoice";
+import { useFetchUser } from "../../datahooks/users/userhooks";
 
 const OrdersTable = ({ data }) => {
+  const [displayDropDown, setDisplayDropDown] = useState(false)
+  const { user, isFetchingUser, isError } = useFetchUser();
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedText, setSelectedText] = useState("");
   // console.log(data);
-
+ const handleInvoice = (order) => {
+   const  {url} = UseGenerateInvoiceGenerator(order,user)
+   console.log(url)
+ }
+// const handleInvoice = (order) => {
+//   console.log(order)
+// }
   // 6fwrI8EmItlIXpT5
   const toggleFilterDropdown = () => {
     setFilterDropdownOpen(!filterDropdownOpen);
@@ -175,107 +187,20 @@ const OrdersTable = ({ data }) => {
                 <td className="px-2 text-center text-[13px]">
                   {order.paymentStatus || "Pending"}
                 </td>
-                {/* <td className="px-2  text-center">{ order.status}</td> */}
-                {/* <td className="px-2   text-center">
-                  <input
-                    type="checkbox"
-                    id="MarketingAccept"
-                    name="marketing_accept"
-                    className="size-5 rounded-md bg-white shadow-sm"
-                  />
-                </td> */}
+                <td className=" relative">
+                  <div className=" relative">
+                    <FaEllipsisV onClick={ () => setDisplayDropDown(!displayDropDown)} className=" cursor-pointer" />
+                    { displayDropDown && <div className=" absolute px-2 py-3 w-fit -translate-x-1/2 left-1/2 top-[140%] rounded-md bg-white shadow-zinc-200">
+                      <p onClick={ () => handleInvoice(order)} className=" hover:bg-zinc-200 py-2  cursor-pointer w-fit text-nowrap px-3">Preview Order Invoice</p>
+                    </div>}
+                  </div>
+                </td>
+             
               </tr>
             ))}
 
             {/* Row 1 */}
 
-            {/* Row 6 */}
-            {/* <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 bg-[#EAF4E2]">Jaddy</td>
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">57</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">05/11/2024</td>
-              <td className="px-2 py-3 text-center">Cancelled</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
-              <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center">Cancelled</td>
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>
-
-            {/* Row 7 */}
-            {/* <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 bg-[#EAF4E2]">Mary</td>
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">57</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">05/11/2024</td>
-              <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
-              <td className="px-2 py-3 text-center">Pending</td>
-              <ShippingConfirm />
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr> */}
-
-            {/* Row 8 */}
-            {/* <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 bg-[#EAF4E2]">Mary</td>
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">57</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">05/11/2024</td>
-              <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
-              <td className="px-2 py-3 text-center">Pending</td>
-              <ShippingConfirm />
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr> */}
-
-            {/* Row 9 */}
-            {/* <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 bg-[#EAF4E2]">Kelly</td>
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Lion's Den</td>
-              <td className="px-2 py-3 text-center">57</td>
-              <td className="px-2 py-3 text-center">$350</td>
-              <td className="px-2 py-3 text-center">05/11/2024</td>
-              <td className="px-2 py-3 text-center">Pending</td>
-              <td className="px-2 py-3 text-center text-[#8ED06C]">Track</td>
-              <td className="px-2 py-3 text-center">Pending</td>
-              <ShippingConfirm />
-              <td className="px-2 py-3 text-center">
-                <input
-                  type="checkbox"
-                  id="MarketingAccept"
-                  name="marketing_accept"
-                  className="size-5 rounded-md bg-white shadow-sm"
-                />
-              </td>
-            </tr>  */}
           </tbody>
         </table>
       </div>

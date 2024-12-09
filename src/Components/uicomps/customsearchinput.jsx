@@ -41,7 +41,7 @@ const CustomSearchInput = ({ setSelectedCustomer, selectedCustomer }) => {
     const { name, value } = event.target;
     setCustomerData((prevData) => ({ ...prevData, [name]: value }));
   };
-  console.log(filteredCustomers);
+  // console.log(filteredCustomers);
   // Debounce effect to delay updates to the search term
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -89,7 +89,7 @@ const CustomSearchInput = ({ setSelectedCustomer, selectedCustomer }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  console.log(selectedCustomer);
+  // console.log(selectedCustomer);
   return (
     <div ref={searchBoxRef} className="relative  h-[50px] w-full">
       {/* Input field */}

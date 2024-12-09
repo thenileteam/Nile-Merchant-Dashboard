@@ -46,13 +46,15 @@ const Orders = () => {
   };
   // console.log(data);
   const addOrder = async () => {
+    console.log('here')
     try {
-      const itemsFromLocalStorage = JSON.parse(
+          const itemsFromLocalStorage = JSON.parse(
         localStorage.getItem("orderItems")
       );
       const customerFromLocalStorage = JSON.parse(
         localStorage.getItem("customer")
       )?.[0];
+      const customer = selectedCustomer[0]
 
       if (!itemsFromLocalStorage || itemsFromLocalStorage.items.length === 0) {
         toast.success("Please add products to order");
@@ -72,12 +74,12 @@ const Orders = () => {
       const orderData = {
         totalAmount: itemsFromLocalStorage.totalAmount,
         items: newProducts,
-        phoneNumber: customerFromLocalStorage?.phoneNumber || null,
-        name: customerFromLocalStorage?.name || null,
-        email: customerFromLocalStorage?.email || null,
+        phoneNumber: customer?.phoneNumber || null,
+        name: customer?.name || null,
+        email: customer?.email || null,
         paymentStatus: paymentStatus,
         createdAt: createdAt,
-        customerId: customerFromLocalStorage?.id,
+        customerId: customer?.id,
         storeId: store._id,
         salesChannel,
       };
