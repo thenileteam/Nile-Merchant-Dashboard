@@ -187,7 +187,7 @@ const OrdersTable = ({ data }) => {
       )}
 
       {/* Tables */}
-      <div className="lg:px-24 px-2">
+      <div className="max-w-[800px] mx-auto">
         <table className="w-full border-separate h-fit border-spacing-y-5">
           <thead>
             <tr className="text-left bg-[#EAF4E2] shadow-lg">

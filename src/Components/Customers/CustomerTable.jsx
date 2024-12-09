@@ -105,17 +105,17 @@ const CustomerTable = ({ customers, isLoading, error }) => {
       )}
 
       {/* Tables */}
-      <div className="px-24">
+      <div className="max-w-[800px] mx-auto">
         <CustomAwaitTable isLoading={isLoading} error={error}>
           <table className=" w-full border-separate border-spacing-y-5">
             <thead>
               <tr className="text-left bg-[#EAF4E2] shadow-lg">
-                <th className="px-2 py-3 text-center">Customer ID</th>
-                <th className="px-2 py-3 text-center">Customer Name</th>
-                <th className="px-2 py-3 text-center">Email</th>
-                <th className="px-2 py-3 text-center">Total Orders</th>
-                <th className="px-2 py-3 text-center">Total Spend</th>
-                <th className="px-2 py-3 text-center">Last Purchase Date</th>
+                <th className="p-2  text-center">Customer ID</th>
+                <th className="p-2  text-center">Customer Name</th>
+                <th className="p-2  text-center">Email</th>
+                <th className="p-2  text-center">Total Orders</th>
+                <th className="p-2 text-center">Total Spend</th>
+                <th className="p-2   text-center">Last Purchase Date</th>
                 {/* <th className="px-2 py-3 text-center">Actions</th>
                 <th className="px-2 py-3 text-center">
                   Bulk Action
@@ -128,22 +128,22 @@ const CustomerTable = ({ customers, isLoading, error }) => {
               {customers &&
                 customers.map((customer) => (
                   <tr key={customer.id} className="bg-[#ffffff] shadow-md">
-                    <td className="py-2 text-[14px] text-center">
+                    <td className="p-2  text-center">
                       {customer.id.slice(0, 3)}
                     </td>
-                    <td className="py-2 text-[14px] text-center">
+                    <td className="p-2 text-center">
                       {customer.name}
                     </td>
-                    <td className="py-2 text-[14px] text-center">
+                    <td className="p-2  text-center">
                       {customer.email}
                     </td>
-                    <td className="py-2 text-[14px] text-center">
+                    <td className="p-2 text-center">
                       {customer.order?.length || 0}
                     </td>
-                    <td className="px-2 text-[14px] text-center">
+                    <td className="p-2 text-center">
                       &#8358;{getTotalAmountSpent(customer.order)}
                     </td>
-                    <td className="px-2 text-[14px] text-center">
+                    <td className="p-2 text-center">
                       {customer.updatedAt.slice(0, 10)}
                     </td>
                     {/* <SendDiscount />
