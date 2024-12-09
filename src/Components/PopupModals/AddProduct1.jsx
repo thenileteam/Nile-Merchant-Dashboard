@@ -181,7 +181,7 @@ const AddProduct1 = () => {
     <>
       {/* Button to trigger the popup */}
       <button onClick={togglePopup}>
-        <h1 className="flex font-bold gap-1 items-center border-[#004324] bg-[#004324] text-[#ffffff] duration-500 border-2 p-2 rounded-md">
+        <h1 className="flex font-bold gap-1 items-center border-[#004324] bg-[#004324] text-[#ffffff] duration-500 border-2 rounded-md w-[120px] p-2 h-[48px]">
           Add Product
         </h1>
       </button>

@@ -140,7 +140,7 @@ const Orders = () => {
             />
 
             {/* Cards */}
-            <div className="mt-20 lg:mt-28 mb-6 px-2 lg:px-32 lg:mx-w-[1128px] max-w-full">
+            <div className="mt-20 lg:mt-28 mb-6 px-2 lg:max-w-[800px]  lg:px-0 mx-auto max-w-full">
               <div className="flex gap-8 lg:gap-20">
                 {isFetching ? (
                   <div className="grid grid-cols-3 gap-20">
@@ -177,8 +177,8 @@ const Orders = () => {
               </div>
             </div>
 
-            <div className="mx-auto">
-              <div className="flex items-center ml-32 gap-16">
+            <div className="max-w-[800px] mx-auto ">
+              <div className="flex items-center">
                 <button
                   type="button"
                   onClick={() => setCreateOrderForm(true)}

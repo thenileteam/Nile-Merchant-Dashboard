@@ -15,14 +15,17 @@ import Skeleton from "react-loading-skeleton";
 import { useFetchUser } from "../datahooks/users/userhooks";
 import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
+import CategoryTable from "../Components/Products/CategoryTable";
 const Product = () => {
   //get profile image from the user
   const { user } = useFetchUser();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isActiveTab, setIsActiveTab] = useState(true)
   const { data, isFetching, isError } = useFetchProducts();
   const closeSidebar = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
+   
   return (
     <>
       <div className="bg-[#F5F5F5] pb-20">
@@ -41,7 +44,7 @@ const Product = () => {
             />
 
             {/* Cards */}
-            <div className="mt-28 mb-6 px-32">
+            <div className="mt-28 mb-6 max-w-[800px] mx-auto">
               {isFetching ? (
                 <div className=" grid grid-cols-3 gap-20">
                   {" "}
@@ -76,8 +79,13 @@ const Product = () => {
               )}
             </div>
             {/* Add Product & Export CSV Button */}
-            <div className="flex ml-32 items-center gap-24">
-              <AddProduct1 />
+            <div className="flex justify-between lg:max-w-[800px] mx-auto h-[48px]">
+              <div className="flex gap-1">
+                <button className={isActiveTab? 'bg-green text-white font-bold p-inherit block w-[100px] rounded-md':'w-[100px] rounded-md bg-white text-[#6e6e6e] font-bold' }onClick={()=>setIsActiveTab(true)}>Products</button>
+                <button className={isActiveTab?"w-[100px] rounded-md bg-white text-[#6e6e6e] font-bold":"bg-green text-white font-bold p-inherit block w-[100px] rounded-md"} onClick={()=>setIsActiveTab(false)}>Category</button>
+              </div>
+              { isActiveTab?<AddProduct1 />: <button className="bg-green text-white font-bold p-inherit block w-[120px] rounded-md ">Add Category</button>}
+               
               {/* <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
           <img src={download} alt="" />
           Export CSV
@@ -104,14 +112,16 @@ const Product = () => {
                 </div>
               </div>
             )}
-
-            <div>
-              <ProductTable
-                data={data}
-                isFetching={isFetching}
-                isError={isError}
-              />
-            </div>
+            {isActiveTab ?
+              <div>
+                <ProductTable
+                  data={data}
+                  isFetching={isFetching}
+                  isError={isError}
+                />
+              </div> : <CategoryTable data={data} />
+             
+            }
           </div>
         </div>
       </div>

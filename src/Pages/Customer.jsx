@@ -39,7 +39,7 @@ const Customer = () => {
             />
 
             {/* Cards */}
-            <div className="mt-28 mb-6 px-32">
+            <div className="mt-28 mb-6 max-w-[800px] mx-auto">
               <CustomAwaitCard isLoading={isLoading} error={error}>
                 <div className="flex gap-20">
                   <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
@@ -67,7 +67,7 @@ const Customer = () => {
               </CustomAwaitCard>
             </div>
             {/* Add Customer & Export CSV Button */}
-            <div className=" flex ml-32 items-center gap-24  ">
+            <div className=" flex max-w-[800px]  mx-auto items-center">
               <AddCustomer1 transparent={true} />
 
               {/* <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
