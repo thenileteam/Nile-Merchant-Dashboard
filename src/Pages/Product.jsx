@@ -16,12 +16,14 @@ import { useFetchUser } from "../datahooks/users/userhooks";
 import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import CategoryTable from "../Components/Products/CategoryTable";
+import AddCategory from '../Components/PopupModals/AddCategory'
 const Product = () => {
   //get profile image from the user
   const { user } = useFetchUser();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isActiveTab, setIsActiveTab] = useState(true)
   const { data, isFetching, isError } = useFetchProducts();
+  const [isCategoryOpen, setCategoryOpen] = useState(false)
   const closeSidebar = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
@@ -84,13 +86,14 @@ const Product = () => {
                 <button className={isActiveTab? 'bg-green text-white font-bold p-inherit block w-[100px] rounded-md':'w-[100px] rounded-md bg-white text-[#6e6e6e] font-bold' }onClick={()=>setIsActiveTab(true)}>Products</button>
                 <button className={isActiveTab?"w-[100px] rounded-md bg-white text-[#6e6e6e] font-bold":"bg-green text-white font-bold p-inherit block w-[100px] rounded-md"} onClick={()=>setIsActiveTab(false)}>Category</button>
               </div>
-              { isActiveTab?<AddProduct1 />: <button className="bg-green text-white font-bold p-inherit block w-[120px] rounded-md ">Add Category</button>}
+              { isActiveTab?<AddProduct1 />: <button className="bg-green text-white font-bold p-inherit block w-[120px] rounded-md " onClick={()=>setCategoryOpen(true)}>Add Category</button>}
                
               {/* <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
           <img src={download} alt="" />
           Export CSV
         </h1> */}
             </div>
+            
             {data && data.length === 0 && (
               <div className="px-24 mt-28">
                 <div>
@@ -122,6 +125,7 @@ const Product = () => {
               </div> : <CategoryTable data={data} />
              
             }
+            {isCategoryOpen && <AddCategory setCategoryOpen={ setCategoryOpen} />}
           </div>
         </div>
       </div>
