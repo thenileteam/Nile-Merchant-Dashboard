@@ -1,9 +1,6 @@
 import { useState } from "react";
-import Links from "../Links";
 import {
-  notification,
-  timer,
-  packagemoving2,
+ 
   deliveryview,
   packagemoving,
   packageoutofstock,
@@ -83,8 +80,8 @@ const Product = () => {
             {/* Add Product & Export CSV Button */}
             <div className="flex justify-between lg:max-w-[800px] mx-auto h-[48px]">
               <div className="flex gap-1">
-                <button className={isActiveTab? 'bg-green text-white font-bold p-inherit block w-[100px] rounded-md':'w-[100px] rounded-md bg-white text-[#6e6e6e] font-bold' }onClick={()=>setIsActiveTab(true)}>Products</button>
-                <button className={isActiveTab?"w-[100px] rounded-md bg-white text-[#6e6e6e] font-bold":"bg-green text-white font-bold p-inherit block w-[100px] rounded-md"} onClick={()=>setIsActiveTab(false)}>Category</button>
+                <button className={isActiveTab? 'bg-[#004324] text-white font-bold p-inherit block w-[100px] rounded-md':'w-[100px] rounded-md bg-white text-[#6e6e6e] font-bold' }onClick={()=>setIsActiveTab(true)}>Products</button>
+                <button className={isActiveTab?"w-[100px] rounded-md bg-white text-[#6e6e6e] font-bold":"bg-[#004324] text-white font-bold p-inherit block w-[100px] rounded-md"} onClick={()=>setIsActiveTab(false)}>Category</button>
               </div>
               { isActiveTab?<AddProduct1 />: <button className="bg-green text-white font-bold p-inherit block w-[120px] rounded-md " onClick={()=>setCategoryOpen(true)}>Add Category</button>}
                

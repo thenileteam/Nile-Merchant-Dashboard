@@ -56,7 +56,7 @@ const { email,phoneNumber,} = user
       body: itemsArray,
       startY: 80,
       theme: "grid",
-      headStyles: { fillColor: [75, 75, 192] },
+      headStyles: { fillColor: [142, 208, 108],},
     });
 
     // Subtotals
