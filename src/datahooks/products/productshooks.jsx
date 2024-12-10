@@ -7,7 +7,7 @@ import { toast } from "sonner";
 const store = JSON.parse(localStorage.getItem("store"));
 
 export const useFetchProducts = () => {
-  if (!store?._id) return { data: [], isFetching: false, isError: false };
+  if (!store) return { data: [], isFetching: false, isError: false };
 
   const { data, isFetching, isError, isLoading } = useQuery({
     queryKey: ["products", store?._id],
