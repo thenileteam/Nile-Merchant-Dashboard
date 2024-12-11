@@ -108,7 +108,7 @@ export const useCreateNewCategory = (onSuccessCallback) => {
   const queryClient = useQueryClient();
   const { mutate, isPending: isAddingCategory } = useMutation({
     mutationFn: (data) =>
-      ApiInstance.post(`/products/store/categories/${store?._id}`, data),
+      ApiInstance.post(`/products/product/store/categories/${store?._id}`, data),
     onSuccess: (response) => {
       console.log(response.data);
     // i did this so that name can now take categoryName's value from the form

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useCreateNewCategory } from "../../datahooks/products/productshooks";
 import { BiLoaderCircle } from "react-icons/bi";
