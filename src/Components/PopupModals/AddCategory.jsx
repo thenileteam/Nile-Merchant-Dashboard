@@ -11,7 +11,7 @@ const AddCategory = ({ setCategoryOpen, setNewCategory,}) => {
   
  // Form fields state
   const [categoryDetails, setCategoryDetails] = useState({
-    //i did this because i was getting an error of the inputs not being controlled at first(because they were undefined so do not change pls!)
+    //i did this because i was getting an error of the inputs not being controlled at first(because they were undefined due to the empty object so do not change pls!)
    categoryName: "",  
     categoryDescription: ""
  })
