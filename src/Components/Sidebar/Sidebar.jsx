@@ -1,14 +1,17 @@
 /* eslint-disable react/prop-types */
 import { nilelogowhite } from "../../assets";
 import Links from "../../Links";
-const Sidebar = ({ sidebarOpen, closeSidebar }) => {
+import { useUserStore } from "../../zustandStore";
+const Sidebar = () => {
+  
+const{sidebarOpen, setSidebarOpen} = useUserStore()
   return (
     <>
       {/* Overlay for small screens */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black opacity-50 lg:hidden"
-          onClick={closeSidebar}
+          onClick={()=>setSidebarOpen(false)}
         ></div>
       )}
 

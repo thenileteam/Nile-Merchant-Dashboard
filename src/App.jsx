@@ -27,7 +27,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import ProtectRoutes from "./Components/ProtectRoutes";
 import { Suspense } from "react";
 import ErrorCustomer from "./Components/ErrorElements/ErrorCustomer"
-
+import CategoryPage from "./Pages/CategoryPage";
 const App = () => {
   const queryClient = new QueryClient();
 
@@ -73,6 +73,14 @@ const App = () => {
           element: (
             <ProtectRoutes>
               <Product />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/categories",
+          element: (
+            <ProtectRoutes>
+              <CategoryPage />
             </ProtectRoutes>
           ),
         },

@@ -2,14 +2,14 @@ import { useState } from "react";
 import EditCategory from "../PopupModals/EditCategory";
 import DeleteCategory from "../PopupModals/DeleteCategory";
 import Skeleton from "react-loading-skeleton";
-import { useFetchCategories} from "../../datahooks/products/productshooks";
+import { useFetchCategories } from "../../datahooks/products/productshooks";
+import { Link } from "react-router-dom";
 const CategoryTable = ({newCategory}) => {
   const { categories, isFetchingCategories, isError } = useFetchCategories();
   //if there's no new array of categories use the former category else add the new category to the array and map over that one instead(i dont knw why its not working tho)
   const displayedCategories = newCategory ? [ ...categories, newCategory] : categories;
-  console.log(displayedCategories);
-  
   return (
+    <>
     <section className="mt-2 max-w-[800px] mx-auto">
       {isFetchingCategories ? (
         <div className="bg-[#ffffff] w-full shadow-md">
@@ -44,7 +44,7 @@ const CategoryTable = ({newCategory}) => {
                 <td className="bg-white p-2 text-[#6e6e6e] font-semibold  ">
                   {item?.products?.length||0}
                   <button className="text-lightGreen font-semibold capitalize">
-                    view
+                    <Link to='/categories'>View</Link>
                   </button>
                 </td>
                 <td className="bg-white p-2 flex text-[#6e6e6e]  items-center gap-1 font-semibold capitalize">
@@ -60,6 +60,8 @@ const CategoryTable = ({newCategory}) => {
         </table>
       }
     </section>
+      
+    </>
 
   );
 };

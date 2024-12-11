@@ -9,6 +9,7 @@ import {
 import CustomAwaitCard from "../Components/uicomps/customawaitcard";
 import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
+import { useUserStore } from "../zustandStore";
 const Customer = () => {
   //show user profile image
   const { user } = useFetchUser();
@@ -17,11 +18,8 @@ const Customer = () => {
     isFetchingCustomers: isLoading,
     isError: error,
   } = useFetchStoreCustomers();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const {sidebarOpen, setSidebarOpen, closeSidebar} = useUserStore();
 
-  const closeSidebar = () => {
-    if (sidebarOpen) setSidebarOpen(false);
-  };
   return (
     <>
       <div className="bg-[#F5F5F5] pb-20">

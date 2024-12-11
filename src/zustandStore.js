@@ -17,42 +17,12 @@ export const useUserStore = create((set) => ({
       },
     }))
   },
-  //state for form validation
-  formDetails: {},
-
-  // Set initial values for form details
-  setInitialFormDetails: (initialValues) =>
-    set(() => ({
-      formDetails: { ...initialValues },
-    })),
-  
-  //update form 
-  updateFormField: (field, value) =>
-    set((state) => ({
-      formDetails: {
-        ...state.formDetails,
-        [field]: value,
-      },
-    })),
-
-  //handle  validating form
-  validateForm: (requiredFields) => {
-    const { formDetails } = useStore.getState(); // Access state directly
-    const errors = [];
-
-    requiredFields.forEach((field) => {
-      if (!formDetails[field]?.trim()) {
-        errors.push(`Please provide ${field.replace("_", " ").toUpperCase()}`);
-      }
-    });
-
-    if (errors.length > 0) {
-      errors.forEach((error) => toast.error(error));
-      return false;
-    }
-
-    return true;
-  },
+  //state for sidebar
+  sidebarOpen: false,
+  setSidebarOpen: (isOpen) => set({ sidebarOpen: isOpen }),
+  closeSidebar: () => set({ sidebarOpen: false }),
+   
+   
   
 }));
 
