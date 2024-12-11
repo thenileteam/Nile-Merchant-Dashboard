@@ -20,7 +20,7 @@ import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import { toast } from "sonner";
 import CreateOrderForm from "../Components/createorderform";
-
+import {useUserStore }from '../zustandStore'
 const Orders = () => {
   //user profile image
   const { user } = useFetchUser();
@@ -28,11 +28,8 @@ const Orders = () => {
     setCreateOrderForm(false);
   });
   const store = JSON.parse(localStorage.getItem("store"));
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const{sidebarOpen, setSidebarOpen, closeSidebar} = useUserStore()
   const [createdAt, setCreatedAt] = useState(null);
-  const closeSidebar = () => {
-    if (sidebarOpen) setSidebarOpen(false);
-  };
   const [paymentStatus, setPaymentStatus] = useState("");
   const [salesChannel, setSalesChannel] = useState("");
   const { data, isError, isFetching } = useFetchOrders();

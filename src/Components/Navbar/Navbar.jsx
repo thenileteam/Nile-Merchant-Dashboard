@@ -1,7 +1,9 @@
 import { notification } from "../../assets";
 import ProfileImage from "../PlaceholderImage/PlaceholderImage";
 import { Link } from "react-router-dom";
-const Navbar = ({ setSidebarOpen, sidebarOpen, title, icon, profilePic }) => {
+import {useUserStore} from '../../zustandStore'
+const Navbar = ({ title, icon, profilePic }) => {
+  const{sidebarOpen, setSidebarOpen,} = useUserStore()
   return (
     <nav className="bg-[#EAF4E2] fixed top-0 shadow-md z-10 w-full py-2">
       <div className="container mx-auto lg:mx-0 lg:px-10 px-4">

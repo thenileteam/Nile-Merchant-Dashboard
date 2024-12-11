@@ -13,19 +13,15 @@ import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import CategoryTable from "../Components/Products/CategoryTable";
 import AddCategory from '../Components/PopupModals/AddCategory'
-
+import { useUserStore } from "../zustandStore";
 const Product = () => {
   const { user } = useFetchUser();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const{sidebarOpen, setSidebarOpen, closeSidebar} = useUserStore()
   const [isActiveTab, setIsActiveTab] = useState(true);
   const { data, isFetching, isError } = useFetchProducts();
   const [isCategoryOpen, setCategoryOpen] = useState(false);
   //category update
   const [newCategory, setNewCategory] = useState(null); 
-  const closeSidebar = () => {
-    setSidebarOpen(false);
-  };
-
   return (
     <div className="bg-[#F5F5F5] pb-20">
       <div className="flex">
