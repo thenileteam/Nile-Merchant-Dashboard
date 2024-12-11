@@ -9,13 +9,6 @@ import Skeleton from "react-loading-skeleton";
 // code start
 const ProductTable = ({ data, isFetching, isError }) => {
   console.log(data);
-  // const arrOfCategory = [...new Set(data?.map((item) => {
-  //   console.log(item.name);
-  //   console.log(typeof(data?.[0].category));
-  //   return item.name
-  // }))]
-  // console.log(arrOfCategory);
-  
   
   return (
     <>
@@ -93,7 +86,7 @@ const ProductTable = ({ data, isFetching, isError }) => {
                     {product.unitsSold}
                   </td>
                   <td className="lg:p-2 px-2  text-center">{product.stock}</td>
-                  <td className="lg:p-2 px-2 text-center flex items-center gap-2 justify-center ">
+                  <td className="lg:p-2 px-2 text-center flex items-center gap-1 justify-center ">
                     <EditProduct product={product} />
                     <DeleteProduct product={product} />
                   </td>
