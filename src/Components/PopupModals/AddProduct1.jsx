@@ -4,8 +4,8 @@ import { addsquare,addImage } from "../../assets";
 import { useCreateNewProduct } from "../../datahooks/products/productshooks";
 import { BiLoaderCircle } from "react-icons/bi";
 import { toast } from "sonner";
-import UploadImage from "../UploadImage/UploadImage";
-
+// import UploadImage from "../UploadImage/UploadImage";
+import {validateForm} from  '../../utils/formatdate'
 const AddProduct1 = () => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
     setIsPopupOpen(false); // close the popup after adding product
@@ -34,36 +34,10 @@ const AddProduct1 = () => {
     // packaging: "",
     handlingTime: "",
   });
-  const validateForm = () => {
-    const requiredFields = [
-      "name",
-      "price",
-      "stock",
-      "description",
-      "productColorName",
-      "categoryName",
-      // "packaging",
-    ];
-    const errors = [];
-
-    requiredFields.forEach((field) => {
-      if (!productDetails[field]) {
-        errors.push(`Please provide ${field.replace("_", " ").toUpperCase()}`);
-      }
-    });
-
-    if (errors.length > 0) {
-      errors.forEach((error) => toast.error(error));
-      return false;
-    }
-
-    return true;
-  };
   // Function to toggle the main popup visibility
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
   };
-
   // Function to show the confirmation popup and hide the main popup
   const showConfirmation = () => {
     setFadeOut(true); // Start fade-out animation for the main popup
@@ -79,10 +53,19 @@ const AddProduct1 = () => {
   };
 
   const handleAddProduct = () => {
+    const requiredFields = [
+      "name",
+      "price",
+      "stock",
+      "description",
+      "productColorName",
+      "categoryName",
+      // "packaging",
+    ];
     try {
-      console.log(validateForm());
+      // console.log(validateForm(re));
       if (!store) return;
-      if (!validateForm()) return;
+      if (!validateForm(requiredFields, productDetails)) return;
       const dataToBackend = {
         name: productDetails.name,
         storeId: store._id,
@@ -318,7 +301,7 @@ const AddProduct1 = () => {
                         </datalist>
                       </div>
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
-                        <img src={addsquare} alt="" />
+                        <img src={addsquare} alt="add product icon" />
                       </span>
                     </div>
                   </div>
@@ -437,7 +420,7 @@ const AddProduct1 = () => {
                       </div>
 
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
-                        <img src={addsquare} alt="" />
+                        <img src={addsquare} alt="add product icon" />
                       </span>
                     </div>
                   </div>

@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import axios from "axios";
 import { reload } from "../../assets";
 import { useAddCustomer } from "../../datahooks/users/userhooks";
 import { toast } from "sonner";

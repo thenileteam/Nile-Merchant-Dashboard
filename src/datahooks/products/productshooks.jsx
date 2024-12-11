@@ -102,3 +102,64 @@ export const useDeleteProduct = (onSuccessDelete) => {
     deleteProduct: mutate,
   };
 };
+
+// creating categories pls do not even look at it for now
+export const useCreateNewCategory = (onSuccessCallback) => {
+  const queryClient = useQueryClient();
+  const { mutate, isPending: isAddingCategory } = useMutation({
+    mutationFn: (data) =>
+      ApiInstance.post(`/products/store/categories/${store?._id}`, data),
+    onSuccess: (response) => {
+      console.log(response.data);
+    // i did this so that name can now take categoryName's value from the form
+      const transformedData = {
+        id: response.data._id,
+        name: response.data.categoryName,
+        description: response.data.categoryDescription || 'No Description', 
+        products: response.data.products || [],
+      };
+      toast.success("Category Added Successfully");
+      if (onSuccessCallback) onSuccessCallback(transformedData);
+      queryClient.invalidateQueries(["categories"]);
+    },
+    onError: (err) => {
+      toast.error(
+        err.response?.data?.message ||
+          "An error occurred while creating categories"
+      );
+    },
+  });
+
+  return {
+    addCategoryToBackend: mutate,
+    isAddingCategory,
+  };
+};
+
+// fetching categories
+export const useFetchCategories = () => {
+  const { data, isFetching, isError, isLoading } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      try {
+        const res = await ApiInstance.get(
+          `/products/store/categories/${store._id}`
+        );
+        return res.data?.responseObject || [];
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        throw error;
+      }
+    },
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    retry: 3,
+  });
+
+  return {
+    categories: data,
+    isFetchingCategories: isFetching,
+    isError,
+    isLoading,
+  };
+};
