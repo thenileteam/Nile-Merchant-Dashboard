@@ -3,10 +3,9 @@ import { useState } from "react";
 import { useCreateNewCategory } from "../../datahooks/products/productshooks";
 import { BiLoaderCircle } from "react-icons/bi";
 import { validateForm } from "../../utils/formatdate";
-const AddCategory = ({ setCategoryOpen, setNewCategory,}) => {
+const AddCategory = ({ setCategoryOpen}) => {
   const store = JSON.parse(localStorage.getItem("store"));
-  const { addCategoryToBackend, isAddingCategory } = useCreateNewCategory((newCategoryData) => {
-    setNewCategory(newCategoryData); 
+  const { addCategoryToBackend, isAddingCategory } = useCreateNewCategory(() => {
     setCategoryOpen(false);
   });
   
@@ -24,7 +23,6 @@ const AddCategory = ({ setCategoryOpen, setNewCategory,}) => {
     }));
   };
   const handleAddCategory = () => {
-    // Send the new category to the backend
     const requiredFields = ["categoryName", "categoryDescription"];
     try {
       //if store doesn't exist return

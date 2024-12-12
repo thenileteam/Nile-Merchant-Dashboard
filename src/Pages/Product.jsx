@@ -1,35 +1,28 @@
 import { useState } from "react";
-import {
-  deliveryview,
-  packagemoving,
-  packageoutofstock,
-} from "../assets";
+import { deliveryview, packagemoving, packageoutofstock } from "../assets";
 import ProductTable from "../Components/Products/ProductTable";
 import AddProduct1 from "../Components/PopupModals/AddProduct1";
-import {useFetchProducts } from "../datahooks/products/productshooks";
+import { useFetchProducts } from "../datahooks/products/productshooks";
 import Skeleton from "react-loading-skeleton";
 import { useFetchUser } from "../datahooks/users/userhooks";
 import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import CategoryTable from "../Components/Products/CategoryTable";
-import AddCategory from '../Components/PopupModals/AddCategory'
+import AddCategory from "../Components/PopupModals/AddCategory";
 import { useUserStore } from "../zustandStore";
 const Product = () => {
   const { user } = useFetchUser();
-  const{sidebarOpen, setSidebarOpen, closeSidebar} = useUserStore()
+  const { sidebarOpen, setSidebarOpen, closeSidebar } = useUserStore();
   const [isActiveTab, setIsActiveTab] = useState(true);
   const { data, isFetching, isError } = useFetchProducts();
   const [isCategoryOpen, setCategoryOpen] = useState(false);
   //category update
-  const [newCategory, setNewCategory] = useState(null); 
   return (
     <div className="bg-[#F5F5F5] pb-20">
       <div className="flex">
         <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
         <div className="flex-grow lg:ml-56 overflow-x-hidden">
           <Navbar
-            sidebarOpen={sidebarOpen}
-            setSidebarOpen={setSidebarOpen}
             title="Products"
             icon={packagemoving}
             profilePic={user && user.image ? user.image : ""}
@@ -86,9 +79,29 @@ const Product = () => {
               <AddProduct1 />
             ) : (
               <button
-                className="bg-green text-white font-bold p-inherit block w-[120px] rounded-md"
+                className="bg-green text-white font-bold p-inherit flex items-center w-[150px] rounded-md px-2"
                 onClick={() => setCategoryOpen(true)}
               >
+                <svg
+                  width="25"
+                  height="24"
+                  viewBox="0 0 25 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12.5 8V16M16.5 12H8.5"
+                    stroke="currentcolor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M3 12C3 7.52166 3 5.28249 4.39124 3.89124C5.78249 2.5 8.02166 2.5 12.5 2.5C16.9783 2.5 19.2175 2.5 20.6088 3.89124C22 5.28249 22 7.52166 22 12C22 16.4783 22 18.7175 20.6088 20.1088C19.2175 21.5 16.9783 21.5 12.5 21.5C8.02166 21.5 5.78249 21.5 4.39124 20.1088C3 18.7175 3 16.4783 3 12Z"
+                    stroke="currentcolor"
+                    strokeWidth="1.5"
+                  />
+                </svg>
                 Add Category
               </button>
             )}
@@ -121,16 +134,9 @@ const Product = () => {
               isError={isError}
             />
           ) : (
-            <CategoryTable newCategory={newCategory}
-             
-            />
+            <CategoryTable />
           )}
-          {isCategoryOpen && (
-            <AddCategory
-              setCategoryOpen={setCategoryOpen}
-              setNewCategory={setNewCategory}
-            />
-          )}
+          {isCategoryOpen && <AddCategory setCategoryOpen={setCategoryOpen} />}
         </div>
       </div>
     </div>
