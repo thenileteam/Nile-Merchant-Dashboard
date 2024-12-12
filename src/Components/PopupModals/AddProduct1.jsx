@@ -2,10 +2,14 @@
 import { useState } from "react";
 import { addsquare,addImage } from "../../assets";
 import { useCreateNewProduct, useFetchCategories } from "../../datahooks/products/productshooks";
+import { addsquare, addImage } from "../../assets";
+import { useCreateNewProduct } from "../../datahooks/products/productshooks";
 import { BiLoaderCircle } from "react-icons/bi";
 // import UploadImage from "../UploadImage/UploadImage";
 import { validateForm } from '../../utils/formatdate'
 import { FaSearch } from 'react-icons/fa'
+import { validateForm } from "../../utils/formatdate";
+import CustomProductSizeSelector from "../Products/CustomProductSizeSelector";
 const AddProduct1 = () => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
     setIsPopupOpen(false); // close the popup after adding product
@@ -21,6 +25,8 @@ const AddProduct1 = () => {
 
   // Form fields state
   const [productDetails, setProductDetails] = useState({
+    size: "",
+    unit: "",
     categoryName: "",
     name: "",
     storeId: "",
@@ -53,7 +59,7 @@ const AddProduct1 = () => {
   const toggleConfirmation = () => {
     setIsConfirmationOpen(false);
   };
-
+  // console.log(productDetails.size)
   const handleAddProduct = () => {
     const requiredFields = [
       "name",
@@ -65,6 +71,13 @@ const AddProduct1 = () => {
       // "packaging",
     ];
     try {
+      if (productDetails.size && !productDetails.unit) {
+        toast.error("Size Measurement must be accompanied by a unit");
+        return;
+      } else if (!productDetails.size && productDetails.unit) {
+        toast.error("Unit must be accompanied by a size measurement");
+        return;
+      }
       // console.log(validateForm(re));
       if (!store) return;
       if (!validateForm(requiredFields, productDetails)) return;
@@ -87,9 +100,10 @@ const AddProduct1 = () => {
         handlingTime: productDetails.handlingTime,
         stock: productDetails.stock,
         productStatus: "AVAILABLE",
-        productSizes: productDetails.quantitySizes,
+        quantitySizes: `${productDetails.size} ${productDetails.unit}`,
       };
       // console.log(dataToBackend);
+      // return;
       addProductToBackend(dataToBackend);
     } catch (error) {
       console.error("Error adding product:", error);
@@ -172,8 +186,8 @@ const AddProduct1 = () => {
       </button>
 
       {isPopupOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"   >
-          <div className="bg-white p-10 rounded-lg shadow-lg max-w-3xl w-full relative" >
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-10 rounded-lg shadow-lg max-w-3xl w-full relative">
             {/* Cancel Button in the top-right corner */}
             <button
               className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"
@@ -282,36 +296,10 @@ const AddProduct1 = () => {
                   </div>
 
                   <div>
-                    <div className="relative">
-                      <label
-                        htmlFor="size"
-                        className="block text-[16px] font-bold text-[#333333]"
-                      >
-                        Product Size
-                      </label>
-                      <div className="flex flex-col w-full">
-                        <input
-                          list="size-options" // This connects to the datalist below
-                          name="quantitySizes"
-                          id="size"
-                          value={productDetails.quantitySizes}
-                          onChange={handleInputChange}
-                          className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
-                          placeholder="Select or enter a size"
-                        />
-                        <datalist id="size-options">
-                          <option value="XL" />
-                          <option value="XXL" />
-                          <option value="LG" />
-                          <option value="SM" />
-                          <option value="XS" />
-                          <option value="XXS" />
-                        </datalist>
-                      </div>
-                      <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
-                        <img src={addsquare} alt="add product icon" />
-                      </span>
-                    </div>
+                    <CustomProductSizeSelector
+                      productDetails={productDetails}
+                      setProductDetails={setProductDetails}
+                    />
                   </div>
 
                   {/* <div className="mb-4">
@@ -408,8 +396,8 @@ const AddProduct1 = () => {
                       >
                         Product Color
                       </label>
-                       {/* dropdown and manual input fields */}
-                       <div className="flex flex-col w-full">
+                      {/* dropdown and manual input fields */}
+                      <div className="flex flex-col w-full">
                         <input
                           list="color-options" // Links to the datalist below
                           name="productColorName"

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { addsquare } from "../../assets";
+import CustomProductSizeSelector from "../Products/CustomProductSizeSelector";
 
 const AddProduct = () => {
   // State to control the popup visibility and animation
@@ -235,7 +236,9 @@ const AddProduct = () => {
                       >
                         Product Size
                       </label>
-                      <div className="flex flex-col w-full">
+                      
+                  <CustomProductSizeSelector/>
+                      {/* <div className="flex flex-col w-full">
                         <input
                           list="size-options" // This connects to the datalist below
                           name="quantitySizes"
@@ -253,7 +256,7 @@ const AddProduct = () => {
                           <option value="XS" />
                           <option value="XXS" />
                         </datalist>
-                      </div>
+                      </div> */}
                       <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
                         <img src={addsquare} alt="" />
                       </span>
