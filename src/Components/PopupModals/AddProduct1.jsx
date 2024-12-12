@@ -1,14 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import { addsquare,addImage } from "../../assets";
 import { useCreateNewProduct, useFetchCategories } from "../../datahooks/products/productshooks";
 import { addsquare, addImage } from "../../assets";
-import { useCreateNewProduct } from "../../datahooks/products/productshooks";
 import { BiLoaderCircle } from "react-icons/bi";
 // import UploadImage from "../UploadImage/UploadImage";
 import { validateForm } from '../../utils/formatdate'
 import { FaSearch } from 'react-icons/fa'
-import { validateForm } from "../../utils/formatdate";
 import CustomProductSizeSelector from "../Products/CustomProductSizeSelector";
 const AddProduct1 = () => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
@@ -180,7 +177,28 @@ const AddProduct1 = () => {
     <>
       {/* Button to trigger the popup */}
       <button onClick={togglePopup}>
-        <h1 className="flex font-bold gap-1 items-center border-[#004324] bg-[#004324] text-[#ffffff] duration-500 border-2 rounded-md w-[120px] p-2 h-[48px]">
+        
+        <h1 className="flex font-bold gap-1 items-center border-[#004324] bg-[#004324] text-[#ffffff] duration-500 border-2 rounded-md w-[150px] p-2 h-[48px]">
+        <svg
+            width="25"
+            height="24"
+            viewBox="0 0 25 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12.5 8V16M16.5 12H8.5"
+              stroke="currentcolor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M3 12C3 7.52166 3 5.28249 4.39124 3.89124C5.78249 2.5 8.02166 2.5 12.5 2.5C16.9783 2.5 19.2175 2.5 20.6088 3.89124C22 5.28249 22 7.52166 22 12C22 16.4783 22 18.7175 20.6088 20.1088C19.2175 21.5 16.9783 21.5 12.5 21.5C8.02166 21.5 5.78249 21.5 4.39124 20.1088C3 18.7175 3 16.4783 3 12Z"
+              stroke="currentcolor"
+              strokeWidth="1.5"
+            />
+          </svg>
           Add Product
         </h1>
       </button>
@@ -220,7 +238,7 @@ const AddProduct1 = () => {
                       >
                         Product Category
                       </label>
-                         <FaSearch className="absolute top-[37px] right-2 text-[#6e6e6e]"/>
+                         <FaSearch className="absolute top-[37px] right-3 text-[#6e6e6e] bg-zinc-100 w-4 h-5"/>
                       <input
                         id="category"
                         name="categoryName"
