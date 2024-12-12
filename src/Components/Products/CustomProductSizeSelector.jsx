@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsPlus } from "react-icons/bs";
 import { toast } from "sonner";
 
 const CustomProductSizeSelector = ({setProductDetails, productDetails}) => {
+  const modalRef = useRef(null);
+  const createSizeTabRef = useRef(null); 
   const [size, setSize] = useState("");
   const [unit, setUnit] = useState("");
   const [openSelect, setOpenSelect] = useState(false);
@@ -81,6 +83,27 @@ const CustomProductSizeSelector = ({setProductDetails, productDetails}) => {
       value: e.target.value,
     });
   };
+  useEffect(() => {
+    // Function to close modals when clicking outside
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setOpenSelect(false);  // Close the select modal
+      }
+
+      if (createSizeTabRef.current && !createSizeTabRef.current.contains(event.target)) {
+        SetOpenCreateSizeTab(false); // Close the create size tab modal
+      }
+    };
+
+    // Add event listener on component mount
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Clean up event listener on component unmount
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="flex flex-col gap-3 ">
       <p>Enter Product Size and SI Unit</p>
@@ -106,12 +129,10 @@ const CustomProductSizeSelector = ({setProductDetails, productDetails}) => {
           />
           {openSelect && (
             <div
-              //   onClick={(e) => {
-              //     // e.stopPropagation();
-              // overflow-y-scroll h-[150px] }}
-              className="flex z-[100] w-fit py-5  bg-white  absolute rounded-lg top-[105%]   left-0 right-0  flex-col  divide-y-2 divide-zinc-100"
+            ref={modalRef}
+              className="flex  z-[100] w-fit py-5  bg-white  absolute rounded-lg top-[105%] border-zinc-100 border  left-0 right-0 h-fit  flex-col  divide-y-2 divide-zinc-100"
             >
-              <div className="max-h-[150px] overflow-y-auto">
+              <div className=" max-h-[150px] overflow-y-auto">
                 {sizes.map((size) => (
                   <>
                     <div
@@ -138,7 +159,8 @@ const CustomProductSizeSelector = ({setProductDetails, productDetails}) => {
                   Create New Si Unit{" "}
                 </button>
                 {openCreateSizeTab && (
-                  <div onClick={(e) => e.stopPropagation()} className=" gap-3 flex-col absolute bg-white border-zinc-100 shadow shadow-zinc-200 p-2 border flex items-center space-x-3 pl-2 left-[110%]  top-[-200%] ">
+                  <div   ref={createSizeTabRef} 
+                  onClick={(e) => e.stopPropagation()} className=" gap-3 flex-col absolute bg-white border-zinc-100 shadow shadow-zinc-200 p-2 border flex items-center space-x-3 pl-2 left-[110%]  top-[-200%] ">
                     <div>
                       <input
                         type="text"
