@@ -76,14 +76,6 @@ const App = () => {
             </ProtectRoutes>
           ),
         },
-        // {
-        //   path: "/categories",
-        //   element: (
-        //     <ProtectRoutes>
-        //       <CategoryPage />
-        //     </ProtectRoutes>
-        //   ),
-        // },
         {
           path: "/categories/:id",
           element: (
