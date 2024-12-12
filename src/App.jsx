@@ -76,8 +76,16 @@ const App = () => {
             </ProtectRoutes>
           ),
         },
+        // {
+        //   path: "/categories",
+        //   element: (
+        //     <ProtectRoutes>
+        //       <CategoryPage />
+        //     </ProtectRoutes>
+        //   ),
+        // },
         {
-          path: "/categories",
+          path: "/categories/:id",
           element: (
             <ProtectRoutes>
               <CategoryPage />

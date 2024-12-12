@@ -1,15 +1,17 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { addsquare,addImage } from "../../assets";
-import { useCreateNewProduct } from "../../datahooks/products/productshooks";
+import { useCreateNewProduct, useFetchCategories } from "../../datahooks/products/productshooks";
 import { BiLoaderCircle } from "react-icons/bi";
-import { toast } from "sonner";
 // import UploadImage from "../UploadImage/UploadImage";
-import {validateForm} from  '../../utils/formatdate'
+import { validateForm } from '../../utils/formatdate'
+import { FaSearch } from 'react-icons/fa'
 const AddProduct1 = () => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
     setIsPopupOpen(false); // close the popup after adding product
   });
+  const { categories } = useFetchCategories()
+  
   // State to control the popup visibility and animation
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
@@ -192,28 +194,34 @@ const AddProduct1 = () => {
                 />
               </svg>
             </button>
-
             {/* Popup Content */}
             <form>
               <div className="grid grid-cols-2 gap-12">
                 <div className="space-y-3">
                   <div className="flex items-center gap-5">
-                    <div className="mb-4">
+                    <div className=" relative mb-4">
                       <label
                         htmlFor="category"
                         className="block text-[16px] font-bold text-[#333333]"
                       >
                         Product Category
                       </label>
+                         <FaSearch className="absolute top-[37px] right-2 text-[#6e6e6e]"/>
                       <input
                         id="category"
                         name="categoryName"
                         type="text"
+                        list="categories"
                         value={productDetails.categoryName}
                         onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] appearance-none rounded-md p-2"
                         placeholder="E.g:Apparel"
                       />
+                      {/* pop up for categories list if there are any */}
+                      {categories?.length>0?
+                        <datalist id='categories' className="h-[250px] overflow-y-scroll">
+                          {categories?.map(item => <option className="list-none">{item.name}</option>)}
+                        </datalist>:<p>no categories found</p>}
                     </div>
 
                     <div className="mb-4">

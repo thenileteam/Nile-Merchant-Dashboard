@@ -29,8 +29,6 @@ const Customer = () => {
           {/* Navbar */}
           <div className="flex-grow lg:ml-56 overflow-x-hidden">
             <Navbar
-              sidebarOpen={sidebarOpen}
-              setSidebarOpen={setSidebarOpen}
               title="Customers Management"
               icon={userlist}
               profilePic={user && user.image ? user.image : ""}

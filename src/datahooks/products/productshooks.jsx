@@ -115,7 +115,7 @@ export const useCreateNewCategory = (onSuccessCallback) => {
       const transformedData = {
         id: response.data._id,
         name: response.data.categoryName,
-        description: response.data.categoryDescription || 'xxxxxxxxx', 
+        description: response.data.categoryDescription || 'NA' ,   
         products: response.data.products || [],
       };
       toast.success("Category Added Successfully");

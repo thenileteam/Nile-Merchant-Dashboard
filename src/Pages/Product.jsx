@@ -1,35 +1,28 @@
 import { useState } from "react";
-import {
-  deliveryview,
-  packagemoving,
-  packageoutofstock,
-} from "../assets";
+import { deliveryview, packagemoving, packageoutofstock } from "../assets";
 import ProductTable from "../Components/Products/ProductTable";
 import AddProduct1 from "../Components/PopupModals/AddProduct1";
-import {useFetchProducts } from "../datahooks/products/productshooks";
+import { useFetchProducts } from "../datahooks/products/productshooks";
 import Skeleton from "react-loading-skeleton";
 import { useFetchUser } from "../datahooks/users/userhooks";
 import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import CategoryTable from "../Components/Products/CategoryTable";
-import AddCategory from '../Components/PopupModals/AddCategory'
+import AddCategory from "../Components/PopupModals/AddCategory";
 import { useUserStore } from "../zustandStore";
 const Product = () => {
   const { user } = useFetchUser();
-  const{sidebarOpen, setSidebarOpen, closeSidebar} = useUserStore()
+  const { sidebarOpen, setSidebarOpen, closeSidebar } = useUserStore();
   const [isActiveTab, setIsActiveTab] = useState(true);
   const { data, isFetching, isError } = useFetchProducts();
   const [isCategoryOpen, setCategoryOpen] = useState(false);
   //category update
-  const [newCategory, setNewCategory] = useState(null); 
   return (
     <div className="bg-[#F5F5F5] pb-20">
       <div className="flex">
         <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
         <div className="flex-grow lg:ml-56 overflow-x-hidden">
           <Navbar
-            sidebarOpen={sidebarOpen}
-            setSidebarOpen={setSidebarOpen}
             title="Products"
             icon={packagemoving}
             profilePic={user && user.image ? user.image : ""}
@@ -121,16 +114,9 @@ const Product = () => {
               isError={isError}
             />
           ) : (
-            <CategoryTable newCategory={newCategory}
-             
-            />
+            <CategoryTable />
           )}
-          {isCategoryOpen && (
-            <AddCategory
-              setCategoryOpen={setCategoryOpen}
-              setNewCategory={setNewCategory}
-            />
-          )}
+          {isCategoryOpen && <AddCategory setCategoryOpen={setCategoryOpen} />}
         </div>
       </div>
     </div>
