@@ -5,13 +5,15 @@ import { useFetchUser } from "../datahooks/users/userhooks";
 import { arrowleft } from "../assets";
 import AddProduct1 from "../Components/PopupModals/AddProduct1";
 import { useParams } from "react-router-dom";
-const CategoryPage = ({ newCategory }) => {
+const CategoryPage = () => {
   const { user } = useFetchUser();
-  const { categories, isFetchingCategories, isError } = useFetchCategories();
+  const { categories } = useFetchCategories();
   const { id } = useParams();
-  const { name } = categories[id]
+  console.log(categories);
+  const category = categories && categories[id];
   //capitalize the title of each store name pls do not touch abeg!
-  const storeTitle = name.split('')[0].toUpperCase() + name.slice(1);
+  const storeTitle =
+    category?.name?.split("")[0].toUpperCase() + category?.name.slice(1);
   return (
     <>
       <Sidebar />
@@ -36,27 +38,28 @@ const CategoryPage = ({ newCategory }) => {
             <tbody>
               {
                 //in the above array look for a particular category based on its id and map thru it
-                categories?.[id]?.products.map((item) => {
-                  return (
-                    <tr className="mt-4 bg-white shadow-md" key={item.id}>
-                      <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize ">
-                        {item.id}
-                      </td>
-                      <td className="bg-white p-2 text-[#6e6e6e] font-semibold  ">
-                        {item.name}
-                      </td>
-                      <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
-                        {name}
-                      </td>
-                      <td className="bg-white p-2 text-[#6e6e6e] font-semibold  ">
-                        {item.price}
-                      </td>
-                      <td className="bg-white p-2   text-[#6e6e6e]  font-semibold capitalize">
-                        {item.stock}
-                      </td>
-                    </tr>
-                  );
-                })
+                categories &&
+                  categories?.[id].products.map((item, index) => {
+                    return (
+                      <tr className="mt-4 bg-white shadow-md" key={item.id}>
+                        <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize ">
+                          {index + 1}
+                        </td>
+                        <td className="bg-white p-2 text-[#6e6e6e] font-semibold  ">
+                          {item.name}
+                        </td>
+                        <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
+                          {category?.name}
+                        </td>
+                        <td className="bg-white p-2 text-[#6e6e6e] font-semibold  ">
+                          {item.price}
+                        </td>
+                        <td className="bg-white p-2   text-[#6e6e6e]  font-semibold capitalize">
+                          {item.stock}
+                        </td>
+                      </tr>
+                    );
+                  })
               }
             </tbody>
           </table>
