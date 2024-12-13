@@ -1,18 +1,22 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import { useCreateNewProduct, useFetchCategories } from "../../datahooks/products/productshooks";
+import {
+  useCreateNewProduct,
+  useFetchCategories,
+} from "../../datahooks/products/productshooks";
 import { addsquare, addImage } from "../../assets";
 import { BiLoaderCircle } from "react-icons/bi";
 // import UploadImage from "../UploadImage/UploadImage";
-import { validateForm } from '../../utils/formatdate'
-import { FaSearch } from 'react-icons/fa'
+import { validateForm } from "../../utils/formatdate";
+import { FaSearch } from "react-icons/fa";
 import CustomProductSizeSelector from "../Products/CustomProductSizeSelector";
+import { toast } from "sonner";
 const AddProduct1 = () => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
     setIsPopupOpen(false); // close the popup after adding product
   });
-  const { categories } = useFetchCategories()
-  
+  const { categories } = useFetchCategories();
+
   // State to control the popup visibility and animation
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
@@ -177,9 +181,8 @@ const AddProduct1 = () => {
     <>
       {/* Button to trigger the popup */}
       <button onClick={togglePopup}>
-        
         <h1 className="flex font-bold gap-1 items-center border-[#004324] bg-[#004324] text-[#ffffff] duration-500 border-2 rounded-md w-[150px] p-2 h-[48px]">
-        <svg
+          <svg
             width="25"
             height="24"
             viewBox="0 0 25 24"
@@ -238,7 +241,7 @@ const AddProduct1 = () => {
                       >
                         Product Category
                       </label>
-                         <FaSearch className="absolute top-[37px] right-3 text-[#6e6e6e] bg-zinc-100 w-4 h-5"/>
+                      <FaSearch className="absolute top-[37px] right-3 text-[#6e6e6e] bg-zinc-100 w-4 h-5" />
                       <input
                         id="category"
                         name="categoryName"
@@ -250,10 +253,20 @@ const AddProduct1 = () => {
                         placeholder="E.g:Apparel"
                       />
                       {/* pop up for categories list if there are any */}
-                      {categories?.length>0?
-                        <datalist id='categories' className="h-[250px] overflow-y-scroll">
-                          {categories?.map(item => <option className="list-none">{item.name}</option>)}
-                        </datalist>:<p>no categories found</p>}
+                      {categories?.length > 0 ? (
+                        <datalist
+                          id="categories"
+                          className="h-[250px] overflow-y-scroll"
+                        >
+                          {categories?.map((item, i) => (
+                            <option key={i} className="list-none">
+                              {item.name}
+                            </option>
+                          ))}
+                        </datalist>
+                      ) : (
+                        <p>no categories found</p>
+                      )}
                     </div>
 
                     <div className="mb-4">
@@ -319,7 +332,38 @@ const AddProduct1 = () => {
                       setProductDetails={setProductDetails}
                     />
                   </div>
+                  <div>
+                    <div className="relative">
+                      <label
+                        htmlFor="color"
+                        className="block text-[16px] font-bold text-[#333333]"
+                      >
+                        Product Color
+                      </label>
+                      {/* dropdown and manual input fields */}
+                      <div className="flex flex-col w-full">
+                        <input
+                          list="color-options" // Links to the datalist below
+                          name="productColorName"
+                          id="color"
+                          value={productDetails.productColorName}
+                          onChange={handleInputChange}
+                          className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
+                          placeholder="Select or enter a color"
+                        />
+                        {/* Datalist with predefined options */}
+                        <datalist id="color-options">
+                          <option value="Red" />
+                          <option value="Blue" />
+                          <option value="Pink" />
+                        </datalist>
+                      </div>
 
+                      <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
+                        <img src={addsquare} alt="add product icon" />
+                      </span>
+                    </div>
+                  </div>
                   {/* <div className="mb-4">
                     <label
                       htmlFor="weight"
@@ -406,39 +450,8 @@ const AddProduct1 = () => {
                       placeholder="7842"
                     />
                   </div>
-                  <div>
-                    <div className="relative">
-                      <label
-                        htmlFor="color"
-                        className="block text-[16px] font-bold text-[#333333]"
-                      >
-                        Product Color
-                      </label>
-                      {/* dropdown and manual input fields */}
-                      <div className="flex flex-col w-full">
-                        <input
-                          list="color-options" // Links to the datalist below
-                          name="productColorName"
-                          id="color"
-                          value={productDetails.productColorName}
-                          onChange={handleInputChange}
-                          className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
-                          placeholder="Select or enter a color"
-                        />
-                        {/* Datalist with predefined options */}
-                        <datalist id="color-options">
-                          <option value="Red" />
-                          <option value="Blue" />
-                          <option value="Pink" />
-                        </datalist>
-                      </div>
 
-                      <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
-                        <img src={addsquare} alt="add product icon" />
-                      </span>
-                    </div>
-                  </div>
-                  {/* <div>
+                  <div>
                     <label
                       htmlFor="dimensionsLength"
                       className="block text-[16px] font-bold text-[#333333]"
@@ -499,7 +512,7 @@ const AddProduct1 = () => {
                       </span>
                     </div>
                   </div>
-                  <div className="mb-4">
+                  {/* <div className="mb-4">
                     <label
                       htmlFor="handlingTime"
                       className="block text-[16px] font-bold text-[#333333]"
