@@ -290,7 +290,38 @@ const AddProduct1 = () => {
                       setProductDetails={setProductDetails}
                     />
                   </div>
+                  <div>
+                    <div className="relative">
+                      <label
+                        htmlFor="color"
+                        className="block text-[16px] font-bold text-[#333333]"
+                      >
+                        Product Color
+                      </label>
+                      {/* dropdown and manual input fields */}
+                      <div className="flex flex-col w-full">
+                        <input
+                          list="color-options" // Links to the datalist below
+                          name="productColorName"
+                          id="color"
+                          value={productDetails.productColorName}
+                          onChange={handleInputChange}
+                          className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
+                          placeholder="Select or enter a color"
+                        />
+                        {/* Datalist with predefined options */}
+                        <datalist id="color-options">
+                          <option value="Red" />
+                          <option value="Blue" />
+                          <option value="Pink" />
+                        </datalist>
+                      </div>
 
+                      <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
+                        <img src={addsquare} alt="add product icon" />
+                      </span>
+                    </div>
+                  </div>
                   {/* <div className="mb-4">
                     <label
                       htmlFor="weight"
@@ -377,39 +408,8 @@ const AddProduct1 = () => {
                       placeholder="7842"
                     />
                   </div>
-                  <div>
-                    <div className="relative">
-                      <label
-                        htmlFor="color"
-                        className="block text-[16px] font-bold text-[#333333]"
-                      >
-                        Product Color
-                      </label>
-                      {/* dropdown and manual input fields */}
-                      <div className="flex flex-col w-full">
-                        <input
-                          list="color-options" // Links to the datalist below
-                          name="productColorName"
-                          id="color"
-                          value={productDetails.productColorName}
-                          onChange={handleInputChange}
-                          className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
-                          placeholder="Select or enter a color"
-                        />
-                        {/* Datalist with predefined options */}
-                        <datalist id="color-options">
-                          <option value="Red" />
-                          <option value="Blue" />
-                          <option value="Pink" />
-                        </datalist>
-                      </div>
-
-                      <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
-                        <img src={addsquare} alt="add product icon" />
-                      </span>
-                    </div>
-                  </div>
-                  {/* <div>
+                 
+                <div>
                     <label
                       htmlFor="dimensionsLength"
                       className="block text-[16px] font-bold text-[#333333]"
@@ -470,7 +470,7 @@ const AddProduct1 = () => {
                       </span>
                     </div>
                   </div>
-                  <div className="mb-4">
+                 {/* <div className="mb-4">
                     <label
                       htmlFor="handlingTime"
                       className="block text-[16px] font-bold text-[#333333]"

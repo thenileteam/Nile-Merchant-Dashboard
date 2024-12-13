@@ -106,12 +106,12 @@ const CustomProductSizeSelector = ({setProductDetails, productDetails}) => {
 
   return (
     <div className="flex flex-col gap-3">
-      <p>Enter Product Size and SI Unit</p>
+      <p>Enter Product Weight and SI Unit</p>
       <div className=" flex gap-3 mb-3">
         <input
           type="text"
           className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
-          placeholder="Enter size"
+          placeholder="Enter Weight"
           value={size}
           onChange={handleSizeChange}
         />
