@@ -1,16 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
+import { useCreateNewProduct, useFetchCategories } from "../../datahooks/products/productshooks";
 import { addsquare, addImage } from "../../assets";
-import { useCreateNewProduct } from "../../datahooks/products/productshooks";
 import { BiLoaderCircle } from "react-icons/bi";
-import { toast } from "sonner";
 // import UploadImage from "../UploadImage/UploadImage";
-import { validateForm } from "../../utils/formatdate";
+import { validateForm } from '../../utils/formatdate'
+import { FaSearch } from 'react-icons/fa'
 import CustomProductSizeSelector from "../Products/CustomProductSizeSelector";
 const AddProduct1 = () => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
     setIsPopupOpen(false); // close the popup after adding product
   });
+  const { categories } = useFetchCategories()
+  
   // State to control the popup visibility and animation
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
@@ -175,7 +177,28 @@ const AddProduct1 = () => {
     <>
       {/* Button to trigger the popup */}
       <button onClick={togglePopup}>
-        <h1 className="flex font-bold gap-1 items-center border-[#004324] bg-[#004324] text-[#ffffff] duration-500 border-2 rounded-md w-[120px] p-2 h-[48px]">
+        
+        <h1 className="flex font-bold gap-1 items-center border-[#004324] bg-[#004324] text-[#ffffff] duration-500 border-2 rounded-md w-[150px] p-2 h-[48px]">
+        <svg
+            width="25"
+            height="24"
+            viewBox="0 0 25 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12.5 8V16M16.5 12H8.5"
+              stroke="currentcolor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M3 12C3 7.52166 3 5.28249 4.39124 3.89124C5.78249 2.5 8.02166 2.5 12.5 2.5C16.9783 2.5 19.2175 2.5 20.6088 3.89124C22 5.28249 22 7.52166 22 12C22 16.4783 22 18.7175 20.6088 20.1088C19.2175 21.5 16.9783 21.5 12.5 21.5C8.02166 21.5 5.78249 21.5 4.39124 20.1088C3 18.7175 3 16.4783 3 12Z"
+              stroke="currentcolor"
+              strokeWidth="1.5"
+            />
+          </svg>
           Add Product
         </h1>
       </button>
@@ -203,28 +226,34 @@ const AddProduct1 = () => {
                 />
               </svg>
             </button>
-
             {/* Popup Content */}
             <form>
               <div className="grid grid-cols-2 gap-12">
                 <div className="space-y-3">
                   <div className="flex items-center gap-5">
-                    <div className="mb-4">
+                    <div className=" relative mb-4">
                       <label
                         htmlFor="category"
                         className="block text-[16px] font-bold text-[#333333]"
                       >
                         Product Category
                       </label>
+                         <FaSearch className="absolute top-[37px] right-3 text-[#6e6e6e] bg-zinc-100 w-4 h-5"/>
                       <input
                         id="category"
                         name="categoryName"
                         type="text"
+                        list="categories"
                         value={productDetails.categoryName}
                         onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] appearance-none rounded-md p-2"
                         placeholder="E.g:Apparel"
                       />
+                      {/* pop up for categories list if there are any */}
+                      {categories?.length>0?
+                        <datalist id='categories' className="h-[250px] overflow-y-scroll">
+                          {categories?.map(item => <option className="list-none">{item.name}</option>)}
+                        </datalist>:<p>no categories found</p>}
                     </div>
 
                     <div className="mb-4">

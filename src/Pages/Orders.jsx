@@ -129,8 +129,6 @@ const Orders = () => {
           {/* Navbar */}
           <div className="flex-grow lg:ml-56 lg:overflow-x-hidden">
             <Navbar
-              sidebarOpen={sidebarOpen}
-              setSidebarOpen={setSidebarOpen}
               title="Orders"
               icon={trolley}
               profilePic={user && user.image ? user.image : ""}

@@ -136,7 +136,7 @@ const CustomProductSizeSelector = ({setProductDetails, productDetails}) => {
                 {sizes.map((size) => (
                   <>
                     <div
-                      className=" hover:text-zinc-800 cursor-pointer hover:bg-zinc-100 px-5 p-2"
+                      className=" hover:text-zinc-800 cursor-pointer hover:bg-zinc-100 px-5 p-2 "
                       key={size.value}
                       onClick={(e) => {
                          handleUnitChange({ target: { value: size.value } });
