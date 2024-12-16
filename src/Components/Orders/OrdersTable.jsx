@@ -9,6 +9,7 @@ import { UseGenerateInvoiceGenerator } from "../../utils/generateInvoice";
 import { useFetchUser } from "../../datahooks/users/userhooks";
 import InvoicePreview from "./InvoicePreview";
 import { FaX } from "react-icons/fa6";
+import InvoiceComponent from "./invoiceComponent";
 
 const OrdersTable = ({ data }) => {
   const [displayDropDown, setDisplayDropDown] = useState({
@@ -19,14 +20,18 @@ const OrdersTable = ({ data }) => {
     url: "",
     display: false,
   });
+  const [order, setOrder] = useState(null)
   const { user, isFetchingUser, isError } = useFetchUser();
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedText, setSelectedText] = useState("");
+const [generatingPdf, setGeneratingPdf] = useState(false)
   // console.log(data);
   const handleInvoice = (order) => {
+
+    setOrder(order)
     const { url } = UseGenerateInvoiceGenerator(order, user);
-    console.log(url);
+    // console.log(url);
     setPreviewView({
       url,
       display:true
@@ -87,7 +92,7 @@ const OrdersTable = ({ data }) => {
             })
           }
           
-          } className="absolute top-0 left-0 w-full bg-white bg-opacity-50  h-full blur-sm">
+          } className="absolute top-0 left-0 w-full bg-black bg-opacity-80  h-full blur-sm">
 
             
           </div>
@@ -109,7 +114,8 @@ const OrdersTable = ({ data }) => {
               <FaX className=" " size={15} color="white" />
             </div>
          <div onClick={(e) => e.stopPropagation()} className=" relative h-[86%] w-[80%]">
-            <InvoicePreview pdfUrl={previewView.url}/>
+            {/* <InvoicePreview pdfUrl={previewView.url}/> */}
+            <InvoiceComponent user={user} data={order}/>
           </div>
         </div>
       )}
