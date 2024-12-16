@@ -28,6 +28,7 @@ import ProtectRoutes from "./Components/ProtectRoutes";
 import { Suspense } from "react";
 import ErrorCustomer from "./Components/ErrorElements/ErrorCustomer"
 import CategoryPage from "./Pages/CategoryPage";
+import ReactGA from "react-ga4";
 const App = () => {
   const queryClient = new QueryClient();
 
@@ -209,7 +210,11 @@ const App = () => {
       ],
     },
   ]);
-
+  ReactGA.initialize("G-LJT7FW6H2G");
+  ReactGA.send({
+    hitType:'pageview',
+    path:window.location.pathname
+  })
   return (
     <QueryClientProvider client={queryClient}>
         <div>
