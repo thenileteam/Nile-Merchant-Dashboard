@@ -1,0 +1,8 @@
+// export {default as Dashboard} from './Dashboard'
+// export {default as Orders} from './Orders'
+// export {default as Product} from './Product'
+// export {default as CategoryPage} from './CategoryPage'
+// export {default as Customer} from './Customer'
+// export {default as FinancialManagement} from './FinancialManagement'
+// export {default as Reviews} from './Reviews'
+// export {default as Dashboard} from './Dashboard'

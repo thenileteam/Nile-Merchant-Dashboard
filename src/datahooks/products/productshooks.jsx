@@ -163,3 +163,7 @@ export const useFetchCategories = () => {
     isLoading,
   };
 };
+
+// edit category
+
+// delete category

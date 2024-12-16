@@ -22,8 +22,12 @@ export const useUserStore = create((set) => ({
   setSidebarOpen: (isOpen) => set({ sidebarOpen: isOpen }),
   closeSidebar: () => set({ sidebarOpen: false }),
    
-   
-  
+  //state for opening policy
+  policyOpen: false,
+  openPolicy: () => set({ policyOpen: true }),
+  closePolicy: () => set({
+    policyOpen: false
+  })
 }));
 
 
