@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-
 import { useDeleteProduct } from "../../datahooks/products/productshooks";
 
 const DeleteProduct = ({ product }) => {
@@ -37,12 +36,11 @@ const DeleteProduct = ({ product }) => {
     try {
       deleteProduct(product);
       // Send a delete request to the API
-
       // If successful, close the main popup and show the final confirmation
     } catch (error) {
       console.error("Error deleting product:", error);
-      alert("Failed to delete the product. Please try again.");
       // Handle error (e.g., show a message to the user)
+      alert("Failed to delete the product. Please try again.");
     }
   };
   return (

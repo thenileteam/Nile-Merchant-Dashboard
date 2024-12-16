@@ -83,7 +83,7 @@ const ProductTable = ({ data, isFetching, isError }) => {
                   </td>
                   <td className="lg:p-2 px-2 text-center">{product.price}</td>
                   <td className="lg:p-2 px-2  text-center">
-                    {product.unitsSold}
+                    {product.unitsSold||0}
                   </td>
                   <td className="lg:p-2 px-2  text-center">{product.stock}</td>
                   <td className="lg:p-2 px-2 text-center flex items-center gap-1 justify-center ">
