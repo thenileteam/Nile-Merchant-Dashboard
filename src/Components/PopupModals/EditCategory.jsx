@@ -1,10 +1,45 @@
+import { useState } from "react";
+import { useEditCategory } from "../../datahooks/products/productshooks";
+import { BiLoaderCircle } from "react-icons/bi";
+const EditCategory = ({ category }) => {
+  console.log(category);
+  const [showForm, setShowForm] = useState(false);
+  const [categoryDetails, setCategoryDetails] = useState({
+    categoryName: category.name || "",
+    categoryDescription: category.description || "",
+  });
 
-const EditCategory = () => {
+  const { addCategoryToBackend, isEditingCategory } = useEditCategory();
+  const handleCategoryInputChange = (e) => {
+    const { name, value } = e.target;
+    console.log(value)
+    setCategoryDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+      
+    }));
+  };
+
+  // Handle form submission to edit a category
+  const handleEditCategory = () => {
+    try {
+      const updatedCategory = {
+        categoryName: categoryDetails.categoryName,
+        categoryDescription: categoryDetails.categoryDescription,
+        id: category.id,
+      };
+      addCategoryToBackend(updatedCategory);
+    }  catch (error) {
+      console.log(error);
+    }
+
+  };
   return (
     <>
       {/* Button to trigger the popup */}
       <button
         className="hover:scale-110 duration-300 hover:border-[#8ED06C] border-[#ffffff] border-b-[2px] transition underline-offset-2 decoration-[2px] inline-block hover:-translate-x-1"
+        onClick={() => setShowForm(true)}
       >
         <svg
           width="24"
@@ -29,34 +64,80 @@ const EditCategory = () => {
         </svg>
       </button>
 
-      {/* {isPopupOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          < className="bg-white p-10 rounded-lg shadow-lg max-w-3xl w-full relative">
-            {/* Cancel Button in the top-right corner */}
-            {/* <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
-              onClick={() => setIsPopupOpen(false)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
+      {/* form to edit category */}
+      {showForm && (
+        <div className="bg-[rgba(0,0,0,0.4)] fixed inset-0">
+          <div className="max-w-[450px] mx-auto relative">
+          <button
+          className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"
+          onClick={() => setShowForm(false)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+            <form className="bg-white p-8 mt-32">
+              <div className=" ">
+                <label htmlFor="categoryName" className="mb-2">
+                  Category Name
+                </label>
+                <input
+                  type="text"
+                  name="categoryName"
+                  value={categoryDetails.categoryName}
+                  placeholder="Apparel"
+                  className="border border-lightGreen rounded-lg  p-3 block w-full"
+                  onChange={handleCategoryInputChange}
+                  required
                 />
-              </svg>
-            </button> */} 
-
-       
+              </div>
+              <div className="mt-4">
+                <label htmlFor="productDescription" className="mb-2 ">
+                  Category Details{" "}
+                  <span className="text-[#6e6e6e] font-semibold" required>
+                    {" "}
+                    (Optional)
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  name="categoryDescription"
+                  placeholder="input info about the category  "
+                  value={categoryDetails.categoryDescription}
+                  className="border border-lightGreen rounded-lg  p-3 block w-full"
+                  onChange={handleCategoryInputChange}
+                  required
+                />
+              </div>
+              <button
+            type="button"
+            disabled={isEditingCategory}
+            onClick={handleEditCategory}
+            className="bg-green text-white mt-8 font-semibold block mx-auto w-[120px] p-2 rounded-lg"
+          >
+            {isEditingCategory ? (
+              <BiLoaderCircle className=" animate-spin duration-300 transition-all block mx-auto" />
+            ) : (
+              "Edit Category"
+            )}
+          </button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
-  
-}
+};
 
-export default EditCategory
+export default EditCategory;

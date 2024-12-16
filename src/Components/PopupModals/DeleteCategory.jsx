@@ -2,24 +2,13 @@ import {useState} from 'react'
 import {useDeleteCategory} from '../../datahooks/products/productshooks'
 const DeleteCategory = ({category}) => {
   const [delCategory , setDelCategory]= useState(false)
-  const{deleteCategory, isDeleting} = useDeleteCategory(()=>{
-    setDelCategory(false)
-  })
+  const{deleteCategory, isDeleting} = useDeleteCategory()
 
-  const handleTestDelete = () => {
-    deleteCategory(category, {
-      onSuccess: (response) => {
-        console.log("Delete API response:", response); // Log the response
-      },
-      onError: (error) => {
-        console.error("Error from delete API:", error.response?.data || error);
-      },
-    });
-  };
   const handleDeleteCategoryConfirmation = async () => {
     try {
       // Send a delete request to the API
       deleteCategory(category);
+      setDelCategory(false)
     } catch (error) {
       console.error("Error deleting category:", error);
       alert("Failed to delete the product. Please try again.");
@@ -73,9 +62,9 @@ const DeleteCategory = ({category}) => {
               </h1>
             </div>
 
-            <div className="flex items-center justify-center gap-28" onClick={handleTestDelete}>
+            <div className="flex items-center justify-center gap-28">
               {/* Yes Button */}
-              <button type="button" disabled={ isDeleting}>
+              <button type="button" disabled={ isDeleting}  onClick={handleDeleteCategoryConfirmation}>
                 <div className=" flex mt-10">
                   <h1 className="text-[#333333] flex font-bold gap-1 items-center hover:border-[#ffffff] hover:bg-[#E2E8F0] transition ease-out duration-500 border-[#004324] border-2 p-2 px-6 rounded-md">
                   {isDeleting? 'deleting..':'Yes'}

@@ -110,7 +110,6 @@ export const useCreateNewCategory = (onSuccessCallback) => {
     mutationFn: (data) =>
       ApiInstance.post(`/products/product/store/categories/${store?._id}`, data),
     onSuccess: (response) => {
-      console.log(response.data);
     // i did this so that name can now take categoryName's value from the form
       const transformedData = {
         id: response.data._id,
@@ -165,6 +164,26 @@ export const useFetchCategories = () => {
 };
 
 // edit category
+export const useEditCategory = (onSuccessCallback) => {
+  const queryClient = useQueryClient();
+  const { mutate, isPending: isEditingCategory } = useMutation({
+    mutationFn: (data) =>
+      ApiInstance.put(`products/product/store/categories`, data),
+    onSuccess: (response) => {
+      toast.success("Category Edited Successfully");
+      if (onSuccessCallback) onSuccessCallback();
+      queryClient.invalidateQueries(["categories", store._id]);
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "An error occurred while editing category");
+    },
+  });
+  return {
+    addCategoryToBackend: mutate,
+    isEditingCategory,
+  };
+};
+
 
 // delete category
 export const useDeleteCategory = (onSuccessDelete) => {
@@ -172,7 +191,7 @@ export const useDeleteCategory = (onSuccessDelete) => {
   const { mutate, isLoading } = useMutation({
     // Mutation function for API call
     mutationFn: (category) =>
-      ApiInstance.delete(`/products/store/categories/${category.uuid}`, {
+      ApiInstance.delete(`/products/product/store/categories/${category.id}`, {
         params: { storeId: category.storeId, id: category.uuid },
       }),
     
@@ -188,7 +207,7 @@ export const useDeleteCategory = (onSuccessDelete) => {
 
     // error?
     onError: (err) => {
-      toast.error(err.response?.data?.message || "An error occurred");
+      toast.error(err.response?.data?.message || "An error occurred while deleting category");
     },
   });
 

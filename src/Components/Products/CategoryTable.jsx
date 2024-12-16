@@ -53,7 +53,7 @@ const CategoryTable = () => {
                       </Link>
                     </td>
                     <td className="bg-white p-2 flex text-[#6e6e6e]  items-center gap-1 font-semibold capitalize">
-                      <EditCategory  />
+                      <EditCategory category={category} />
                       <DeleteCategory category={category}/>
                     </td>
                     {/* <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
