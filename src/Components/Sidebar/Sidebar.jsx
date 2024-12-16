@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import { nilelogowhite } from "../../assets";
 import Links from "../../Links";
+import Policy from '../PopupModals/Policy'
 import { useUserStore } from "../../zustandStore";
 const Sidebar = () => {
   
-const{sidebarOpen, setSidebarOpen} = useUserStore()
+const{sidebarOpen, setSidebarOpen, policyOpen} = useUserStore()
   return (
     <>
       {/* Overlay for small screens */}
@@ -24,6 +25,8 @@ const{sidebarOpen, setSidebarOpen} = useUserStore()
         <img src={nilelogowhite} alt="" className="w-[100px] flex" />
         <Links />
       </div>
+      {/* terms and conditions */}
+     {policyOpen&& <Policy/>}
     </>
   );
 };

@@ -9,7 +9,8 @@ export const theme = {
       secondary: "#00f6ff",
       dimWhite: "rgba(255, 255, 255, 0.7)",
       dimBlue: "rgba(9, 151, 124, 0.1)",
-      lightGreen: '#8ED06C'
+      lightGreen: '#8ED06C',
+      lightBlack:'#333'
     },
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],

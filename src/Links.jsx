@@ -1,13 +1,13 @@
-import React from "react";
+import { useState} from "react";
 import { Link, useLocation } from "react-router-dom";
 import { copyright } from "./assets";
-
+import { useUserStore } from "./zustandStore";
 const Links = () => {
   const location = useLocation();
 
+  const {openPolicy } = useUserStore()
   // Function to determine if link is active
   const isActive = (path) => location.pathname === path;
-
   const getLinkClasses = (path) => {
     return `py-2 rounded-lg px-2 flex items-center justify-between border
     ${isActive(path) ? "bg-[#ffffff] text-[#004324]" : "text-[#ffffff]"}`;
@@ -334,8 +334,12 @@ const Links = () => {
           <img src={copyright} alt="" />
           <h1 className="text-sm">By Dorisa Technology LTD</h1>
         </div> */}
+        <div>
+        <button type="button" className="absolute bottom-10 hover:opacity-50" onClick={openPolicy}>Terms and conditons</button>
         <a href="https://nile.ng/" target="_blank" rel="noopener noreferrer" className="font-bold block absolute bottom-3" >@Nile Technologies</a>
         <span className="bg-blue-500 p-1 rounded-md absolute bottom-3 right-20">beta</span>
+
+        </div>
       </footer>
     </ul>
   );

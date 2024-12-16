@@ -12,8 +12,8 @@ import {
   dollar,
   bank,
 } from "../assets";
+// import Policy from '../Components/PopupModals/Policy'
 import DashoardTabel from "../Components/Dashboard/DashoardTabel";
-import { useState } from "react";
 import {
   useFetchDashboardData,
   useFetchUser,
@@ -27,8 +27,8 @@ const Dashboard = () => {
   const { user } = useFetchUser();
   const { dashboardData, isFetchingDashboardData, dashboardDataisError } =
     useFetchDashboardData();
-  const{sidebarOpen, setSidebarOpen,} = useUserStore()
-  //getting username from zustand store
+  const{policyOpen} = useUserStore()
+//username
   const username =
     user && user.name ? user.name.split(" ")[0].toUpperCase() : "User";
   // console.log(username);
@@ -173,7 +173,7 @@ const Dashboard = () => {
                 </Link>
               </div>
             </div> */}
-
+          {/* { policyOpen&&<Policy/>} */}
             <div>
               <DashoardTabel
                 dashboardData={dashboardData}

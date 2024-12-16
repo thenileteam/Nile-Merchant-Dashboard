@@ -7,7 +7,7 @@ import { useEditProduct } from "../../datahooks/products/productshooks";
 import { LuLoader2 } from "react-icons/lu";
 
 const EditProduct = ({ product }) => {
-  // console.log(product);
+  console.log(product);
 
   // State to control the popup visibility and animation
   const [isPopupOpen, setIsPopupOpen] = useState(false);
