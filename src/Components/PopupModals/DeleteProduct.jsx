@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-
 import { useDeleteProduct } from "../../datahooks/products/productshooks";
 
 const DeleteProduct = ({ product }) => {

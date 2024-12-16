@@ -167,3 +167,33 @@ export const useFetchCategories = () => {
 // edit category
 
 // delete category
+export const useDeleteCategory = (onSuccessDelete) => {
+  const queryClient = useQueryClient();
+  const { mutate, isLoading } = useMutation({
+    // Mutation function for API call
+    mutationFn: (category) =>
+      ApiInstance.delete(`/products/store/categories/${category.uuid}`, {
+        params: { storeId: category.storeId, id: category.uuid },
+      }),
+    
+    // On success callback
+    onSuccess: (response) => {
+      console.log(response.data)
+      toast.success("Category Deleted Successfully");
+      if (onSuccessDelete) {
+        onSuccessDelete();
+      }
+      queryClient.invalidateQueries(["categories", store._id]);
+    },
+
+    // error?
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "An error occurred");
+    },
+  });
+
+  return {
+    deleteCategory: mutate,
+    isDeleting:isLoading
+  };
+};
