@@ -9,7 +9,7 @@ const InvoiceComponent = ({ data, user }) => {
   const currentDate = new Date();
   const formattedDate = format(currentDate, "yyyy-MM-dd");
   const formattedTime = format(currentDate, "hh:mm aa");
-  // console.log(data, user);
+//  console.log(data, user);
   const invoiceRef = useRef();
   const { customer, items, paymentStatus, createdAt, totalAmount, storeId } =
     data;

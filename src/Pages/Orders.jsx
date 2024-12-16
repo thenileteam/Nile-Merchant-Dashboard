@@ -68,6 +68,7 @@ const Orders = () => {
       const newProducts = itemsFromLocalStorage.items.map(
         ({ id, ...rest }) => rest
       );
+      
       const orderData = {
         totalAmount: itemsFromLocalStorage.totalAmount,
         items: newProducts,
