@@ -1,15 +1,17 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+import useBankDetails from "@/datahooks/banks/usebankhook";
 import { format } from "date-fns";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef } from "react";
 
 const InvoiceComponent = ({ data, user }) => {
+  const { dbBanks } = useBankDetails();
   const currentDate = new Date();
   const formattedDate = format(currentDate, "yyyy-MM-dd");
   const formattedTime = format(currentDate, "hh:mm aa");
-//  console.log(data, user);
+  //  console.log(data, user);
   const invoiceRef = useRef();
   const { customer, items, paymentStatus, createdAt, totalAmount, storeId } =
     data;
@@ -66,11 +68,14 @@ const InvoiceComponent = ({ data, user }) => {
             <p className=" text-gray-500 text-lg">{formattedTime}</p>
             <p className=" text-gray-500 text-lg">
               {" "}
-              Account:{" "}
-              <span className=" text-right">
-                {" "}
-                Gt Bank <br /> 1513301116
-              </span>{" "}
+              Accounts:{" "}
+              {dbBanks &&
+                dbBanks.length > 0 &&
+                dbBanks.map((bank, index) => (
+                  <span key={index} className="text-right">
+                    {bank.bankName} {bank.accountNumber}
+                  </span>
+                ))}{" "}
             </p>
           </div>
           <div className=" w-1/2 flex flex-col gap-1">
@@ -102,7 +107,7 @@ const InvoiceComponent = ({ data, user }) => {
           {items.map((item, i) => (
             <div
               key={i}
-              className=" text-gray-500 text-lg flex justify-between items-center"
+              className=" text-gray-500 capitalize text-lg flex justify-between items-center"
             >
               <span>{item.name}</span>{" "}
               <span className=" text-center">{item.quantity}</span>{" "}

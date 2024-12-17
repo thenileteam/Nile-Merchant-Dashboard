@@ -128,7 +128,7 @@ const Orders = () => {
           <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
 
           {/* Navbar */}
-          <div className="flex-grow lg:ml-56 lg:overflow-x-hidden">
+          <div className="flex-grow lg:ml-56 overflow-y-hidden lg:overflow-x-hidden">
             <Navbar
               title="Orders"
               icon={trolley}

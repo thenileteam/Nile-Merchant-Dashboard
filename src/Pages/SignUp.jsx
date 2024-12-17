@@ -5,7 +5,7 @@ import { useUserStore } from "../zustandStore";
 import { toast } from "sonner";
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
-import { LuLoader2 } from "react-icons/lu";
+import { Loader2 } from "lucide-react";
 
 const SignUp = () => {
   // Custom context hook
@@ -236,7 +236,7 @@ const SignUp = () => {
                   className="text-[#ffffff] grid place-items-center bg-[#004324] w-full py-4 text-center text-[14px] font-semibold rounded-md shadow-md"
                 >
                   {signUpIsPending ? (
-                    <LuLoader2 className=" animate-spin duration-300 transition-all" />
+                    <Loader2 className=" animate-spin duration-300 transition-all" />
                   ) : (
                     "Sign Up"
                   )}

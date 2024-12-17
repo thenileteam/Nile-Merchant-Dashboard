@@ -5,9 +5,10 @@ import {
   useAddCustomer,
   useFetchStoreCustomers,
 } from "../../datahooks/users/userhooks";
-import { LuLoader2 } from "react-icons/lu";
+
 import { toast } from "sonner";
 import { BiSearchAlt2 } from "react-icons/bi";
+import { Loader2 } from "lucide-react";
 
 const CustomSearchInput = ({ setSelectedCustomer, selectedCustomer }) => {
   const [customerData, setCustomerData] = useState({
@@ -183,7 +184,7 @@ const CustomSearchInput = ({ setSelectedCustomer, selectedCustomer }) => {
                 }}
               >
                 {addCustomerQueryIsPending ? (
-                  <LuLoader2 className=" animate-spin transition-all duration-300" />
+                  <Loader2 className=" animate-spin transition-all duration-300" />
                 ) : (
                   "Add Customer"
                 )}

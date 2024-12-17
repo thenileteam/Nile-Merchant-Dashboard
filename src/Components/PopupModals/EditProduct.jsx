@@ -4,7 +4,8 @@ import { useState } from "react";
 import { addsquare, addImage } from "../../assets";
 import UploadImage from "../UploadImage/UploadImage";
 import { useEditProduct } from "../../datahooks/products/productshooks";
-import { LuLoader2 } from "react-icons/lu";
+import { Loader2 } from "lucide-react";
+
 
 const EditProduct = ({ product }) => {
   console.log(product);
@@ -526,7 +527,7 @@ const EditProduct = ({ product }) => {
               Are You Sure You Want To Edit This Product?
             </h1>
             {isEditingProduct ? (
-              <LuLoader2 className=" mx-auto animate-spin duration-300 transition-all" />
+              <Loader2 className=" mx-auto animate-spin duration-300 transition-all" />
             ) : (
               <div className="flex justify-center gap-20">
                 <button onClick={handleConfirm}>
