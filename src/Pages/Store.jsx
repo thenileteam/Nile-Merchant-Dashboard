@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Links from "../Links";
 import {
@@ -16,7 +16,6 @@ import {
   invoice,
   containertruck,
   websecurity,
-  delete1,
 } from "../assets";
 import DeleteAccount from "../Components/Store/DeleteAccount";
 

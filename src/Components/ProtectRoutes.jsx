@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { LuLoader2 } from "react-icons/lu";
+import { Loader2 } from "lucide-react";
 
 const ProtectRoutes = ({ children }) => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const ProtectRoutes = ({ children }) => {
   if (loading) {
     return (
       <div className="fixed w-full h-screen grid place-items-center">
-        <LuLoader2 className="animate-spin duration-300" />
+        <Loader2 className="animate-spin duration-300" />
       </div>
     );
   }

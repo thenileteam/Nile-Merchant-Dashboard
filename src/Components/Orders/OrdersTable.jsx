@@ -208,34 +208,10 @@ const [generatingPdf, setGeneratingPdf] = useState(false)
               <th className="p-2 text-[14px] text-center">Shipping Status</th>
               <th className="p-2 text-[14px]  text-center">Track Order</th>
               <th className="p-2 text-[14px] text-center">Payment Status</th>
-              {/* <th className="px-2 py-3 text-center">Actions </th>
-              <th className="px-2 py-3 text-center">
-                Bulk Action
-                <svg
-                  width="24"
-                  className="flex justify-center mx-auto"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M15 9L9 14.9996M15 15L9 9.00039"
-                    stroke="#8ED06C"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
-                    stroke="#8ED06C"
-                    strokeWidth="1.5"
-                  />
-                </svg>
-                <h1 className="px-2 py-3 text-center text-[#8ED06C] flex items-center">
-                  Mark As Shipped
-                </h1>
-              </th> */}
+              <th className="p-2 text-[14px]   text-center">
+                <span className=" invisible">pay</span>
+              </th>
+         
             </tr>
           </thead>
           <tbody>

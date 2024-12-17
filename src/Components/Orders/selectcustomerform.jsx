@@ -6,7 +6,7 @@ import {
   useFetchStoreCustomers,
 } from "../../datahooks/users/userhooks";
 import { toast } from "sonner";
-import { LuLoader2 } from "react-icons/lu";
+import { Loader2 } from "lucide-react";
 
 const SelectCustomerForm = ({
   setSelectCustomerForm,
@@ -201,7 +201,7 @@ const SelectCustomerForm = ({
               }}
             >
               {addCustomerQueryIsPending ? (
-                <LuLoader2 className=" animate-spin transition-all duration-300" />
+                <Loader2 className=" animate-spin transition-all duration-300" />
               ) : (
                 "Add Customer"
               )}

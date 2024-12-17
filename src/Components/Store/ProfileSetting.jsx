@@ -10,10 +10,14 @@ import {
 import ProfileImage from "../PlaceholderImage/PlaceholderImage";
 import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
+import { Sheet, SheetTrigger } from "../ui/sheet";
+import AcccountNumberComp from "./AcccountNumberComp";
+import useBankDetails from "@/datahooks/banks/usebankhook";
 
 const ProfileSetting = () => {
+  const { dbBanks } = useBankDetails();
   const { user, isFetchingUser, isError } = useFetchUser();
-  // console.log(user);
+
 
   const [phoneNumber, setPhoneNumber] = useState(
     (user && user.phoneNumber) || ""
@@ -151,7 +155,7 @@ const ProfileSetting = () => {
             />
           )}
         </div>
-        <div className="sm:flex sm:justify-center">
+        <div className="sm:flex flex-col w-fit mx-auto sm:justify-end">
           <form action="#" className="px-4 lg:px-0">
             <div className="mt-4">
               <label
@@ -212,6 +216,18 @@ const ProfileSetting = () => {
               )}
             </div>
           </form>
+
+          <Sheet>
+            {dbBanks && (
+              <SheetTrigger className=" bg-green mt-10 w-fit px-5 py-3 text-white rounded-md ">
+                {dbBanks && dbBanks.length > 0
+                  ? "Update Bank Settings"
+                  : "Add Bank Details"}
+              </SheetTrigger>
+            )}
+
+            <AcccountNumberComp />
+          </Sheet>
         </div>
         <div className="flex items-center justify-center gap-4  md:gap-16 mt-10 px-4 md:px-0">
           <button
@@ -220,6 +236,7 @@ const ProfileSetting = () => {
           >
             Cancel Changes
           </button>
+
           <button
             disabled={isPending}
             onClick={() => {

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { reload } from "../../assets";
 import { useAddCustomer } from "../../datahooks/users/userhooks";
 import { toast } from "sonner";
-import { LuLoader2 } from "react-icons/lu";
+import { Loader2 } from "lucide-react";
 
 const AddCustomer1 = ({ transparent }) => {
   const { addCustomerQuery, addCustomerQueryError, addCustomerQueryIsPending } =
@@ -202,7 +202,7 @@ const AddCustomer1 = ({ transparent }) => {
                         type="text"
                         name="phoneNumber"
                         pattern="\d{11}"
-                        maxlength="11"
+                        maxLength="11"
                         title="Phone number must be exactly 11 digits"
                         required
                         placeholder="Enter 11-digit Phone number"
@@ -310,7 +310,7 @@ const AddCustomer1 = ({ transparent }) => {
               Are You Sure You Want To Add This Customer?
             </h1>
             {addCustomerQueryIsPending ? (
-              <LuLoader2 className=" animate-spin duration-300 transition-all" />
+              <Loader2 className=" animate-spin duration-300 transition-all" />
             ) : (
               <div className="flex justify-center gap-20">
                 <button onClick={addCustomer}>

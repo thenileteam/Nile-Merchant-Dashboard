@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { addsquare, arrowleft, image, notification } from "../../assets";
 import { Link } from "react-router-dom";
 import SaveChanges from "../PopupModals/SaveChanges";
