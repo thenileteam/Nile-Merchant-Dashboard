@@ -22,7 +22,6 @@ const EditProduct = ({ product }) => {
     name: product.name || "",
     details: product.description || "",
     stockQuantity: product.stock || "",
-
     quantitySizes: product.quantitySizes || "",
     weight: product.shippingWeight || "",
     freeShipping: product.freeShipping || false,
