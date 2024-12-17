@@ -8,7 +8,6 @@ const AddCategory = ({ setCategoryOpen}) => {
   const { addCategoryToBackend, isAddingCategory } = useCreateNewCategory(() => {
     setCategoryOpen(false);
   });
-  
  // Form fields state
   const [categoryDetails, setCategoryDetails] = useState({
     //i did this because i was getting an error of the inputs not being controlled at first(because they were undefined due to the empty object so do not change pls!)

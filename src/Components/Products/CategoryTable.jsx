@@ -4,9 +4,12 @@ import DeleteCategory from "../PopupModals/DeleteCategory";
 import Skeleton from "react-loading-skeleton";
 import { useFetchCategories } from "../../datahooks/products/productshooks";
 import { Link } from "react-router-dom";
+import usePagination from '../Pagination/PaginationHook'
+import Pagination from "../Pagination/Pagination";
 const CategoryTable = () => {
   const { categories, isFetchingCategories, isError } = useFetchCategories();
-  //removed the new element i was adding to the end of the array causing the bug
+  const itemsPerPage = 10
+   const {pageCount, currentItems, handlePageChange}= usePagination(categories, itemsPerPage)
   return (
     <>
       <section className="mt-2 max-w-[800px] mx-auto">
@@ -30,9 +33,7 @@ const CategoryTable = () => {
               </tr>
             </thead>
             <tbody>
-                  {categories?.map((category, i) => {
-                console.log(category);
-                
+                  {currentItems?.map((category, i) => {
                 return (
                   <tr className="mt-4 bg-white shadow-md" key={category.id}>
                     <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
@@ -65,6 +66,10 @@ const CategoryTable = () => {
           </table>
         )}
       </section>
+      {/* pagination */}
+      {categories?.length > itemsPerPage && (
+        <Pagination pageCount={pageCount} onPageChange={handlePageChange} />
+      )}
     </>
   );
 };
