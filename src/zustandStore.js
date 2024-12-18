@@ -56,6 +56,9 @@ export const useUserStore = create((set) => ({
     }));
   },
 
+  //collapsible state
+  isCollapsed: false,
+  setIsCollapsed: () => set((state)=>({isCollapsed:!state.isCollapsed}))
 }));
 
 

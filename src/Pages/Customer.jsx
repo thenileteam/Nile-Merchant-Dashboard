@@ -18,7 +18,7 @@ const Customer = () => {
     isFetchingCustomers: isLoading,
     isError: error,
   } = useFetchStoreCustomers();
-  const {sidebarOpen, setSidebarOpen, closeSidebar} = useUserStore();
+  const {sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed} = useUserStore();
 
   return (
     <>
@@ -27,7 +27,7 @@ const Customer = () => {
           {/* Sidebar */}
           <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
           {/* Navbar */}
-          <div className="flex-grow lg:ml-56 overflow-x-hidden">
+          <div className={isCollapsed? 'flex-grow lg:ml-20 overflow-x-hidden':"flex-grow lg:ml-56 overflow-x-hidden"}>
             <Navbar
               title="Customers Management"
               icon={userlist}
@@ -35,7 +35,7 @@ const Customer = () => {
             />
 
             {/* Cards */}
-            <div className="mt-28 mb-6 max-w-[800px] mx-auto">
+            <div className={`${isCollapsed?'max-w-[1000px]':'max-w-[800px]'} mt-28 mb-6 mx-auto`}>
               <CustomAwaitCard isLoading={isLoading} error={error}>
                 <div className="flex gap-20">
                   <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
@@ -63,7 +63,7 @@ const Customer = () => {
               </CustomAwaitCard>
             </div>
             {/* Add Customer & Export CSV Button */}
-            <div className=" flex max-w-[800px]  mx-auto items-center">
+            <div className={`flex ${isCollapsed?'max-w-[1000px]':'max-w-[800px]'}   mx-auto items-center`}>
               <AddCustomer1 transparent={true} />
 
               {/* <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
@@ -98,6 +98,7 @@ const Customer = () => {
                 customers={customers}
                 error={error}
                 isLoading={isLoading}
+                isCollapsed={isCollapsed}    
               />
             </div>
           </div>

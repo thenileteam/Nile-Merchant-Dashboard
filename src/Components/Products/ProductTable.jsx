@@ -5,14 +5,16 @@ import DeleteProduct from "../PopupModals/DeleteProduct";
 import Skeleton from "react-loading-skeleton";
 import Pagination from '../Pagination/Pagination'
 import usePagination from "../Pagination/PaginationHook";
+import { useUserStore } from "@/zustandStore";
 // code start
 const ProductTable = ({ data, isFetching, isError }) => {
   const itemsPerPage = 10
-   const {pageCount, currentItems, handlePageChange}= usePagination(data, itemsPerPage)
+  const { pageCount, currentItems, handlePageChange } = usePagination(data, itemsPerPage)
+  const { isCollapsed}= useUserStore()
   return (
     <>
       {/* Table */}
-      <div className="max-w-[800px] mx-auto">
+      <div  className={`${isCollapsed?'max-w-[1000px]':"max-w-[800px]"} mx-auto`}>
         {isFetching ? (
           <div className="bg-[#ffffff] w-full shadow-md">
             <Skeleton className=" w-full h-10" />

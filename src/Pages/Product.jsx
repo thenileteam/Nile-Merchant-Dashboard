@@ -12,7 +12,7 @@ import AddCategory from "../Components/PopupModals/AddCategory";
 import { useUserStore } from "../zustandStore";
 const Product = () => {
   const { user } = useFetchUser();
-  const { sidebarOpen, setSidebarOpen, closeSidebar } = useUserStore();
+  const { sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed } = useUserStore();
   const [isActiveTab, setIsActiveTab] = useState(true);
   const { data, isFetching, isError } = useFetchProducts();
   const [isCategoryOpen, setCategoryOpen] = useState(false);
@@ -21,13 +21,13 @@ const Product = () => {
     <div className="bg-[#F5F5F5] pb-20">
       <div className="flex">
         <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
-        <div className="flex-grow lg:ml-56 overflow-x-hidden">
+        <div className={`flex-grow ${isCollapsed?'lg:ml-20':'lg:ml-56'} overflow-x-hidden`}>
           <Navbar
             title="Products"
             icon={packagemoving}
             profilePic={user && user.image ? user.image : ""}
           />
-          <div className="mt-28 mb-6 max-w-[800px] mx-auto">
+          <div className={`mt-28 mb-6 ${isCollapsed?'max-w-[1000px]':'max-w-[800px]'}   mx-auto`}>
             {isFetching ? (
               <div className="grid grid-cols-3 gap-20">
                 <Skeleton className="w-[300px] h-[150px] rounded-sm" />
@@ -52,7 +52,7 @@ const Product = () => {
               </div>
             )}
           </div>
-          <div className="flex justify-between lg:max-w-[800px] mx-auto h-[48px]">
+          <div className={`flex justify-between ${isCollapsed?"lg:max-w-[1000px]":'lg:max-w-[800px]'} mx-auto h-[48px]`}>
             <div className="flex gap-1">
               <button
                 className={

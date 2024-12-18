@@ -147,6 +147,7 @@ body{
 .popUp-wrapper{
   scrollbar-width: thin;
 }
+/* I'm very stephen wrote this */
 @layer base {
   :root {
 
@@ -251,12 +252,5 @@ body{
     --chart-5: 340 75% 55%;
   }
 }
-@layer base {
-  /* * {
-    @apply border-border;
-  } */
-  /* body {
-    @apply bg-background text-foreground;
-  } */
-}
+ 
  

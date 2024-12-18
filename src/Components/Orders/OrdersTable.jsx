@@ -13,7 +13,7 @@ import InvoiceComponent from "./invoiceComponent";
 import Pagination from "../Pagination/Pagination";
 import usePagination from "../Pagination/PaginationHook";
 
-const OrdersTable = ({ data }) => {
+const OrdersTable = ({ data, isCollapsed }) => {
   const [displayDropDown, setDisplayDropDown] = useState({
     id: null,
     active: false,
@@ -196,7 +196,7 @@ const OrdersTable = ({ data }) => {
       )}
 
       {/* Tables */}
-      <div className=" max-w-[800px] mx-auto">
+      <div className={`${isCollapsed?'max-w-[1000px]':'max-w-[800px]'}  mx-auto`}>
         <table className="w-full border-separate h-fit border-spacing-y-5">
           <thead>
             <tr className="text-left bg-[#EAF4E2] shadow-lg">
