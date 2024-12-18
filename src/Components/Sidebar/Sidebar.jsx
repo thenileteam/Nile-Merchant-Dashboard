@@ -5,7 +5,7 @@ import Policy from '../PopupModals/Policy'
 import { useUserStore } from "../../zustandStore";
 import{useState } from 'react'
 const Sidebar = () => {
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth>1024)//for collapsing only on desktop screen
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth>1024)//for collapsing only on desktop screen 
 const{sidebarOpen, setSidebarOpen, policyOpen, setIsCollapsed, isCollapsed} = useUserStore()
   return (
     <>
