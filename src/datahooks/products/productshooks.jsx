@@ -28,6 +28,7 @@ export const useFetchProducts = () => {
 
   return {
     data,
+    productLength:data?.length,
     isFetching,
     isError,
     isLoading,
@@ -109,7 +110,7 @@ export const useCreateNewCategory = (onSuccessCallback) => {
   const { mutate, isPending: isAddingCategory } = useMutation({
     mutationFn: (data) =>
       ApiInstance.post(`/products/product/store/categories/${store?._id}`, data),
-    onSuccess: (response, variables) => {
+    onSuccess: (response) => {
       console.log(response)
       // if (response.data.categoryName === variables.categoryName || response.data.categoryDescription == variables.categoryDescription) {
       //   toast.success("Category already exists, add product to existing category instead");

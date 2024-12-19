@@ -1,34 +1,43 @@
 /* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom";
 import {
-  bitcoin,
   notification,
-  packagemoving,
   store,
-  transaction,
   arrow,
   packagemoving1,
   truck,
   dollar,
   bank,
+  totalExpense,
+  totalInventory,
+  totalRevenue,
+  totalCustomers,
+  totalOrders,
+  totalProfit,
 } from "../assets";
 // import Policy from '../Components/PopupModals/Policy'
 import DashoardTabel from "../Components/Dashboard/DashoardTabel";
 import {
   useFetchDashboardData,
+  useFetchStoreCustomers,
   useFetchUser,
 } from "../datahooks/users/userhooks";
 import Skeleton from "react-loading-skeleton";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import Navbar from "../Components/Navbar/Navbar";
 import { useUserStore } from "../zustandStore";
+import DashboardBox from "@/Components/Dashboard/DashboardBox";
+import { useFetchProducts } from "@/datahooks/products/productshooks";
 const Dashboard = () => {
   //users image
   const { user } = useFetchUser();
   const { dashboardData, isFetchingDashboardData, dashboardDataisError } =
     useFetchDashboardData();
-  const{isCollapsed} = useUserStore()
-//username
+  const { customerLength } = useFetchStoreCustomers();
+  const { productLength } = useFetchProducts();
+  console.log(dashboardData);
+  const { isCollapsed } = useUserStore();
+  //username
   const username =
     user && user.name ? user.name.split(" ")[0].toUpperCase() : "User";
   return (
@@ -38,7 +47,11 @@ const Dashboard = () => {
           {/* Sidebar */}
           <Sidebar />
           {/* Navbar */}
-          <div className={isCollapsed?"flex-grow lg:ml-16": 'flex-grow lg:ml-56'}>
+          <div
+            className={
+              isCollapsed ? "flex-grow lg:ml-16" : "flex-grow lg:ml-56"
+            }
+          >
             <Navbar
               title={`Welcome ${username}`}
               profilePic={user && user.image ? user.image : ""}
@@ -46,41 +59,69 @@ const Dashboard = () => {
 
             {/* Cards */}
             {isFetchingDashboardData ? (
-              <div className=" w-full mt-28 px-32  h-40 flex lg:flex-row gap-20">
+              <div className=" w-full mt-28 h-40 flex gap-8">
                 <div className=" h-[150px] bg-zinc-200  w-[300px]" />
                 <div className=" h-[150px] bg-zinc-200 w-[300px]" />
-                {/* <div className=" h-[150px] bg-zinc-200 w-[300px]" /> */}
+                <div className=" h-[150px] bg-zinc-200 w-[300px]" />
               </div>
             ) : (
-              <div className={`mt-20 lg:mt-28 mb-6 px-2 ${isCollapsed?'lg:max-w-[1000px]':'lg:max-w-[900px]'} mx-auto`}>
-                <div className="flex gap-8 lg:gap-20">
-                  <div className="bg-[#FFFFFF] shadow-sm w-[273px] p-5 rounded-md">
-                    <img src={transaction} alt="" />
-                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                     &#8358;{dashboardData?.salesData?.totalSales || 0}
-                    </h1>
-                    <p className="text-[#6E6E6E]">Revenue</p>
+              <div
+                className={`mt-20 lg:mt-28 mb-6 px-2 ${
+                  isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[880px]"
+                } mx-auto`}
+              >
+                <div className="grid gap-x-8 gap-y-4 grid-cols-2 lg:grid-cols-3">
+                  <DashboardBox
+                    text="Revenue"
+                    image={totalRevenue}
+                    bgColor="bg-[#FCDADF]"
+                    data={dashboardData?.salesData?.totalSales || 0}
+                  />
+                    <div className="relative">
+                      <span className="absolute top-2 right-3 font-medium text-[13px] capitalize">coming soon..</span>
+                    <DashboardBox
+                      text="Total Expenses"
+                      image={totalExpense}
+                      bgColor="bg-[#FFE8DF]"
+                      data={"-"}
+                      />
+                    </div>
+                    <div className="relative"> 
+                    <span className="absolute right-3 top-2 font-medium text-[13px] capitalize">coming soon..</span>
+                    <DashboardBox
+                      text="Total Profits"
+                      image={totalProfit}
+                      bgColor="bg-[#FFDBFA]"
+                      data={'-'}
+                    />
                   </div>
-                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                    <img src={packagemoving} alt="" />
-                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                      {dashboardData?.orders?.totalOrders}
-                    </h1>
-                    <p className="text-[#6E6E6E]">Total Orders</p>
-                  </div>
-                  {/* <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                    <img src={bitcoin} alt="" />
-                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                      0
-                    </h1>
-                    <p className="text-[#6E6E6E]">Total Payouts</p>
-                  </div> */}
+                  <DashboardBox
+                    text="Total Orders"
+                    image={totalOrders}
+                    bgColor="bg-[#F3D1FF]"
+                    data={dashboardData?.orders?.totalOrders}
+                  />
+                  <DashboardBox
+                    text="Total Inventory"
+                    image={totalInventory}
+                    bgColor="bg-[#E7FFD4]"
+                    data={productLength}
+                  />
+                  <DashboardBox
+                    text="Total Customers"
+                    image={totalCustomers}
+                    bgColor="bg-[#D8FFEE]"
+                    data={customerLength}
+                  />
                 </div>
               </div>
             )}
-
             {/* Line */}
-            <div className={`${isCollapsed?'lg:max-w-[1000px]':'lg:max-w-[900px]'} mx-auto px-2 border2 border-red-600`}>
+            <div
+              className={`${
+                isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[860px]"
+              } mx-auto px-2`}
+            >
               <div className="border-2 border-white shadow-[0px_4px_10px_rgba(0,0,0,0.3)]"></div>
             </div>
 
@@ -171,7 +212,7 @@ const Dashboard = () => {
                 </Link>
               </div>
             </div> */}
-          {/* { policyOpen&&<Policy/>} */}
+            {/* { policyOpen&&<Policy/>} */}
             <div>
               <DashoardTabel
                 dashboardData={dashboardData}

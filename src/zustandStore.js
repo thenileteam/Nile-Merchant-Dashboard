@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import {toast} from 'sonner'
+import { create } from "zustand";
+import { toast } from "sonner";
 export const useUserStore = create((set) => ({
-  showPassword:{
+  showPassword: {
     password: false, // For SignInPage
     password1: false, // For the first password field on SignUpPage
     password2: false, // For second field on the SignUpPage
@@ -9,25 +9,26 @@ export const useUserStore = create((set) => ({
     confirmPassword: false,
   },
 
-   handleShowPassword: (id) => {
+  handleShowPassword: (id) => {
     set((state) => ({
       showPassword: {
         ...state.showPassword,
         [id]: state.showPassword[id] ? false : true,
       },
-    }))
+    }));
   },
   //state for sidebar
   sidebarOpen: false,
   setSidebarOpen: (isOpen) => set({ sidebarOpen: isOpen }),
   closeSidebar: () => set({ sidebarOpen: false }),
-   
+
   //state for opening policy
   policyOpen: false,
   openPolicy: () => set({ policyOpen: true }),
-  closePolicy: () => set({
-    policyOpen: false
-  }),
+  closePolicy: () =>
+    set({
+      policyOpen: false,
+    }),
 
   //state related to category adding and editing
   // default empty category
@@ -58,8 +59,17 @@ export const useUserStore = create((set) => ({
 
   //collapsible state
   isCollapsed: false,
-  setIsCollapsed: () => set((state)=>({isCollapsed:!state.isCollapsed}))
+  isDesktop: window.innerWidth,
+  setIsDesktop: (value) => set({ isDesktop: value }),
+  setIsCollapsed: (value) =>
+    set((state) => {
+      if (value <= 1000) {
+        return { isCollapsed : value}
+      }
+      //only update the state when we are on desktop view
+      if (state.isDesktop > 1000) {
+        return { isCollapsed: !state.isCollapsed };  
+      }
+      return state;
+    }),
 }));
-
-
- 

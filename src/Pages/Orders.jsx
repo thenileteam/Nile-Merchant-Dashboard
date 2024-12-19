@@ -21,6 +21,7 @@ import Sidebar from "../Components/Sidebar/Sidebar";
 import { toast } from "sonner";
 import CreateOrderForm from "../Components/createorderform";
 import {useUserStore }from '../zustandStore'
+import DashboardBox from "@/Components/Dashboard/DashboardBox";
 const Orders = () => {
   //user profile image
   const { user } = useFetchUser();
@@ -147,20 +148,9 @@ const Orders = () => {
                   </div>
                 ) : (
                   <>
-                    <div className="bg-[#FFFFFF] border-2 shadow-sm lg:w-[273px] p-5 rounded-md">
-                      <img src={shoppingcart} alt="" />
-                      <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                        {data?.length || 0}
-                      </h1>
-                      <p className="text-[#6E6E6E]">Total Orders</p>
-                    </div>
-                    <div className="bg-[#FFFFFF] border-2 shadow-sm lg:w-[273px] p-5 rounded-md">
-                      <img src={truck1} alt="" />
-                      <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                        0
-                      </h1>
-                      <p className="text-[#6E6E6E]">Pending Shipment</p>
-                    </div>
+                      <DashboardBox text='Total Orders' bgColor='bg-[#FCDADF]' image={shoppingcart} data={data?.length || 0} width='w-[50%]'  />
+                      <DashboardBox text='Pending Shipments' bgColor='bg-[#FFE8DF]' image={truck1} data={0}  width='w-[50%]' />
+                      {/*  data?.filter(item => item.status === 'pending' ) */}
                     {/* <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                       <img src={timer} alt="" />
                       <h1 className="text-[#333333] text-[22px] font-bold mt-1">
@@ -172,7 +162,6 @@ const Orders = () => {
                 )}
               </div>
             </div>
-
             <div className={`${isCollapsed?'max-w-[1000px]':'max-w-[800px]'}  mx-auto`} >
               <div className="flex items-center">
                 <button

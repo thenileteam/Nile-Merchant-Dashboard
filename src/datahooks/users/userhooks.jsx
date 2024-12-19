@@ -414,6 +414,7 @@ export const useFetchStoreCustomers = () => {
 
   return {
     customers: data,
+    customerLength: data?.length,
     isFetchingCustomers: isFetching,
     isError,
   };

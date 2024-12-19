@@ -38,24 +38,24 @@ const CategoryTable = () => {
                   {currentItems?.map((category, i) => {
                 return (
                   <tr className="mt-4 bg-white shadow-md" key={category.id}>
-                    <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
+                    <td className="bg-white p-2 text-[#6e6e6e] capitalize">
                       {category?.name}
                     </td>
-                    <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
+                    <td className="bg-white p-2 text-[#6e6e6e]  capitalize">
                       {category?.description || "NA"}
                     </td>
-                    <td className="bg-white p-2 text-[#6e6e6e] font-semibold  ">
+                    <td className="bg-white p-2 text-[#6e6e6e]  ">
                       {category?.products?.length || 0}
                       <Link to={`/categories/${i}`}>
                         <button
-                          className="text-lightGreen font-semibold capitalize"
+                          className="text-lightGreen capitalize"
                           disabled={category?.products?.length === 0}
                         >
                           View
                         </button>
                       </Link>
                     </td>
-                    <td className="bg-white p-2 flex text-[#6e6e6e]  items-center gap-1 font-semibold capitalize">
+                    <td className="bg-white p-2 flex text-[#6e6e6e]  items-center gap-1 capitalize">
                       <EditCategory category={category} />
                       <DeleteCategory category={category}/>
                     </td>

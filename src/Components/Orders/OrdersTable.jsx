@@ -23,7 +23,7 @@ const OrdersTable = ({ data, isCollapsed }) => {
     display: false,
   });
   const [order, setOrder] = useState(null);
-  const { user, isFetchingUser, isError } = useFetchUser();
+  const { user} = useFetchUser();
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedText, setSelectedText] = useState("");
@@ -219,7 +219,7 @@ const OrdersTable = ({ data, isCollapsed }) => {
           </thead>
           <tbody>
             {currentItems?.map((order) => (
-              <tr key={order._id} className="bg-[#ffffff] h-[60px] shadow-md">
+              <tr key={order.id} className="bg-[#ffffff] h-[60px] shadow-md">
                 <td className="px-2  bg-[#EAF4E2] text-[13px]">
                   {order?.customer?.name ||
                     order?.customer?.id.slice(0, 2) ||
