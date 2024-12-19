@@ -78,7 +78,7 @@ const Dashboard = () => {
                     data={dashboardData?.salesData?.totalSales || 0}
                   />
                     <div className="relative">
-                      <span className="absolute top-2 right-3 font-medium text-[13px] capitalize">coming soon..</span>
+                      <span className={` absolute top-2 font-medium ${isCollapsed?'right-12':'right-3'} text-[13px] capitalize`}>coming soon..</span>
                     <DashboardBox
                       text="Total Expenses"
                       image={totalExpense}
@@ -87,7 +87,7 @@ const Dashboard = () => {
                       />
                     </div>
                     <div className="relative"> 
-                    <span className="absolute right-3 top-2 font-medium text-[13px] capitalize">coming soon..</span>
+                    <span className={` absolute top-2 font-medium ${isCollapsed?'right-12':'right-3'} text-[13px] capitalize`}>coming soon..</span>
                     <DashboardBox
                       text="Total Profits"
                       image={totalProfit}
