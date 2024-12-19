@@ -27,12 +27,10 @@ const Dashboard = () => {
   const { user } = useFetchUser();
   const { dashboardData, isFetchingDashboardData, dashboardDataisError } =
     useFetchDashboardData();
-  const{policyOpen} = useUserStore()
+  const{isCollapsed} = useUserStore()
 //username
   const username =
     user && user.name ? user.name.split(" ")[0].toUpperCase() : "User";
-  // console.log(username);
-
   return (
     <>
       <div className="bg-[#F5F5F5] pb-20 lg:overflow-x-hidden">
@@ -40,7 +38,7 @@ const Dashboard = () => {
           {/* Sidebar */}
           <Sidebar />
           {/* Navbar */}
-          <div className="flex-grow lg:ml-56">
+          <div className={isCollapsed?"flex-grow lg:ml-16": 'flex-grow lg:ml-56'}>
             <Navbar
               title={`Welcome ${username}`}
               profilePic={user && user.image ? user.image : ""}
@@ -54,7 +52,7 @@ const Dashboard = () => {
                 {/* <div className=" h-[150px] bg-zinc-200 w-[300px]" /> */}
               </div>
             ) : (
-              <div className="mt-20 lg:mt-28 mb-6 px-2 lg:px-32 lg:mx-w-[1128px]">
+              <div className={`mt-20 lg:mt-28 mb-6 px-2 ${isCollapsed?'lg:max-w-[1000px]':'lg:max-w-[900px]'} mx-auto`}>
                 <div className="flex gap-8 lg:gap-20">
                   <div className="bg-[#FFFFFF] shadow-sm w-[273px] p-5 rounded-md">
                     <img src={transaction} alt="" />
@@ -82,7 +80,7 @@ const Dashboard = () => {
             )}
 
             {/* Line */}
-            <div className="lg:px-32 w-full px-2">
+            <div className={`${isCollapsed?'lg:max-w-[1000px]':'lg:max-w-[900px]'} mx-auto px-2 border2 border-red-600`}>
               <div className="border-2 border-white shadow-[0px_4px_10px_rgba(0,0,0,0.3)]"></div>
             </div>
 
@@ -178,6 +176,7 @@ const Dashboard = () => {
               <DashoardTabel
                 dashboardData={dashboardData}
                 isFetchingDashboardData={isFetchingDashboardData}
+                isCollapsed={isCollapsed}
               />
             </div>
           </div>

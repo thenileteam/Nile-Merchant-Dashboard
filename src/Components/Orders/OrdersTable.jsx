@@ -10,8 +10,10 @@ import { useFetchUser } from "../../datahooks/users/userhooks";
 import InvoicePreview from "./InvoicePreview";
 import { FaX } from "react-icons/fa6";
 import InvoiceComponent from "./invoiceComponent";
+import Pagination from "../Pagination/Pagination";
+import usePagination from "../Pagination/PaginationHook";
 
-const OrdersTable = ({ data }) => {
+const OrdersTable = ({ data, isCollapsed }) => {
   const [displayDropDown, setDisplayDropDown] = useState({
     id: null,
     active: false,
@@ -20,34 +22,35 @@ const OrdersTable = ({ data }) => {
     url: "",
     display: false,
   });
-  const [order, setOrder] = useState(null)
+  const [order, setOrder] = useState(null);
   const { user, isFetchingUser, isError } = useFetchUser();
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedText, setSelectedText] = useState("");
-const [generatingPdf, setGeneratingPdf] = useState(false)
+  const [generatingPdf, setGeneratingPdf] = useState(false);
+  const itemsPerPage = 10;
+  const { pageCount, currentItems, handlePageChange } = usePagination(
+    data,
+    itemsPerPage
+  );
   // console.log(data);
   const handleInvoice = (order) => {
-
-    setOrder(order)
+    setOrder(order);
     const { url } = UseGenerateInvoiceGenerator(order, user);
     // console.log(url);
     setPreviewView({
       url,
-      display:true
-    })
+      display: true,
+    });
   };
 
   const ellipsisRef = useRef(null);
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        ellipsisRef.current &&
-        !ellipsisRef.current.contains(event.target)
-      ) {
+      if (ellipsisRef.current && !ellipsisRef.current.contains(event.target)) {
         setDisplayDropDown({
-          id:null,
-          active:false
+          id: null,
+          active: false,
         }); // Close the list when clicking outside
       }
     };
@@ -80,42 +83,42 @@ const [generatingPdf, setGeneratingPdf] = useState(false)
     <>
       {previewView.display && previewView.url && (
         <div className=" fixed grid z-[3000000] place-items-center w-full h-screen left-0 right-0 bottom-0 top-0">
-          <div onClick={ () => {
-            //clear state of visibility et al
-            setPreviewView({
-              url:'',
-              display:false
-            })
-            setDisplayDropDown({
-              id:null,
-              active:false
-            })
-          }
-          
-          } className="absolute top-0 left-0 w-full bg-black bg-opacity-80  h-full blur-sm">
-
-            
+          <div
+            onClick={() => {
+              //clear state of visibility et al
+              setPreviewView({
+                url: "",
+                display: false,
+              });
+              setDisplayDropDown({
+                id: null,
+                active: false,
+              });
+            }}
+            className="absolute top-0 left-0 w-full bg-black bg-opacity-80  h-full blur-sm"
+          ></div>
+          <div
+            onClick={() => {
+              //clear state of visibility et al
+              setPreviewView({
+                url: "",
+                display: false,
+              });
+              setDisplayDropDown({
+                id: null,
+                active: false,
+              });
+            }}
+            className=" absolute z-[3000001] top-4 right-6 bg-red-300 cursor-pointer size-10 rounded-full grid place-items-center"
+          >
+            <FaX className=" " size={15} color="white" />
           </div>
-          <div onClick={ () => {
-            //clear state of visibility et al
-            setPreviewView({
-              url:'',
-              display:false
-            })
-            setDisplayDropDown({
-              id:null,
-              active:false
-            })
-          }
-          
-          }
-            
-            className=" absolute z-[3000001] top-4 right-6 bg-red-300 cursor-pointer size-10 rounded-full grid place-items-center">
-              <FaX className=" " size={15} color="white" />
-            </div>
-         <div onClick={(e) => e.stopPropagation()} className=" relative h-[86%] w-[80%]">
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className=" relative h-[86%] w-[80%]"
+          >
             {/* <InvoicePreview pdfUrl={previewView.url}/> */}
-            <InvoiceComponent user={user} data={order}/>
+            <InvoiceComponent user={user} data={order} />
           </div>
         </div>
       )}
@@ -193,7 +196,7 @@ const [generatingPdf, setGeneratingPdf] = useState(false)
       )}
 
       {/* Tables */}
-      <div className=" max-w-[800px] mx-auto">
+      <div className={`${isCollapsed?'max-w-[1000px]':'max-w-[800px]'}  mx-auto`}>
         <table className="w-full border-separate h-fit border-spacing-y-5">
           <thead>
             <tr className="text-left bg-[#EAF4E2] shadow-lg">
@@ -215,7 +218,7 @@ const [generatingPdf, setGeneratingPdf] = useState(false)
             </tr>
           </thead>
           <tbody>
-            {data?.map((order) => (
+            {currentItems?.map((order) => (
               <tr key={order._id} className="bg-[#ffffff] h-[60px] shadow-md">
                 <td className="px-2  bg-[#EAF4E2] text-[13px]">
                   {order?.customer?.name ||
@@ -252,7 +255,7 @@ const [generatingPdf, setGeneratingPdf] = useState(false)
                           active: !displayDropDown.active,
                         })
                       }
-                      ref={ellipsisRef} 
+                      ref={ellipsisRef}
                       className=" cursor-pointer"
                     />
                     {displayDropDown.id === order.id &&
@@ -277,91 +280,7 @@ const [generatingPdf, setGeneratingPdf] = useState(false)
       </div>
 
       {/*Pagination*/}
-      <div>
-        <ol className="flex justify-center gap-3 text-xs font-medium mt-3">
-          <li>
-            <a
-              href="#"
-              className="inline-flex size-8 items-center justify-center rounded border border-gray-300 bg-white hover:bg-[#8ED06C] text-gray-900 hover:text-[#E2E8F0] rtl:rotate-180"
-            >
-              <span className="sr-only">Prev Page</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-[#8ED06C] bg-white text-center leading-8 text-[#8ED06C]"
-            >
-              1
-            </a>
-          </li>
-
-          <li className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900">
-            2
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900"
-            >
-              ...
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900"
-            >
-              9
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900"
-            >
-              10
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="inline-flex size-8 items-center justify-center rounded border border-gray-300 bg-white hover:bg-[#8ED06C] text-gray-900 hover:text-[#E2E8F0] rtl:rotate-180"
-            >
-              <span className="sr-only">Next Page</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
-          </li>
-        </ol>
-      </div>
+      {data?.length>itemsPerPage&&<Pagination pageCount={pageCount} onPageChange={handlePageChange}/>}
 
       {/* Export CSV Button */}
       {/* <div className=" flex px-28 justify-end mt-10">

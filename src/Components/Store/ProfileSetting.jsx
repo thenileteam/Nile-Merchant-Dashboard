@@ -219,7 +219,7 @@ const ProfileSetting = () => {
 
           <Sheet>
             {dbBanks && (
-              <SheetTrigger className=" bg-green mt-10 w-fit px-5 py-3 text-white rounded-md ">
+              <SheetTrigger className=" bg-green mt-10 w-full px-5 py-3 text-white rounded-md ">
                 {dbBanks && dbBanks.length > 0
                   ? "Update Bank Settings"
                   : "Add Bank Details"}

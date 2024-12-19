@@ -69,6 +69,8 @@ import tadfarm from './tadFarm.jpg'
 import lashesIcon from './lashes-icon.svg'
 import addImage from './add-image.svg'
 import placeholderImage from './placeholderImage.svg'
+import iconExpandCollapsible from './icon-expand-collapseBar.svg'
+import nileBagOnly from './nile-bagOnly-logo.svg'
 export {
     nilelogosolid,
     nilelogowhite,
@@ -135,5 +137,5 @@ export {
     donBaci,
     dot1,
     dot2, dot3, eye
-    ,tadfarm,lashesIcon,addImage,placeholderImage
+    ,tadfarm,lashesIcon,addImage,placeholderImage,iconExpandCollapsible, nileBagOnly
 }

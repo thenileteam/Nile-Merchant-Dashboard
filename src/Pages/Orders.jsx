@@ -28,7 +28,7 @@ const Orders = () => {
     setCreateOrderForm(false);
   });
   const store = JSON.parse(localStorage.getItem("store"));
-  const{sidebarOpen, setSidebarOpen, closeSidebar} = useUserStore()
+  const{sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed} = useUserStore()
   const [createdAt, setCreatedAt] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState("");
   const [salesChannel, setSalesChannel] = useState("");
@@ -128,7 +128,7 @@ const Orders = () => {
           <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
 
           {/* Navbar */}
-          <div className="flex-grow lg:ml-56 overflow-y-hidden lg:overflow-x-hidden">
+          <div className={`flex-grow ${isCollapsed? 'lg:ml-20':'lg:ml-56'}  overflow-y-hidden lg:overflow-x-hidden`}>
             <Navbar
               title="Orders"
               icon={trolley}
@@ -136,7 +136,7 @@ const Orders = () => {
             />
 
             {/* Cards */}
-            <div className="mt-20 lg:mt-28 mb-6 px-2 lg:max-w-[800px]  lg:px-0 mx-auto max-w-full">
+            <div className={`mt-20 lg:mt-28 mb-6 px-2 ${isCollapsed?'lg:max-w-[1000px]':'lg:max-w-[800px]'}   lg:px-0 mx-auto max-w-full`}>
               <div className="flex gap-8 lg:gap-20">
                 {isFetching ? (
                   <div className="grid grid-cols-3 gap-20">
@@ -173,7 +173,7 @@ const Orders = () => {
               </div>
             </div>
 
-            <div className="max-w-[800px] mx-auto ">
+            <div className={`${isCollapsed?'max-w-[1000px]':'max-w-[800px]'}  mx-auto`} >
               <div className="flex items-center">
                 <button
                   type="button"
@@ -228,7 +228,7 @@ const Orders = () => {
             </div>
 
             <div>
-              <OrdersTable data={data} />
+              <OrdersTable data={data} isCollapsed={ isCollapsed} />
             </div>
           </div>
         </div>
