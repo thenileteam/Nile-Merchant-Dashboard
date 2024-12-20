@@ -1,7 +1,7 @@
 import { policies } from "../../utils/formatdate";
-import{useUserStore} from '../../zustandStore'
+import{usePolicyStore} from '../../ZustandStores/policyStore'
 const Policy = () => {
-  const{closePolicy} = useUserStore()
+  const{closePolicy} = usePolicyStore()
   return (
     <div className="bg-[rgba(0,0,0,0.35)] fixed inset-0 transitions">
       <div className="popUp-wrapper container bg-[#EAF4E2] text-black mt-20 max-w-[600px] mx-auto p-5 h-[500px] overflow-y-scroll relative transitions">

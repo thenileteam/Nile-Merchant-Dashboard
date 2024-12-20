@@ -25,7 +25,7 @@ import {
 import Skeleton from "react-loading-skeleton";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import Navbar from "../Components/Navbar/Navbar";
-import { useUserStore } from "../zustandStore";
+import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 import { useFetchProducts } from "@/datahooks/products/productshooks";
 const Dashboard = () => {
@@ -36,7 +36,7 @@ const Dashboard = () => {
   const { customerLength } = useFetchStoreCustomers();
   const { productLength } = useFetchProducts();
   console.log(dashboardData);
-  const { isCollapsed } = useUserStore();
+  const { isCollapsed } = useSidebarStore();
   //username
   const username =
     user && user.name ? user.name.split(" ")[0].toUpperCase() : "User";

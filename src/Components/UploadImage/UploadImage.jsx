@@ -1,9 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useUserStore } from "../../zustandStore";
-
 const UploadImage = ({ handleFileChange, style, image }) => {
-  // const { uploadedFile, handleFileChange, handleRemoveFile } = useUserStore();
 
   return (
     <div className="relative text-center mt-10 lg:w-[308px] mx-auto">

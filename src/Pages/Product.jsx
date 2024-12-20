@@ -9,11 +9,11 @@ import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import CategoryTable from "../Components/Products/CategoryTable";
 import AddCategory from "../Components/PopupModals/AddCategory";
-import { useUserStore } from "../zustandStore";
+import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 const Product = () => {
   const { user } = useFetchUser();
-  const { sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed } = useUserStore();
+  const { sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed } = useSidebarStore();
   const [isActiveTab, setIsActiveTab] = useState(true);
   const { data, isFetching, isError } = useFetchProducts();
   const [isCategoryOpen, setCategoryOpen] = useState(false);

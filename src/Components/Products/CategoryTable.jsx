@@ -6,10 +6,10 @@ import { useFetchCategories } from "../../datahooks/products/productshooks";
 import { Link } from "react-router-dom";
 import usePagination from '../Pagination/PaginationHook'
 import Pagination from "../Pagination/Pagination";
-import { useUserStore } from "@/zustandStore";
+import { useSidebarStore } from "../../ZustandStores/sidebarStore";
 const CategoryTable = () => {
   const { categories, isFetchingCategories, isError } = useFetchCategories();
-  const{isCollapsed} = useUserStore()
+  const{isCollapsed} = useSidebarStore()
   const itemsPerPage = 10
    const {pageCount, currentItems, handlePageChange}= usePagination(categories, itemsPerPage)
   return (

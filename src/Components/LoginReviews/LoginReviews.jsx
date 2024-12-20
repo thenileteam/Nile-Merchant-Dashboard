@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {wuraolaImg, donBaci, tadfarm, dot1, dot2, dot3 } from "../../assets";
 

@@ -20,7 +20,7 @@ import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import { toast } from "sonner";
 import CreateOrderForm from "../Components/createorderform";
-import {useUserStore }from '../zustandStore'
+import {useSidebarStore }from '../ZustandStores/sidebarStore'
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 const Orders = () => {
   //user profile image
@@ -29,7 +29,7 @@ const Orders = () => {
     setCreateOrderForm(false);
   });
   const store = JSON.parse(localStorage.getItem("store"));
-  const{sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed} = useUserStore()
+  const{sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed} = useSidebarStore()
   const [createdAt, setCreatedAt] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState("");
   const [salesChannel, setSalesChannel] = useState("");
@@ -156,7 +156,7 @@ const Orders = () => {
                       <h1 className="text-[#333333] text-[22px] font-bold mt-1">
                         0
                       </h1>
-                      <p className="text-[#6E6E6E]">Average Deliver Time</p>
+                      <p className="text-[#6E6E6E]">Average Delivery Time</p>
                     </div> */}
                   </>
                 )}

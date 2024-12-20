@@ -204,9 +204,9 @@ const OrdersTable = ({ data, isCollapsed }) => {
               <th className="p-2 text-[14px] text-center">Order ID</th>
               <th className="p-2 text-[14px] text-center">Product Name</th>
               <th className="p-2 text-[14px] text-center">Price</th>
-              <th className="p-2 text-[14px] text-center">
+              {/* <th className="p-2 text-[14px] text-center">
                 Total P. With Shipping
-              </th>
+              </th> */}
               <th className="p-2 text-[14px] text-center">Order Date</th>
               <th className="p-2 text-[14px] text-center">Shipping Status</th>
               <th className="p-2 text-[14px]  text-center">Track Order</th>
@@ -229,12 +229,12 @@ const OrdersTable = ({ data, isCollapsed }) => {
                 <td className="px-2  text-center text-[13px]">
                   {order.items[0].name}
                 </td>
-                <td className="px-2  text-center text-[13px]">
+                <td className="px-2  text-center text-[13px]">&#8358;
                   {order.items[0].price}
                 </td>
-                <td className="px-2  text-center text-[13px]">
+                {/* <td className="px-2  text-center text-[13px]">
                   &#8358;{order.totalAmount}
-                </td>
+                </td> */}
                 <td className="px-2 text-center text-[13px]">
                   {format(parseISO(order?.createdAt), "dd MMMM yyyy")}
                 </td>

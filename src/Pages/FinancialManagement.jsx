@@ -11,13 +11,13 @@ import {
   moneysend,
 } from "../assets";
 import FinancialTable from "../Components/Financial/FinancialTable";
-import { useUserStore } from "@/zustandStore";
+import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import Sidebar from '../Components/Sidebar/Sidebar'
 import { useFetchUser } from "@/datahooks/users/userhooks";
 import Navbar from "@/Components/Navbar/Navbar";
 const FinancialManagement = () => {
   const {user} = useFetchUser() 
-  const {sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed} = useUserStore();
+  const {sidebarOpen, closeSidebar, isCollapsed} = useSidebarStore();
   return (
     <>
       <div className="bg-[#F5F5F5] pb-20">

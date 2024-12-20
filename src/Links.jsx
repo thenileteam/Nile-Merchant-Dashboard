@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { copyright } from "./assets";
-import { useUserStore } from "./zustandStore";
+import { usePolicyStore } from "./ZustandStores/policyStore";
 const Links = ({ isCollapsed }) => {
   const location = useLocation();
-  const { openPolicy } = useUserStore();
+  const { openPolicy } = usePolicyStore();
   // Function to determine if link is active
   const isActive = (path) => location.pathname === path;
   const getLinkClasses = (path) => {

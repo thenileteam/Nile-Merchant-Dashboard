@@ -9,7 +9,7 @@ import {
 import CustomAwaitCard from "../Components/uicomps/customawaitcard";
 import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
-import { useUserStore } from "../zustandStore";
+import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 const Customer = () => {
   //show user profile image
@@ -19,7 +19,7 @@ const Customer = () => {
     isFetchingCustomers: isLoading,
     isError: error,
   } = useFetchStoreCustomers();
-  const {sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed} = useUserStore();
+  const {sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed} = useSidebarStore();
 
   return (
     <>

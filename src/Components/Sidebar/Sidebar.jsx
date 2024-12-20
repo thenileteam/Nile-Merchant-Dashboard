@@ -2,10 +2,12 @@
 import { nilelogowhite, iconExpandCollapsible , nileBagOnly} from "../../assets";
 import Links from "../../Links";
 import Policy from '../PopupModals/Policy'
-import { useUserStore } from "../../zustandStore";
-import{useEffect, useState } from 'react'
+import { useSidebarStore } from "../../ZustandStores/sidebarStore";
+import { usePolicyStore } from "../../ZustandStores/policyStore";
+import{useEffect} from 'react'
 const Sidebar = () => {
-  const { sidebarOpen, setSidebarOpen, policyOpen, setIsCollapsed, isCollapsed, isDesktop ,setIsDesktop} = useUserStore()
+  const { sidebarOpen, setSidebarOpen, setIsCollapsed, isCollapsed, setIsDesktop } = useSidebarStore()
+  const{policyOpen} = usePolicyStore()
   useEffect(() => {
     const handleResize = () => {
       console.log('resized and state updated');
