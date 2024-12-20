@@ -1,6 +1,5 @@
-import { useState} from "react";
+
 import { Link, useLocation } from "react-router-dom";
-import { copyright } from "./assets";
 import { useUserStore } from "./zustandStore";
 const Links = () => {
   const location = useLocation();
@@ -240,7 +239,7 @@ const Links = () => {
       </Link>
 
       {/* Financial Management */}
-      {/* <Link to="/financial">
+      <Link to="/financial">
         <li className="cursor-pointer mt-5">
           <div className={getLinkClasses("/financial")}>
             <div className="flex items-center gap-3">
@@ -284,7 +283,7 @@ const Links = () => {
             </div>
           </div>
         </li>
-      </Link> */}
+      </Link> 
 
       {/* Store Setting */}
       {/* <Link to="/store">

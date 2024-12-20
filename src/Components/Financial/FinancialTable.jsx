@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { download, preference1, withdraw } from "../../assets";
+import  { useState } from "react";
+import { download, preference1, } from "../../assets";
 import DownloadInvoice from "../PopupModals/DownloadInvoice";
 import RequestPayout from "../PopupModals/RequestPayout";
 
