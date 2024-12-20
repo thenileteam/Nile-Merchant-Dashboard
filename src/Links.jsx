@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { Link, useLocation } from "react-router-dom";
 import { copyright } from "./assets";
 import { usePolicyStore } from "./ZustandStores/policyStore";
@@ -248,9 +248,9 @@ const Links = ({ isCollapsed }) => {
       </Link>
 
       {/* Financial Management */}
-      {/* <Link to="/financial">
-        <li  className={`cursor-pointer mt-4 w-full`}>
-          <div className={`${getLinkClasses("/financial")} transitions`}>
+      <Link to="/financial">
+        <li className="cursor-pointer mt-5">
+          <div className={getLinkClasses("/financial")}>
             <div className="flex items-center gap-3">
               <svg
                 width="24"
@@ -293,7 +293,7 @@ const Links = ({ isCollapsed }) => {
             </div>
           </div>
         </li>
-      </Link> */}
+      </Link> 
 
       {/* Store Setting */}
       {/* <Link to="/store">
