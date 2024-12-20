@@ -11,17 +11,21 @@ import {
   moneysend,
 } from "../assets";
 
-
 import FinancialTable from "../Components/Financial/FinancialTable";
-import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
+import { useSidebarStore } from "../ZustandStores/sidebarStore";
+import Sidebar from "../Components/Sidebar/Sidebar";
+import { useFetchUser } from "@/datahooks/users/userhooks";
+import Navbar from "@/Components/Navbar/Navbar";
 import ExpensesTable from "../Components/Financial/ExpensesTable";
 import { ExpenseForm } from "@/Components/Financial/ExpenseForm";
 import { useExpenseHook } from "@/datahooks/users/expensehook";
 import { validateForm } from "@/utils/formatdate";
+
 const FinancialManagement = () => {
+  const { user } = useFetchUser();
+  const { sidebarOpen, closeSidebar, isCollapsed } = useSidebarStore();
   const [displaySuccessModal, setDisplaySuccessModal] = useState(false);
   const [open, setOpen] = useState(false);
- 
 
   const [tabs, setTabs] = useState([
     {
@@ -35,122 +39,26 @@ const FinancialManagement = () => {
       active: false,
     },
   ]);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   let emptyState = false;
-  const closeSidebar = () => {
-    if (sidebarOpen) setSidebarOpen(false);
-  };
+
   return (
     <>
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
-          {/* Overlay for small screens */}
-          {sidebarOpen && (
-            <div
-              className="fixed inset-0 bg-black opacity-50 lg:hidden"
-              onClick={closeSidebar}
-            ></div>
-          )}
-
-          {/* Sidebar */}
-          <div
-            className={`fixed top-0 left-0 h-full w-[290px] z-20 bg-[#004324] border-2 text-white p-5 transition-transform transform ${
-              sidebarOpen ? "translate-x-0" : "-translate-x-full"
-            } lg:translate-x-0`}
-          >
-            <img
-              src={nilelogowhite}
-              alt=""
-              className="w-[170px] flex mx-auto"
-            />
-            <Links />
-          </div>
-
+          <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
           {/* Navbar */}
-          <div className="flex-grow lg:ml-64 overflow-x-hidden">
-            <nav className="bg-[#EAF4E2] p-4 shadow-md flex z-10 items-center gap-5 fixed w-full">
-              <button
-                className="lg:hidden text-gray-800 z-20"
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d={
-                      sidebarOpen
-                        ? "M6 18L18 6M6 6l12 12" // Close icon
-                        : "M4 6h16M4 12h16M4 18h16" // Menu icon
-                    }
-                  />
-                </svg>
-              </button>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 px-20">
-                  <img src={bitcoingraph} alt="" />
-                  <h1 className="text-[32px] font-bold">
-                    Financial Management
-                  </h1>
-                </div>
-                <div className="flex items-center gap-10 ml-[10px]">
-                  <div className="relative">
-                    <label htmlFor="Search" className="sr-only">
-                      {" "}
-                      Search{" "}
-                    </label>
-
-                    <input
-                      type="text"
-                      id="Search"
-                      placeholder=""
-                      className="w-[300px] rounded-md border-[#6E6E6E] border-2 p-8 py-2.5 pe-10 shadow-sm sm:text-sm"
-                    />
-
-                    <span className="absolute inset-y-0 start-0 grid w-10 place-content-center">
-                      <button
-                        type="button"
-                        className="text-gray-600 hover:text-gray-700"
-                      >
-                        <span className="sr-only">Search</span>
-
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="size-4"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                          />
-                        </svg>
-                      </button>
-                    </span>
-                  </div>
-                  <div>
-                    <Link to="/notification">
-                      <img src={notification} alt="" />
-                    </Link>
-                  </div>
-                  <div>
-                    <Link to="/profilesetting">
-                      <PlaceholderImage />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </nav>
-
+          <div
+            className={
+              isCollapsed
+                ? "flex-grow lg:ml-20 overflow-x-hidden"
+                : "flex-grow lg:ml-56 overflow-x-hidden"
+            }
+          >
+            <Navbar
+              title="Financial Management"
+              icon={bitcoingraph}
+              profilePic={user && user.image ? user.image : ""}
+            />
             {/* Cards */}
             <div className="p-6 mt-28 px-32">
               <div className=" grid sm:grid-cols-2 space-x-2 lg:grid-cols-3 grid-cols-1 gap-2 lg:gap-28">
@@ -255,7 +163,10 @@ const FinancialManagement = () => {
                 </div>
               )}
               {tabs.find((tab) => tab.active)?.name === "Finance" && (
-                <div className=" p-[48px]  text-3xl font-bold"> Coming Soon </div>
+                <div className={`${isCollapsed? ' max-w-[1000px]':' max-w-[850px]'} mt-4 mx-auto text-3xl font-bold`}>
+                  {" "}
+                  Coming Soon...{" "}
+                </div>
                 // <FinancialTable />
               )}
               {tabs.find((tab) => tab.active)?.name === "Expenses" && (
