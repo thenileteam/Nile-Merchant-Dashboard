@@ -5,7 +5,7 @@ import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
 import { useLogUserIn } from "../datahooks/users/userhooks";
 import Cookies from "js-cookie";
-import {useUserStore} from '../zustandStore'
+import {useShowPasswordStore} from '../ZustandStores/showPasswordStore'
 const SignIn = () => {
   const navigate = useNavigate();
   const [checkingUser, setCheckingUser] = useState(true);
@@ -23,7 +23,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // State for error messages
 
-  const { showPassword, handleShowPassword } = useUserStore();
+  const { showPassword, handleShowPassword } = useShowPasswordStore();
   const { mutate, isPending } = useLogUserIn();
 
   const handleLogin = async (e) => {

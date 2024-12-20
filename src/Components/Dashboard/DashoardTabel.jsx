@@ -10,7 +10,7 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData, isCollapsed }) 
   // console.log(dashboardData);
   return (
     <>
-      <div className={`${isCollapsed?'lg:max-w-[1000px]':"lg:max-w-[900px]"} mx-auto px-2`}>
+      <div className={`${isCollapsed?'lg:max-w-[1000px]':"lg:max-w-[860px]"} mx-auto px-2 lg:px-0`}>
         {isFetchingDashboardData ? (
           <div className=" w-full mt-10 flex flex-col gap-5">
             <Skeleton className=" h-[50px] w-full min-w-52" />
@@ -29,7 +29,7 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData, isCollapsed }) 
                 <th className=" py-3 text-center">Action</th>
               </tr>
             </thead>
-            <tbody className="border-2 border-blue-500 ">
+            <tbody className="">
               {/* Row 1 */}
               <tr className="bg-[#ffffff] shadow-md  ">
                 <td className="lg:p-3 p-2 bg-[#EAF4E2]">Your Orders</td>

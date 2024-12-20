@@ -5,12 +5,12 @@ import { useFetchUser } from "../datahooks/users/userhooks";
 import { arrowleft } from "../assets";
 import AddProduct1 from "../Components/PopupModals/AddProduct1";
 import { useParams } from "react-router-dom";
-import { useUserStore } from "@/zustandStore";
+import { useSidebarStore } from "../ZustandStores/sidebarStore";
 const CategoryPage = () => {
   const { user } = useFetchUser();
   const { categories } = useFetchCategories();
   const { id } = useParams();
-  const{isCollapsed} = useUserStore()
+  const{isCollapsed} = useSidebarStore()
   const category = categories && categories[id];
   //capitalize the title of each store name pls do not touch abeg!
   const storeTitle =
@@ -22,9 +22,10 @@ const CategoryPage = () => {
         <Navbar
           title={storeTitle}
           icon={arrowleft}
+          // link='/product'
           profilePic={user && user.image ? user.image : ""}
         />
-        <section className="mt-28 mb-6 max-w-[800px] mx-auto">
+        <section className={`mt-28 mb-6 ${isCollapsed? ' max-w-[1000px]':' max-w-[800px]'}  mx-auto`}>
           <AddProduct1 />
           <table className="w-full border-separate border-spacing-y-5">
             <thead>

@@ -9,10 +9,11 @@ import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import CategoryTable from "../Components/Products/CategoryTable";
 import AddCategory from "../Components/PopupModals/AddCategory";
-import { useUserStore } from "../zustandStore";
+import { useSidebarStore } from "../ZustandStores/sidebarStore";
+import DashboardBox from "@/Components/Dashboard/DashboardBox";
 const Product = () => {
   const { user } = useFetchUser();
-  const { sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed } = useUserStore();
+  const { sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed } = useSidebarStore();
   const [isActiveTab, setIsActiveTab] = useState(true);
   const { data, isFetching, isError } = useFetchProducts();
   const [isCategoryOpen, setCategoryOpen] = useState(false);
@@ -35,20 +36,8 @@ const Product = () => {
               </div>
             ) : (
               <div className="flex gap-20">
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={packagemoving} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    {data?.length || "0"}
-                  </h1>
-                  <p className="text-[#6E6E6E]">Total Products</p>
-                </div>
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={deliveryview} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Total Products View</p>
-                </div>
+                  <DashboardBox text='Total Products' image={packagemoving} bgColor='bg-[#FCDADF]' data={data?.length || 0} width='w-[50%]'/>
+                  <DashboardBox text='Total Products View' image={ deliveryview} bgColor='bg-[#FFE8DF]' data={0} width='w-[50%]' />
               </div>
             )}
           </div>

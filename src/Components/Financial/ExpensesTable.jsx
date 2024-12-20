@@ -14,7 +14,7 @@ const ExpensesTable = () => {
   return (
     <div className="px-24 mt-6">
       <div className="bg-white rounded-lg overflow-hidden">
-        <table className="w-full">
+        <table className="w-full border-y-separate">
           <thead className="bg-[#EAF4E2]">
             <tr>
               <th className="px-6 py-3 text-center font-bold text-[16px]  leading-[18.4px]  tracking-[1%] text-sm border-r text-[#333333]">
@@ -28,18 +28,18 @@ const ExpensesTable = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className=" ">
             {data ? (
               data.length > 0 ? (
                 data.map((expense, index) => (
                   <tr key={index} className="hover:bg-gray-50">
-                    <td className="px-6 py-4  font-bold  text-[#6E6E6E]  leading-[18.4px] text-center ">
+                    <td className="px-6 py-4  font-medium  text-[#6E6E6E]  leading-[18.4px] text-center ">
                       {expense.name}
                     </td>
-                    <td className="px-6 py-4  font-bold  text-center text-[16px]  leading-[18.4px]  tracking-[1%] text-sm text-[#6E6E6E]">
-                      {expense.amount}
+                    <td className="px-6 py-4  font-medium  text-center text-[16px]  leading-[18.4px]  tracking-[1%] text-sm text-[#6E6E6E]">
+                     &#8358;{expense.amount}
                     </td>
-                    <td className="px-6 py-4  font-bold  text-center text-[16px]  leading-[18.4px]  tracking-[1%] text-sm text-[#6E6E6E]">
+                    <td className="px-6 py-4  font-medium text-center text-[16px]  leading-[18.4px]  tracking-[1%] text-sm text-[#6E6E6E]">
                     {format(parseISO(expense.createdAt), 'MMMM d, yyyy')}
                     </td>
                   </tr>

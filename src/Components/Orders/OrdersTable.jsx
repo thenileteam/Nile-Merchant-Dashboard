@@ -23,7 +23,7 @@ const OrdersTable = ({ data, isCollapsed }) => {
     display: false,
   });
   const [order, setOrder] = useState(null);
-  const { user, isFetchingUser, isError } = useFetchUser();
+  const { user} = useFetchUser();
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedText, setSelectedText] = useState("");
@@ -204,9 +204,9 @@ const OrdersTable = ({ data, isCollapsed }) => {
               <th className="p-2 text-[14px] text-center">Order ID</th>
               <th className="p-2 text-[14px] text-center">Product Name</th>
               <th className="p-2 text-[14px] text-center">Price</th>
-              <th className="p-2 text-[14px] text-center">
+              {/* <th className="p-2 text-[14px] text-center">
                 Total P. With Shipping
-              </th>
+              </th> */}
               <th className="p-2 text-[14px] text-center">Order Date</th>
               <th className="p-2 text-[14px] text-center">Shipping Status</th>
               <th className="p-2 text-[14px]  text-center">Track Order</th>
@@ -219,7 +219,7 @@ const OrdersTable = ({ data, isCollapsed }) => {
           </thead>
           <tbody>
             {currentItems?.map((order) => (
-              <tr key={order._id} className="bg-[#ffffff] h-[60px] shadow-md">
+              <tr key={order.id} className="bg-[#ffffff] h-[60px] shadow-md">
                 <td className="px-2  bg-[#EAF4E2] text-[13px]">
                   {order?.customer?.name ||
                     order?.customer?.id.slice(0, 2) ||
@@ -229,12 +229,12 @@ const OrdersTable = ({ data, isCollapsed }) => {
                 <td className="px-2  text-center text-[13px]">
                   {order.items[0].name}
                 </td>
-                <td className="px-2  text-center text-[13px]">
+                <td className="px-2  text-center text-[13px]">&#8358;
                   {order.items[0].price}
                 </td>
-                <td className="px-2  text-center text-[13px]">
+                {/* <td className="px-2  text-center text-[13px]">
                   &#8358;{order.totalAmount}
-                </td>
+                </td> */}
                 <td className="px-2 text-center text-[13px]">
                   {format(parseISO(order?.createdAt), "dd MMMM yyyy")}
                 </td>

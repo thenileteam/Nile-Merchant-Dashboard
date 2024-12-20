@@ -4,7 +4,6 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom"; // Make sure this is imported if using React Router
 import { useCallback, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { useUserStore } from "../../zustandStore";
 import ApiInstance from "../../Api/ApiInstance";
 import {
   endOfDay,
@@ -414,6 +413,7 @@ export const useFetchStoreCustomers = () => {
 
   return {
     customers: data,
+    customerLength: data?.length,
     isFetchingCustomers: isFetching,
     isError,
   };

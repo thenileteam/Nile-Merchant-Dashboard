@@ -9,7 +9,8 @@ import {
 import CustomAwaitCard from "../Components/uicomps/customawaitcard";
 import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
-import { useUserStore } from "../zustandStore";
+import { useSidebarStore } from "../ZustandStores/sidebarStore";
+import DashboardBox from "@/Components/Dashboard/DashboardBox";
 const Customer = () => {
   //show user profile image
   const { user } = useFetchUser();
@@ -18,7 +19,7 @@ const Customer = () => {
     isFetchingCustomers: isLoading,
     isError: error,
   } = useFetchStoreCustomers();
-  const {sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed} = useUserStore();
+  const {sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed} = useSidebarStore();
 
   return (
     <>
@@ -38,20 +39,8 @@ const Customer = () => {
             <div className={`${isCollapsed?'max-w-[1000px]':'max-w-[800px]'} mt-28 mb-6 mx-auto`}>
               <CustomAwaitCard isLoading={isLoading} error={error}>
                 <div className="flex gap-20">
-                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                    <img src={usergroup} alt="" />
-                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                      {customers?.length}
-                    </h1>
-                    <p className="text-[#6E6E6E]">Total Customers</p>
-                  </div>
-                  <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                    <img src={usercheck} alt="" />
-                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                      {customers?.length}
-                    </h1>
-                    <p className="text-[#6E6E6E]">Active Customers</p>
-                  </div>
+                  <DashboardBox text='Total Customers'  bgColor='bg-[#FCDADF]' image={ usergroup} data={customers?.length} width='w-[50%]' />
+                  <DashboardBox bgColor='bg-[#FFE8DF]' text='Active Customers' image={usercheck} data={customers?.length} width='w-[50%]'  />
                   {/*<div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={userarrow} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
