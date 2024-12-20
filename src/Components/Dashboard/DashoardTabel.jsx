@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 import { download } from "../../assets";
 import Skeleton from "react-loading-skeleton";
 
-const DashoardTabel = ({ isFetchingDashboardData, dashboardData }) => {
+const DashoardTabel = ({ isFetchingDashboardData, dashboardData, isCollapsed }) => {
   // const { orders, product, salesData } = dashboardData;
   // console.log(dashboardData);
   return (
     <>
-      <div className="lg:px-24 px-2">
+      <div className={`${isCollapsed?'lg:max-w-[1000px]':"lg:max-w-[900px]"} mx-auto px-2`}>
         {isFetchingDashboardData ? (
           <div className=" w-full mt-10 flex flex-col gap-5">
             <Skeleton className=" h-[50px] w-full min-w-52" />

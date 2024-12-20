@@ -1,15 +1,18 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { preference1 } from "../../assets";
-// import AddCustomer from "../PopupModals/AddCustomer";
 import CustomAwaitTable from "../uicomps/customawaittable"
+import Pagination from '../Pagination/Pagination'
+import usePagination from "../Pagination/PaginationHook";
+// import AddCustomer from "../PopupModals/AddCustomer";
 
-const CustomerTable = ({ customers, isLoading, error }) => {
+const CustomerTable = ({ customers, isLoading, error, isCollapsed }) => {
   // console.log(customers);
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedText, setSelectedText] = useState("");
-
+  const itemsPerPage = 10
+  const{pageCount, handlePageChange, currentItems}= usePagination()
   const toggleFilterDropdown = () => {
     setFilterDropdownOpen(!filterDropdownOpen);
   };
@@ -105,7 +108,7 @@ const CustomerTable = ({ customers, isLoading, error }) => {
       )}
 
       {/* Tables */}
-      <div className="max-w-[800px] mx-auto">
+      <div className={`${isCollapsed?'max-w-[1000px]':"max-w-[800px]"} mx-auto`}>
         <CustomAwaitTable isLoading={isLoading} error={error}>
           <table className=" w-full border-separate border-spacing-y-5">
             <thead>
@@ -161,93 +164,8 @@ const CustomerTable = ({ customers, isLoading, error }) => {
           </table>
         </CustomAwaitTable>
       </div>
-
       {/*Pagination*/}
-      <div>
-        <ol className="flex justify-center gap-3 text-xs font-medium mt-3">
-          <li>
-            <a
-              href="#"
-              className="inline-flex size-8 items-center justify-center rounded border border-gray-300 bg-white hover:bg-[#8ED06C] text-gray-900 hover:text-[#E2E8F0] rtl:rotate-180"
-            >
-              <span className="sr-only">Prev Page</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-[#8ED06C] bg-white text-center leading-8 text-[#8ED06C]"
-            >
-              1
-            </a>
-          </li>
-
-          <li className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900">
-            2
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900"
-            >
-              ...
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900"
-            >
-              9
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900"
-            >
-              10
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="inline-flex size-8 items-center justify-center rounded border border-gray-300 bg-white hover:bg-[#8ED06C] text-gray-900 hover:text-[#E2E8F0] rtl:rotate-180"
-            >
-              <span className="sr-only">Next Page</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
-          </li>
-        </ol>
-      </div>
+       {customers?.length>itemsPerPage&&<Pagination pageCount={pageCount} onPageChange={handlePageChange}/>}
     </>
   );
 };

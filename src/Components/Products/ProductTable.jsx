@@ -1,19 +1,20 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
 import { download, preference1 } from "../../assets";
 import EditProduct from "../PopupModals/EditProduct";
 import DeleteProduct from "../PopupModals/DeleteProduct";
-// import AddProduct from "../PopupModals/AddProduct";
 import Skeleton from "react-loading-skeleton";
-
+import Pagination from '../Pagination/Pagination'
+import usePagination from "../Pagination/PaginationHook";
+import { useUserStore } from "@/zustandStore";
 // code start
 const ProductTable = ({ data, isFetching, isError }) => {
-  console.log(data);
-  
+  const itemsPerPage = 10
+  const { pageCount, currentItems, handlePageChange } = usePagination(data, itemsPerPage)
+  const { isCollapsed}= useUserStore()
   return (
     <>
       {/* Table */}
-      <div className="max-w-[800px] mx-auto">
+      <div  className={`${isCollapsed?'max-w-[1000px]':"max-w-[800px]"} mx-auto`}>
         {isFetching ? (
           <div className="bg-[#ffffff] w-full shadow-md">
             <Skeleton className=" w-full h-10" />
@@ -72,7 +73,7 @@ const ProductTable = ({ data, isFetching, isError }) => {
             </thead>
 
             <tbody>
-              {data?.map((product) => (
+              {currentItems?.map((product) => (
                 <tr key={product.id} className="bg-[#ffffff] shadow-md">
                   <td className="lg:p-2 px-2 text-center">{product.id}</td>
                   <td className="lg:p-2 px-2 text-center capitalize">
@@ -83,7 +84,7 @@ const ProductTable = ({ data, isFetching, isError }) => {
                   </td>
                   <td className="lg:p-2 px-2 text-center">{product.price}</td>
                   <td className="lg:p-2 px-2  text-center">
-                    {product.unitsSold||0}
+                    {product.unitsSold || 0}
                   </td>
                   <td className="lg:p-2 px-2  text-center">{product.stock}</td>
                   <td className="lg:p-2 px-2 text-center flex items-center gap-1 justify-center ">
@@ -104,93 +105,10 @@ const ProductTable = ({ data, isFetching, isError }) => {
           </table>
         )}
       </div>
-
-      {/*Pagination*/}
-      <div>
-        <ol className="flex justify-center gap-3 text-xs font-medium mt-3">
-          <li>
-            <a
-              href="#"
-              className="inline-flex size-8 items-center justify-center rounded border border-gray-300 bg-white hover:bg-[#8ED06C] text-gray-900 hover:text-[#E2E8F0] rtl:rotate-180"
-            >
-              <span className="sr-only">Prev Page</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-[#8ED06C] bg-white text-center leading-8 text-[#8ED06C]"
-            >
-              1
-            </a>
-          </li>
-
-          <li className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900">
-            2
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900"
-            >
-              ...
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900"
-            >
-              9
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900"
-            >
-              10
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="inline-flex size-8 items-center justify-center rounded border border-gray-300 bg-white hover:bg-[#8ED06C] text-gray-900 hover:text-[#E2E8F0] rtl:rotate-180"
-            >
-              <span className="sr-only">Next Page</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
-          </li>
-        </ol>
-      </div>
+      {/* pagination */}
+      {data?.length > itemsPerPage && (
+        <Pagination pageCount={pageCount} onPageChange={handlePageChange} />
+      )}
     </>
   );
 };

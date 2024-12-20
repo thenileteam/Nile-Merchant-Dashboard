@@ -15,6 +15,9 @@ export const theme = {
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],
     },
+    transitionProperty: {
+      'width': 'width',
+    },
   },
   screens: {
     xs: "480px",

@@ -12,11 +12,9 @@ const EditCategory = ({ category }) => {
   const { addCategoryToBackend, isEditingCategory } = useEditCategory();
   const handleCategoryInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(value)
     setCategoryDetails((prevDetails) => ({
       ...prevDetails,
       [name]: value,
-      
     }));
   };
 

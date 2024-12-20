@@ -109,7 +109,12 @@ export const useCreateNewCategory = (onSuccessCallback) => {
   const { mutate, isPending: isAddingCategory } = useMutation({
     mutationFn: (data) =>
       ApiInstance.post(`/products/product/store/categories/${store?._id}`, data),
-    onSuccess: (response) => {
+    onSuccess: (response, variables) => {
+      console.log(response)
+      // if (response.data.categoryName === variables.categoryName || response.data.categoryDescription == variables.categoryDescription) {
+      //   toast.success("Category already exists, add product to existing category instead");
+      //   return
+      // }
     // i did this so that name can now take categoryName's value from the form
       const transformedData = {
         id: response.data._id,

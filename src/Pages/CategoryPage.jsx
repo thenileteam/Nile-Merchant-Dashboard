@@ -5,11 +5,12 @@ import { useFetchUser } from "../datahooks/users/userhooks";
 import { arrowleft } from "../assets";
 import AddProduct1 from "../Components/PopupModals/AddProduct1";
 import { useParams } from "react-router-dom";
+import { useUserStore } from "@/zustandStore";
 const CategoryPage = () => {
   const { user } = useFetchUser();
   const { categories } = useFetchCategories();
   const { id } = useParams();
-  console.log(categories);
+  const{isCollapsed} = useUserStore()
   const category = categories && categories[id];
   //capitalize the title of each store name pls do not touch abeg!
   const storeTitle =
@@ -17,7 +18,7 @@ const CategoryPage = () => {
   return (
     <>
       <Sidebar />
-      <div className="flex-grow lg:ml-56 overflow-x-hidden">
+      <div className={`${isCollapsed? 'flex-grow lg:ml-20 ':'flex-grow lg:ml-56 '} overflow-x-hidden`}>
         <Navbar
           title={storeTitle}
           icon={arrowleft}
