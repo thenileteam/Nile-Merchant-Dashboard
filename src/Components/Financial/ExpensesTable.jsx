@@ -16,7 +16,7 @@ const ExpensesTable = () => {
       <div className="bg-white rounded-lg overflow-hidden">
         <table className="w-full border-y-separate">
           <thead className="bg-[#EAF4E2]">
-            <tr>
+            <tr className="text-left bg-[#EAF4E2] shadow-lg">
               <th className="px-6 py-3 text-center font-bold text-[16px]  leading-[18.4px]  tracking-[1%] text-sm border-r text-[#333333]">
                 Expense Type
               </th>
