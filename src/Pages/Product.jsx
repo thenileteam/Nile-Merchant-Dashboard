@@ -13,7 +13,7 @@ import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 const Product = () => {
   const { user } = useFetchUser();
-  const { sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed } = useSidebarStore();
+  const {isCollapsed } = useSidebarStore();
   const [isActiveTab, setIsActiveTab] = useState(true);
   const { data, isFetching, isError } = useFetchProducts();
   const [isCategoryOpen, setCategoryOpen] = useState(false);
@@ -21,7 +21,7 @@ const Product = () => {
   return (
     <div className="bg-[#F5F5F5] pb-20">
       <div className="flex">
-        <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
+        <Sidebar  />
         <div className={`flex-grow ${isCollapsed?'lg:ml-20':'lg:ml-56'} overflow-x-hidden`}>
           <Navbar
             title="Products"
@@ -36,8 +36,8 @@ const Product = () => {
               </div>
             ) : (
               <div className="flex gap-20">
-                  <DashboardBox text='Total Products' image={packagemoving} bgColor='bg-[#FCDADF]' data={data?.length || 0} width='w-[50%]'/>
-                  <DashboardBox text='Total Products View' image={ deliveryview} bgColor='bg-[#FFE8DF]' data={0} width='w-[50%]' />
+                  <DashboardBox text='Total Products' imgWidth='w-9' image={packagemoving} bgColor='bg-[#FCDADF]' data={data?.length || 0} width='w-[50%]'/>
+                  <DashboardBox text='Total Products View' imgWidth='w-8' image={ deliveryview} bgColor='bg-[#FFE8DF]' data={0} width='w-[50%]' />
               </div>
             )}
           </div>

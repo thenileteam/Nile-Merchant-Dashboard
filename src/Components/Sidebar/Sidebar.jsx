@@ -30,8 +30,9 @@ const Sidebar = () => {
       )}
 
       {/* Sidebar */}
+      {/* overflow-x-hidden overflow-y-scroll  */}
       <div
-        className={`fixed top-0 left-0 h-full z-20 bg-[#004324] border-2 text-white p-5 transition-all transform ${
+        className={`fixed top-0 left-0 h-screen custom-scrollbar z-20 bg-[#004324] border-2 text-white p-5 transition-all transform ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0  ${isCollapsed?'w-[110px] duration-100 delay-100 ease-in':'w-[290px] duration-100 delay-100 ease-in' }` }
       >

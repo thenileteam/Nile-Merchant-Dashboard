@@ -20,8 +20,8 @@ import ExpensesTable from "../Components/Financial/ExpensesTable";
 import { ExpenseForm } from "@/Components/Financial/ExpenseForm";
 import { useExpenseHook } from "@/datahooks/users/expensehook";
 import { validateForm } from "@/utils/formatdate";
-
-const FinancialManagement = () => {
+import DashboardBox from "@/Components/Dashboard/DashboardBox";
+const FinancialManagement = ({ data }) => {
   const { user } = useFetchUser();
   const { sidebarOpen, closeSidebar, isCollapsed } = useSidebarStore();
   const [displaySuccessModal, setDisplaySuccessModal] = useState(false);
@@ -45,7 +45,7 @@ const FinancialManagement = () => {
     <>
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
-          <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
+          <Sidebar />
           {/* Navbar */}
           <div
             className={
@@ -60,36 +60,41 @@ const FinancialManagement = () => {
               profilePic={user && user.image ? user.image : ""}
             />
             {/* Cards */}
-            <div className="p-6 mt-28 px-32">
-              <div className=" grid sm:grid-cols-2 space-x-2 lg:grid-cols-3 grid-cols-1 gap-2 lg:gap-28">
-                <div className="bg-[#FCDADF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={bitcoinbag} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Total Revenue</p>
-                </div>
-                <div className="bg-[#FFE8DF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={bitcoin} alt="" />
-                  <h1 className="text-[#333333] leading-[25.3px] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]  leading-4  font-bold text-[14px]  tracking-[1%]">
-                    Total Expences
-                  </p>
-                </div>
-                <div className="bg-[#FFDBFA] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={bitcoindown} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Total Revenue For The Month</p>
-                </div>
+            <div
+              className={`${
+                isCollapsed ? "max-w-[1000px]" : "max-w-[900px]"
+              } p-6 mt-28 mx-auto`}
+            >
+              <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-2 lg:gap-10">
+                <DashboardBox
+                  text="Total Revenue"
+                  imgWidth="w-9"
+                  bgColor="bg-[#FCDADF]"
+                  width="w-full"
+                  image={bitcoinbag}
+                  data={0}
+                />
+                <DashboardBox
+                  text="Total Expenses"
+                  bgColor="bg-[#FFE8DF]"
+                  imgWidth="w-9"
+                  width="w-full"
+                  image={bitcoin}
+                  data={0}
+                />
+                <DashboardBox
+                  text="Total Revenue For The Month"
+                  bgColor="bg-[#FFDBFA]  "
+                  width="w-full"
+                  image={bitcoindown}
+                  imgWidth="w-9"
+                  data={0}
+                />
               </div>
             </div>
 
             {emptyState && (
-              <div className="px-24 mt-32">
+              <div className="px-24 mt-32  ">
                 <div>
                   <img
                     src={moneysend}
@@ -112,8 +117,8 @@ const FinancialManagement = () => {
                 </div>
               </div>
             )}
-            <div className="px-24 mt-6 w-full flex justify-between">
-              <div className="flex  gap-1 items-center">
+            <div className="px-24 mt-6 w-full flex justify-between ">
+              <div className="flex gap-1 items-center">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
@@ -163,7 +168,11 @@ const FinancialManagement = () => {
                 </div>
               )}
               {tabs.find((tab) => tab.active)?.name === "Finance" && (
-                <div className={`${isCollapsed? ' max-w-[1000px]':' max-w-[850px]'} mt-4 mx-auto text-3xl font-bold`}>
+                <div
+                  className={`${
+                    isCollapsed ? " max-w-[1000px]" : " max-w-[850px]"
+                  } mt-4 mx-auto text-3xl font-bold`}
+                >
                   {" "}
                   Coming Soon...{" "}
                 </div>
