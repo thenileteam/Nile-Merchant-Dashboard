@@ -126,7 +126,7 @@ const Orders = () => {
       <div className="bg-[#F5F5F5] overflow-y-hidden pb-20">
         <div className="flex">
           {/* Sidebar */}
-          <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
+          <Sidebar />
 
           {/* Navbar */}
           <div className={`flex-grow ${isCollapsed? 'lg:ml-20':'lg:ml-56'}  overflow-y-hidden lg:overflow-x-hidden`}>
@@ -148,8 +148,8 @@ const Orders = () => {
                   </div>
                 ) : (
                   <>
-                      <DashboardBox text='Total Orders' bgColor='bg-[#FCDADF]' image={shoppingcart} data={data?.length || 0} width='w-[50%]'  />
-                      <DashboardBox text='Pending Shipments' bgColor='bg-[#FFE8DF]' image={truck1} data={0}  width='w-[50%]' />
+                      <DashboardBox text='Total Orders' bgColor='bg-[#FCDADF]' image={shoppingcart} data={data?.length || 0} imgWidth='w-9'  width='w-[50%]'  />
+                      <DashboardBox text='Pending Shipments' bgColor='bg-[#FFE8DF]' imgWidth='w-9'  image={truck1} data={0}  width='w-[50%]' />
                       {/*  data?.filter(item => item.status === 'pending' ) */}
                     {/* <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                       <img src={timer} alt="" />

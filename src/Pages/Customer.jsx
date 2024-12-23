@@ -26,7 +26,7 @@ const Customer = () => {
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
           {/* Sidebar */}
-          <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
+          <Sidebar  />
           {/* Navbar */}
           <div className={isCollapsed? 'flex-grow lg:ml-20 overflow-x-hidden':"flex-grow lg:ml-56 overflow-x-hidden"}>
             <Navbar
@@ -39,8 +39,8 @@ const Customer = () => {
             <div className={`${isCollapsed?'max-w-[1000px]':'max-w-[800px]'} mt-28 mb-6 mx-auto`}>
               <CustomAwaitCard isLoading={isLoading} error={error}>
                 <div className="flex gap-20">
-                  <DashboardBox text='Total Customers'  bgColor='bg-[#FCDADF]' image={ usergroup} data={customers?.length} width='w-[50%]' />
-                  <DashboardBox bgColor='bg-[#FFE8DF]' text='Active Customers' image={usercheck} data={customers?.length} width='w-[50%]'  />
+                  <DashboardBox text='Total Customers' imgWidth='w-9'  bgColor='bg-[#FCDADF]' image={ usergroup} data={customers?.length}  width='w-[50%]' />
+                  <DashboardBox bgColor='bg-[#FFE8DF]' text='Active Customers' imgWidth='w-9' image={usercheck} data={customers?.length} width='w-[50%]'  />
                   {/*<div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={userarrow} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">

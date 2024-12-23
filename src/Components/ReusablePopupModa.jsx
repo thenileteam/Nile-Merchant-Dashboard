@@ -1,5 +1,3 @@
-import React from 'react'
-
 const ReusablePopupModal = () => {
   return (
     <div className=' fixed grid place-items-center w-full h-screen left-0 right-0 bottom-0 top-0'>

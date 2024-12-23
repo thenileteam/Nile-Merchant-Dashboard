@@ -18,7 +18,6 @@ const ProfileSetting = () => {
   const { dbBanks } = useBankDetails();
   const { user, isFetchingUser, isError } = useFetchUser();
 
-
   const [phoneNumber, setPhoneNumber] = useState(
     (user && user.phoneNumber) || ""
   );
@@ -151,7 +150,9 @@ const ProfileSetting = () => {
             <UploadImage
               image={profileimage}
               handleFileChange={handleFileChange}
-              style="w-[100px] h-[100px] object-cover rounded-full"
+              style="w-[100px] h-[100px] object-cover rounded-full mx-auto"
+              labelFor={"fileInput"}
+              parentStyle="mt-10"
             />
           )}
         </div>
@@ -216,7 +217,7 @@ const ProfileSetting = () => {
               )}
             </div>
           </form>
-
+          {/* bank details */}
           <Sheet>
             {dbBanks && (
               <SheetTrigger className=" bg-green mt-10 w-full px-5 py-3 text-white rounded-md ">

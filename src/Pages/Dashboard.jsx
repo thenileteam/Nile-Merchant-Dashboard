@@ -70,29 +70,42 @@ const Dashboard = () => {
                   isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[880px]"
                 } mx-auto`}
               >
-                <div className="grid gap-x-8 gap-y-4 grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-x-8 gap-y-4 grid-cols-2 md:grid-cols-3">
                   <DashboardBox
                     text="Revenue"
+                    naira="&#8358;"
                     image={totalRevenue}
                     bgColor="bg-[#FCDADF]"
-                    data={dashboardData?.salesData?.totalSales || 0}
+                    data={`${dashboardData?.salesData?.totalSales || 0}`}
                   />
-                    <div className="relative">
-                      <span className={` absolute top-2 font-medium ${isCollapsed?'right-12':'right-3'} text-[13px] capitalize`}>coming soon..</span>
+                  <div className="relative">
+                    <span
+                      className={` absolute top-2 font-medium ${
+                        isCollapsed ? "right-12" : "right-3"
+                      } text-[13px] capitalize`}
+                    >
+                      coming soon..
+                    </span>
                     <DashboardBox
                       text="Total Expenses"
                       image={totalExpense}
                       bgColor="bg-[#FFE8DF]"
                       data={"-"}
-                      />
-                    </div>
-                    <div className="relative"> 
-                    <span className={` absolute top-2 font-medium ${isCollapsed?'right-12':'right-3'} text-[13px] capitalize`}>coming soon..</span>
+                    />
+                  </div>
+                  <div className="relative">
+                    <span
+                      className={` absolute top-2 font-medium ${
+                        isCollapsed ? "right-12" : "right-3"
+                      } text-[13px] capitalize`}
+                    >
+                      coming soon..
+                    </span>
                     <DashboardBox
                       text="Total Profits"
                       image={totalProfit}
                       bgColor="bg-[#FFDBFA]"
-                      data={'-'}
+                      data={"-"}
                     />
                   </div>
                   <DashboardBox

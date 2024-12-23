@@ -1,29 +1,35 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { copyright } from "./assets";
+import { useState } from "react";
 import { usePolicyStore } from "./ZustandStores/policyStore";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
+import StoreSettingsLinks from "./Components/Store/StoreSettingLinks";
 const Links = ({ isCollapsed }) => {
   const location = useLocation();
   const { openPolicy } = usePolicyStore();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const closeDropdown = () => {
+    console.log(`clicked`);
+    setIsDropdownOpen((prev) => !prev)
+  };
   // Function to determine if link is active
   const isActive = (path) => location.pathname === path;
   const getLinkClasses = (path) => {
     return `py-2 rounded-lg px-2 flex items-center justify-between border
-    ${isActive(path) ? "bg-[#ffffff] text-[#004324]" : "text-[#ffffff]"}`;
+    ${isActive(path) ? "bg-[#fff] text-[#004324]" : "text-[#fff]"}`;
   };
   return (
-    <ul className={`${isCollapsed?'mt-8':'mt-14'}  overflow-x-hidden`}>
+    <ul className={`${isCollapsed ? "mt-8" : "mt-14"}  overflow-x-hidden`}>
       {/* Dashboard overview */}
       <Link to="/dashboard">
         <li className={`cursor-pointer mt-4 w-full`}>
-          <div
-            className={`${getLinkClasses(
-              "/dashboard"
-            )}`}
-          >
-            <div className="flex items-center gap-3">
+          <div className={`${getLinkClasses("/dashboard")}`}>
+            <div
+              className={`flex items-center  ${
+                isCollapsed ? "mx-auto" : "mx-0"
+              } gap-3`}
+            >
               {/* SVG icon */}
-
               <svg
                 width="24"
                 height="25"
@@ -54,7 +60,9 @@ const Links = ({ isCollapsed }) => {
                 />
               </svg>
               {/* {isCollapsed ? "" : "Dashboard Overview"} */}
-              <p className={`${isCollapsed? 'hidden': 'block'}  `}>Dashboard Overview</p>
+              <p className={`${isCollapsed ? "hidden" : "block"}  `}>
+                Dashboard Overview
+              </p>
             </div>
           </div>
         </li>
@@ -62,9 +70,13 @@ const Links = ({ isCollapsed }) => {
 
       {/* Orders & Shipping */}
       <Link to="/orders">
-        <li  className={`cursor-pointer mt-4 w-full`}>
-          <div className={`${getLinkClasses("/orders")} transitions`}>
-            <div className="flex items-center gap-3 transitions">
+        <li className={`cursor-pointer mt-4 w-full`}>
+          <div className={`${getLinkClasses("/orders")}`}>
+            <div
+              className={`flex items-center  ${
+                isCollapsed ? "mx-auto" : "mx-0"
+              } gap-3`}
+            >
               {/* SVG icon */}
               <svg
                 width="24"
@@ -105,7 +117,6 @@ const Links = ({ isCollapsed }) => {
                 />
               </svg>
               {isCollapsed ? "" : "Orders"}
-              {/* <p className={isCollapsed? 'invisible transitions':'visible transitions'}>Orders</p> */}
             </div>
           </div>
         </li>
@@ -113,9 +124,13 @@ const Links = ({ isCollapsed }) => {
 
       {/* Products */}
       <Link to="/product">
-        <li  className={`cursor-pointer mt-4 w-full`}>
+        <li className={`cursor-pointer mt-4 w-full`}>
           <div className={`${getLinkClasses("/product")}`}>
-            <div className="flex items-center gap-3 transitions">
+            <div
+              className={`flex items-center  ${
+                isCollapsed ? "mx-auto" : "mx-0"
+              } gap-3`}
+            >
               {/* SVG icon */}
               <svg
                 width="24"
@@ -161,7 +176,6 @@ const Links = ({ isCollapsed }) => {
                 />
               </svg>
               {isCollapsed ? "" : "Products"}
-              {/* <p className={isCollapsed? 'invisible transitions':'visible transitions'}>Products</p> */}
             </div>
           </div>
         </li>
@@ -197,7 +211,11 @@ const Links = ({ isCollapsed }) => {
       <Link to="/customer">
         <li className={`cursor-pointer mt-4 w-full`}>
           <div className={`${getLinkClasses("/customer")} transitions`}>
-            <div className="flex items-center gap-3">
+            <div
+              className={`flex items-center  ${
+                isCollapsed ? "mx-auto" : "mx-0"
+              } gap-3`}
+            >
               {/* SVG icon */}
               <svg
                 width="24"
@@ -249,9 +267,13 @@ const Links = ({ isCollapsed }) => {
 
       {/* Financial Management */}
       <Link to="/financial">
-        <li className="cursor-pointer mt-5">
+        <li className="cursor-pointer mt-4">
           <div className={getLinkClasses("/financial")}>
-            <div className="flex items-center gap-3">
+            <div
+              className={`flex items-center  ${
+                isCollapsed ? "mx-auto" : "mx-0"
+              } gap-3`}
+            >
               <svg
                 width="24"
                 height="24"
@@ -288,69 +310,44 @@ const Links = ({ isCollapsed }) => {
                   strokeLinejoin="round"
                 />
               </svg>
-              {isCollapsed? '':'Financial Management'} 
-           
+              {isCollapsed ? "" : "Transactions"}
             </div>
           </div>
         </li>
-      </Link> 
+      </Link>
 
       {/* Store Setting */}
-      {/* <Link to="/store">
-        <li  className={`cursor-pointer w-full`}>
-          <div className={getLinkClasses("/store")}>
-            <div className="flex items-center gap-3">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M3 10.9863V15.4929C3 18.3254 3 19.7417 3.87868 20.6217C4.75736 21.5017 6.17157 21.5017 9 21.5017H15C17.8284 21.5017 19.2426 21.5017 20.1213 20.6217C21 19.7417 21 18.3254 21 15.4929V10.9863"
-                  stroke={isActive("/store") ? "#004324" : "#ffffff"}
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M7 17.9746H11"
-                  stroke={isActive("/store") ? "#004324" : "#ffffff"}
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M17.7966 2.50074L6.1508 2.52979C4.41263 2.44036 3.96697 3.77884 3.96697 4.43315C3.96697 5.01834 3.89152 5.87145 2.82621 7.47487C1.7609 9.07829 1.84095 9.55462 2.44168 10.6646C2.94025 11.5859 4.20838 11.9457 4.86959 12.0063C6.9698 12.054 7.99162 10.24 7.99162 8.9652C9.03348 12.1685 11.9965 12.1685 13.3167 11.8022C14.6395 11.4352 15.7726 10.1216 16.04 8.9652C16.1959 10.4023 16.6691 11.241 18.0672 11.8172C19.5154 12.4141 20.7608 11.5018 21.3857 10.917C22.0106 10.3322 22.4116 9.03389 21.2977 7.60691C20.5295 6.62282 20.2093 5.69573 20.1042 4.73487C20.0432 4.17812 19.9897 3.57986 19.5981 3.19915C19.0257 2.64278 18.2045 2.47397 17.7966 2.50074Z"
-                  stroke={isActive("/store") ? "#004324" : "#ffffff"}
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              Store {isCollapsed? '':'Settings'}
-            </div>
-          </div>
-        </li>
-      </Link> */}
-
-      {/* Footer */}
-      {!isCollapsed && (
-        <footer className="mt-20  ">
-          {/* <div className="flex items-center gap-3">
-          <h1 className="text-sm">Terms & Conditions</h1>
-          <p className="text-sm">Home</p>
-          <p className="text-sm">About Us</p>
+      {/* <div className="mt-4 border-b-2 border-t-2 border-dotted py-3">
+        <div className="flex items-center justify-between gap-1 pb-1">
+          <li>Store {isCollapsed?'': 'Settings'}</li>
+          <button
+            type="button"
+            className="bg-transparent border-2  border-blue-600"
+            onClick={closeDropdown}
+          >
+            {isDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
+          </button>
         </div>
-        <div className="flex items-center gap-1 justify-center">
-          <img src={copyright} alt="" />
-          <h1 className="text-sm">By Dorisa Technology LTD</h1>
-        </div> */}
+        {/*drop down links */}
+       {/* {isDropdownOpen && (
+          <StoreSettingsLinks
+            isCollapsed={isCollapsed}
+            getLinkClasses={getLinkClasses}
+            isActive={isActive}
+            isDropDownOpen={isDropdownOpen}
+          />
+        )}
+      </div> */}
+      {/* Footer */}
+      {!isCollapsed && !isDropdownOpen && (
+        <footer className="mt-20  ">
           <div>
             <button
               type="button"
               className="absolute bottom-10 hover:opacity-50"
               onClick={openPolicy}
             >
-              Terms and conditons
+              Terms and conditions
             </button>
             <a
               href="https://nile.ng/"
