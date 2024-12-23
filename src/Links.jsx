@@ -21,7 +21,7 @@ const Links = ({ isCollapsed }) => {
               "/dashboard"
             )}`}
           >
-            <div className="flex items-center gap-3">
+            <div className={`flex items-center  ${isCollapsed?'mx-auto':'mx-0'} gap-3`}>
               {/* SVG icon */}
 
               <svg
@@ -30,6 +30,7 @@ const Links = ({ isCollapsed }) => {
                 viewBox="0 0 24 25"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+               
               >
                 <path
                   d="M6.25 10.8262C8.59721 10.8262 10.5 8.92338 10.5 6.57617C10.5 4.22896 8.59721 2.32617 6.25 2.32617C3.90279 2.32617 2 4.22896 2 6.57617C2 8.92338 3.90279 10.8262 6.25 10.8262Z"
@@ -63,8 +64,8 @@ const Links = ({ isCollapsed }) => {
       {/* Orders & Shipping */}
       <Link to="/orders">
         <li  className={`cursor-pointer mt-4 w-full`}>
-          <div className={`${getLinkClasses("/orders")} transitions`}>
-            <div className="flex items-center gap-3 transitions">
+          <div className={`${getLinkClasses("/orders")}`}>
+            <div  className={`flex items-center  ${isCollapsed?'mx-auto':'mx-0'} gap-3`}>
               {/* SVG icon */}
               <svg
                 width="24"
@@ -115,7 +116,7 @@ const Links = ({ isCollapsed }) => {
       <Link to="/product">
         <li  className={`cursor-pointer mt-4 w-full`}>
           <div className={`${getLinkClasses("/product")}`}>
-            <div className="flex items-center gap-3 transitions">
+            <div  className={`flex items-center  ${isCollapsed?'mx-auto':'mx-0'} gap-3`}>
               {/* SVG icon */}
               <svg
                 width="24"
@@ -197,7 +198,7 @@ const Links = ({ isCollapsed }) => {
       <Link to="/customer">
         <li className={`cursor-pointer mt-4 w-full`}>
           <div className={`${getLinkClasses("/customer")} transitions`}>
-            <div className="flex items-center gap-3">
+            <div  className={`flex items-center  ${isCollapsed?'mx-auto':'mx-0'} gap-3`}>
               {/* SVG icon */}
               <svg
                 width="24"
@@ -251,7 +252,7 @@ const Links = ({ isCollapsed }) => {
       <Link to="/financial">
         <li className="cursor-pointer mt-5">
           <div className={getLinkClasses("/financial")}>
-            <div className="flex items-center gap-3">
+            <div  className={`flex items-center  ${isCollapsed?'mx-auto':'mx-0'} gap-3`}>
               <svg
                 width="24"
                 height="24"
