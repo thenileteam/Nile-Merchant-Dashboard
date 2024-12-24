@@ -3,13 +3,12 @@ import { copyright } from "./assets";
 import { useState } from "react";
 import { usePolicyStore } from "./ZustandStores/policyStore";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
-import StoreSettingsLinks from "./Components/Store/StoreSettingLinks";
+import StoreSettingsLinks from "./Components/Store/AllStoreComp/StoreSettingLinks";
 const Links = ({ isCollapsed }) => {
   const location = useLocation();
   const { openPolicy } = usePolicyStore();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const closeDropdown = () => {
-    console.log(`clicked`);
     setIsDropdownOpen((prev) => !prev);
   };
   // Function to determine if link is active
@@ -284,14 +283,14 @@ const Links = ({ isCollapsed }) => {
                 <path
                   opacity="0.4"
                   d="M20 17.6406H4"
-                  stroke={isActive("/customer") ? "#004324" : "#ffffff"}
+                  stroke={isActive("/financial") ? "#004324" : "#ffffff"}
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
                   d="M17.0001 14.6406C17.0001 14.6406 20 16.8501 20 17.6406C20 18.4312 17 20.6406 17 20.6406"
-                  stroke={isActive("/customer") ? "#004324" : "#ffffff"}
+                  stroke={isActive("/financial") ? "#004324" : "#ffffff"}
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -299,14 +298,14 @@ const Links = ({ isCollapsed }) => {
                 <path
                   opacity="0.4"
                   d="M5 7.64062H20"
-                  stroke={isActive("/customer") ? "#004324" : "#ffffff"}
+                  stroke={isActive("/financial") ? "#004324" : "#ffffff"}
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
                   d="M6.99998 4.64062C6.99998 4.64062 4.00001 6.8501 4 7.64065C3.99999 8.43121 7 10.6406 7 10.6406"
-                  stroke={isActive("/customer") ? "#004324" : "#ffffff"}
+                  stroke={isActive("/financial") ? "#004324" : "#ffffff"}
                   stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -322,7 +321,7 @@ const Links = ({ isCollapsed }) => {
       {/* Store Setting */}
       <div className="mt-4 border-b-2 border-t-2 border-dotted py-3">
         <div className="flex items-center justify-between gap-1 pb-1">
-          <li>Store {isCollapsed?'': 'Settings'}</li>
+          <li>Store {isCollapsed ? "" : "Settings"}</li>
           <button
             type="button"
             className="bg-transparent border-2  border-blue-600"
@@ -332,7 +331,7 @@ const Links = ({ isCollapsed }) => {
           </button>
         </div>
         {/*drop down links */}
-       {isDropdownOpen && (
+        {isDropdownOpen && (
           <StoreSettingsLinks
             isCollapsed={isCollapsed}
             getLinkClasses={getLinkClasses}

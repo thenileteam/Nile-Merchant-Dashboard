@@ -135,7 +135,7 @@ export const useLogOut = () => {
 export const useSignUserUp = () => {
   const navigate = useNavigate();
   //access state from zustand store
-  const setUsername = useUserStore((state) => state.setUsername);
+  // const setUsername = useUserStore((state) => state.setUsername);
   const [error] = useState("");
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
