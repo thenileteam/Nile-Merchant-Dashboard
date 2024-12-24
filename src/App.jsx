@@ -17,6 +17,7 @@ import PaymentSetting from "./Components/Store/PaymentSetting";
 import UserSetting from "./Components/Store/UserSetting";
 import NotificationSetting from "./Components/Store/NotificationSetting";
 import BankSetting from "./Components/Store/BankSetting";
+import Staffs from "./Pages/Staffs";
 import PlanSetting from "./Components/Store/PlanSetting";
 import ShippingSetting from "./Components/Store/ShippingSetting";
 import DomainSetting from "./Components/Store/DomainSetting";
@@ -163,6 +164,14 @@ const App = () => {
           element: (
             <ProtectRoutes>
               <NotificationSetting />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/staffs",
+          element: (
+            <ProtectRoutes>
+              <Staffs />
             </ProtectRoutes>
           ),
         },
