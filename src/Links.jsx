@@ -10,7 +10,7 @@ const Links = ({ isCollapsed }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const closeDropdown = () => {
     console.log(`clicked`);
-    setIsDropdownOpen((prev) => !prev)
+    setIsDropdownOpen((prev) => !prev);
   };
   // Function to determine if link is active
   const isActive = (path) => location.pathname === path;
@@ -276,40 +276,43 @@ const Links = ({ isCollapsed }) => {
             >
               <svg
                 width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                height="25"
+                viewBox="0 0 24 25"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M13.5 19.5V11.5C13.5 10.5572 13.5 10.0858 13.2071 9.79289C12.9142 9.5 12.4428 9.5 11.5 9.5C10.5572 9.5 10.0858 9.5 9.79289 9.79289C9.5 10.0858 9.5 10.5572 9.5 11.5V19.5C9.5 20.4428 9.5 20.9142 9.79289 21.2071C10.0858 21.5 10.5572 21.5 11.5 21.5C12.4428 21.5 12.9142 21.5 13.2071 21.2071C13.5 20.9142 13.5 20.4428 13.5 19.5Z"
-                  stroke={isActive("/financial") ? "#004324" : "#ffffff"}
+                  opacity="0.4"
+                  d="M20 17.6406H4"
+                  stroke={isActive("/customer") ? "#004324" : "#ffffff"}
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
-                  d="M20.5 12.5V19.5C20.5 20.4428 20.5 20.9142 20.2071 21.2071C19.9142 21.5 19.4428 21.5 18.5 21.5C17.5572 21.5 17.0858 21.5 16.7929 21.2071C16.5 20.9142 16.5 20.4428 16.5 19.5V12.5"
-                  stroke={isActive("/financial") ? "#004324" : "#ffffff"}
+                  d="M17.0001 14.6406C17.0001 14.6406 20 16.8501 20 17.6406C20 18.4312 17 20.6406 17 20.6406"
+                  stroke={isActive("/customer") ? "#004324" : "#ffffff"}
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
-                  d="M17.4375 9.16667V3.83333M19 3.83333V2.5M19 10.5V9.16667M17.4375 6.5H20.5625M20.5625 6.5C21.0803 6.5 21.5 6.94772 21.5 7.5V8.16667C21.5 8.71895 21.0803 9.16667 20.5625 9.16667H16.5M20.5625 6.5C21.0803 6.5 21.5 6.05228 21.5 5.5V4.83333C21.5 4.28105 21.0803 3.83333 20.5625 3.83333H16.5"
-                  stroke={isActive("/financial") ? "#004324" : "#ffffff"}
+                  opacity="0.4"
+                  d="M5 7.64062H20"
+                  stroke={isActive("/customer") ? "#004324" : "#ffffff"}
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
-                  d="M6.5 19.5V14.5C6.5 13.5572 6.5 13.0858 6.20711 12.7929C5.91421 12.5 5.44281 12.5 4.5 12.5C3.55719 12.5 3.08579 12.5 2.79289 12.7929C2.5 13.0858 2.5 13.5572 2.5 14.5V19.5C2.5 20.4428 2.5 20.9142 2.79289 21.2071C3.08579 21.5 3.55719 21.5 4.5 21.5C5.44281 21.5 5.91421 21.5 6.20711 21.2071C6.5 20.9142 6.5 20.4428 6.5 19.5Z"
-                  stroke={isActive("/financial") ? "#004324" : "#ffffff"}
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  d="M6.99998 4.64062C6.99998 4.64062 4.00001 6.8501 4 7.64065C3.99999 8.43121 7 10.6406 7 10.6406"
+                  stroke={isActive("/customer") ? "#004324" : "#ffffff"}
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 />
               </svg>
+
               {isCollapsed ? "" : "Transactions"}
             </div>
           </div>
@@ -317,7 +320,7 @@ const Links = ({ isCollapsed }) => {
       </Link>
 
       {/* Store Setting */}
-      {/* <div className="mt-4 border-b-2 border-t-2 border-dotted py-3">
+      <div className="mt-4 border-b-2 border-t-2 border-dotted py-3">
         <div className="flex items-center justify-between gap-1 pb-1">
           <li>Store {isCollapsed?'': 'Settings'}</li>
           <button
@@ -329,7 +332,7 @@ const Links = ({ isCollapsed }) => {
           </button>
         </div>
         {/*drop down links */}
-       {/* {isDropdownOpen && (
+       {isDropdownOpen && (
           <StoreSettingsLinks
             isCollapsed={isCollapsed}
             getLinkClasses={getLinkClasses}
@@ -337,7 +340,7 @@ const Links = ({ isCollapsed }) => {
             isDropDownOpen={isDropdownOpen}
           />
         )}
-      </div> */}
+      </div>
       {/* Footer */}
       {!isCollapsed && !isDropdownOpen && (
         <footer className="mt-20  ">

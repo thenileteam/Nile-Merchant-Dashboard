@@ -46,6 +46,63 @@ const StoreSettingLinks = ({
             </div>
           </div>
         </Link>
+        <Link to="/staffs">
+          <div className={`${getLinkClasses("/staffs")} mt-3`}>
+            <div className="flex items-center gap-2 rounded-md">
+              <svg
+                width="24"
+                height="25"
+                viewBox="0 0 24 25"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M2.5 12.6406C2.5 8.16228 2.5 5.92311 3.89124 4.53186C5.28249 3.14062 7.52166 3.14062 12 3.14062C16.4783 3.14062 18.7175 3.14062 20.1088 4.53186C21.5 5.92311 21.5 8.16228 21.5 12.6406C21.5 17.1189 21.5 19.3581 20.1088 20.7494C18.7175 22.1406 16.4783 22.1406 12 22.1406C7.52166 22.1406 5.28249 22.1406 3.89124 20.7494C2.5 19.3581 2.5 17.1189 2.5 12.6406Z"
+                  stroke={isActive("/staffs") ? "#004324" : "#ffffff"}
+                  strokeWidth="1.5"
+                />
+                <path
+                  d="M11 7.64062H17"
+                  stroke={isActive("/staffs") ? "#004324" : "#ffffff"}
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M7 7.64062H8"
+                  stroke="#004324"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M7 12.6406H8"
+                  stroke={isActive("/staffs") ? "#004324" : "#ffffff"}
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M7 17.6406H8"
+                  stroke={isActive("/staffs") ? "#004324" : "#ffffff"}
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M11 12.6406H17"
+                  stroke={isActive("/staffs") ? "#004324" : "#ffffff"}
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M11 17.6406H17"
+                  stroke={isActive("/staffs") ? "#004324" : "#ffffff"}
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+              </svg>
+
+              {isCollapsed ? "" : "Staff Management"}
+            </div>
+          </div>
+        </Link>
         <Link to="/banksetting">
           <div className={`${getLinkClasses("/banksetting")} mt-3`}>
             <div className="flex items-center gap-2 rounded-md">
@@ -84,7 +141,7 @@ const StoreSettingLinks = ({
                   strokeWidth="1.5"
                 />
               </svg>
-               {isCollapsed ? "" : "Bank Details"} 
+              {isCollapsed ? "" : "Bank Details"}
             </div>
           </div>
         </Link>
@@ -131,7 +188,7 @@ const StoreSettingLinks = ({
                   strokeLinecap="round"
                 />
               </svg>
-               {isCollapsed ? "" : "Plan & Billing Settings"}
+              {isCollapsed ? "" : "Plan & Billing Settings"}
             </div>
           </div>
         </Link>
