@@ -95,19 +95,19 @@ const Product = () => {
               </button>
             )}
           </div>
-          {data && data.length === 0 && (
+          {data && data.length < 1 && (
             <div className="px-24 mt-28">
               <div>
                 <img
                   src={packageoutofstock}
-                  alt=""
+                  alt="icon to show you that there no products yet"
                   className="flex justify-center mx-auto"
                 />
                 <h1 className="text-[24px] font-extrabold text-center">
                   You Have No Product Yet
                 </h1>
                 <p className="text-[#6E6E6E] font-bold text-center">
-                  First up;Add your products Dear <br /> Merchants in order to
+                  First up:Add your products Dear <br /> Merchants in order to
                   start making <br /> sales
                 </p>
               </div>

@@ -27,10 +27,9 @@ const EditCategory = ({ category }) => {
         id: category.id,
       };
       addCategoryToBackend(updatedCategory);
-    }  catch (error) {
+    } catch (error) {
       console.log(error);
     }
-
   };
   return (
     <>
@@ -66,25 +65,25 @@ const EditCategory = ({ category }) => {
       {showForm && (
         <div className="bg-[rgba(0,0,0,0.4)] fixed inset-0">
           <div className="max-w-[450px] mx-auto relative">
-          <button
-          className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"
-          onClick={() => setShowForm(false)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
+            <button
+              className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"
+              onClick={() => setShowForm(false)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
             <form className="bg-white p-8 mt-32">
               <div className=" ">
                 <label htmlFor="categoryName" className="mb-2">
@@ -119,17 +118,17 @@ const EditCategory = ({ category }) => {
                 />
               </div>
               <button
-            type="button"
-            disabled={isEditingCategory}
-            onClick={handleEditCategory}
-            className="bg-green text-white mt-8 font-semibold block mx-auto w-[120px] p-2 rounded-lg"
-          >
-            {isEditingCategory ? (
-              <BiLoaderCircle className=" animate-spin duration-300 transition-all block mx-auto" />
-            ) : (
-              "Edit Category"
-            )}
-          </button>
+                type="button"
+                disabled={isEditingCategory}
+                onClick={handleEditCategory}
+                className="bg-green text-white mt-8 font-semibold block mx-auto w-[120px] p-2 rounded-lg"
+              >
+                {isEditingCategory ? (
+                  <BiLoaderCircle className=" animate-spin duration-300 transition-all block mx-auto" />
+                ) : (
+                  "Edit Category"
+                )}
+              </button>
             </form>
           </div>
         </div>

@@ -1,10 +1,13 @@
-import { totalRevenue } from '@/assets';
-import {useState} from 'react'
+import { totalRevenue } from "@/assets";
+import { useState } from "react";
 const EditStaff = () => {
-  const [editStaff, setEditStaff] = useState(false)
+  const [editStaff, setEditStaff] = useState(false);
   return (
     <div>
-      <button className="hover:scale-110 duration-300 hover:border-[#8ED06C] border-[#ffffff] border-b-[2px] transition underline-offset-2 decoration-[2px] inline-block hover:-translate-x-1" onClick={() => setEditStaff(!editStaff)}>
+      <button
+        className="hover:scale-110 duration-300 hover:border-[#8ED06C] border-[#ffffff] border-b-[2px] transition underline-offset-2 decoration-[2px] inline-block hover:-translate-x-1"
+        onClick={() => setEditStaff(!editStaff)}
+      >
         <svg
           width="24"
           height="24"
@@ -29,106 +32,120 @@ const EditStaff = () => {
       </button>
 
       {/* edit staff parent */}
-     { editStaff &&<div className="bg-[rgba(0,0,0,0.4)] fixed inset-0">
-        <div className="max-w-[450px] mx-auto relative">
-        <button
-          className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"
-          onClick={() => setEditStaff(false)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-          </button>
-          {/* edit form component */}
-          <form action="" className="bg-white p-8 mt-32">
-            <div className="mt-4 ">
-              <label
-                htmlFor="adminName"
-                className="mb-2 text-lightBlack font-bold"
+      {editStaff && (
+        <div className="bg-[rgba(0,0,0,0.4)] fixed inset-0">
+          <div className="max-w-[450px] mx-auto relative">
+            <button
+              className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"
+              onClick={() => setEditStaff(false)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                Admin Name
-              </label>
-              <input
-                type="text"
-                name="adminName"
-                placeholder="Enter Admin Name e.g Farouk kola"
-                className="border border-lightGreen rounded-md  p-2 block w-full"
-                required
-              />
-            </div>
-            <h4 className="text-green font-bold">Last Login: <span className='text-lightBlack'>date</span></h4>
-            <div>
-              <h3 className="text-green font-bold mt-2">Permissions</h3>
-              <p className="mb-2 text-[#6e6e6e] text-[12px]">
-                Choose What The Admin Should Be Able To Access:
-              </p>
-              <div className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2">
-                <div>
-                  <h3 className="text-gray-800 font-semibold text-sm ">
-                    Orders & Shipping
-                  </h3>
-                  <p className="text-gray-500 text-[12px]">
-                    Will be able to perform action on this page
-                  </p>
-                </div>
-                <label htmlFor="order-permission">
-                  <input type="checkbox" id="order-permission" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+            {/* edit form component */}
+            <form action="" className="bg-white p-8 mt-[100px]">
+              <div className="mt-4 ">
+                <label
+                  htmlFor="adminName"
+                  className="mb-2 text-lightBlack font-bold"
+                >
+                  Admin Name
                 </label>
+                <input
+                  type="text"
+                  name="adminName"
+                  placeholder="Enter Admin Name e.g Farouk kola"
+                  className="border border-lightGreen rounded-md  p-2 block w-full"
+                  required
+                />
               </div>
-              <div className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2">
-                <div>
-                  <h3 className="text-gray-800 font-semibold text-sm ">
-                    Products
-                  </h3>
-                  <p className="text-gray-500 text-[12px]">
-                    Will be able to perform action on this page
-                  </p>
+              <h4 className="text-green font-bold">
+                Last Login: <span className="text-lightBlack">date</span>
+              </h4>
+              <div>
+                <h3 className="text-green font-bold mt-2">Permissions</h3>
+                <p className="mb-2 text-[#6e6e6e] text-[12px]">
+                  Choose What The Admin Should Be Able To Access:
+                </p>
+                <div className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2">
+                  <div>
+                    <h3 className="text-gray-800 font-semibold text-sm ">
+                      Orders & Shipping
+                    </h3>
+                    <p className="text-gray-500 text-[12px]">
+                      Will be able to perform action on this page
+                    </p>
+                  </div>
+                  <label htmlFor="order-permission">
+                    <input type="checkbox" id="order-permission" />
+                  </label>
                 </div>
-                <label htmlFor="product-permission">
-                  <input type="checkbox" id="product-permission" />
-                </label>
-              </div>
-              <div className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2">
-                <div>
-                  <h3 className="text-gray-800 font-semibold text-sm ">
-                    Customer Management
-                  </h3>
-                  <p className="text-gray-500 text-[12px]">
-                    Will be able to perform action on this page
-                  </p>
+                <div className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2">
+                  <div>
+                    <h3 className="text-gray-800 font-semibold text-sm ">
+                      Products
+                    </h3>
+                    <p className="text-gray-500 text-[12px]">
+                      Will be able to perform action on this page
+                    </p>
+                  </div>
+                  <label htmlFor="product-permission">
+                    <input type="checkbox" id="product-permission" />
+                  </label>
                 </div>
-                <label htmlFor="customer-permission">
-                  <input type="checkbox" id="customer-permission" />
-                </label>
-              </div>
-              <div className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2">
-                <div>
-                  <h3 className="text-gray-800 font-semibold text-sm ">
-                    Financial Management
-                  </h3>
-                  <p className="text-gray-500 text-[12px]">
-                    Will be able to perform action on this page
-                  </p>
+                <div className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2">
+                  <div>
+                    <h3 className="text-gray-800 font-semibold text-sm ">
+                      Customer Management
+                    </h3>
+                    <p className="text-gray-500 text-[12px]">
+                      Will be able to perform action on this page
+                    </p>
+                  </div>
+                  <label htmlFor="customer-permission">
+                    <input type="checkbox" id="customer-permission" />
+                  </label>
                 </div>
-                <label htmlFor="financial-permission">
-                  <input type="checkbox" id="financial-permission" />
-                </label>
+                <div className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2">
+                  <div>
+                    <h3 className="text-gray-800 font-semibold text-sm ">
+                      Financial Management
+                    </h3>
+                    <p className="text-gray-500 text-[12px]">
+                      Will be able to perform action on this page
+                    </p>
+                  </div>
+                  <label htmlFor="financial-permission">
+                    <input type="checkbox" id="financial-permission" />
+                  </label>
+                </div>
               </div>
-            </div>
-          </form>
+              <div className="mt-6 flex gap-3 max-w-[327px] mx-auto">
+              <button
+                type="button"
+                className="bg-green text-white w-[150px] p-2 rounded-md"
+              >
+                Save Changes
+              </button>
+              <button type="button" className="border border-lightGreen text-lightGreen w-[150px] p-2 rounded-md">Delete Admin</button>
+
+              </div>
+            </form>
+          </div>
         </div>
-      </div>}
+      )}
     </div>
   );
 };
