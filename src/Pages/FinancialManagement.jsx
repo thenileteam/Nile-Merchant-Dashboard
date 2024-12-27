@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -80,7 +81,7 @@ const FinancialManagement = ({ data }) => {
                   bgColor="bg-[#FCDADF]"
                   width="w-full"
                   image={bitcoinbag}
-                  data={0}
+                  data={totalRevenue}
                 />
                 <DashboardBox
                   text="Total Expenses"
@@ -88,7 +89,7 @@ const FinancialManagement = ({ data }) => {
                   imgWidth="w-9"
                   width="w-full"
                   image={bitcoin}
-                  data={0}
+                  data={totalExpense}
                 />
                 <DashboardBox
                   text="Total Revenue For The Month"
@@ -96,7 +97,7 @@ const FinancialManagement = ({ data }) => {
                   width="w-full"
                   image={bitcoindown}
                   imgWidth="w-9"
-                  data={0}
+                  data={totalRevenueForMonth}
                 />
               </div>
             </div>
