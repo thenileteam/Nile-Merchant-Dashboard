@@ -1,5 +1,6 @@
 import { useFetchExpense } from "@/datahooks/users/expensehook";
 import { format, parseISO } from "date-fns";
+import { UserTableListLoader } from "../CustomLoaders/loaders";
 
 const ExpensesTable = () => {
   // Sample data - replace with your actual data source
@@ -13,33 +14,40 @@ const ExpensesTable = () => {
 
   return (
     <div className="px-24 mt-6">
-      <div className="bg-white rounded-lg overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-[#EAF4E2]">
-            <tr>
-              <th className="px-6 py-3 text-center font-bold text-[16px]  leading-[18.4px]  tracking-[1%] text-sm border-r text-[#333333]">
+
+        <UserTableListLoader
+
+          data={data}
+          loading={isFetching}
+          error={isError}
+          cols={3}
+        >
+          <table className="w-full  border-separate border-spacing-y-5">
+            <thead>
+              <tr className="text-left bg-[#EAF4E2] shadow-lg">
+              <th className="px-2 py-3 text-center font-bold   tracking-[1%] text-sm border-r text-[#333333]">
                 Expense Type
               </th>
-              <th className="px-6 py-3 text-center font-bold text-[16px]  leading-[18.4px]  tracking-[1%] text-sm border-r text-[#333333]">
+              <th className="px-2 py-3 text-center font-bold   tracking-[1%] text-sm border-r text-[#333333]">
                 Amount
               </th>
-              <th className="px-6 py-3 text-center font-bold text-[16px]  leading-[18.4px]  tracking-[1%] text-sm border-r text-[#333333]">
+              <th className="px-2 py-3 text-center font-bold   tracking-[1%] text-sm border-r text-[#333333]">
                 Date
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="w-full bg-transparent">
             {data ? (
               data.length > 0 ? (
                 data.map((expense, index) => (
-                  <tr key={index} className="hover:bg-gray-50">
-                    <td className="px-6 py-4  font-bold  text-[#6E6E6E]  leading-[18.4px] text-center ">
+                  <tr key={index} className=" shadow-md">
+                    <td className="px-2 py-3  font-bold  text-center ">
                       {expense.name}
                     </td>
-                    <td className="px-6 py-4  font-bold  text-center text-[16px]  leading-[18.4px]  tracking-[1%] text-sm text-[#6E6E6E]">
+                    <td className="px-2 py-3  font-bold  text-center   tracking-[1%] text-sm ">
                       {expense.amount}
                     </td>
-                    <td className="px-6 py-4  font-bold  text-center text-[16px]  leading-[18.4px]  tracking-[1%] text-sm text-[#6E6E6E]">
+                    <td className="px-2 py-3  font-bold  text-center   tracking-[1%] text-sm ">
                     {format(parseISO(expense.createdAt), 'MMMM d, yyyy')}
                     </td>
                   </tr>
@@ -72,7 +80,7 @@ const ExpensesTable = () => {
             )}
           </tbody>
         </table>
-
+        </UserTableListLoader>
         {/* Pagination */}
         <div className="flex items-center justify-center py-4 bg-white">
           <nav className="flex items-center gap-2">
@@ -99,7 +107,7 @@ const ExpensesTable = () => {
             </button>
           </nav>
         </div>
-      </div>
+
     </div>
   );
 };

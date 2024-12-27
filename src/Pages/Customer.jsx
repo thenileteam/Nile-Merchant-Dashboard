@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { userlist, usergroup, usercheck, userblock } from "../assets";
 import CustomerTable from "../Components/Customers/CustomerTable";
 import AddCustomer1 from "../Components/PopupModals/AddCustomer1";
@@ -18,7 +18,7 @@ const Customer = () => {
     isFetchingCustomers: isLoading,
     isError: error,
   } = useFetchStoreCustomers();
-  const {sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed} = useUserStore();
+  const {sidebarOpen, closeSidebar, isCollapsed} = useUserStore();
 
   return (
     <>

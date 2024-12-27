@@ -287,7 +287,7 @@ const Links = ({ isCollapsed }) => {
                   strokeLinejoin="round"
                 />
               </svg>
-              {isCollapsed? '':'Financial Management'} 
+              {isCollapsed? '':'Transactions'} 
            
             </div>
           </div>

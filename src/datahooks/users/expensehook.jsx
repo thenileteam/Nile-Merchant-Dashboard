@@ -6,9 +6,9 @@ export const useExpenseHook = (onSuccessFn) => {
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
-      return ApiInstance.post("/orders/store/expenses", {
+      return ApiInstance.post("/store/store/expenses", {
         ...data,
-        storeId: store?._id,
+        storeId: store?.id,
       });
     },
 
@@ -47,9 +47,9 @@ export const useFetchExpense = (page, limit, sortBy, sortOrder) => {
   const { data, isFetching, isError } = useQuery({
     queryKey: ["expenses"],
     queryFn: async () => {
-      const res = await ApiInstance.get(`/orders/store/expenses`, {
+      const res = await ApiInstance.get(`/store/store/expenses`, {
         params: {
-          storeId: store._id,
+          storeId: store.id,
           page,
           limit,
           sortBy,
@@ -63,9 +63,11 @@ export const useFetchExpense = (page, limit, sortBy, sortOrder) => {
     cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
+  const totalExpense = data?.reduce((acc, curr) => acc + curr.amount, 0);
   return {
     data,
     isFetching,
     isError,
+    totalExpense,
   };
 };

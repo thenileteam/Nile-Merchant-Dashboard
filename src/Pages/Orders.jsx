@@ -78,7 +78,7 @@ const Orders = () => {
         paymentStatus: paymentStatus,
         createdAt: createdAt,
         customerId: customer?.id,
-        storeId: store._id,
+        storeId: store.id,
         salesChannel,
       };
 

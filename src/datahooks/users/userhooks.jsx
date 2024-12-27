@@ -27,13 +27,18 @@ export const useLogUserIn = () => {
       // console.log(data);
       return ApiInstance.post("/users/auth/login", data);
     },
-    onSuccess: (response) => {
+
+    onSuccess: async (response) => {
       // Set data in localStorage
+      const store = await ApiInstance.get(
+        `/store/store/getStoreByUserId?userId=${response?.data?.data?.user?._id}`
+      );
+ 
       localStorage.setItem("Id", response?.data?.data?.user?._id);
       localStorage.setItem("refreshToken", response?.data?.refreshToken);
       localStorage.setItem(
         "store",
-        JSON.stringify(response?.data?.data?.stores[0])
+        JSON.stringify(store?.data?.responseObject)
       );
 
       // Set cookies
@@ -213,7 +218,7 @@ export const useAddCustomer = (onSuccess) => {
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
       return ApiInstance.post(
-        `/orders/orders/customers/create/${store._id}`,
+        `/orders/orders/customers/create/${store.id}`,
         data
       );
     },
@@ -257,7 +262,7 @@ export const useFetchDashboardData = () => {
       throw new Error("No store found in localStorage.");
     }
 
-    const storeId = store._id;
+    const storeId = store.id;
     console.log("Store ID:", storeId);
 
     try {
@@ -338,7 +343,7 @@ export const useFetchDashboardData = () => {
     }
   }, [store]);
 
-  const storeId = store._id;
+  const storeId = store.id;
 
   const {
     data: dashboardData,
@@ -373,14 +378,14 @@ export const useFetchDashboardData = () => {
 };
 export const useFetchOrders = () => {
   const store = JSON.parse(localStorage.getItem("store"));
-  // console.log("storeId etch orders", store._id);
+  // console.log("storeId etch orders", store.id);
   // console.log(store);
   const { data, isFetching, isError } = useQuery({
     queryKey: ["orders"],
     queryFn: async () => {
-      const res = await ApiInstance.get(`/orders/orders/stores/${store._id}`, {
+      const res = await ApiInstance.get(`/orders/orders/stores/${store.id}`, {
         params: {
-          storeId: store._id,
+          storeId: store.id,
         },
       });
 
@@ -403,7 +408,7 @@ export const useFetchStoreCustomers = () => {
     queryKey: ["customers"],
     queryFn: async () => {
       const res = await ApiInstance.get(
-        `/orders/orders/customers/${store._id}`
+          `/orders/orders/customers/${store.id}`
       );
 
       return res.data?.responseObject;

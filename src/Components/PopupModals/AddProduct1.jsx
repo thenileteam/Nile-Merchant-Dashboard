@@ -84,7 +84,7 @@ const AddProduct1 = () => {
       if (!validateForm(requiredFields, productDetails)) return;
       const dataToBackend = {
         name: productDetails.name,
-        storeId: store._id,
+        storeId: store.id,
         userId: store.userId,
         length: productDetails.dimensions.length,
         width: productDetails.dimensions.width,
@@ -122,7 +122,7 @@ const AddProduct1 = () => {
         if (!store) return;
         const dataToBackend = {
           name: productDetails.name,
-          storeId: store._id,
+          storeId: store.id,
           userId: store.userId,
           length: productDetails.dimensions.length,
           width: productDetails.dimensions.width,

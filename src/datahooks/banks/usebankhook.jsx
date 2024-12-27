@@ -76,7 +76,7 @@ const useBankDetails = () => {
     queryKey: ["banks", store?._id],
     queryFn: async () => {
       try {
-        const res = await ApiInstance.get(`/users/stores/store/bank/${store._id}`);
+        const res = await ApiInstance.get(`/users/stores/store/bank/${store.id}`);
         return res.data?.responseObject || [];
       } catch (error) {
         console.error("Error fetching stored banks:", error);
@@ -151,7 +151,7 @@ const useBankDetails = () => {
     onSuccess: () => {
       toast.success("Bank details added  Successfully");
      
-      queryClient.invalidateQueries(["banks", store._id]);
+      queryClient.invalidateQueries(["banks", store.id]);
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "An error occurred");
@@ -167,7 +167,7 @@ const useBankDetails = () => {
     onSuccess: () => {
       toast.success("Bank Deleted Successfully");
      
-      queryClient.invalidateQueries(["banks", store._id]);
+      queryClient.invalidateQueries(["banks", store.id]);
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "An error occurred");

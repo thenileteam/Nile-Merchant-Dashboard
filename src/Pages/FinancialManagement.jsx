@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Links from "../Links";
 import {
   nilelogowhite,
@@ -12,22 +12,26 @@ import {
   moneysend,
 } from "../assets";
 
-
 import FinancialTable from "../Components/Financial/FinancialTable";
 import PlaceholderImage from "../Components/PlaceholderImage/PlaceholderImage";
 import ExpensesTable from "../Components/Financial/ExpensesTable";
 import { ExpenseForm } from "@/Components/Financial/ExpenseForm";
 import { useExpenseHook } from "@/datahooks/users/expensehook";
 import { validateForm } from "@/utils/formatdate";
+import { useFetchTransactions } from "@/datahooks/users/transactions";
+import { useFetchExpense } from "@/datahooks/users/expensehook";
 const FinancialManagement = () => {
   const [displaySuccessModal, setDisplaySuccessModal] = useState(false);
   const [open, setOpen] = useState(false);
- 
-
+  const [searchParams, setSearchParams] = useSearchParams({
+    expense: "false"
+  });
+  const { totalRevenue, totalRevenueForMonth } = useFetchTransactions();
+  const { totalExpense } = useFetchExpense();
   const [tabs, setTabs] = useState([
     {
       id: 1,
-      name: "Finance",
+      name: "Revenue",
       active: true,
     },
     {
@@ -41,6 +45,7 @@ const FinancialManagement = () => {
   const closeSidebar = () => {
     if (sidebarOpen) setSidebarOpen(false);
   };
+  const navigate = useNavigate();
   return (
     <>
       <div className="bg-[#F5F5F5] pb-20">
@@ -158,23 +163,23 @@ const FinancialManagement = () => {
                 <div className="bg-[#FCDADF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                   <img src={bitcoinbag} alt="" />
                   <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
+                   NGN {totalRevenue}
                   </h1>
                   <p className="text-[#6E6E6E]">Total Revenue</p>
                 </div>
                 <div className="bg-[#FFE8DF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                   <img src={bitcoin} alt="" />
                   <h1 className="text-[#333333] leading-[25.3px] text-[22px] font-bold mt-1">
-                    0
+                    NGN {totalExpense}
                   </h1>
                   <p className="text-[#6E6E6E]  leading-4  font-bold text-[14px]  tracking-[1%]">
-                    Total Expences
+                    Total Expenses
                   </p>
                 </div>
                 <div className="bg-[#FFDBFA] border-2 shadow-sm w-[273px] p-5 rounded-md">
                   <img src={bitcoindown} alt="" />
                   <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
+                    {totalRevenueForMonth }
                   </h1>
                   <p className="text-[#6E6E6E]">Total Revenue For The Month</p>
                 </div>
@@ -214,9 +219,10 @@ const FinancialManagement = () => {
                       setTabs(
                         tabs.map((t) => ({ ...t, active: t.id === tab.id }))
                       );
+                      navigate(`?expense=${tab.id === 2 ? true : false}`);
                     }}
                     className={`${
-                      tab.active
+                      searchParams.get("expense") === `${tab.id === 2 ? true : false}`
                         ? "bg-[#004324] text-[#ffffff] p-2 rounded-md"
                         : "bg-[#ffffff] text-[#004324] p-2 rounded-md"
                     }`}
@@ -225,7 +231,7 @@ const FinancialManagement = () => {
                   </button>
                 ))}
               </div>
-              {tabs.find((tab) => tab.active)?.name === "Expenses" && (
+              {searchParams.get("expense") === "true" && (
                 <button
                   onClick={() => setOpen(true)}
                   className="bg-[#004324] text-[#ffffff] p-2 rounded-md flex items-center gap-2"
@@ -255,13 +261,8 @@ const FinancialManagement = () => {
                   </div>
                 </div>
               )}
-              {tabs.find((tab) => tab.active)?.name === "Finance" && (
-                <div className=" p-[48px]  text-3xl font-bold"> Coming Soon </div>
-                // <FinancialTable />
-              )}
-              {tabs.find((tab) => tab.active)?.name === "Expenses" && (
-                <ExpensesTable />
-              )}
+              {searchParams.get("expense") === "false" && <FinancialTable />}
+              {searchParams.get("expense") === "true" && <ExpensesTable />}
             </div>
           </div>
         </div>
