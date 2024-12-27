@@ -8,102 +8,57 @@ import {
   image,
   logout,
   notification,
-  profileimage,
   store1,
 } from "../../assets";
 import { Link } from "react-router-dom";
 import SaveCard from "../PopupModals/SaveCard";
 import Upgrade from "../PopupModals/Upgrade";
-
+import Navbar from "../Navbar/Navbar";
+import { useFetchUser } from "@/datahooks/users/userhooks";
+import Sidebar from "../Sidebar/Sidebar";
+import { useSidebarStore } from "@/ZustandStores/sidebarStore";
 const PlanSetting = () => {
+  const { user } = useFetchUser();
+  const { isCollapsed } = useSidebarStore();
   return (
     <>
       <div>
-        {/* Navbar */}
-        <nav className="bg-[#EAF4E2] p-4 shadow-md flex items-center justify-center gap-5 fixed w-full">
-          <div className="flex items-center justify-between gap-20">
-            <div className="flex items-center gap-2">
-              <Link to="/store">
-                <img src={arrowleft} alt="" />
-              </Link>
-              <h1 className="text-[32px] font-bold">Plan & Billing Settings</h1>
-            </div>
-            <div className="flex items-center gap-10 ml-[525px]">
-              <div className="relative">
-                <label htmlFor="Search" className="sr-only">
-                  {" "}
-                  Search{" "}
-                </label>
-
-                <input
-                  type="text"
-                  id="Search"
-                  placeholder=""
-                  className="w-[300px] rounded-md border-[#6E6E6E] border-2 p-8 py-2.5 pe-10 shadow-sm sm:text-sm"
-                />
-
-                <span className="absolute inset-y-0 start-0 grid w-10 place-content-center">
-                  <button
-                    type="button"
-                    className="text-gray-600 hover:text-gray-700"
-                  >
-                    <span className="sr-only">Search</span>
-
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="size-4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                      />
-                    </svg>
-                  </button>
-                </span>
-              </div>
-              <div>
-                <Link to="/notification">
-                  <img src={notification} alt="" />
-                </Link>
-              </div>
-              <div>
-                <Link to="/profilesetting">
-                  <img src={image} alt="" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </nav>
-      </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-
+        <Sidebar />
+        <div
+          className={
+            isCollapsed
+              ? "flex-grow lg:ml-20 overflow-x-hidden"
+              : "flex-grow lg:ml-56 overflow-x-hidden"
+          }
+        >
+          {/* Navbar */}
+          <Navbar
+            title="Plan & Billings"
+            profilePic={user && user.image ? user.image : ""}
+          />
+        </div>
+      
       {/* Input Field */}
-      <div className="flex justify-center gap-20 px-28">
+      <div
+        className={` mt-24 ${
+          isCollapsed ? "ml-20" : "ml-64"
+        }  flex  justify-center gap-10 `}
+      >
         <div className="space-y-7">
-          <div className="bg-[#EAF4E2] border-[#8ED06C] border-2 w-[338px] p-4 rounded-lg">
+          <div className="bg-[#EAF4E2] border-[#8ED06C] border-2  p-4 rounded-lg">
             <h1 className="text-[#004324] text-[20px] font-bold">
               Plan Details
             </h1>
-            <p className="text-[#6E6E6E] font-bold text-sm">
-              You’re on free plan
+            <p className="text-[#8ED06C] font-bold text-sm">
+              You’re on a free plan
             </p>
           </div>
 
-          <div className="space-y-5">
-            <h1 className="text-[#004324] text-[24px] font-bold">
+          <div className="space-y-5 ">
+            {/* <h1 className="text-[#004324] text-[24px] font-bold">
               Billing History
-            </h1>
-            <div className="bg-[#EAF4E2] border-[#8ED06C] border-2 w-[338px] p-4 rounded-lg space-y-3">
+            </h1> */}
+            {/* <div className="bg-[#EAF4E2] border-[#8ED06C] border-2 w-[338px] p-4 rounded-lg space-y-3">
               <div>
                 <h1 className="text-[#004324] text-[20px] font-bold">
                   You’re being billed
@@ -131,136 +86,135 @@ const PlanSetting = () => {
                   month of June
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
-        </div>
 
-        <div className="space-y-2">
-          <div className="bg-[#EAF4E2] border-[#8ED06C] border-2 w-[375px] p-4 rounded-lg">
-            <h1 className="text-[#004324] text-[20px] font-bold">
-              Billing Cycle
-            </h1>
-            <p className="text-[#6E6E6E] font-bold text-sm">
-              You’re not being billed for anything right now.
-            </p>
-            <div className="border-[#004324] border-2 flex items-center justify-center gap-2 p-2 mt-2 rounded-lg">
-              <img src={add} alt="" />
-              <h1 className="text-[#004324] font-bold">
-                Add Payment Method Below
+          <div className="space-y-2">
+            <div className="bg-[#EAF4E2] border-[#8ED06C] border-2  p-4 rounded-lg">
+              <h1 className="text-[#004324] text-[20px] font-bold">
+                Billing Cycle
               </h1>
+              <p className="text-[#6E6E6E] font-bold text-sm">
+                You’re not being billed for anything right now.
+              </p>
+              <div className="border-[#004324] border-2 flex items-center justify-center gap-2 p-2 mt-2 rounded-lg">
+                <img src={add} alt="" />
+                <h1 className="text-[#004324] font-bold">
+                  Add Payment Method Below
+                </h1>
+              </div>
             </div>
+            <form
+              action="#"
+              className="space-y-5 bg-[#EAF4E2] border-[#8ED06C] border-2 w-[375px] p-4 rounded-lg"
+            >
+              <div>
+                <label
+                  htmlFor="CardName"
+                  className="block text-[16px] font-bold text-[#333333]"
+                >
+                  Card Holder Name
+                </label>
+
+                <input
+                  type="text"
+                  id="CardName"
+                  name="card_name"
+                  placeholder="Enter Name On Card"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="CardNumber"
+                  className="text-[16px] font-bold text-[#333333]"
+                >
+                  Card Number
+                </label>
+
+                <input
+                  type="text"
+                  id="CardNumber"
+                  name="card_number"
+                  placeholder="xxxx xxxx xxxx xxxx"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                />
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="">
+                  <label
+                    htmlFor="ExpiryDate"
+                    className="text-[16px] font-bold text-[#333333] block w-full"
+                  >
+                    Expiry Date
+                  </label>
+
+                  <input
+                    type="text"
+                    id="ExpiryDate"
+                    name="expiry_date"
+                    placeholder="MM/YY"
+                    className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="CVV"
+                    className="text-[16px] font-bold text-[#333333] block full"
+                  >
+                    CVV
+                  </label>
+
+                  <input
+                    type="text"
+                    id="CVV"
+                    name="cvv"
+                    placeholder="XXX"
+                    className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  />
+                </div>
+              </div>
+              <div>
+                <label
+                  htmlFor="Address"
+                  className="text-[16px] font-bold text-[#333333] flex items-center "
+                >
+                  Address
+                </label>
+
+                <input
+                  type="text"
+                  id="Address"
+                  name="address"
+                  placeholder="xxxxxxxxxx"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="StoreName"
+                  className="block text-[16px] font-bold text-[#333333]"
+                >
+                  Zip/Postal Code
+                </label>
+
+                <input
+                  type="text"
+                  id="StoreName"
+                  name="store_name"
+                  placeholder="xxxxx"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                />
+              </div>
+
+              <div className="flex justify-center mt-10">
+                <SaveCard />
+              </div>
+            </form>
           </div>
-          <form
-            action="#"
-            className="space-y-5 bg-[#EAF4E2] border-[#8ED06C] border-2 w-[375px] p-4 rounded-lg"
-          >
-            <div>
-              <label
-                htmlFor="CardName"
-                className="block text-[16px] font-bold text-[#333333]"
-              >
-                Card Holder Name
-              </label>
-
-              <input
-                type="text"
-                id="CardName"
-                name="card_name"
-                placeholder="Enter Name On Card"
-                className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="CardNumber"
-                className="text-[16px] font-bold text-[#333333]"
-              >
-                Card Number
-              </label>
-
-              <input
-                type="text"
-                id="CardNumber"
-                name="card_number"
-                placeholder="xxxx xxxx xxxx xxxx"
-                className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-              />
-            </div>
-            <div className="flex items-center">
-              <div>
-                <label
-                  htmlFor="ExpiryDate"
-                  className="text-[16px] font-bold text-[#333333]"
-                >
-                  Expiry Date
-                </label>
-
-                <input
-                  type="text"
-                  id="ExpiryDate"
-                  name="expiry_date"
-                  placeholder="MM/YY"
-                  className="mt-1 w-[128px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="CVV"
-                  className="text-[16px] font-bold text-[#333333]"
-                >
-                  CVV
-                </label>
-
-                <input
-                  type="text"
-                  id="CVV"
-                  name="cvv"
-                  placeholder="XXX"
-                  className="mt-1 w-[128px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-                />
-              </div>
-            </div>
-            <div>
-              <label
-                htmlFor="Address"
-                className="text-[16px] font-bold text-[#333333] flex items-center"
-              >
-                Address
-              </label>
-
-              <input
-                type="text"
-                id="Address"
-                name="address"
-                placeholder="xxxxxxxxxx"
-                className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="StoreName"
-                className="block text-[16px] font-bold text-[#333333]"
-              >
-                Zip/Postal Code
-              </label>
-
-              <input
-                type="text"
-                id="StoreName"
-                name="store_name"
-                placeholder="xxxxx"
-                className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-              />
-            </div>
-
-            <div className="flex justify-center mt-10">
-              <SaveCard />
-            </div>
-          </form>
         </div>
-
-        <div className="bg-[#EAF4E2] border-[#8ED06C] border-2 w-[456px] p-5 rounded-lg">
+        <div className="bg-[#EAF4E2] border-[#8ED06C] border-2 p-5 rounded-lg ">
           <div>
             <h1 className="text-[#333333] text-[24px] font-bold text-center">
               Choose Subscription Plan
@@ -413,7 +367,8 @@ const PlanSetting = () => {
         </div>
       </div>
       <br />
-      <br />
+        <br />
+        </div>
     </>
   );
 };

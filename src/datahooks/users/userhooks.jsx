@@ -4,7 +4,6 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom"; // Make sure this is imported if using React Router
 import { useCallback, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { useUserStore } from "../../zustandStore";
 import ApiInstance from "../../Api/ApiInstance";
 import {
   endOfDay,
@@ -141,7 +140,7 @@ export const useLogOut = () => {
 export const useSignUserUp = () => {
   const navigate = useNavigate();
   //access state from zustand store
-  const setUsername = useUserStore((state) => state.setUsername);
+  // const setUsername = useUserStore((state) => state.setUsername);
   const [error] = useState("");
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
@@ -419,6 +418,7 @@ export const useFetchStoreCustomers = () => {
 
   return {
     customers: data,
+    customerLength: data?.length,
     isFetchingCustomers: isFetching,
     isError,
   };

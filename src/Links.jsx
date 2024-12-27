@@ -1,28 +1,34 @@
-
 import { Link, useLocation } from "react-router-dom";
-import { useUserStore } from "./zustandStore";
+import { copyright } from "./assets";
+import { useState } from "react";
+import { usePolicyStore } from "./ZustandStores/policyStore";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
+import StoreSettingsLinks from "./Components/Store/AllStoreComp/StoreSettingLinks";
 const Links = ({ isCollapsed }) => {
   const location = useLocation();
-  const { openPolicy } = useUserStore();
+  const { openPolicy } = usePolicyStore();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const closeDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
   // Function to determine if link is active
   const isActive = (path) => location.pathname === path;
   const getLinkClasses = (path) => {
     return `py-2 rounded-lg px-2 flex items-center justify-between border
-    ${isActive(path) ? "bg-[#ffffff] text-[#004324]" : "text-[#ffffff]"}`;
+    ${isActive(path) ? "bg-[#fff] text-[#004324]" : "text-[#fff]"}`;
   };
   return (
-    <ul className={`${isCollapsed?'mt-8':'mt-14'}  overflow-x-hidden`}>
+    <ul className={`${isCollapsed ? "mt-8" : "mt-14"}  overflow-x-hidden`}>
       {/* Dashboard overview */}
       <Link to="/dashboard">
         <li className={`cursor-pointer mt-4 w-full`}>
-          <div
-            className={`${getLinkClasses(
-              "/dashboard"
-            )}`}
-          >
-            <div className="flex items-center gap-3">
+          <div className={`${getLinkClasses("/dashboard")}`}>
+            <div
+              className={`flex items-center  ${
+                isCollapsed ? "mx-auto" : "mx-0"
+              } gap-3`}
+            >
               {/* SVG icon */}
-
               <svg
                 width="24"
                 height="25"
@@ -53,7 +59,9 @@ const Links = ({ isCollapsed }) => {
                 />
               </svg>
               {/* {isCollapsed ? "" : "Dashboard Overview"} */}
-              <p className={`${isCollapsed? 'hidden': 'block'}  `}>Dashboard Overview</p>
+              <p className={`${isCollapsed ? "hidden" : "block"}  `}>
+                Dashboard Overview
+              </p>
             </div>
           </div>
         </li>
@@ -61,9 +69,13 @@ const Links = ({ isCollapsed }) => {
 
       {/* Orders & Shipping */}
       <Link to="/orders">
-        <li  className={`cursor-pointer mt-4 w-full`}>
-          <div className={`${getLinkClasses("/orders")} transitions`}>
-            <div className="flex items-center gap-3 transitions">
+        <li className={`cursor-pointer mt-4 w-full`}>
+          <div className={`${getLinkClasses("/orders")}`}>
+            <div
+              className={`flex items-center  ${
+                isCollapsed ? "mx-auto" : "mx-0"
+              } gap-3`}
+            >
               {/* SVG icon */}
               <svg
                 width="24"
@@ -104,7 +116,6 @@ const Links = ({ isCollapsed }) => {
                 />
               </svg>
               {isCollapsed ? "" : "Orders"}
-              {/* <p className={isCollapsed? 'invisible transitions':'visible transitions'}>Orders</p> */}
             </div>
           </div>
         </li>
@@ -112,9 +123,13 @@ const Links = ({ isCollapsed }) => {
 
       {/* Products */}
       <Link to="/product">
-        <li  className={`cursor-pointer mt-4 w-full`}>
+        <li className={`cursor-pointer mt-4 w-full`}>
           <div className={`${getLinkClasses("/product")}`}>
-            <div className="flex items-center gap-3 transitions">
+            <div
+              className={`flex items-center  ${
+                isCollapsed ? "mx-auto" : "mx-0"
+              } gap-3`}
+            >
               {/* SVG icon */}
               <svg
                 width="24"
@@ -160,7 +175,6 @@ const Links = ({ isCollapsed }) => {
                 />
               </svg>
               {isCollapsed ? "" : "Products"}
-              {/* <p className={isCollapsed? 'invisible transitions':'visible transitions'}>Products</p> */}
             </div>
           </div>
         </li>
@@ -196,7 +210,11 @@ const Links = ({ isCollapsed }) => {
       <Link to="/customer">
         <li className={`cursor-pointer mt-4 w-full`}>
           <div className={`${getLinkClasses("/customer")} transitions`}>
-            <div className="flex items-center gap-3">
+            <div
+              className={`flex items-center  ${
+                isCollapsed ? "mx-auto" : "mx-0"
+              } gap-3`}
+            >
               {/* SVG icon */}
               <svg
                 width="24"
@@ -248,108 +266,90 @@ const Links = ({ isCollapsed }) => {
 
       {/* Financial Management */}
       <Link to="/financial">
-        <li className="cursor-pointer mt-5">
+        <li className="cursor-pointer mt-4">
           <div className={getLinkClasses("/financial")}>
-            <div className="flex items-center gap-3">
+            <div
+              className={`flex items-center  ${
+                isCollapsed ? "mx-auto" : "mx-0"
+              } gap-3`}
+            >
               <svg
                 width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                height="25"
+                viewBox="0 0 24 25"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M13.5 19.5V11.5C13.5 10.5572 13.5 10.0858 13.2071 9.79289C12.9142 9.5 12.4428 9.5 11.5 9.5C10.5572 9.5 10.0858 9.5 9.79289 9.79289C9.5 10.0858 9.5 10.5572 9.5 11.5V19.5C9.5 20.4428 9.5 20.9142 9.79289 21.2071C10.0858 21.5 10.5572 21.5 11.5 21.5C12.4428 21.5 12.9142 21.5 13.2071 21.2071C13.5 20.9142 13.5 20.4428 13.5 19.5Z"
+                  opacity="0.4"
+                  d="M20 17.6406H4"
                   stroke={isActive("/financial") ? "#004324" : "#ffffff"}
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
-                  d="M20.5 12.5V19.5C20.5 20.4428 20.5 20.9142 20.2071 21.2071C19.9142 21.5 19.4428 21.5 18.5 21.5C17.5572 21.5 17.0858 21.5 16.7929 21.2071C16.5 20.9142 16.5 20.4428 16.5 19.5V12.5"
+                  d="M17.0001 14.6406C17.0001 14.6406 20 16.8501 20 17.6406C20 18.4312 17 20.6406 17 20.6406"
                   stroke={isActive("/financial") ? "#004324" : "#ffffff"}
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
-                  d="M17.4375 9.16667V3.83333M19 3.83333V2.5M19 10.5V9.16667M17.4375 6.5H20.5625M20.5625 6.5C21.0803 6.5 21.5 6.94772 21.5 7.5V8.16667C21.5 8.71895 21.0803 9.16667 20.5625 9.16667H16.5M20.5625 6.5C21.0803 6.5 21.5 6.05228 21.5 5.5V4.83333C21.5 4.28105 21.0803 3.83333 20.5625 3.83333H16.5"
+                  opacity="0.4"
+                  d="M5 7.64062H20"
                   stroke={isActive("/financial") ? "#004324" : "#ffffff"}
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
-                  d="M6.5 19.5V14.5C6.5 13.5572 6.5 13.0858 6.20711 12.7929C5.91421 12.5 5.44281 12.5 4.5 12.5C3.55719 12.5 3.08579 12.5 2.79289 12.7929C2.5 13.0858 2.5 13.5572 2.5 14.5V19.5C2.5 20.4428 2.5 20.9142 2.79289 21.2071C3.08579 21.5 3.55719 21.5 4.5 21.5C5.44281 21.5 5.91421 21.5 6.20711 21.2071C6.5 20.9142 6.5 20.4428 6.5 19.5Z"
+                  d="M6.99998 4.64062C6.99998 4.64062 4.00001 6.8501 4 7.64065C3.99999 8.43121 7 10.6406 7 10.6406"
                   stroke={isActive("/financial") ? "#004324" : "#ffffff"}
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 />
               </svg>
-              {isCollapsed? '':'Transactions'} 
-           
+
+              {isCollapsed ? "" : "Transactions"}
             </div>
           </div>
         </li>
-      </Link> 
+      </Link>
 
       {/* Store Setting */}
-      {/* <Link to="/store">
-        <li  className={`cursor-pointer w-full`}>
-          <div className={getLinkClasses("/store")}>
-            <div className="flex items-center gap-3">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M3 10.9863V15.4929C3 18.3254 3 19.7417 3.87868 20.6217C4.75736 21.5017 6.17157 21.5017 9 21.5017H15C17.8284 21.5017 19.2426 21.5017 20.1213 20.6217C21 19.7417 21 18.3254 21 15.4929V10.9863"
-                  stroke={isActive("/store") ? "#004324" : "#ffffff"}
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M7 17.9746H11"
-                  stroke={isActive("/store") ? "#004324" : "#ffffff"}
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M17.7966 2.50074L6.1508 2.52979C4.41263 2.44036 3.96697 3.77884 3.96697 4.43315C3.96697 5.01834 3.89152 5.87145 2.82621 7.47487C1.7609 9.07829 1.84095 9.55462 2.44168 10.6646C2.94025 11.5859 4.20838 11.9457 4.86959 12.0063C6.9698 12.054 7.99162 10.24 7.99162 8.9652C9.03348 12.1685 11.9965 12.1685 13.3167 11.8022C14.6395 11.4352 15.7726 10.1216 16.04 8.9652C16.1959 10.4023 16.6691 11.241 18.0672 11.8172C19.5154 12.4141 20.7608 11.5018 21.3857 10.917C22.0106 10.3322 22.4116 9.03389 21.2977 7.60691C20.5295 6.62282 20.2093 5.69573 20.1042 4.73487C20.0432 4.17812 19.9897 3.57986 19.5981 3.19915C19.0257 2.64278 18.2045 2.47397 17.7966 2.50074Z"
-                  stroke={isActive("/store") ? "#004324" : "#ffffff"}
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              Store {isCollapsed? '':'Settings'}
-            </div>
-          </div>
-        </li>
-      </Link> */}
-
-      {/* Footer */}
-      {!isCollapsed && (
-        <footer className="mt-20  ">
-          {/* <div className="flex items-center gap-3">
-          <h1 className="text-sm">Terms & Conditions</h1>
-          <p className="text-sm">Home</p>
-          <p className="text-sm">About Us</p>
+      <div className="mt-4 border-b-2 border-t-2 border-dotted py-3">
+        <div className="flex items-center justify-between gap-1 pb-1">
+          <li>Store {isCollapsed ? "" : "Settings"}</li>
+          <button
+            type="button"
+            className="bg-transparent border-2  border-blue-600"
+            onClick={closeDropdown}
+          >
+            {isDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
+          </button>
         </div>
-        <div className="flex items-center gap-1 justify-center">
-          <img src={copyright} alt="" />
-          <h1 className="text-sm">By Dorisa Technology LTD</h1>
-        </div> */}
+        {/*drop down links */}
+        {isDropdownOpen && (
+          <StoreSettingsLinks
+            isCollapsed={isCollapsed}
+            getLinkClasses={getLinkClasses}
+            isActive={isActive}
+            isDropDownOpen={isDropdownOpen}
+          />
+        )}
+      </div>
+      {/* Footer */}
+      {!isCollapsed && !isDropdownOpen && (
+        <footer className="mt-20  ">
           <div>
             <button
               type="button"
               className="absolute bottom-10 hover:opacity-50"
               onClick={openPolicy}
             >
-              Terms and conditons
+              Terms and conditions
             </button>
             <a
               href="https://nile.ng/"

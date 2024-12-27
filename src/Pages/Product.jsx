@@ -9,10 +9,11 @@ import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import CategoryTable from "../Components/Products/CategoryTable";
 import AddCategory from "../Components/PopupModals/AddCategory";
-import { useUserStore } from "../zustandStore";
+import { useSidebarStore } from "../ZustandStores/sidebarStore";
+import DashboardBox from "@/Components/Dashboard/DashboardBox";
 const Product = () => {
   const { user } = useFetchUser();
-  const { sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed } = useUserStore();
+  const {isCollapsed } = useSidebarStore();
   const [isActiveTab, setIsActiveTab] = useState(true);
   const { data, isFetching, isError } = useFetchProducts();
   const [isCategoryOpen, setCategoryOpen] = useState(false);
@@ -20,7 +21,7 @@ const Product = () => {
   return (
     <div className="bg-[#F5F5F5] pb-20">
       <div className="flex">
-        <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
+        <Sidebar  />
         <div className={`flex-grow ${isCollapsed?'lg:ml-20':'lg:ml-56'} overflow-x-hidden`}>
           <Navbar
             title="Products"
@@ -35,20 +36,8 @@ const Product = () => {
               </div>
             ) : (
               <div className="flex gap-20">
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={packagemoving} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    {data?.length || "0"}
-                  </h1>
-                  <p className="text-[#6E6E6E]">Total Products</p>
-                </div>
-                <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                  <img src={deliveryview} alt="" />
-                  <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                    0
-                  </h1>
-                  <p className="text-[#6E6E6E]">Total Products View</p>
-                </div>
+                  <DashboardBox text='Total Products' imgWidth='w-9' image={packagemoving} bgColor='bg-[#FCDADF]' data={data?.length || 0} width='w-[50%]'/>
+                  <DashboardBox text='Total Products View' imgWidth='w-8' image={ deliveryview} bgColor='bg-[#FFE8DF]' data={0} width='w-[50%]' />
               </div>
             )}
           </div>
@@ -106,19 +95,19 @@ const Product = () => {
               </button>
             )}
           </div>
-          {data && data.length === 0 && (
+          {data && data.length < 1 && (
             <div className="px-24 mt-28">
               <div>
                 <img
                   src={packageoutofstock}
-                  alt=""
+                  alt="icon to show you that there no products yet"
                   className="flex justify-center mx-auto"
                 />
                 <h1 className="text-[24px] font-extrabold text-center">
                   You Have No Product Yet
                 </h1>
                 <p className="text-[#6E6E6E] font-bold text-center">
-                  First up;Add your products Dear <br /> Merchants in order to
+                  First up:Add your products Dear <br /> Merchants in order to
                   start making <br /> sales
                 </p>
               </div>

@@ -1,9 +1,9 @@
 import { notification } from "../../assets";
 import ProfileImage from "../PlaceholderImage/PlaceholderImage";
 import { Link } from "react-router-dom";
-import {useUserStore} from '../../zustandStore'
-const Navbar = ({ title, icon, profilePic }) => {
-  const{sidebarOpen, setSidebarOpen,} = useUserStore()
+import {useSidebarStore} from '../../ZustandStores/sidebarStore'
+const Navbar = ({ title, icon, profilePic, link }) => {
+  const{sidebarOpen, setSidebarOpen,} = useSidebarStore()
   return (
     <nav className="bg-[#EAF4E2] fixed top-0 shadow-md z-10 w-full py-2">
       <div className="container mx-auto lg:mx-0 lg:px-10 px-4">
@@ -37,7 +37,10 @@ const Navbar = ({ title, icon, profilePic }) => {
           <div className="page-head flex items-center justify-between w-[95%] lg:max-w-[1000px]">
             {/* first */}
             <div className="flex gap-2 items-center md:pl-8">
-              {icon &&<img src={icon} alt={`${title} icon`} className="hidden lg:block" />}
+              {icon &&
+                //  <Link to={link}> 
+                  <img src={icon} alt={`${title} icon`} className="hidden lg:block" />
+                  }
               <h1 className={icon?"lg:text-[32px] text-[24px]  font-bold" : 'lg:text-[32px] text-[24px]  font-bold pl-2'}>{title}</h1>
             </div>
             {/* second */}

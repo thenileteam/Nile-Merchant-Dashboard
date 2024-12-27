@@ -23,6 +23,9 @@ body{
   .transitions {
     @apply transition-all delay-100 duration-200 ease-in;
   }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px; 
+  }
 }
 .text-gradient {
   background: radial-gradient(
@@ -147,7 +150,7 @@ body{
 .popUp-wrapper{
   scrollbar-width: thin;
 }
-/* I'm very stephen wrote this */
+/* I'm very sure stephen wrote this */
 @layer base {
   :root {
 

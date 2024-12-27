@@ -1,25 +1,22 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useUserStore } from "../../zustandStore";
-
-const UploadImage = ({ handleFileChange, style, image }) => {
-  // const { uploadedFile, handleFileChange, handleRemoveFile } = useUserStore();
+const UploadImage = ({ handleFileChange, style, image , parentStyle, labelFor}) => {
 
   return (
-    <div className="relative text-center mt-10 lg:w-[308px] mx-auto">
+    <div className={`relative text-center ${parentStyle} lg:w-[308px] mx-auto`}>
       <input
         type="file"
-        name="fileInput"
-        id="fileInput"
+        name= {labelFor}
+        id= {labelFor}
         accept=".jpg,.png,.svg,.jpeg"
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full hidden"
         required
         onChange={handleFileChange}
       />
-      <label htmlFor="fileInput" className="cursor-pointer">
+      <label htmlFor={labelFor} className="cursor-pointer">
         <img
           src={image}
-          className={`block mx-auto ${style} `}
+          className={`block ${style} `}
           alt="add image placeholder icon"
         />
       </label>

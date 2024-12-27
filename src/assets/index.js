@@ -71,6 +71,13 @@ import addImage from './add-image.svg'
 import placeholderImage from './placeholderImage.svg'
 import iconExpandCollapsible from './icon-expand-collapseBar.svg'
 import nileBagOnly from './nile-bagOnly-logo.svg'
+import totalOrders from './totalOrders.svg'
+import totalCustomers from './totalCustomers.svg'
+import totalExpense from './totalExpense.svg'
+import totalProfit from './totalProfit.svg'
+import totalInventory from './totalInventory.svg'
+import totalRevenue from './revenue.svg'
+
 export {
     nilelogosolid,
     nilelogowhite,
@@ -137,5 +144,5 @@ export {
     donBaci,
     dot1,
     dot2, dot3, eye
-    ,tadfarm,lashesIcon,addImage,placeholderImage,iconExpandCollapsible, nileBagOnly
+    ,tadfarm,lashesIcon,addImage,placeholderImage,iconExpandCollapsible, nileBagOnly, totalExpense, totalInventory, totalRevenue,totalCustomers,totalOrders,totalProfit
 }

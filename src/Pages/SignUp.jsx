@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { nilelogosolid, eye, lashesIcon } from "../assets";
 import { useSignUserUp } from "../datahooks/users/userhooks";
-import { useUserStore } from "../zustandStore";
+import {useShowPasswordStore} from '../ZustandStores/showPasswordStore'
 import { toast } from "sonner";
 import LoginReviews from "../Components/LoginReviews/LoginReviews";
 import CreateAccPaths from "../Components/CreateAccPaths/CreateAccPaths";
@@ -9,7 +9,7 @@ import { Loader2 } from "lucide-react";
 
 const SignUp = () => {
   // Custom context hook
-  const { showPassword, handleShowPassword } = useUserStore();
+  const { showPassword, handleShowPassword } = useShowPasswordStore();
   const [step, setStep] = useState(false); // Default to Step 1
   const [formData, setFormData] = useState({
     name: "",

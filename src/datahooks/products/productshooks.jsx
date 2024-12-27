@@ -29,6 +29,7 @@ export const useFetchProducts = () => {
 
   return {
     data,
+    productLength:data?.length,
     isFetching,
     isError,
     isLoading,
