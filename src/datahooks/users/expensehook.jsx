@@ -46,6 +46,8 @@ export const useExpenseHook = (onSuccessFn) => {
 };
 
 export const useFetchExpense = (page, limit, sortBy, sortOrder) => {
+  const store = JSON.parse(localStorage.getItem("store"));
+ 
   const { data, isFetching, isError } = useQuery({
     queryKey: ["expenses"],
     queryFn: async () => {
@@ -61,6 +63,7 @@ export const useFetchExpense = (page, limit, sortBy, sortOrder) => {
       return res.data?.responseObject?.expenses;
     },
 
+    enabled: !!store?.id,
     staleTime: Infinity,
     cacheTime: Infinity,
     refetchOnWindowFocus: false,

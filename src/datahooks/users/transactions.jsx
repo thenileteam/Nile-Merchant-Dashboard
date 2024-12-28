@@ -14,7 +14,7 @@ export const useFetchTransactions = () => {
     (acc, curr) => acc + curr.amount,
     0
   );
-  console.log(transactions?.data?.responseObject);
+  
   const totalRevenueForMonth = transactions?.data?.responseObject?.filter(
     (transaction) => {
       const month = new Date(transaction.createdAt).getMonth();
@@ -22,6 +22,7 @@ export const useFetchTransactions = () => {
       return month === currentMonth;
     }
   ).reduce((acc, curr) => acc + curr.amount, 0);
+  console.log(totalRevenue,totalRevenueForMonth);
   return {
     transactions: transactions?.data?.responseObject,
     isFetching,

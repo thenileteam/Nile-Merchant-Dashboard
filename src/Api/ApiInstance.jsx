@@ -5,17 +5,19 @@ import Cookies from "js-cookie";
 const ApiInstance = axios.create({
   baseURL: "https://api.nile.ng",
   withCredentials: true,
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 // Track retry attempts separately
-const retryAttempts = new WeakMap();
+const retryAttempts = new Map();
 
 // Function to check if user is in login or authentication process
 const isAuthenticatingPage = () => {
-  const currentPath = window.location.pathname;
+  const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
+ 
   const authPaths = [
     "/",
     "/signup",
@@ -23,7 +25,7 @@ const isAuthenticatingPage = () => {
     "/authentication",
     "/reset-password",
   ];
-  return authPaths.some((path) => currentPath.includes(path));
+  return authPaths.includes(currentPath);
 };
 
 // Function to refresh access token
@@ -34,8 +36,8 @@ const refreshAccessToken = async () => {
     const refreshToken =
       Cookies.get("refreshToken") || localStorage.getItem("refreshToken");
 
-    if (!refreshToken) {
-      throw new Error("No refresh token available");
+    if (!refreshToken || !id) {
+      throw new Error("No refresh token available or user id");
     }
 
     const response = await axios.post(
@@ -72,6 +74,7 @@ const refreshAccessToken = async () => {
 
     return newAccessToken;
   } catch (error) {
+    console.log(error);
     handleRefreshTokenFailure();
     throw error;
   }
@@ -79,7 +82,9 @@ const refreshAccessToken = async () => {
 
 // Function to handle refresh token failure
 const handleRefreshTokenFailure = () => {
+ 
   // Only redirect if not already on an authentication page
+  
   if (!isAuthenticatingPage()) {
     console.warn("Session expired. Logging out the user...");
 
@@ -112,6 +117,7 @@ ApiInstance.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+let refreshTokenPromise = null;
 
 // Add response interceptor
 ApiInstance.interceptors.response.use(
@@ -120,8 +126,11 @@ ApiInstance.interceptors.response.use(
     const originalRequest = error.config;
 
     // Check if we've already attempted to retry this request
-    const currentAttempts = retryAttempts.get(originalRequest) || 0;
-    console.log(currentAttempts, error.response);
+    const requestKey = `${originalRequest.url}-${originalRequest.method}`;
+    // console.log(requestKey);
+    const currentAttempts = retryAttempts.get(requestKey) || 0;
+    // console.log(`Retry attempts for ${requestKey}:`, currentAttempts);
+
     // Check for unauthorized access and limit retries
     if (
       (error.response?.status === 401 ||
@@ -130,12 +139,21 @@ ApiInstance.interceptors.response.use(
       currentAttempts < 1
     ) {
       // Increment retry attempts
-      retryAttempts.set(originalRequest, currentAttempts + 1);
+      retryAttempts.set(requestKey, currentAttempts + 1);
 
       try {
         // Attempt to refresh the token
-        const newAccessToken = await refreshAccessToken();
+        if (!refreshTokenPromise) {
+          refreshTokenPromise = refreshAccessToken();
+        }
+        const newAccessToken = await refreshTokenPromise;
 
+        refreshTokenPromise.finally(() => {
+          refreshTokenPromise = null;
+          setTimeout(() => {
+            retryAttempts.delete(requestKey);
+          }, 1000);
+        });
         // Create a new config object with updated headers
         const newConfig = {
           ...originalRequest,
@@ -153,7 +171,13 @@ ApiInstance.interceptors.response.use(
         return Promise.reject(refreshError);
       }
     }
-
+    // const errormsg = error.response?.data?.message || error.message;
+    // console.log(errormsg, {
+    //   status: error.response?.status,
+    //   statusText: error.response?.statusText,
+    //   data: error.response?.data,
+    //   config: error.config,
+    // });
     return Promise.reject(error);
   }
 );
