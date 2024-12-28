@@ -14,7 +14,7 @@ const CategoryTable = () => {
    const {pageCount, currentItems, handlePageChange}= usePagination(categories, itemsPerPage)
   return (
     <>
-      <section className={`mt-2 ${isCollapsed?'max-w-[1000px]':'max-w-[800px]'}  mx-auto`}>
+      <section className={`mt-2 ${isCollapsed ? 'max-w-[1000px]' : 'max-w-[800px]'}  mx-auto`}>
         {isFetchingCategories ? (
           <div className="bg-[#ffffff] w-full shadow-md">
             <Skeleton className=" w-full h-10" />

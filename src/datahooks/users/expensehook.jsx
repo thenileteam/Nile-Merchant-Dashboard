@@ -6,6 +6,8 @@ export const useExpenseHook = (onSuccessFn) => {
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
+      console.log(data);
+      
       return ApiInstance.post("/store/store/expenses", {
         ...data,
         storeId: store?.id,

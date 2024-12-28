@@ -138,9 +138,9 @@ const Dashboard = () => {
               <div className="border-2 border-white shadow-[0px_4px_10px_rgba(0,0,0,0.3)]"></div>
             </div>
 
-            {/* <div className="px-36 mt-10 space-y-7">
+            {/* {/* <div className="px-36 mt-10 space-y-7">
               <div className="flex items-center justify-between">
-                <Link to="/storesetting">
+                <Link to="/store">
                   <div className="flex items-center justify-between w-[469px] h-[122px] border-[#8ED06C] border-2 bg-[#ffffff] p-3 rounded-lg">
                     <div className="flex items-center gap-2">
                       <img src={store} alt="" />
