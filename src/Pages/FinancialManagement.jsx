@@ -27,7 +27,7 @@ import { useFetchExpense } from "@/datahooks/users/expensehook";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 const FinancialManagement = ({ data }) => {
   const { user } = useFetchUser();
-  const { sidebarOpen, closeSidebar, isCollapsed } = useSidebarStore();
+  const {isCollapsed } = useSidebarStore();
   const [displaySuccessModal, setDisplaySuccessModal] = useState(false);
   const [open, setOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams({
@@ -35,6 +35,8 @@ const FinancialManagement = ({ data }) => {
   });
   const { totalRevenue, totalRevenueForMonth } = useFetchTransactions();
   const { totalExpense } = useFetchExpense();
+  console.log(totalExpense);
+  
   const [tabs, setTabs] = useState([
     {
       id: 1,

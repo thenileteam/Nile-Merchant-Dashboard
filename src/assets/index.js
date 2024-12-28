@@ -73,7 +73,7 @@ import iconExpandCollapsible from './icon-expand-collapseBar.svg'
 import nileBagOnly from './nile-bagOnly-logo.svg'
 import totalOrders from './totalOrders.svg'
 import totalCustomers from './totalCustomers.svg'
-import totalExpense from './totalExpense.svg'
+import totalExpenseImg from './totalExpense.svg'
 import totalProfit from './totalProfit.svg'
 import totalInventory from './totalInventory.svg'
 import totalRevenue from './revenue.svg'
@@ -144,5 +144,5 @@ export {
     donBaci,
     dot1,
     dot2, dot3, eye
-    ,tadfarm,lashesIcon,addImage,placeholderImage,iconExpandCollapsible, nileBagOnly, totalExpense, totalInventory, totalRevenue,totalCustomers,totalOrders,totalProfit
+    ,tadfarm,lashesIcon,addImage,placeholderImage,iconExpandCollapsible, nileBagOnly, totalExpenseImg, totalInventory, totalRevenue,totalCustomers,totalOrders,totalProfit
 }
