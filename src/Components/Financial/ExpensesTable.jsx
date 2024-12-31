@@ -82,32 +82,6 @@ const ExpensesTable = () => {
         </table>
         </UserTableListLoader>
         {/* Pagination */}
-        <div className="flex items-center justify-center py-4 bg-white">
-          <nav className="flex items-center gap-2">
-            <button className="p-2 text-gray-500 hover:text-gray-700">
-              <span className="sr-only">Previous</span>
-              &lt;
-            </button>
-            <button className="px-3 py-1 bg-green-100 text-green-700 rounded">
-              1
-            </button>
-            <button className="px-3 py-1 text-gray-500 hover:bg-gray-100 rounded">
-              2
-            </button>
-            <span className="text-gray-500">...</span>
-            <button className="px-3 py-1 text-gray-500 hover:bg-gray-100 rounded">
-              9
-            </button>
-            <button className="px-3 py-1 text-gray-500 hover:bg-gray-100 rounded">
-              10
-            </button>
-            <button className="p-2 text-white bg-[#004324] rounded hover:bg-[#003319]">
-              <span className="sr-only">Next</span>
-              &gt;
-            </button>
-          </nav>
-        </div>
-
     </div>
   );
 };

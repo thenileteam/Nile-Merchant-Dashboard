@@ -9,6 +9,8 @@ import {
 import { useState, useEffect } from "react";
 const StoreSetting = () => {
   const { data } = useFetchStoreSettings();
+  console.log(data);
+  
   const { isEditingStore, addStoreSettingsToBackend } = useEditStoreSettings();
   const [storeSettingDetails, setStoreSettingDetails] = useState({
     name: "",
@@ -273,7 +275,8 @@ const StoreSetting = () => {
                   <input
                     type="radio"
                     name="currency"
-                    value={storeSettingDetails.currency}
+                    value='USD'
+                    checked= {storeSettingDetails.currency === 'USD'}
                     id="naira-currency"
                     onChange={handleChangeStoreInfo}
                   />
@@ -284,6 +287,8 @@ const StoreSetting = () => {
                     type="radio"
                     name="currency"
                     id="currency"
+                    value='Naira'
+                    checked={storeSettingDetails.currency=== 'Naira'}
                     onChange={handleChangeStoreInfo}
                   />
                 </div>

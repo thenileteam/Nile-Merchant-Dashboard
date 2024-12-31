@@ -25,6 +25,7 @@ import { validateForm } from "@/utils/formatdate";
 import { useFetchTransactions } from "@/datahooks/users/transactions";
 import { useFetchExpense } from "@/datahooks/users/expensehook";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
+import RequestPayout from '../Components/PopupModals/RequestPayout'
 const FinancialManagement = ({ data }) => {
   const { user } = useFetchUser();
   const {isCollapsed } = useSidebarStore();
@@ -40,7 +41,7 @@ const FinancialManagement = ({ data }) => {
   const [tabs, setTabs] = useState([
     {
       id: 1,
-      name: "Revenue",
+      name: "Finance",
       active: true,
     },
     {
@@ -149,7 +150,7 @@ const FinancialManagement = ({ data }) => {
                   </button>
                 ))}
               </div>
-              {searchParams.get("expense") === "true" && (
+              {searchParams.get("expense") === "true" ? (
                 <button
                   onClick={() => setOpen(true)}
                   className="bg-[#004324] text-[#ffffff] p-2 rounded-md flex items-center gap-2"
@@ -157,7 +158,7 @@ const FinancialManagement = ({ data }) => {
                   <img src="/plus.svg" alt="" />
                   Add Expense
                 </button>
-              )}
+              ):<RequestPayout/>}
               <ExpenseForm
                 open={open}
                 onClose={() => setOpen(false)}

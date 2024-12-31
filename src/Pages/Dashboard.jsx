@@ -87,7 +87,7 @@ const Dashboard = () => {
                       text="Total Profits"
                       image={totalProfit}
                       bgColor="bg-[#FFDBFA]"
-                      data={`${totalExpense> dashboardData?.salesData?.totalSales? 0: dashboardData?.salesData?.totalSales- totalExpense  }`}
+                      data={`${totalExpense && totalExpense > dashboardData?.salesData?.totalSales? 0: dashboardData?.salesData?.totalSales- totalExpense  }`}
                     />
                   </div>
                   <DashboardBox
