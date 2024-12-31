@@ -4,13 +4,14 @@ import Links from "../../Links";
 import Policy from '../PopupModals/Policy'
 import { useSidebarStore } from "../../ZustandStores/sidebarStore";
 import { usePolicyStore } from "../../ZustandStores/policyStore";
+import { useDropDown } from '../../ZustandStores/dropDown';
 import{useEffect} from 'react'
 const Sidebar = () => {
   const { sidebarOpen, setSidebarOpen, setIsCollapsed, isCollapsed, setIsDesktop } = useSidebarStore()
-  const{policyOpen} = usePolicyStore()
+  const { policyOpen } = usePolicyStore()
+  const {isDropdownOpen} = useDropDown()
   useEffect(() => {
     const handleResize = () => {
-      console.log('resized and state updated');
       setIsDesktop(window.innerWidth)
       if (window.innerWidth <= 1000) setIsCollapsed(false)
     }
@@ -32,16 +33,16 @@ const Sidebar = () => {
       {/* Sidebar */}
       {/* overflow-x-hidden overflow-y-scroll  */}
       <div
-        className={`fixed top-0 left-0 h-screen overflow-x-hidden overflow-y-scroll custom-scrollbar z-20 bg-[#004324] border-2 text-white p-5 transition-all transform ${
+        className={`fixed top-0 left-0 h-screen ${isDropdownOpen? 'overflow-y-scroll custom-scrollbar':''} z-20 bg-[#004324] border-2 text-white p-5 transition-all transform ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0  ${isCollapsed?'w-[110px] duration-100 delay-100 ease-in':'w-[290px] duration-100 delay-100 ease-in' }` }
       >
-        <button type="button" className="bg-white w-6 h-6 rounded-full lg:flex items-center border  border-green fixed -right-2 top-20 hidden" onClick={setIsCollapsed}>
+       { !isDropdownOpen&&<button type="button" className="bg-white w-6 h-6 rounded-full lg:flex items-center border  border-green fixed z-100 -right-2 top-20 hidden" onClick={setIsCollapsed}>
         <img src={iconExpandCollapsible}  className={isCollapsed?'block rotate-180 transition-transform':'block'} alt="icon to expand and collapse sidebar" />
-        </button>
+        </button>}
         <img src={isCollapsed?nileBagOnly:nilelogowhite} alt="" className={`${isCollapsed?'w-[55px] object-fit':'w-[110px]'} flex`} />
         <Links isCollapsed={isCollapsed}  />
-      </div>
+      </div>  
       {/* terms and conditions */}
      {policyOpen&& <Policy/>}
     </>

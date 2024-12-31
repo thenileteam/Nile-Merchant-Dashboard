@@ -11,8 +11,8 @@ const StoreSettingLinks = ({
   return (
     <>
       <div
-        className={`transition-all duration-300 ease-in-out transform
-            ${isDropDownOpen ? "opacity-100" : "opacity-0"}`}
+        className={`transition-all duration-500 ease-in transform`}
+            // ${isDropDownOpen ? "opacity-100" : "opacity-0"}`}
       >
         <StoreSettingLinkTemplate
           getLinkClasses={getLinkClasses}

@@ -29,7 +29,6 @@ const AddCategory = ({ setCategoryOpen}) => {
       //refactored validateForm
       if (!validateForm(requiredFields, categoryDetails)) return;
       //data to be sent and saved to backend
-      console.log(categoryDetails);
       addCategoryToBackend(categoryDetails);
     } catch (error) {
       console.error("Error adding category:", error);

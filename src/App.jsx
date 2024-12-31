@@ -226,14 +226,14 @@ const App = () => {
   })
   return (
     <QueryClientProvider client={queryClient}>
-        <div>
+        <main>
           <Toaster />
           <Suspense fallback={<div>Loading...</div>}>
             <RouterProvider router={router}>
               <ScrollToTop />
             </RouterProvider>
           </Suspense>
-        </div>
+        </main>
     </QueryClientProvider>
   );
 };

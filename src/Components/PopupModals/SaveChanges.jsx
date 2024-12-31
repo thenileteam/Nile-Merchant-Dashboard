@@ -1,29 +1,17 @@
-import React, { useState } from "react";
-
-const SaveChanges = () => {
-  const [showPopup, setShowPopup] = useState(false);
-
-  const handleSaveChanges = () => {
-    // Show the popup
-    setShowPopup(true);
-
-    // Hide the popup after 3 seconds
-    setTimeout(() => {
-      setShowPopup(false);
-    }, 500); // 3000ms = 3 seconds
-  };
+import { BiLoaderCircle } from "react-icons/bi";
+const SaveChanges = ({isEditingStore, handleSubmitStoreInfo, showPopup,}) => {
 
   return (
     <div className="relative">
       {/* Onclick Button to Trigger The Popup */}
       <button
         className="bg-[#004324] font-bold text-[#ffffff] p-3 rounded-lg"
-        onClick={handleSaveChanges}
+        onClick={handleSubmitStoreInfo}
       >
-        Save Changes
+        {isEditingStore? <BiLoaderCircle className=" animate-spin duration-300 transition-all block mx-auto"/>:'Save Changes'}
       </button>
 
-      {/* Conrimation Popup */}
+      {/* Confirmation Popup */}
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-[#f5f5f5] text-[#333333] font-bold p-4 rounded shadow-md">

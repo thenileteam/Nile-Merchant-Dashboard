@@ -1,14 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom";
 import {
-  notification,
   store,
-  arrow,
-  packagemoving1,
-  truck,
-  dollar,
-  bank,
-  totalExpense,
+  totalExpenseImg,
   totalInventory,
   totalRevenue,
   totalCustomers,
@@ -22,20 +16,20 @@ import {
   useFetchStoreCustomers,
   useFetchUser,
 } from "../datahooks/users/userhooks";
-import Skeleton from "react-loading-skeleton";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import Navbar from "../Components/Navbar/Navbar";
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 import { useFetchProducts } from "@/datahooks/products/productshooks";
+import { useFetchExpense } from "@/datahooks/users/expensehook";
 const Dashboard = () => {
   //users image
   const { user } = useFetchUser();
+  const { totalExpense } = useFetchExpense();
   const { dashboardData, isFetchingDashboardData, dashboardDataisError } =
     useFetchDashboardData();
   const { customerLength } = useFetchStoreCustomers();
   const { productLength } = useFetchProducts();
-  console.log(dashboardData);
   const { isCollapsed } = useSidebarStore();
   //username
   const username =
@@ -79,33 +73,21 @@ const Dashboard = () => {
                     data={`${dashboardData?.salesData?.totalSales || 0}`}
                   />
                   <div className="relative">
-                    <span
-                      className={` absolute top-2 font-medium ${
-                        isCollapsed ? "right-12" : "right-3"
-                      } text-[13px] capitalize`}
-                    >
-                      coming soon..
-                    </span>
+                    
                     <DashboardBox
                       text="Total Expenses"
-                      image={totalExpense}
+                      image={totalExpenseImg}
                       bgColor="bg-[#FFE8DF]"
-                      data={"-"}
+                     data={totalExpense}
                     />
                   </div>
                   <div className="relative">
-                    <span
-                      className={` absolute top-2 font-medium ${
-                        isCollapsed ? "right-12" : "right-3"
-                      } text-[13px] capitalize`}
-                    >
-                      coming soon..
-                    </span>
+                   
                     <DashboardBox
                       text="Total Profits"
                       image={totalProfit}
                       bgColor="bg-[#FFDBFA]"
-                      data={"-"}
+                      data={`${totalExpense && totalExpense > dashboardData?.salesData?.totalSales? 0: dashboardData?.salesData?.totalSales- totalExpense  }`}
                     />
                   </div>
                   <DashboardBox
@@ -138,9 +120,9 @@ const Dashboard = () => {
               <div className="border-2 border-white shadow-[0px_4px_10px_rgba(0,0,0,0.3)]"></div>
             </div>
 
-            {/* <div className="px-36 mt-10 space-y-7">
+            {/* {/* <div className="px-36 mt-10 space-y-7">
               <div className="flex items-center justify-between">
-                <Link to="/storesetting">
+                <Link to="/store">
                   <div className="flex items-center justify-between w-[469px] h-[122px] border-[#8ED06C] border-2 bg-[#ffffff] p-3 rounded-lg">
                     <div className="flex items-center gap-2">
                       <img src={store} alt="" />

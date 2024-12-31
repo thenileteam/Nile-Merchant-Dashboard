@@ -1,133 +1,111 @@
 import { useState } from "react";
-import { addsquare, arrowleft, image, notification } from "../../assets";
-import { Link } from "react-router-dom";
-import SaveChanges from "../PopupModals/SaveChanges";
+import { addsquare } from "../../assets";
+import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
 import { useFetchUser } from "@/datahooks/users/userhooks";
 import { useSidebarStore } from "@/ZustandStores/sidebarStore";
-import Sidebar from "../Sidebar/Sidebar";
-import { Sheet, SheetTrigger } from "../ui/sheet";
-import AcccountNumberComp from "./AcccountNumberComp";
 import useBankDetails from "@/datahooks/banks/usebankhook";
+
 const BankSetting = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedBank, setSelectedBank] = useState("Select Bank or Search");
   const { user } = useFetchUser();
-  const { isCollapsed} = useSidebarStore();
-  const { dbBanks } = useBankDetails();
+  const { isCollapsed } = useSidebarStore();
 
-  // Function to toggle the dropdown
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+  const {
+    banks,
+    formData,
+    handleChange,
+    resolvingAccount,
+    banksLoading,
+    banksError,
+    isAdding,
+    addBank,
+  } = useBankDetails();
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // Toggle Dropdown
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
+  // Handle Bank Selection
+  const handleBankSelection = (bank) => {
+    handleChange("bankCode", bank.code); // Update bankCode in the formData
+    handleChange("bankName", bank.name); // Update bankName in the formData
+    setIsDropdownOpen(false); // Close dropdown after selection
   };
 
-  // Handle bank selection
-  const handleBankSelection = (bankName) => {
-    setSelectedBank(bankName);
-    setIsDropdownOpen(false); // Close the dropdown after selecting
+  // Handle form submission
+  const handleSubmit = () => {
+    if (formData.accountName) {
+      addBank(formData); // Add bank details to the backend
+    }
   };
+
   return (
-    <div className="">
+    <div>
       <div className="flex">
         <Sidebar />
-
-        {/* Navbar */}
         <div
           className={
             isCollapsed
               ? "flex-grow lg:ml-20 overflow-x-hidden"
               : "flex-grow lg:ml-56 overflow-x-hidden"
           }
->
+        >
           <Navbar
             title="Bank Details"
             profilePic={user && user.image ? user.image : ""}
           />
-          {/* Cards */}
-          <div
-            className={`${
-              isCollapsed ? "max-w-[1000px]" : "max-w-[800px]"
-            } mt-28 mb-6 mx-auto`}
-          >
+          <div className="max-w-[800px] mt-28 mb-6 mx-auto">
             <div className="text-center">
               <h1 className="text-[#004324] text-[24px] font-bold">
                 Input Your Bank Details
               </h1>
-              <p className="text-[#6E6E6E]">
-                The Bank Informations You Provide Below Will Be <br /> Sent Your
-                Funds To So,Check It Properly And <br /> Confirm
+              <p className="text-[#6E6E6E] my-3">
+                The Bank Information You Provide Below Will Be <br />
+                Used to Send Your Funds. Check It Properly and Confirm.
               </p>
             </div>
             <div className="flex justify-center">
-              <form action="#" className="space-y-5">
+              <form className="space-y-5">
+                {/* Bank Selection */}
                 <div>
                   <label
-                    htmlFor="Name"
+                    htmlFor="BankName"
                     className="block text-[16px] font-bold text-[#333333]"
                   >
-                    BankName
+                    Bank Name
                   </label>
-
-                  {/* Bank selection div that triggers the dropdown */}
                   <div
                     className="flex items-center justify-between bg-[#ffffff] border-[#8ED06C] border-2 p-3 rounded-md cursor-pointer"
                     onClick={toggleDropdown}
                   >
-                    <h1 className="text-gray-500 font-bold">{selectedBank}</h1>
-                    <div className="flex items-center">
-                      <img src={addsquare} alt="Add Square" />
-                    </div>
+                    <h1 className="text-gray-500 font-bold">
+                      {formData.bankName || "Select Bank or Search"}
+                    </h1>
+                    <img src={addsquare} alt="Add Square" />
                   </div>
-
-                  {/* Dropdown list */}
                   {isDropdownOpen && (
-                    <div className="absolute w-[325px] mt-2 border border-[#8ED06C] bg-white rounded-md shadow-lg">
-                      <ul className="p-2">
-                        <li
-                          className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
-                          onClick={() => handleBankSelection("Bank 1")}
-                        >
-                          Bank 1
-                        </li>
-                        <li
-                          className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
-                          onClick={() => handleBankSelection("Bank 2")}
-                        >
-                          Bank 2
-                        </li>
-                        <li
-                          className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
-                          onClick={() => handleBankSelection("Bank 3")}
-                        >
-                          Bank 3
-                        </li>
-                        <li
-                          className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
-                          onClick={() => handleBankSelection("Bank 4")}
-                        >
-                          Bank 4
-                        </li>
-                      </ul>
+                    <div className="absolute w-[325px] mt-2 border border-[#8ED06C] bg-white rounded-md shadow-lg max-h-[200px] overflow-y-auto">
+                      {banksLoading ? (
+                        <p className="p-2 text-gray-500">Loading Banks...</p>
+                      ) : banksError ? (
+                        <p className="p-2 text-red-500">Error loading banks</p>
+                      ) : (
+                        banks.map((bank) => (
+                          <div
+                            key={bank.code}
+                            className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
+                            onClick={() => handleBankSelection(bank)}
+                          >
+                            {bank.name}
+                          </div>
+                        ))
+                      )}
                     </div>
                   )}
                 </div>
-                {/* Input Field */}
-                <div>
-                  <label
-                    htmlFor="AccountName"
-                    className="block text-[16px] font-bold text-[#333333]"
-                  >
-                    Account Holders Name
-                  </label>
 
-                  <input
-                    type="text"
-                    id="AccountName"
-                    name="account_name"
-                    placeholder="James Jacob"
-                    className="mt-1 w-[325px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-                  />
-                </div>
+                {/* Account Number */}
                 <div>
                   <label
                     htmlFor="AccountNumber"
@@ -135,13 +113,48 @@ const BankSetting = () => {
                   >
                     Account Number
                   </label>
-
                   <input
                     type="text"
                     id="AccountNumber"
-                    name="account_number"
-                    placeholder="0000000000000"
+                    name="accountNumber"
+                    maxLength={10}
+                    value={formData.accountNumber}
+                    onChange={(e) =>
+                      handleChange("accountNumber", e.target.value)
+                    }
+                    placeholder="Enter Account Number"
                     className="mt-1 w-[325px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  />
+                  {formData.accountNumber &&
+                    formData.accountNumber.length < 10 && (
+                      <p className="text-sm text-red-500 mt-1">
+                        Account number must be 10 digits
+                      </p>
+                    )}
+                </div>
+
+                {/* Account Holder's Name */}
+                <div>
+                  <label
+                    htmlFor="AccountName"
+                    className="block text-[16px] font-bold text-[#333333]"
+                  >
+                    Account Holder's Name
+                  </label>
+                  <input
+                    type="text"
+                    id="AccountName"
+                    name="accountName"
+                    value={formData.accountName}
+                    readOnly
+                    placeholder={
+                      resolvingAccount
+                        ? "Resolving account name..." // Show while resolving
+                        : "Account name will automatically appear here"
+                    }
+                    className={`mt-1 w-[325px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm ${
+                      resolvingAccount ? "bg-gray-100" : ""
+                    }`}
                   />
                 </div>
 
@@ -152,37 +165,39 @@ const BankSetting = () => {
                   </h1>
                   <div className="flex items-center justify-between bg-[#ffffff] border-[#8ED06C] border-2 p-2 rounded-md">
                     <h1 className="text-gray-500 font-bold">Weekly</h1>
-                    <div className="flex items-center">
-                      &#8203;
-                      <input
-                        type="checkbox"
-                        className="size-4 rounded border-gray-300"
-                        id="Option2"
-                      />
-                    </div>
+                    <input
+                      type="checkbox"
+                      className="size-4 rounded border-gray-300"
+                    />
                   </div>
                   <div className="flex items-center justify-between bg-[#ffffff] border-[#8ED06C] border-2 p-2 rounded-md">
                     <h1 className="text-gray-500 font-bold">Monthly</h1>
-                    <div className="flex items-center">
-                      &#8203;
-                      <input
-                        type="checkbox"
-                        className="size-4 rounded border-gray-300"
-                        id="Option2"
-                      />
-                    </div>
+                    <input
+                      type="checkbox"
+                      className="size-4 rounded border-gray-300"
+                    />
                   </div>
                 </div>
               </form>
             </div>
-            <div className="flex items-center justify-center gap-16 mt-10">
-              <SaveChanges />
-            </div>
+            <button
+              onClick={handleSubmit}
+              className={`w-[180px] h-[50px] rounded-md block mx-auto mt-4 bg-green text-white ${
+                formData.accountName ? "" : "opacity-50"
+              }`}
+              disabled={isAdding || !formData.accountName}
+            >
+              {isAdding ? (
+                <div className="flex items-center gap-2">
+                  <span>Adding Bank Details...</span>
+                </div>
+              ) : (
+                "Add Bank Details"
+              )}
+            </button>
           </div>
         </div>
       </div>
-
-      {/* Card section */}
     </div>
   );
 };

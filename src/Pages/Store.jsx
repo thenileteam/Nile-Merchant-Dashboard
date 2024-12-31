@@ -42,7 +42,7 @@ const Store = () => {
               icon={store}
               profilePic={user && user.image ? user.image : ""}/>
             {/* Cards */}
-            <StoreSetting/>
+              <StoreSetting />
           </div>
         </div>
       </div>
