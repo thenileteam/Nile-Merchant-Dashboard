@@ -11,8 +11,9 @@ export const UseGenerateInvoiceGenerator = (data,user) => {
   data;
 
   const store = JSON.parse(localStorage.getItem('store'))
+  console.log(store)
 const { email,phoneNumber,} = user
-  const {storeName} = store
+  const {name} = store
 
   const generatePDF = () => {
     const doc = new jsPDF();
@@ -20,7 +21,7 @@ const { email,phoneNumber,} = user
     // Add Business Logo and Name
     doc.setFontSize(20);
     doc.setFont("helvetica", "bold");
-    doc.text(storeName.toUpperCase() || "", 20, 20);
+    doc.text(name?.toUpperCase() || "", 20, 20);
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
     doc.text("Office Address", 20, 30);
