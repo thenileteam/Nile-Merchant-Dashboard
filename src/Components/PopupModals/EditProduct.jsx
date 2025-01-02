@@ -8,7 +8,6 @@ import { Loader2 } from "lucide-react";
 
 
 const EditProduct = ({ product }) => {
-  console.log(product);
 
   // State to control the popup visibility and animation
   const [isPopupOpen, setIsPopupOpen] = useState(false);

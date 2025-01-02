@@ -248,8 +248,8 @@ const ProfileSetting = () => {
             {isPending ? "Saving..." : "Save Changes"}
           </button>
         </div>
-        {/* Log Out Button */}
 
+        {/* Log Out Button */}
         <button
           onClick={() => {
             console.log("Log out");

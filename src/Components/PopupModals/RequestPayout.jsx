@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import { useState } from "react";
 const RequestPayout = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFinalModalOpen, setIsFinalModalOpen] = useState(false);
@@ -15,8 +14,8 @@ const RequestPayout = () => {
 
   return (
     <div>
-      <h1
-        className="text-[#004324] flex font-bold gap-1 items-center border-[#004324] hover:bg-[#004324] hover:text-[#ffffff] duration-500 border-2 p-2 rounded-md cursor-pointer"
+      <button type='button'
+         className="text-[#fff] bg-green flex font-bold gap-1 items-center   hover:bg-transparent hover:text-[#004324] hover:border-[#004324] duration-500 border-2 p-2 rounded-md cursor-pointer"
         onClick={() => setIsModalOpen(true)} // Open the first modal on click
       >
         <div>
@@ -49,12 +48,13 @@ const RequestPayout = () => {
           </svg>
         </div>
         Request Payout
-      </h1>
+      </button>
 
       {/* First Modal (Confirmation) */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-[#f5f5f5] p-16 rounded-md shadow-lg w-[553px] h-[377px]">
+          <div className="relative bg-[#f5f5f5] p-16 rounded-md shadow-lg w-[553px] h-[377px]">
+            <button type="button" className="absolute right-2 top-2 text-lightGreen border border-lightGreen w-6 rounded-md"  onClick={() => setIsModalOpen(false)}>x</button>
             <div className="flex justify-center gap-20">
               <div>
                 <h1 className="text-[#333333] font-bold text-[20px]">

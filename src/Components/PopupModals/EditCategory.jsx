@@ -28,7 +28,7 @@ const EditCategory = ({ category }) => {
       };
       addCategoryToBackend(updatedCategory);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   return (

@@ -44,39 +44,61 @@ const resolveBankAccount = async (accountNumber, bankCode) => {
   return data.data;
 };
 
-// Custom Hook for Bank Details Management
-const useBankDetails = () => {
-  const [formData, setFormData] = useState({
-    accountName: "",
-    accountNumber: "",
-    bankCode: "",
-    bankName: "",
+//adding and removing bank details
+const useBankMutations= (storeId) => {
+  const queryClient = useQueryClient();
+  const { mutate:addBank, isPending:isAdding } = useMutation({
+    mutationFn: (bank) =>
+      ApiInstance.post(
+        `/users/stores/store/bank/create`,
+        { storeId: storeId,
+            bankName:bank.bankName,
+            bankCode:bank.bankCode,
+            accountNumber:bank.accountNumber
+         },
+       
+      ),
+    onSuccess: (response) => {
+      console.log(response);
+      
+      toast.success("Bank details added  Successfully");
+     
+      queryClient.invalidateQueries(["banks", storeId]);
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "An error occurred");
+    },
  
+  }); 
+  const { mutate:removeBank, isPending:isRemoving } = useMutation({
+    mutationFn: (id) =>
+      ApiInstance.delete(
+        `/users/stores/store/bank/delete/${id}`,
+      ),
+    onSuccess: () => {
+      toast.success("Bank Deleted Successfully");
+     
+      queryClient.invalidateQueries(["banks", storeId]);
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "An error occurred");
+    },
   });
-
-  const [resolvingAccount, setResolvingAccount] = useState(false);
-  const [accountDetails, setAccountDetails] = useState(null);
-  const store = JSON.parse(localStorage.getItem("store"));
-
-  // Fetch banks from Paystack
-  const { data: banks, isLoading: banksLoading, error: banksError } = useQuery({
-    queryKey: ["banks-paystack"],
-    queryFn: fetchBanks,
-    staleTime: Infinity,
-    cacheTime: Infinity,
-  });
-
-  // Fetch stored bank details from database
+  return{addBank, removeBank, isAdding, isRemoving}
+}
+//get stored banks
+const useStoredBanks = (storeId) => {
   const {
     data: dbBanks,
     isFetching: dbBanksFetching,
     isError: dbBanksError,
     isLoading: dbBanksLoading,
   } = useQuery({
-    queryKey: ["banks", store?._id],
+    queryKey: ["banks", storeId],
     queryFn: async () => {
       try {
-        const res = await ApiInstance.get(`/users/stores/store/bank/${store.id}`);
+        const res = await ApiInstance.get(`/users/stores/store/bank/${storeId}`);
+        console.log(res);
         return res.data?.responseObject || [];
       } catch (error) {
         console.error("Error fetching stored banks:", error);
@@ -87,12 +109,37 @@ const useBankDetails = () => {
     cacheTime: Infinity,
     retry: 3,
   });
+  return{dbBanks,dbBanksFetching,dbBanksLoading,dbBanksError}
+}
+// Custom Hook for Bank Details Management
+const useBankDetails = () => {
+  const [formData, setFormData] = useState({
+    accountName: "",
+    accountNumber: "",
+    bankCode: "",
+    bankName: "",
+  });
 
+  const [resolvingAccount, setResolvingAccount] = useState(false);
+  const [accountDetails, setAccountDetails] = useState(null);
+  const store = JSON.parse(localStorage.getItem("store"));
+  console.log(store);
+  
+
+  // Fetch banks from Paystack
+  const { data: banks, isLoading: banksLoading, error: banksError } = useQuery({
+    queryKey: ["banks-paystack"],
+    queryFn: fetchBanks,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+
+  // Fetch stored bank details from database
+  const{dbBanks,dbBanksFetching,dbBanksLoading,dbBanksError} = useStoredBanks(store?.id)
   // Handle form input changes and trigger account resolution if applicable
   const handleChange = (field, value) => {
     setFormData((prev) => {
       const updatedFormData = { ...prev, [field]: value };
-
       // Trigger account resolution when both fields are valid
       if (
         (field === "accountNumber" && updatedFormData.bankCode && value.length === 10) ||
@@ -113,12 +160,9 @@ const useBankDetails = () => {
       toast.error("Please provide valid account details.");
       return;
     }
-
     try {
       setResolvingAccount(true);
-
       const details = await resolveBankAccount(accountNumber, bankCode);
-
       setFormData((prev) => ({
         ...prev,
         accountName: details.account_name,
@@ -136,44 +180,7 @@ const useBankDetails = () => {
   };
 
   // Handle form submission
-  const queryClient = useQueryClient();
-  const { mutate:addBank,isPending } = useMutation({
-    mutationFn: (bank) =>
-      ApiInstance.post(
-        `/users/stores/store/bank/create`,
-        { storeId: store?._id,
-            bankName:bank.bankName,
-            bankCode:bank.bankCode,
-            accountNumber:bank.accountNumber
-         },
-       
-      ),
-    onSuccess: () => {
-      toast.success("Bank details added  Successfully");
-     
-      queryClient.invalidateQueries(["banks", store.id]);
-    },
-    onError: (err) => {
-      toast.error(err.response?.data?.message || "An error occurred");
-    },
-  });
-  const { mutate:removeBank,isPending:isRemoving } = useMutation({
-    mutationFn: (id) =>
-      ApiInstance.delete(
-        `/users/stores/store/bank/delete/${id}`,
-       
-       
-      ),
-    onSuccess: () => {
-      toast.success("Bank Deleted Successfully");
-     
-      queryClient.invalidateQueries(["banks", store.id]);
-    },
-    onError: (err) => {
-      toast.error(err.response?.data?.message || "An error occurred");
-    },
-  });
-
+  const{addBank, removeBank, isRemoving,isAdding}= useBankMutations(store?.id)
 //   return {
 //     deleteProduct: mutate,
 //   };
@@ -193,7 +200,7 @@ const useBankDetails = () => {
     handleChange,
     addBank,
     accountDetails,
-    isPending
+    isAdding
   };
 };
 

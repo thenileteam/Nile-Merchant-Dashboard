@@ -1,14 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom";
 import {
-  notification,
   store,
-  arrow,
-  packagemoving1,
-  truck,
-  dollar,
-  bank,
-  totalExpense,
+  totalExpenseImg,
   totalInventory,
   totalRevenue,
   totalCustomers,
@@ -22,7 +16,6 @@ import {
   useFetchStoreCustomers,
   useFetchUser,
 } from "../datahooks/users/userhooks";
-import Skeleton from "react-loading-skeleton";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import Navbar from "../Components/Navbar/Navbar";
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
@@ -33,11 +26,11 @@ import { UseCardLoader } from "@/Components/CustomLoaders/loaders";
 const Dashboard = () => {
   //users image
   const { user } = useFetchUser();
+  const { totalExpense } = useFetchExpense();
   const { dashboardData, isFetchingDashboardData, dashboardDataisError } =
     useFetchDashboardData();
   const { customerLength } = useFetchStoreCustomers();
   const { productLength } = useFetchProducts();
-  console.log(dashboardData);
   const { isCollapsed } = useSidebarStore();
   //username
   const username =
@@ -125,7 +118,7 @@ const Dashboard = () => {
 
           {/* <div className="px-36 mt-10 space-y-7">
               <div className="flex items-center justify-between">
-                <Link to="/storesetting">
+                <Link to="/store">
                   <div className="flex items-center justify-between w-[469px] h-[122px] border-[#8ED06C] border-2 bg-[#ffffff] p-3 rounded-lg">
                     <div className="flex items-center gap-2">
                       <img src={store} alt="" />

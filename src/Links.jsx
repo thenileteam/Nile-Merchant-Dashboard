@@ -4,10 +4,11 @@ import { useState } from "react";
 import { usePolicyStore } from "./ZustandStores/policyStore";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import StoreSettingsLinks from "./Components/Store/AllStoreComp/StoreSettingLinks";
+import {useDropDown} from'./ZustandStores/dropDown'
 const Links = ({ isCollapsed }) => {
   const location = useLocation();
   const { openPolicy } = usePolicyStore();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const {isDropdownOpen, setIsDropdownOpen} = useDropDown();
   const closeDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
@@ -324,7 +325,7 @@ const Links = ({ isCollapsed }) => {
           <li>Store {isCollapsed ? "" : "Settings"}</li>
           <button
             type="button"
-            className="bg-transparent border-2  border-blue-600"
+            className="bg-transparent"
             onClick={closeDropdown}
           >
             {isDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}

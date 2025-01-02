@@ -14,7 +14,7 @@ export const useFetchProducts = () => {
     queryKey: ["products", store?._id],
     queryFn: async () => {
       try {
-        const res = await ApiInstance.get(`/products/store/${store.id}`);
+        const res = await ApiInstance.get(`/products/store/${store?.id}`);
         const products = res.data?.responseObject || [];
         return products.map((item) => ({ ...item, quantity: 1 }));
       } catch (error) {
@@ -43,7 +43,7 @@ export const useCreateNewProduct = (onSuccessCallback) => {
     onSuccess: () => {
       toast.success("Product Added Successfully");
       if (onSuccessCallback) onSuccessCallback();
-      queryClient.invalidateQueries(["products", store.id]);
+      queryClient.invalidateQueries(["products", store?.id]);
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "An error occurred");
@@ -60,10 +60,11 @@ export const useEditProduct = (onSuccessCallback) => {
   const { mutate, isPending: isEditingProduct } = useMutation({
     mutationFn: (data) =>
       ApiInstance.put(`/products/edit/${data.productId}`, data),
-    onSuccess: () => {
+    onSuccess: (response) => {
+      console.log(response);
       toast.success("Product Edited Successfully");
       if (onSuccessCallback) onSuccessCallback();
-      queryClient.invalidateQueries(["products", store.id]);
+      queryClient.invalidateQueries(["products", store?.id]);
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "An error occurred");
@@ -93,7 +94,7 @@ export const useDeleteProduct = (onSuccessDelete) => {
       if (onSuccessDelete) {
         onSuccessDelete();
       }
-      queryClient.invalidateQueries(["products", store.id]);
+      queryClient.invalidateQueries(["products", store?.id]);
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "An error occurred");
@@ -149,7 +150,7 @@ export const useFetchCategories = () => {
     queryFn: async () => {
       try {
         const res = await ApiInstance.get(
-          `/products/store/categories/${store.id}`
+          `/products/store/categories/${store?.id}`
         );
         return res.data?.responseObject || [];
       } catch (error) {
@@ -176,10 +177,10 @@ export const useEditCategory = (onSuccessCallback) => {
   const { mutate, isPending: isEditingCategory } = useMutation({
     mutationFn: (data) =>
       ApiInstance.put(`products/product/store/categories`, data),
-    onSuccess: (response) => {
+    onSuccess: () => {
       toast.success("Category Edited Successfully");
       if (onSuccessCallback) onSuccessCallback();
-      queryClient.invalidateQueries(["categories", store.id]);
+      queryClient.invalidateQueries(["categories", store?.id]);
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "An error occurred while editing category");
@@ -198,7 +199,7 @@ export const useDeleteCategory = (onSuccessDelete) => {
   const { mutate, isLoading } = useMutation({
     // Mutation function for API call
     mutationFn: (category) =>
-      ApiInstance.delete(`/products/product/store/categories/${category.id}`, {
+      ApiInstance.delete(`/products/product/store/categories/${category?.id}`, {
         params: { storeId: category.storeId, id: category.uuid },
       }),
     
@@ -209,7 +210,7 @@ export const useDeleteCategory = (onSuccessDelete) => {
       if (onSuccessDelete) {
         onSuccessDelete();
       }
-      queryClient.invalidateQueries(["categories", store.id]);
+      queryClient.invalidateQueries(["categories", store?.id]);
     },
 
     // error?
