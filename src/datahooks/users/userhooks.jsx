@@ -46,6 +46,7 @@ export const useLogUserIn = () => {
       Cookies.set("isUserLoggedIn", "yes");
       toast("Auth Success✔");
       // Navigate to dashboard
+      localStorage.setItem("clear",true)
       navigate("/dashboard");
     },
     onError: (err) => {
@@ -153,7 +154,7 @@ export const useSignUserUp = () => {
       // Navigate to dashboard
       navigate("/");
       localStorage.setItem("ownerName", JSON.stringify(username));
-      setUsername(username);
+      // setUsername(username);
       // console.log(response.data);
     },
     onError: (err) => {
