@@ -23,6 +23,7 @@ import DashboardBox from "@/Components/Dashboard/DashboardBox";
 import { useFetchProducts } from "@/datahooks/products/productshooks";
 import DashboardLayout from "@/Components/Layouts/DashboardLayout";
 import { UseCardLoader } from "@/Components/CustomLoaders/loaders";
+import { useFetchExpense } from "@/datahooks/users/expensehook";
 const Dashboard = () => {
   //users image
   const { user } = useFetchUser();
