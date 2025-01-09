@@ -22,10 +22,10 @@ const CreateOrderForm = ({
 }) => {
   return (
     <div
-      className=" w-full fixed z-40  justify-center items-center flex h-screen border-2 border-blue-500"
+      className=" w-full fixed justify-center items-center flex h-screen  "
       onClick={() => setCreateOrderForm(false)}
     >
-      <div className=" w-full h-full bg-black/30 absolute top-0 left-0 "></div>
+      <div className="w-full h-full bg-black/30 z-100 fixed inset-0" ></div>
       <div
         style={{
           width: "65%",
@@ -33,10 +33,10 @@ const CreateOrderForm = ({
           paddingRight: "32px",
           paddingTop: "32px",
           position: "relative",
-          zIndex: "50000",
+          zIndex: "99",
           backgroundColor: "white",
         }}
-        className=" rounded-[8px]  z-50 mx-auto pt-[96px] pb-8 px-8 relative "
+        className=" rounded-[8px] z-50 mx-auto pt-[96px] pb-8 px-8 fixed right-24"
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -52,7 +52,7 @@ const CreateOrderForm = ({
           className=" cursor-pointer size-8 absolute top-8 right-8"
           alt=""
         />
-        <div className=" flex w-full flex-col gap-4">
+        <div className=" flex w-full flex-col gap-4  ">
           <div className=" grid  grid-cols-2 gap-16">
             {/* <div className=" flex flex-col gap-2">
               <label

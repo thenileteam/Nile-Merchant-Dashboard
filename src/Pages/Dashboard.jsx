@@ -42,9 +42,9 @@ const Dashboard = () => {
         <div className="bg-[#F5F5F5] h-screen pt-[112px] pb-20 lg:overflow-x-hidden">
           {/* Cards */}
 
-          <UseCardLoader amount={6} className="mt-20 lg:mt-28 mb-6 px-2" loading={isFetchingDashboardData} error={dashboardDataisError}>
+          <UseCardLoader amount={6} className="mt-20 lg:mt-1 mb-6 px-2" loading={isFetchingDashboardData} error={dashboardDataisError}>
             <div
-              className={`mt-20 lg:mt-28 mb-6 px-2 ${
+              className={`mt-20 lg:mt-1 mb-6 px-2 ${
                 isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[880px]"
               } mx-auto`}
             >
@@ -57,33 +57,21 @@ const Dashboard = () => {
                   data={`${dashboardData?.salesData?.totalSales || 0}`}
                 />
                 <div className="relative">
-                  <span
-                    className={` absolute top-2 font-medium ${
-                      isCollapsed ? "right-12" : "right-3"
-                    } text-[13px] capitalize`}
-                  >
-                    coming soon..
-                  </span>
+                   
                   <DashboardBox
                     text="Total Expenses"
-                    image={totalExpense}
+                    image={totalExpenseImg}
                     bgColor="bg-[#FFE8DF]"
-                    data={"-"}
+                    data={totalExpense}
                   />
                 </div>
                 <div className="relative">
-                  <span
-                    className={` absolute top-2 font-medium ${
-                      isCollapsed ? "right-12" : "right-3"
-                    } text-[13px] capitalize`}
-                  >
-                    coming soon..
-                  </span>
+                   
                   <DashboardBox
                     text="Total Profits"
                     image={totalProfit}
                     bgColor="bg-[#FFDBFA]"
-                    data={"-"}
+                    data={totalRevenue>totalExpense?totalRevenue-totalExpense: 0}
                   />
                 </div>
                 <DashboardBox
