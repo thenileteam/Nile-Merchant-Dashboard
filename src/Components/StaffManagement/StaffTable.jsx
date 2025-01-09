@@ -1,8 +1,15 @@
+import { useFetchStaffs, useFetchRoles} from "@/datahooks/staffs/usestaffhook";
 import EditStaff from "../PopupModals/EditStaff";
+import usePagination from "../Pagination/PaginationHook";
 const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
+  const { staffs } = useFetchStaffs()
+  console.log(staffs)
+  // const itemsPerPage = 10
+  //  const {pageCount, currentItems, handlePageChange}= usePagination(staffs, itemsPerPage)
+  // console.log(staffs);
+  
   return (
     <section>
-       
       <div
         className={`mt-28 ${
           isCollapsed ? "max-w-[1000px]" : "max-w-[900px]"
@@ -42,26 +49,26 @@ const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
             </tr>
           </thead>
           <tbody>
-            {/* {currentItems?.map((category, i) => { */}
-            {/* return ( */}
+            {staffs?.map((staff, i) => {
+             return ( 
             <tr className="mt-4 bg-white shadow-md">
               <td className="bg-[#EAF4E2] p-2 text-[#6e6e6e] capitalize">
-                {"xxxxx"}
+                {staff.name||"xxxxx"}
               </td>
               <td className="bg-white p-2 text-[#6e6e6e]  capitalize">
                 {"Admin"}
               </td>
-              <td className="bg-white p-2 text-[#6e6e6e]  ">{"Date xxx"}</td>
+                 <td className="bg-white p-2 text-[#6e6e6e]  ">{ staff.createdAt||'10:37pm'}</td>
 
               <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
-                10:17pm
+                {staff.updatedAt||'10:59pm'}
               </td>
               <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
                 <EditStaff/>
               </td>
             </tr>
-            {/* ); */}
-            {/* })} */}
+              )  
+             })}
           </tbody>
         </table>
       </div>

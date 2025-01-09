@@ -26,6 +26,9 @@ const StoreSetting = () => {
   });
 
   const [showPopup, setShowPopup] = useState(false);
+  const [storeErrors, setStoreErrors] = useState({
+    
+  });
   useEffect(() => {
     if (data) {
       setStoreSettingDetails({
@@ -42,13 +45,26 @@ const StoreSetting = () => {
       });
     }
   }, [data]);
-
+  const socialMediaRegex = /^https:\/\/(www\.)?(facebook|twitter|linkedin|instagram)\.com\/[a-zA-Z0-9_.]+$/
   const handleChangeStoreInfo = (e) => {
     const { name, type, value, checked } = e.target;
     setStoreSettingDetails((prevData) => ({
-      ...prevData,
-      [name]: type === "radio" ? (checked ? value : prevData[name]) : value,
+        ...prevData,
+        [name]: type === "radio" ? (checked ? value : prevData[name]) : value,
     }));
+    
+    // Validate the input value against the regex for social media URLs
+    if (!socialMediaRegex.test(value)) {
+      setStoreErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: 'Invalid URL format. please input the correct format',
+      }));
+    } else {
+      setStoreErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: '', // Clear the error if validation passes
+      }));
+    }
   };
 
   const handleSubmitStoreInfo = () => {
@@ -214,7 +230,9 @@ const StoreSetting = () => {
                   placeholder="https//:wwww.facebook.com/Mynile.store"
                   className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                   onChange={handleChangeStoreInfo}
+
                 />
+                 {storeErrors.facebook && <p className="text-sm text-red-700 my-1">{storeErrors.facebook}</p>}
               </div>
               <div>
                 <label
@@ -232,6 +250,7 @@ const StoreSetting = () => {
                   className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                   onChange={handleChangeStoreInfo}
                 />
+                 {storeErrors.instagram && <p className="text-sm text-red-700 my-1">{storeErrors.instagram}</p>}
               </div>
               <div>
                 <label
@@ -249,6 +268,7 @@ const StoreSetting = () => {
                   className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                   onChange={handleChangeStoreInfo}
                 />
+                {storeErrors.twitter && <p className="text-sm text-red-700 my-1">{storeErrors.twitter}</p>}
               </div>
               <div>
                 <label
@@ -267,6 +287,7 @@ const StoreSetting = () => {
                   className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                   onChange={handleChangeStoreInfo}
                 />
+                  {storeErrors.linkedin && <p className="text-sm text-red-700 my-1">{storeErrors.linkedin}</p>}
               </div>
               <div className="text-[#333] font-semibold mt-4">
                 Store Currency

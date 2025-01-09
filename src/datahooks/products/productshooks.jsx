@@ -39,6 +39,7 @@ export const useFetchProducts = () => {
 export const useCreateNewProduct = (onSuccessCallback) => {
   const queryClient = useQueryClient();
   const { mutate, isPending: isAddingProduct } = useMutation({
+    
     mutationFn: (data) => ApiInstance.post("/products/product/create", data),
     onSuccess: () => {
       toast.success("Product Added Successfully");

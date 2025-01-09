@@ -166,14 +166,16 @@ const BankSetting = () => {
                   <div className="flex items-center justify-between bg-[#ffffff] border-[#8ED06C] border-2 p-2 rounded-md">
                     <h1 className="text-gray-500 font-bold">Weekly</h1>
                     <input
-                      type="checkbox"
+                      type="radio"
                       className="size-4 rounded border-gray-300"
+                      name='payout-schedule'
                     />
                   </div>
                   <div className="flex items-center justify-between bg-[#ffffff] border-[#8ED06C] border-2 p-2 rounded-md">
                     <h1 className="text-gray-500 font-bold">Monthly</h1>
                     <input
-                      type="checkbox"
+                      type="radio"
+                      name='payout-schedule'
                       className="size-4 rounded border-gray-300"
                     />
                   </div>
