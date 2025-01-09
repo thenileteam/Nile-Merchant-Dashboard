@@ -32,7 +32,7 @@ const FinancialManagement = ({ data }) => {
   const [displaySuccessModal, setDisplaySuccessModal] = useState(false);
   const [open, setOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams({
-    expense: "false"
+    expense: "false",
   });
   const { totalRevenue, totalRevenueForMonth } = useFetchTransactions();
   const { totalExpense } = useFetchExpense();
@@ -141,7 +141,8 @@ const FinancialManagement = ({ data }) => {
                       navigate(`?expense=${tab.id === 2 ? true : false}`);
                     }}
                     className={`${
-                      searchParams.get("expense") === `${tab.id === 2 ? true : false}`
+                      searchParams.get("expense") ===
+                      `${tab.id === 2 ? true : false}`
                         ? "bg-[#004324] text-[#ffffff] p-2 rounded-md"
                         : "bg-[#ffffff] text-[#004324] p-2 rounded-md"
                     }`}

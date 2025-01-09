@@ -26,10 +26,11 @@ import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "react-loading-skeleton/dist/skeleton.css";
 import ProtectRoutes from "./Components/ProtectRoutes";
-import { Suspense } from "react";
-import ErrorCustomer from "./Components/ErrorElements/ErrorCustomer"
+import { Suspense, useEffect } from "react";
+import ErrorCustomer from "./Components/ErrorElements/ErrorCustomer";
 import CategoryPage from "./Pages/CategoryPage";
 import ReactGA from "react-ga4";
+import Cookies from "js-cookie";
 const App = () => {
   const queryClient = new QueryClient();
 
@@ -101,7 +102,7 @@ const App = () => {
               <Customer />
             </ProtectRoutes>
           ),
-          errorElement:<ErrorCustomer/>
+          errorElement: <ErrorCustomer />,
         },
         {
           path: "/financial",
@@ -207,7 +208,7 @@ const App = () => {
             </ProtectRoutes>
           ),
         },
-      
+
         {
           path: "/domainsetting",
           element: (
@@ -221,19 +222,40 @@ const App = () => {
   ]);
   ReactGA.initialize("G-LJT7FW6H2G");
   ReactGA.send({
-    hitType:'pageview',
-    path:window.location.pathname
-  })
+    hitType: "pageview",
+    path: window.location.pathname,
+  });
+
+  //Trigger Re Auth To Clear Local Storage And Cookies
+  useEffect(() => {
+    const cleared = JSON.parse(localStorage.getItem("clear"));
+    console.log(cleared);
+    if (cleared) {
+      return;
+    } else if (
+      window.location.pathname === "/" ||
+      window.location.pathname === "/signup"
+    ) {
+      return;
+    } else {
+      localStorage.removeItem("store");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("accessToken");
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
+      window.location.href = "/";
+    }
+  }, []);
   return (
     <QueryClientProvider client={queryClient}>
-        <main>
-          <Toaster />
-          <Suspense fallback={<div>Loading...</div>}>
-            <RouterProvider router={router}>
-              <ScrollToTop />
-            </RouterProvider>
-          </Suspense>
-        </main>
+      <main>
+        <Toaster />
+        <Suspense fallback={<div>Loading...</div>}>
+          <RouterProvider router={router}>
+            <ScrollToTop />
+          </RouterProvider>
+        </Suspense>
+      </main>
     </QueryClientProvider>
   );
 };

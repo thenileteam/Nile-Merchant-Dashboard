@@ -2,11 +2,33 @@
 
 import ProfileImage from "../PlaceholderImage/PlaceholderImage";
 import { Link } from "react-router-dom";
+import {trolley} from '../../assets'
 import {useSidebarStore} from '../../ZustandStores/sidebarStore'
-const Navbar = ({ title, icon, profilePic }) => {
+import { useFetchUser } from '../../datahooks/users/userhooks'
+const NewNavbar = ({isCollapsed}    ) => {
   const{sidebarOpen, setSidebarOpen,} = useSidebarStore()
+  const {user} = useFetchUser()
+  const getNavProperties = () => {
+    const path = window.location.pathname.replace(/\/$/, "") || "/";
+    if(path === "/dashboard"){
+      return {title: `Welcome ${user && user.name ? user.name.split(" ")[0].toUpperCase() : "User"}`, icon: '', profilePic: user && user.image ? user.image : ""}
+    }
+    if(path === "/orders"){
+      return {title: 'Orders', icon: trolley, profilePic: user && user.image ? user.image : ""}
+    }
+    if(path === "/customers"){
+      return {title: 'Customers', icon: '', profilePic: user && user.image ? user.image : ""}
+    }
+    if(path === "/expenses"){
+      return {title: 'Expenses', icon: '', profilePic: user && user.image ? user.image : ""}
+    }
+    if(path === "/settings"){
+      return {title: 'Settings', icon: '', profilePic: user && user.image ? user.image : ""}
+    }
+  }
+
   return (
-    <nav className="bg-[#EAF4E2] fixed top-0 shadow-md z-10 w-full py-2">
+    <nav className={`bg-[#EAF4E2] fixed top-0 shadow-md z-10 w-full py-2 ${isCollapsed?'lg:ml-16':'lg:ml-56'}`}>
       <div className="container mx-auto lg:mx-0 lg:px-10 px-4">
         <div className="flex-container flex gap-4 lg:gap-10">
           {/*parent first child */}
@@ -38,11 +60,11 @@ const Navbar = ({ title, icon, profilePic }) => {
           <div className="page-head flex items-center justify-between w-[95%] lg:max-w-[1000px]">
             {/* first */}
             <div className="flex gap-2 items-center md:pl-8">
-              {icon &&
+              {getNavProperties().icon &&
                 //  <Link to={link}> 
-                  <img src={icon} alt={`${title} icon`} className="hidden lg:block" />
+                  <img src={getNavProperties().icon} alt={`${getNavProperties().title} icon`} className="hidden lg:block" />
                   }
-              <h1 className={icon?"lg:text-[32px] text-[24px]  font-bold" : 'lg:text-[32px] text-[24px]  font-bold pl-2'}>{title}</h1>
+              <h1 className={getNavProperties().icon?"lg:text-[32px] text-[24px]  font-bold" : 'lg:text-[32px] text-[24px]  font-bold pl-2'}>{getNavProperties().title}</h1>
             </div>
             {/* second */}
             <div className="flex gap-4 items-center lg:pr-3">
@@ -86,7 +108,7 @@ const Navbar = ({ title, icon, profilePic }) => {
             </Link> */}
                 <Link to="/profilesetting">
                   <ProfileImage
-                    profileImage={profilePic}
+                    profileImage={getNavProperties().profilePic}
                   />
                 </Link>
               </div>
@@ -98,4 +120,4 @@ const Navbar = ({ title, icon, profilePic }) => {
   );
 };
 
-export default Navbar;
+export default NewNavbar;

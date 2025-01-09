@@ -196,8 +196,8 @@ const OrdersTable = ({ data, isCollapsed }) => {
       )}
 
       {/* Tables */}
-      <div className={`${isCollapsed?'max-w-[1000px]':'max-w-[800px]'}  mx-auto`}>
-        <table className="w-full border-separate h-fit border-spacing-y-5">
+      <div className={`${isCollapsed?'max-w-[1000px]':'max-w-[800px]'} min-h-[400px]  h-fit mx-auto`}>
+        <table className="w-full border-separate  h-fit border-spacing-y-5">
           <thead>
             <tr className="text-left bg-[#EAF4E2] shadow-lg">
               <th className="p-2 text-[14px]">Customer Name</th>
@@ -260,7 +260,7 @@ const OrdersTable = ({ data, isCollapsed }) => {
                     />
                     {displayDropDown.id === order.id &&
                       displayDropDown.active && (
-                        <div className=" absolute p-6 w-fit z-[1000000] shadow-lg shadow-zinc-300 right-full top-[140%] rounded-md bg-white ">
+                        <div className=" absolute p-6 w-fit z-[100000] shadow-lg shadow-zinc-300 right-full top-[140%] rounded-md bg-white ">
                           <p
                             onClick={() => handleInvoice(order)}
                             className=" hover:bg-zinc-200 py-2  cursor-pointer w-fit text-nowrap px-3"

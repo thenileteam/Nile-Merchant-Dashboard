@@ -21,6 +21,8 @@ import Navbar from "../Components/Navbar/Navbar";
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 import { useFetchProducts } from "@/datahooks/products/productshooks";
+import DashboardLayout from "@/Components/Layouts/DashboardLayout";
+import { UseCardLoader } from "@/Components/CustomLoaders/loaders";
 import { useFetchExpense } from "@/datahooks/users/expensehook";
 const Dashboard = () => {
   //users image
@@ -36,91 +38,86 @@ const Dashboard = () => {
     user && user.name ? user.name.split(" ")[0].toUpperCase() : "User";
   return (
     <>
-      <div className="bg-[#F5F5F5] pb-20 lg:overflow-x-hidden">
-        <div className="flex flex-col lg:flex-row">
-          {/* Sidebar */}
-          <Sidebar />
-          {/* Navbar */}
-          <div
-            className={
-              isCollapsed ? "flex-grow lg:ml-16" : "flex-grow lg:ml-56"
-            }
-          >
-            <Navbar
-              title={`Welcome ${username}`}
-              profilePic={user && user.image ? user.image : ""}
-            />
+      <DashboardLayout isCollapsed={isCollapsed}>
+        <div className="bg-[#F5F5F5] h-screen pt-[112px] pb-20 lg:overflow-x-hidden">
+          {/* Cards */}
 
-            {/* Cards */}
-            {isFetchingDashboardData ? (
-              <div className=" w-full mt-28 h-40 flex gap-8">
-                <div className=" h-[150px] bg-zinc-200  w-[300px]" />
-                <div className=" h-[150px] bg-zinc-200 w-[300px]" />
-                <div className=" h-[150px] bg-zinc-200 w-[300px]" />
-              </div>
-            ) : (
-              <div
-                className={`mt-20 lg:mt-28 mb-6 px-2 ${
-                  isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[880px]"
-                } mx-auto`}
-              >
-                <div className="grid gap-x-8 gap-y-4 grid-cols-2 md:grid-cols-3">
+          <UseCardLoader amount={6} className="mt-20 lg:mt-28 mb-6 px-2" loading={isFetchingDashboardData} error={dashboardDataisError}>
+            <div
+              className={`mt-20 lg:mt-28 mb-6 px-2 ${
+                isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[880px]"
+              } mx-auto`}
+            >
+              <div className="grid gap-x-8 gap-y-4 grid-cols-2 md:grid-cols-3">
+                <DashboardBox
+                  text="Revenue"
+                  naira="&#8358;"
+                  image={totalRevenue}
+                  bgColor="bg-[#FCDADF]"
+                  data={`${dashboardData?.salesData?.totalSales || 0}`}
+                />
+                <div className="relative">
+                  <span
+                    className={` absolute top-2 font-medium ${
+                      isCollapsed ? "right-12" : "right-3"
+                    } text-[13px] capitalize`}
+                  >
+                    coming soon..
+                  </span>
                   <DashboardBox
-                    text="Revenue"
-                    naira="&#8358;"
-                    image={totalRevenue}
-                    bgColor="bg-[#FCDADF]"
-                    data={`${dashboardData?.salesData?.totalSales || 0}`}
-                  />
-                  <div className="relative">
-                    
-                    <DashboardBox
-                      text="Total Expenses"
-                      image={totalExpenseImg}
-                      bgColor="bg-[#FFE8DF]"
-                     data={totalExpense}
-                    />
-                  </div>
-                  <div className="relative">
-                   
-                    <DashboardBox
-                      text="Total Profits"
-                      image={totalProfit}
-                      bgColor="bg-[#FFDBFA]"
-                      data={`${totalExpense && totalExpense > dashboardData?.salesData?.totalSales? 0: dashboardData?.salesData?.totalSales- totalExpense  }`}
-                    />
-                  </div>
-                  <DashboardBox
-                    text="Total Orders"
-                    image={totalOrders}
-                    bgColor="bg-[#F3D1FF]"
-                    data={dashboardData?.orders?.totalOrders}
-                  />
-                  <DashboardBox
-                    text="Total Inventory"
-                    image={totalInventory}
-                    bgColor="bg-[#E7FFD4]"
-                    data={productLength}
-                  />
-                  <DashboardBox
-                    text="Total Customers"
-                    image={totalCustomers}
-                    bgColor="bg-[#D8FFEE]"
-                    data={customerLength}
+                    text="Total Expenses"
+                    image={totalExpense}
+                    bgColor="bg-[#FFE8DF]"
+                    data={"-"}
                   />
                 </div>
+                <div className="relative">
+                  <span
+                    className={` absolute top-2 font-medium ${
+                      isCollapsed ? "right-12" : "right-3"
+                    } text-[13px] capitalize`}
+                  >
+                    coming soon..
+                  </span>
+                  <DashboardBox
+                    text="Total Profits"
+                    image={totalProfit}
+                    bgColor="bg-[#FFDBFA]"
+                    data={"-"}
+                  />
+                </div>
+                <DashboardBox
+                  text="Total Orders"
+                  image={totalOrders}
+                  bgColor="bg-[#F3D1FF]"
+                  data={dashboardData?.orders?.totalOrders}
+                />
+                <DashboardBox
+                  text="Total Inventory"
+                  image={totalInventory}
+                  bgColor="bg-[#E7FFD4]"
+                  data={productLength}
+                />
+                <DashboardBox
+                  text="Total Customers"
+                  image={totalCustomers}
+                  bgColor="bg-[#D8FFEE]"
+                  data={customerLength}
+                />
               </div>
-            )}
-            {/* Line */}
-            <div
-              className={`${
-                isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[860px]"
-              } mx-auto px-2`}
-            >
-              <div className="border-2 border-white shadow-[0px_4px_10px_rgba(0,0,0,0.3)]"></div>
             </div>
+          </UseCardLoader>
 
-            {/* {/* <div className="px-36 mt-10 space-y-7">
+          {/* Line */}
+          <div
+            className={`${
+              isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[860px]"
+            } mx-auto px-2`}
+          >
+            <div className="border-2 border-white shadow-[0px_4px_10px_rgba(0,0,0,0.3)]"></div>
+          </div>
+
+          {/* <div className="px-36 mt-10 space-y-7">
               <div className="flex items-center justify-between">
                 <Link to="/store">
                   <div className="flex items-center justify-between w-[469px] h-[122px] border-[#8ED06C] border-2 bg-[#ffffff] p-3 rounded-lg">
@@ -207,17 +204,16 @@ const Dashboard = () => {
                 </Link>
               </div>
             </div> */}
-            {/* { policyOpen&&<Policy/>} */}
-            <div>
-              <DashoardTabel
-                dashboardData={dashboardData}
-                isFetchingDashboardData={isFetchingDashboardData}
-                isCollapsed={isCollapsed}
-              />
-            </div>
+          {/* { policyOpen&&<Policy/>} */}
+          <div>
+            <DashoardTabel
+              dashboardData={dashboardData}
+              isFetchingDashboardData={isFetchingDashboardData}
+              isCollapsed={isCollapsed}
+            />
           </div>
         </div>
-      </div>
+      </DashboardLayout>
     </>
   );
 };
