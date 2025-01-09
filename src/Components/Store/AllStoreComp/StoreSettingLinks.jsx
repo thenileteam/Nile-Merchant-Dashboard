@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { accountsetting, notification2 } from "../../../assets";
 import { Icon1, StaffIcon, BankIcon, PlanIcon } from "./StoreSettingIcons";
 import StoreSettingLinkTemplate from "./StoreSettingLinkTemplate";
@@ -11,7 +10,7 @@ const StoreSettingLinks = ({
   return (
     <>
       <div
-        className={`transition-all duration-500 ease-in transform`}
+        className={`transition-all duration-500 ease-in transform h-[120px] ${ isDropDownOpen? 'overflow-y-scroll  custom-scrollbar':''}`}
             // ${isDropDownOpen ? "opacity-100" : "opacity-0"}`}
       >
         <StoreSettingLinkTemplate

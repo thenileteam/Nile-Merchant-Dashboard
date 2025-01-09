@@ -320,7 +320,7 @@ const Links = ({ isCollapsed }) => {
       </Link>
 
       {/* Store Setting */}
-      <div className="mt-4 border-b-2 border-t-2 border-dotted py-3">
+      <div className={`mt-4 border-b-2 border-t-2 border-dotted py-3  `}>
         <div className="flex items-center justify-between gap-1 pb-1">
           <li>Store {isCollapsed ? "" : "Settings"}</li>
           <button

@@ -147,7 +147,7 @@ const useBankDetails = () => {
       ) {
         handleResolveAccount(updatedFormData);
       }
-
+ 
       return updatedFormData;
     });
   };
@@ -200,7 +200,7 @@ const useBankDetails = () => {
     handleChange,
     addBank,
     accountDetails,
-    isAdding
+    isAdding,
   };
 };
 

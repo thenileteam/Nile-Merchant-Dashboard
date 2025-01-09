@@ -20,7 +20,7 @@ const Customer = () => {
     isFetchingCustomers: isLoading,
     isError: error,
   } = useFetchStoreCustomers();
-  const {sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed} = useSidebarStore();
+  const { isCollapsed} = useSidebarStore();
 
   return (
     <>
