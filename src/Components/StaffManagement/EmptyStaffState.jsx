@@ -1,4 +1,5 @@
-const EmptyStaffState = () => {
+import AddStaff from "../PopupModals/AddStaff";
+const EmptyStaffState = ({showStaffPopUp, setShowStaffPopUp}) => {
   return (
     <div className="flex justify-center items-center max-w-[400px] mx-auto h-screen">
       <div className="text-center">
@@ -32,9 +33,11 @@ const EmptyStaffState = () => {
 
         <h3 className="capitalize text-lightBlack font-semibold">You have no staffs yet!</h3>
         <strong className="text-lightBlack">
-          Once you add a new staff,It will appear here.
+          Once you add a new staff, It will appear here.
         </strong>
-        <button className="bg-green text-white">Add New Staff</button>
+        <button className="bg-green text-white py-1 px-2 rounded-md" onClick={()=>setShowStaffPopUp(true)}>Add New Staff</button>
+        {showStaffPopUp && <AddStaff setShowStaffPopUp={setShowStaffPopUp} />}
+
       </div>
     </div>
   );

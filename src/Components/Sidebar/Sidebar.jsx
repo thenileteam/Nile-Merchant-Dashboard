@@ -44,9 +44,7 @@ const Sidebar = () => {
       {/* Sidebar */}
       {/* overflow-x-hidden overflow-y-scroll  */}
       <div
-        className={`fixed top-0 left-0 h-screen ${
-          isDropdownOpen ? "overflow-y-scroll custom-scrollbar" : ""
-        } z-20 bg-[#004324] border-2 text-white p-5 transition-all transform ${
+        className={`fixed top-0 left-0 h-screen z-20 bg-[#004324] border-2 text-white p-5 transition-all transform ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0  ${
           isCollapsed
@@ -54,30 +52,12 @@ const Sidebar = () => {
             : "w-[290px] duration-100 delay-100 ease-in"
         }`}
       >
-        {!isDropdownOpen && (
-          <button
-            type="button"
-            className="bg-white w-6 h-6 rounded-full lg:flex items-center border  border-green fixed z-100 -right-2 top-20 hidden"
-            onClick={setIsCollapsed}
-          >
-            <img
-              src={iconExpandCollapsible}
-              className={
-                isCollapsed ? "block rotate-180 transition-transform" : "block"
-              }
-              alt="icon to expand and collapse sidebar"
-            />
-          </button>
-        )}
-        <img
-          src={isCollapsed ? nileBagOnly : nilelogowhite}
-          alt=""
-          className={`${
-            isCollapsed ? "w-[55px] object-fit" : "w-[110px]"
-          } flex`}
-        />
-        <Links isCollapsed={isCollapsed} />
-      </div>
+       <button type="button" className="bg-white w-6 h-6 rounded-full lg:flex items-center border  border-green fixed z-100 -right-2 top-20 hidden" onClick={setIsCollapsed}>
+        <img src={iconExpandCollapsible}  className={isCollapsed?'block rotate-180 transition-transform':'block'} alt="icon to expand and collapse sidebar" />
+        </button>
+        <img src={isCollapsed?nileBagOnly:nilelogowhite} alt="" className={`${isCollapsed?'w-[55px] object-fit':'w-[110px]'} flex`} />
+        <Links isCollapsed={isCollapsed}  />
+      </div>  
       {/* terms and conditions */}
       {policyOpen && <Policy />}
     </>
