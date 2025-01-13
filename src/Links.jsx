@@ -320,7 +320,7 @@ const Links = ({ isCollapsed }) => {
       </Link>
 
       {/* Store Setting */}
-      {/* <div className={`mt-4 border-b-2 border-t-2 border-dotted py-3  `}>
+       <div className={`mt-4 border-b-2 border-t-2 border-dotted py-3  `}>
         <div className="flex items-center justify-between gap-1 pb-1">
           <li>Store {isCollapsed ? "" : "Settings"}</li>
           <button
@@ -332,7 +332,7 @@ const Links = ({ isCollapsed }) => {
           </button>
         </div>
         {/*drop down links */}
-        {/* {isDropdownOpen && (
+       {isDropdownOpen && (
           <StoreSettingsLinks
             isCollapsed={isCollapsed}
             getLinkClasses={getLinkClasses}
@@ -340,7 +340,7 @@ const Links = ({ isCollapsed }) => {
             isDropDownOpen={isDropdownOpen}
           />
         )}
-      </div> */} 
+      </div>
       {/* Footer */}
       {!isCollapsed && !isDropdownOpen && (
         <footer className="mt-20  ">

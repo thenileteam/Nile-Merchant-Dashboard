@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useEditCategory } from "../../datahooks/products/productshooks";
 import { BiLoaderCircle } from "react-icons/bi";
 const EditCategory = ({ category }) => {
-  console.log(category);
   const [showForm, setShowForm] = useState(false);
   const [categoryDetails, setCategoryDetails] = useState({
     categoryName: category.name || "",

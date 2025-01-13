@@ -205,8 +205,7 @@ export const useDeleteCategory = (onSuccessDelete) => {
       }),
     
     // On success callback
-    onSuccess: (response) => {
-      console.log(response.data)
+    onSuccess: () => {
       toast.success("Category Deleted Successfully");
       if (onSuccessDelete) {
         onSuccessDelete();

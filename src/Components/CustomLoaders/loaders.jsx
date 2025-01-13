@@ -33,7 +33,7 @@ export const UserTableListLoader = ({
       </div>
     );
 
-  if (data.length === 0)
+  if (data?.length === 0)
     return (
       <div className="flex justify-center bg-white mt-5 items-center h-[200px]">
         No records found

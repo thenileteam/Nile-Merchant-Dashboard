@@ -41,12 +41,13 @@ export const useFetchRoles = () => {
 export const useCreateStaff = (onSuccessCallback) => {
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
-    mutationFn: (data) => ApiInstance.post("store/store/staffs", data),
+    mutationFn: (data) => ApiInstance.post(`store/store/staffs`, data),
     onSuccess: (response) => {
-      console.log(response?.data);
+      console.log(response.data);
       toast.success("Staff added successfully");
       if (onSuccessCallback) onSuccessCallback();
-      queryClient.invalidateQueries(["staffs", store?._id]);
+      queryClient.invalidateQueries(["staff", store?._id]);
+      // console.log("Invalidated queries for staffs");
     },
     onError: (err) => {
       toast.error(
@@ -67,14 +68,14 @@ export const useFetchStaffs = () => {
     isError,
     isLoading,
   } = useQuery({
-    queryKey: ["staffs", store?._id],
+    queryKey: ["staff", store?._id],
     queryFn: async () => {
       try {
-        const res = await ApiInstance.get(`/store/store/staffs`);
-        console.log(res.responseObject)
-        return  res.data?.responseObject || [];
+        const res = await ApiInstance.get(`/store/store/staffs/${store?._id}`);
+        console.log(res.data)
+        return  res.data?.responseObject|| [];
       } catch (error) { 
-        console.error("Error fetching staffs:", error);
+        console.error("Error fetching staffs:", error)
         throw error;
       }
     },

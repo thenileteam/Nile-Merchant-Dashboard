@@ -1,13 +1,17 @@
-import { useFetchStaffs, useFetchRoles} from "@/datahooks/staffs/usestaffhook";
+import { useFetchStaffs,} from "@/datahooks/staffs/usestaffhook";
 import EditStaff from "../PopupModals/EditStaff";
 import usePagination from "../Pagination/PaginationHook";
 const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
-  const { staffs } = useFetchStaffs()
+  const { staffs , isLoading, isError} = useFetchStaffs()
   console.log(staffs)
   // const itemsPerPage = 10
   //  const {pageCount, currentItems, handlePageChange}= usePagination(staffs, itemsPerPage)
   // console.log(staffs);
-  
+  // if (isLoading) {
+  //   console.log('loading data..')
+  // } else if (isError) {
+  //   console.log('error..')
+  // }
   return (
     <section>
       <div
