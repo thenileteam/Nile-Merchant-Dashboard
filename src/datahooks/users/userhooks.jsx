@@ -28,26 +28,33 @@ export const useLogUserIn = () => {
     },
 
     onSuccess: async (response) => {
-      // Set data in localStorage
-      const store = await ApiInstance.get(
-        `/store/store/getStoreByUserId?userId=${response?.data?.data?.user?._id}`
-      );
- 
-      localStorage.setItem("Id", response?.data?.data?.user?._id);
-      localStorage.setItem("refreshToken", response?.data?.refreshToken);
-      localStorage.setItem(
-        "store",
-        JSON.stringify(store?.data?.responseObject)
-      );
-
-      // Set cookies
+      // First set the tokens
       Cookies.set("accessToken", response?.data?.accessToken);
       Cookies.set("refreshToken", response?.data?.refreshToken);
       Cookies.set("isUserLoggedIn", "yes");
-      toast("Auth Success✔");
-      // Navigate to dashboard
-      localStorage.setItem("clear",true)
-      navigate("/dashboard");
+
+      // Set essential user data
+      localStorage.setItem("Id", response?.data?.data?.user?._id);
+      localStorage.setItem("refreshToken", response?.data?.refreshToken);
+
+      // Now fetch store data with the token available
+      try {
+        const store = await ApiInstance.get(
+          `/store/store/getStoreByUserId?userId=${response?.data?.data?.user?._id}`
+        );
+        
+        localStorage.setItem(
+          "store",
+          JSON.stringify(store?.data?.responseObject)
+        );
+        
+        localStorage.setItem("clear", true);
+        toast("Auth Success✔");
+        navigate("/dashboard");
+      } catch (error) {
+        console.error("Error fetching store data:", error);
+        toast.error("Login successful but error loading store data");
+      }
     },
     onError: (err) => {
       console.log(err);
