@@ -30,7 +30,6 @@ const AddStaff = ({ setShowStaffPopUp }) => {
 
   // Filtered roles (for now until i have to implement specific roles )
   const filteredRoles = roles?.filter((_, i) => i !== 0 && i !== 4);
-
   // Submit data
   const submitData = (data) => {
     if (!roles?.length) {
@@ -44,17 +43,18 @@ const AddStaff = ({ setShowStaffPopUp }) => {
       email: data.staffMail,
       roles: selectedRoleIds.map((roleId) => ({
         id: roleId,
-        name: roles?.find((role) => role.id === roleId)?.name || "", // Get role name
-        createdAt: new Date().toISOString(), // Add createdAt
+        name: roles?.find((role) => role.id === roleId)?.name || "",
+        createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-      })), // Use selected role IDs directly
-    };
+      })),
+    }
     addStaffToBackend(staffData, {
       onSuccess: () => toast.success("Staff successfully added."),
-      // onError: (error) => {
-      //   toast.error(error.response?.data?.message || "An error occurred.");
-      // },
+      onError: (error) => {
+        toast.error(error.response?.data?.message || "An error occurred.");
+      },
     });
+    setShowStaffPopUp(false)
   };
 
   return (

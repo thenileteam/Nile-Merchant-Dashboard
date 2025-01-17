@@ -1,12 +1,52 @@
 import { totalRevenue } from "@/assets";
-import { useState } from "react";
-const EditStaff = () => {
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+// import { useStaffStore } from "../../ZustandStores/staffStore";
+import { Controller } from "react-hook-form";
+import {
+  useEditStaff,
+  useFetchRoles,
+} from "../../datahooks/staffs/usestaffhook";
+import DeleteStaff from "./DeleteStaff";
+const EditStaff = ({ staff }) => {
   const [editStaff, setEditStaff] = useState(false);
+  const { roles } = useFetchRoles();
+  // Populate the form when editStaff with existing values
+  const { addStaffToBackend, isEditingStaff } = useEditStaff(() => setEditStaff(false));
+  
+//initialize the form with existing values
+  const { handleSubmit, reset, register, control } = useForm({
+    defaultValues: {
+      adminName: staff?.name || "",
+      roles: roles?.reduce((acc, role) => {
+        acc[role.id] = staff?.roles?.some((r) => r.id === role.id) || false;
+        return acc;
+      }, {}),
+    },
+  });
+
+  const onSubmit = (data) => {
+    const updatedStaff = {
+      id: staff?.id,
+      name: data.adminName,
+      roles: roles
+        .filter((role) => data.roles[role.id])
+        .map((role) => ({ id: role.id, name: role.name })),
+    };
+
+    addStaffToBackend(updatedStaff);
+  };
+
+  const handleEditClick = () => {
+    setEditStaff(true);
+    reset(); // Reset the form with current staff data
+  };
+
   return (
     <div>
       <button
         className="hover:scale-110 duration-300 hover:border-[#8ED06C] border-[#ffffff] border-b-[2px] transition underline-offset-2 decoration-[2px] inline-block hover:-translate-x-1"
-        onClick={() => setEditStaff(!editStaff)}
+        onClick={handleEditClick}
       >
         <svg
           width="24"
@@ -15,6 +55,7 @@ const EditStaff = () => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
+          {/* SVG Content */}
           <path
             d="M16.2141 4.98239L17.6158 3.58063C18.39 2.80646 19.6452 2.80646 20.4194 3.58063C21.1935 4.3548 21.1935 5.60998 20.4194 6.38415L19.0176 7.78591M16.2141 4.98239L10.9802 10.2163C9.93493 11.2616 9.41226 11.7842 9.05637 12.4211C8.70047 13.058 8.3424 14.5619 8 16C9.43809 15.6576 10.942 15.2995 11.5789 14.9436C12.2158 14.5877 12.7384 14.0651 13.7837 13.0198L19.0176 7.78591M16.2141 4.98239L19.0176 7.78591"
             stroke="#8ED06C"
@@ -31,7 +72,6 @@ const EditStaff = () => {
         </svg>
       </button>
 
-      {/* edit staff parent */}
       {editStaff && (
         <div className="bg-[rgba(0,0,0,0.4)] fixed inset-0">
           <div className="max-w-[450px] mx-auto relative">
@@ -54,9 +94,13 @@ const EditStaff = () => {
                 />
               </svg>
             </button>
-            {/* edit form component */}
-            <form action="" className="bg-white p-8 mt-[100px]">
-              <div className="mt-4 ">
+
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="bg-white p-8 mt-[100px]"
+            >
+              {/* Admin Name */}
+              <div className="mt-4">
                 <label
                   htmlFor="adminName"
                   className="mb-2 text-lightBlack font-bold"
@@ -65,82 +109,79 @@ const EditStaff = () => {
                 </label>
                 <input
                   type="text"
-                  name="adminName"
-                  placeholder="Enter Admin Name e.g Farouk kola"
-                  className="border border-lightGreen rounded-md  p-2 block w-full"
+                  {...register("adminName")}
+                  placeholder="Enter Admin Name e.g Farouk Kola"
+                  className="border border-lightGreen rounded-md p-2 block w-full"
                   required
                 />
               </div>
-              <h4 className="text-green font-bold">
-                Last Login: <span className="text-lightBlack">date</span>
+
+              {/* Permissions */}
+              <h4 className="text-green font-bold mt-2">
+                Last Login:{" "}
+                <span className="text-lightBlack">{staff?.updatedAt}</span>
               </h4>
               <div>
                 <h3 className="text-green font-bold mt-2">Permissions</h3>
                 <p className="mb-2 text-[#6e6e6e] text-[12px]">
                   Choose What The Admin Should Be Able To Access:
                 </p>
-                <div className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2">
-                  <div>
-                    <h3 className="text-gray-800 font-semibold text-sm ">
-                      Orders & Shipping
-                    </h3>
-                    <p className="text-gray-500 text-[12px]">
-                      Will be able to perform action on this page
-                    </p>
-                  </div>
-                  <label htmlFor="order-permission">
-                    <input type="checkbox" id="order-permission" />
-                  </label>
-                </div>
-                <div className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2">
-                  <div>
-                    <h3 className="text-gray-800 font-semibold text-sm ">
-                      Products
-                    </h3>
-                    <p className="text-gray-500 text-[12px]">
-                      Will be able to perform action on this page
-                    </p>
-                  </div>
-                  <label htmlFor="product-permission">
-                    <input type="checkbox" id="product-permission" />
-                  </label>
-                </div>
-                <div className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2">
-                  <div>
-                    <h3 className="text-gray-800 font-semibold text-sm ">
-                      Customer Management
-                    </h3>
-                    <p className="text-gray-500 text-[12px]">
-                      Will be able to perform action on this page
-                    </p>
-                  </div>
-                  <label htmlFor="customer-permission">
-                    <input type="checkbox" id="customer-permission" />
-                  </label>
-                </div>
-                <div className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2">
-                  <div>
-                    <h3 className="text-gray-800 font-semibold text-sm ">
-                      Financial Management
-                    </h3>
-                    <p className="text-gray-500 text-[12px]">
-                      Will be able to perform action on this page
-                    </p>
-                  </div>
-                  <label htmlFor="financial-permission">
-                    <input type="checkbox" id="financial-permission" />
-                  </label>
-                </div>
+                {roles
+                  ?.filter((_, i) => i !== 0 && i !== 4)
+                  .map((role, index) => {
+                    // console.log(permission.name)
+                    return (
+                      <div
+                        key={index}
+                        className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2"
+                      >
+                        <div>
+                          <h3 className="text-gray-800 font-semibold text-sm">
+                            {role.name}
+                          </h3>
+                          <p className="text-gray-500 text-[12px]">
+                            {role.description}
+                          </p>
+                        </div>
+                        {/* <label htmlFor={permission.name}>
+                          <input
+                            type="checkbox"
+                            {...register(`${permission.name}`)}
+                           
+                          />
+                        </label> */}
+                        <Controller
+                          name={`roles.${role.id}`}
+                          control={control}
+                          defaultValue={
+                            staff?.roles?.some(
+                              (assignedRole) => assignedRole.id === role.id
+                            ) || false
+                          }
+                          render={({ field }) => (
+                            <input
+                              type="checkbox"
+                              {...field}
+                              checked={field.value}
+                            />
+                          )}
+                        />
+                      </div>
+                    );
+                  })}
               </div>
-              <div className="mt-6 flex gap-3 max-w-[327px] mx-auto">
-              <button
-                type="button"
-                className="bg-green text-white w-[150px] p-2 rounded-md"
-              >
-                Save Changes
-              </button>
-              <button type="button" className="border border-lightGreen text-lightGreen w-[150px] p-2 rounded-md">Delete Admin</button>
 
+              {/* Buttons */}
+              <div className="mt-6 flex gap-3 max-w-[327px] mx-auto">
+                <button
+                  type="submit"
+                  className="bg-green text-white w-[150px] p-2 rounded-md"
+                  disabled={isEditingStaff}
+                  // onClick={handleSubmit(onSubmit)}
+                >
+                  {isEditingStaff ? "Saving..." : "Save Changes"}
+                </button>
+                <DeleteStaff staff={staff} setEditStaff={ setEditStaff} />
               </div>
             </form>
           </div>

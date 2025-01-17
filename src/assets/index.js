@@ -77,6 +77,7 @@ import totalExpenseImg from './totalExpense.svg'
 import totalProfit from './totalProfit.svg'
 import totalInventory from './totalInventory.svg'
 import totalRevenue from './revenue.svg'
+import outOfStock from './outOfStock.svg'
 
 export {
     nilelogosolid,
@@ -144,5 +145,5 @@ export {
     donBaci,
     dot1,
     dot2, dot3, eye
-    ,tadfarm,lashesIcon,addImage,placeholderImage,iconExpandCollapsible, nileBagOnly, totalExpenseImg, totalInventory, totalRevenue,totalCustomers,totalOrders,totalProfit
+    ,tadfarm,lashesIcon,addImage,placeholderImage,iconExpandCollapsible, nileBagOnly, totalExpenseImg, totalInventory, totalRevenue,totalCustomers,totalOrders,totalProfit, outOfStock
 }

@@ -27,6 +27,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "react-loading-skeleton/dist/skeleton.css";
 import ProtectRoutes from "./Components/ProtectRoutes";
 import { Suspense, useEffect } from "react";
+import Location from './Pages/Location'
+import Branch from './Pages/Branch'
 import ErrorCustomer from "./Components/ErrorElements/ErrorCustomer";
 import CategoryPage from "./Pages/CategoryPage";
 import ReactGA from "react-ga4";
@@ -210,10 +212,18 @@ const App = () => {
         },
 
         {
-          path: "/domainsetting",
+          path: "/location",
           element: (
             <ProtectRoutes>
-              <DomainSetting />
+              <Location />
+            </ProtectRoutes>
+          ),
+        },
+        {
+          path: "/branch:id",
+          element: (
+            <ProtectRoutes>
+              <Branch/>
             </ProtectRoutes>
           ),
         },
