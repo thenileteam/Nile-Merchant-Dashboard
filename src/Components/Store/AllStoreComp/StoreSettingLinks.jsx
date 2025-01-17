@@ -1,5 +1,5 @@
 import { accountsetting, notification2 } from "../../../assets";
-import { Icon1, StaffIcon, BankIcon, PlanIcon } from "./StoreSettingIcons";
+import { Icon1, StaffIcon, BankIcon, PlanIcon , LocationIcon} from "./StoreSettingIcons";
 import StoreSettingLinkTemplate from "./StoreSettingLinkTemplate";
 const StoreSettingLinks = ({
   isCollapsed,
@@ -44,6 +44,14 @@ const StoreSettingLinks = ({
           text="Plan & Billing Settings"
           isCollapsed={isCollapsed}
           icon={PlanIcon}
+        />
+          <StoreSettingLinkTemplate
+          getLinkClasses={getLinkClasses}
+          isActive={isActive}
+          link="/location"
+          text="Location"
+          isCollapsed={isCollapsed}
+          icon={LocationIcon}
         />
 
         {/* <Link to="/profilesetting">

@@ -95,7 +95,7 @@ const Product = () => {
               </button>
             )}
           </div>
-          {data && data.length < 1 && (
+          {data?.length === 0 && (
             <div className="px-24 mt-28">
               <div>
                 <img

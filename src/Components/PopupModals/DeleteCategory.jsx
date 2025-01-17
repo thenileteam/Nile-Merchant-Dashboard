@@ -11,7 +11,7 @@ const DeleteCategory = ({category}) => {
       setDelCategory(false)
     } catch (error) {
       console.error("Error deleting category:", error);
-      alert("Failed to delete the product. Please try again.");
+      alert("Failed to delete the category. Please try again.");
     }
   };
   return (

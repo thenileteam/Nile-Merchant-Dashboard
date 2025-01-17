@@ -11,7 +11,7 @@ export const useFetchProducts = () => {
   if (!store) return { data: [], isFetching: false, isError: false };
 
   const { data, isFetching, isError, isLoading } = useQuery({
-    queryKey: ["products", store?._id],
+    queryKey: ["products", store?.id],
     queryFn: async () => {
       try {
         const res = await ApiInstance.get(`/products/store/${store?.id}`);
@@ -178,7 +178,8 @@ export const useEditCategory = (onSuccessCallback) => {
   const { mutate, isPending: isEditingCategory } = useMutation({
     mutationFn: (data) =>
       ApiInstance.put(`products/product/store/categories`, data),
-    onSuccess: () => {
+    onSuccess: (response) => {
+      console.log(response.data)
       toast.success("Category Edited Successfully");
       if (onSuccessCallback) onSuccessCallback();
       queryClient.invalidateQueries(["categories", store?.id]);

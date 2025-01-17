@@ -7,7 +7,6 @@ import AddStaff from "../Components/PopupModals/AddStaff";
 import StaffTable from "../Components/StaffManagement/StaffTable";
 import { useState } from "react";
 import { useFetchStaffs } from "@/datahooks/staffs/usestaffhook";
-
 const Staffs = () => {
   const [showStaffPopUp, setShowStaffPopUp] = useState(false);
   const { user } = useFetchUser();
@@ -28,14 +27,15 @@ const Staffs = () => {
           profilePic={user && user.image ? user.image : ""}
         />
         <section>
-          <StaffTable
-            isCollapsed={isCollapsed}
-            setShowStaffPopUp={setShowStaffPopUp}
-          />
-          {/* {staffs?.length ? (
-          ) : (
-              <EmptyStaffState showStaffPopUp={showStaffPopUp } setShowStaffPopUp={setShowStaffPopUp}/>
-          )} */}
+            <StaffTable
+              isCollapsed={isCollapsed}
+              setShowStaffPopUp={setShowStaffPopUp}
+            />
+          {staffs?.length===0 &&  <EmptyStaffState
+              showStaffPopUp={showStaffPopUp}
+              setShowStaffPopUp={setShowStaffPopUp}
+            />}
+          
           {showStaffPopUp && <AddStaff setShowStaffPopUp={setShowStaffPopUp} />}
         </section>
       </div>
