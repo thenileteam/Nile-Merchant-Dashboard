@@ -139,7 +139,7 @@ const SignIn = () => {
 
               <button
                 type="submit"
-                className="text-[#ffffff] bg-[#004324] w-full p-2 rounded-md mt-5 flex items-center justify-center"
+                className="text-[#ffffff] bg-[#004324] w-full p-2 rounded-md mt-5 flex items-center justify-center h-10"
                 disabled={isPending}
               >
                 {isPending ? (

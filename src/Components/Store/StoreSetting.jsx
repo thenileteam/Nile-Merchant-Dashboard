@@ -228,6 +228,8 @@ const StoreSetting = () => {
                   name="facebook"
                   value={storeSettingDetails.facebook}
                   placeholder="https//:wwww.facebook.com/Mynile.store"
+                  pattern="https?://w{3,4}\.facebook\.com/[A-Za-z0-9._-]+"
+                  title="Please enter a valid Facebook URL starting with http:// or https://"
                   className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                   onChange={handleChangeStoreInfo}
 
@@ -247,6 +249,8 @@ const StoreSetting = () => {
                   name="instagram"
                   value={storeSettingDetails.instagram}
                   placeholder="https//:wwww.instagram.com/Mynile.store"
+                  pattern="https?://w{3,4}\.instagram\.com/[A-Za-z0-9._-]+"
+                  title="Please enter a valid Instagram URL starting with http:// or https://"
                   className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                   onChange={handleChangeStoreInfo}
                 />
@@ -265,6 +269,7 @@ const StoreSetting = () => {
                   name="twitter"
                   value={storeSettingDetails.twitter}
                   placeholder="https//:wwww.x.com/Mynile.store"
+                  pattern="https?://w{3,4}\.x\.com/[A-Za-z0-9._-]+" title="Please enter a valid twitter URL starting with http:// or https://"
                   className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                   onChange={handleChangeStoreInfo}
                 />
@@ -284,6 +289,8 @@ const StoreSetting = () => {
                   name="linkedin"
                   value={storeSettingDetails.linkedin}
                   placeholder="https//:wwww.linkedin.com/Mynile.store"
+                  pattern="https?://w{3,4}\.linkedin\.com/[A-Za-z0-9._-]+"
+                  title="Please enter a valid linkedIn URL starting with http:// or https://"
                   className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                   onChange={handleChangeStoreInfo}
                 />

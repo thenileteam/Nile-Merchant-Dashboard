@@ -16,8 +16,7 @@ import {
   useFetchStoreCustomers,
   useFetchUser,
 } from "../datahooks/users/userhooks";
-import Sidebar from "../Components/Sidebar/Sidebar";
-import Navbar from "../Components/Navbar/Navbar";
+import {formatNumber} from '../utils/formatNumber'
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 import { useFetchProducts } from "@/datahooks/products/productshooks";
@@ -32,10 +31,11 @@ const Dashboard = () => {
     useFetchDashboardData();
   const { customerLength } = useFetchStoreCustomers();
   const { productLength } = useFetchProducts();
+  console.log(productLength)
   const { isCollapsed } = useSidebarStore();
   //username
-  const username =
-    user && user.name ? user.name.split(" ")[0].toUpperCase() : "User";
+  // const username =
+  //   user && user.name ? user.name.split(" ")[0].toUpperCase() : "User";
   return (
     <>
       <DashboardLayout isCollapsed={isCollapsed}>
@@ -54,7 +54,7 @@ const Dashboard = () => {
                   naira="&#8358;"
                   image={totalRevenue}
                   bgColor="bg-[#FCDADF]"
-                  data={`${dashboardData?.salesData?.totalSales || 0}`}
+                  data={`${formatNumber(dashboardData?.salesData?.totalSales)  || 0}`}
                 />
                 <div className="relative">
                    

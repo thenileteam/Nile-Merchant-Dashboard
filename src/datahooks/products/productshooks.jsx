@@ -1,15 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useQuery } from "@tanstack/react-query";
 import ApiInstance from "../../Api/ApiInstance";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-
 const store = JSON.parse(localStorage.getItem("store"));
 
 export const useFetchProducts = () => {
   if (!store) return { data: [], isFetching: false, isError: false };
-
   const { data, isFetching, isError, isLoading } = useQuery({
     queryKey: ["products", store?.id],
     queryFn: async () => {
@@ -29,7 +26,7 @@ export const useFetchProducts = () => {
 
   return {
     data,
-    productLength:data?.length,
+    productLength: data?.length,
     isFetching,
     isError,
     isLoading,
@@ -39,7 +36,6 @@ export const useFetchProducts = () => {
 export const useCreateNewProduct = (onSuccessCallback) => {
   const queryClient = useQueryClient();
   const { mutate, isPending: isAddingProduct } = useMutation({
-    
     mutationFn: (data) => ApiInstance.post("/products/product/create", data),
     onSuccess: () => {
       toast.success("Product Added Successfully");
@@ -114,16 +110,16 @@ export const useCreateNewCategory = (onSuccessCallback) => {
     mutationFn: (data) =>
       ApiInstance.post(`/products/product/store/categories/${store?.id}`, data),
     onSuccess: (response, variables) => {
-      console.log(response)
+      console.log(response);
       // if (response.data.categoryName === variables.categoryName || response.data.categoryDescription == variables.categoryDescription) {
       //   toast.success("Category already exists, add product to existing category instead");
       //   return
       // }
-    // i did this so that name can now take categoryName's value from the form
+      // i did this so that name can now take categoryName's value from the form
       const transformedData = {
         id: response.data._id,
         name: response.data.categoryName,
-        description: response.data.categoryDescription || 'NA' ,   
+        description: response.data.categoryDescription || "NA",
         products: response.data.products || [],
       };
       toast.success("Category Added Successfully");
@@ -179,13 +175,16 @@ export const useEditCategory = (onSuccessCallback) => {
     mutationFn: (data) =>
       ApiInstance.put(`products/product/store/categories`, data),
     onSuccess: (response) => {
-      console.log(response.data)
+      console.log(response.data);
       toast.success("Category Edited Successfully");
       if (onSuccessCallback) onSuccessCallback();
       queryClient.invalidateQueries(["categories", store?.id]);
     },
     onError: (err) => {
-      toast.error(err.response?.data?.message || "An error occurred while editing category");
+      toast.error(
+        err.response?.data?.message ||
+          "An error occurred while editing category"
+      );
     },
   });
   return {
@@ -193,7 +192,6 @@ export const useEditCategory = (onSuccessCallback) => {
     isEditingCategory,
   };
 };
-
 
 // delete category
 export const useDeleteCategory = (onSuccessDelete) => {
@@ -204,7 +202,7 @@ export const useDeleteCategory = (onSuccessDelete) => {
       ApiInstance.delete(`/products/product/store/categories/${category?.id}`, {
         params: { storeId: category.storeId, id: category.uuid },
       }),
-    
+
     // On success callback
     onSuccess: () => {
       toast.success("Category Deleted Successfully");
@@ -216,12 +214,15 @@ export const useDeleteCategory = (onSuccessDelete) => {
 
     // error?
     onError: (err) => {
-      toast.error(err.response?.data?.message || "An error occurred while deleting category");
+      toast.error(
+        err.response?.data?.message ||
+          "An error occurred while deleting category"
+      );
     },
   });
 
   return {
     deleteCategory: mutate,
-    isDeleting:isLoading
+    isDeleting: isLoading,
   };
 };

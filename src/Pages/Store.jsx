@@ -20,7 +20,6 @@ import {
 import DeleteAccount from "../Components/Store/DeleteAccount";
 import {useFetchUser} from '../datahooks/users/userhooks'
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
-import Sidebar from '../Components/Sidebar/Sidebar'
 import Navbar from '../Components/Navbar/Navbar'
 import StoreSetting from "../Components/Store/StoreSetting";
 const Store = () => {
@@ -30,7 +29,7 @@ const Store = () => {
     <>
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
-         <Sidebar />
+         {/* <Sidebar /> */}
 
           {/* Navbar */}
           <div   className={

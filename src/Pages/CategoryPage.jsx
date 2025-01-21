@@ -1,5 +1,4 @@
 import Navbar from "../Components/Navbar/Navbar";
-import Sidebar from "../Components/Sidebar/Sidebar";
 import { useFetchCategories } from "../datahooks/products/productshooks";
 import { useFetchUser } from "../datahooks/users/userhooks";
 import { arrowleft } from "../assets";
@@ -17,7 +16,7 @@ const CategoryPage = () => {
     category?.name?.split("")[0].toUpperCase() + category?.name.slice(1);
   return (
     <>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div className={`${isCollapsed? 'flex-grow lg:ml-20 ':'flex-grow lg:ml-56 '} overflow-x-hidden`}>
         <Navbar
           title={storeTitle}

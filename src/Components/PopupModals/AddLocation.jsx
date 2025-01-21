@@ -1,65 +1,72 @@
 import { useForm } from "react-hook-form";
-import {useCreateLocation }from '../../datahooks/location/useLocationhook'
-const AddLocation = ({locationOpen, setLocationOpen}) => {
+import { useCreateLocation } from "../../datahooks/location/useLocationhook";
+const store = JSON.parse(localStorage.getItem("store"));
+const storeId = store?.id
+const AddLocation = ({setLocationOpen }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { addLocationToBackend, locationPending } = useCreateLocation()
+  const { addLocationToBackend, locationPending } = useCreateLocation();
   const submitLocation = (data) => {
-    console.log(data)
-    try {
-      
-      addLocationToBackend(data)
-    } catch (error) {
-      console.error('error :', error)
-    }
-  }
+    const locationData = {
+      storeId,
+      locationName: data.locationName,
+      address: `${data.city}, ${data.state}, ${data.country}`,
+      state: data.state,
+      city: data.city,
+      country: data.country,
+    };
+    console.log(locationData);
+    addLocationToBackend(locationData)
+  };
   return (
-     <div>
-        <div className="bg-[rgba(0,0,0,0.6)] fixed inset-0">
-          <div className="max-w-[450px] mx-auto relative">
-            <button
-              className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"
-              onClick={() => setLocationOpen(false)}
+    <div>
+      <div className="bg-[rgba(0,0,0,0.6)] fixed inset-0">
+        <div className="max-w-[450px] mx-auto relative">
+          <button
+            className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"
+            onClick={() => setLocationOpen(false)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-
-            <form
-              onSubmit={handleSubmit(submitLocation)}
-              className="bg-white p-8 mt-[100px]  "
-          > 
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+          <form
+            className="bg-white p-8 mt-[100px]  "
+          >
             <div className="grid grid-cols-2 gap-5">
-              {/* Admin Name */}
+              {/* location Name */}
               <div className="">
                 <label
-                  htmlFor="adminName"
+                  htmlFor="locationName"
                   className="mb-2 text-lightBlack font-bold"
                 >
                   Location Name
                 </label>
                 <input
                   type="text"
-                  {...register("locationName")}
+                  {...register("locationName", {
+                    required: "Location name is required",
+                  })}
                   placeholder="Enter Location Name "
                   className="border border-lightGreen rounded-md p-2 block w-full"
-                  required
                 />
+                {errors.locationName && (
+                  <p className="text-red-500">{errors.locationName.message}</p>
+                )}
               </div>
               <div className="">
                 <label
@@ -70,13 +77,15 @@ const AddLocation = ({locationOpen, setLocationOpen}) => {
                 </label>
                 <input
                   type="text"
-                  {...register("country")}
+                  {...register("country", { required: "Country is required" })}
                   placeholder="Enter country"
                   className="border border-lightGreen rounded-md p-2 block w-full"
-                  required
                 />
-            </div>
-            <div className="">
+                {errors.country && (
+                  <p className="text-red-500">{errors.country.message}</p>
+                )}
+              </div>
+              <div className="">
                 <label
                   htmlFor="state"
                   className="mb-2 text-lightBlack font-bold"
@@ -85,13 +94,15 @@ const AddLocation = ({locationOpen, setLocationOpen}) => {
                 </label>
                 <input
                   type="text"
-                  {...register("state")}
+                  {...register("state", { required: "State is required" })}
                   placeholder="Enter Admin State"
                   className="border border-lightGreen rounded-md p-2 block w-full"
-                  required
                 />
-            </div>
-            <div className="">
+                {errors.state && (
+                  <p className="text-red-500">{errors.state.message}</p>
+                )}
+              </div>
+              <div className="">
                 <label
                   htmlFor="city"
                   className="mb-2 text-lightBlack font-bold"
@@ -100,24 +111,27 @@ const AddLocation = ({locationOpen, setLocationOpen}) => {
                 </label>
                 <input
                   type="text"
-                  {...register("city")}
+                  {...register("city", { required: "City is required" })}
                   placeholder="Enter City"
                   className="border border-lightGreen rounded-md p-2 block w-full"
-                  required
                 />
+                {errors.city && (
+                  <p className="text-red-500">{errors.city.message}</p>
+                )}
               </div>
             </div>
-              {/* Buttons */}
-                <button
-              type="submit"
+            {/* Buttons */}
+            <button
+              type="button"
               className="bg-green text-white w-[150px] p-2 rounded-md block mx-auto mt-5"
               disabled={locationPending}
-                >
-                  {locationPending ? "Adding..." : "Add Location"}
-                </button>
-            </form>
-          </div>
+              onClick={handleSubmit(submitLocation)}
+            >
+              {locationPending ? "Adding..." : "Add Location"}
+            </button>
+          </form>
         </div>
+      </div>
     </div>
   );
 };

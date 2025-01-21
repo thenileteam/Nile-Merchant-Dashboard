@@ -257,7 +257,7 @@ const ProfileSetting = () => {
           }}
           className="flex cursor-pointer items-center float-right mt-6 px-16"
         >
-          <img src={logout} alt="" />
+          <img src={logout} alt="log out button" />
           <h1 className="text-[#DC3545] font-bold">Log Out</h1>
         </button>
         {cancelMessage && (
