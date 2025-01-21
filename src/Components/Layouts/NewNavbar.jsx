@@ -2,7 +2,7 @@
 
 import ProfileImage from "../PlaceholderImage/PlaceholderImage";
 import { Link } from "react-router-dom";
-import {trolley} from '../../assets'
+import {trolley, userlist,bitcoingraph,store} from '../../assets'
 import {useSidebarStore} from '../../ZustandStores/sidebarStore'
 import { useFetchUser } from '../../datahooks/users/userhooks'
 const NewNavbar = ({isCollapsed}    ) => {
@@ -17,13 +17,13 @@ const NewNavbar = ({isCollapsed}    ) => {
       return {title: 'Orders', icon: trolley, profilePic: user && user.image ? user.image : ""}
     }
     if(path === "/customers"){
-      return {title: 'Customers', icon: '', profilePic: user && user.image ? user.image : ""}
+      return {title: 'Customers', icon: userlist, profilePic: user && user.image ? user.image : ""}
     }
     if(path === "/expenses"){
-      return {title: 'Expenses', icon: '', profilePic: user && user.image ? user.image : ""}
+      return {title: 'Expenses', icon: bitcoingraph, profilePic: user && user.image ? user.image : ""}
     }
     if(path === "/settings"){
-      return {title: 'Settings', icon: '', profilePic: user && user.image ? user.image : ""}
+      return {title: 'Settings', icon: store, profilePic: user && user.image ? user.image : ""}
     }
   }
 
@@ -106,11 +106,11 @@ const NewNavbar = ({isCollapsed}    ) => {
                 {/* <Link to="/notification">
               <img src={notification} alt="notification-icon" className="hidden lg:block" />
             </Link> */}
-                <Link to="/profilesetting">
+                <div>
                   <ProfileImage
                     profileImage={getNavProperties().profilePic}
                   />
-                </Link>
+                </div>
               </div>
             </div>
           </div>

@@ -1,7 +1,6 @@
 import { useFetchStaffs } from "@/datahooks/staffs/usestaffhook";
 import EditStaff from "../PopupModals/EditStaff";
 import Skeleton from 'react-loading-skeleton'
-import DeleteStaff from '../PopupModals/DeleteStaff'
 import usePagination from "../Pagination/PaginationHook";
 const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
   const { staffs, isLoading, isError } = useFetchStaffs();
@@ -14,7 +13,6 @@ const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
   //   console.log('error..')
   // }
   const sortedStaffs = staffs?.sort((a, b) => a.name.localeCompare(b.name));
-
   return (
     <section>
       <div
@@ -48,7 +46,13 @@ const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
           </svg>
           Add New Staff
         </button>
-         
+          {isLoading? (
+          <div className="w-full mt-2">
+            <Skeleton className=" h-[40px] w-full block" />
+            <Skeleton className=" h-[40px] w-full block" />
+            <Skeleton className=" h-[40px] w-full block" />
+          </div>
+        ) :
         <table className="w-full border-separate border-spacing-y-5 ">
           <thead>
             <tr className="text-left bg-[#EAF4E2]">
@@ -59,15 +63,13 @@ const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
               <th className=" p-2 shadow-lg">Action</th>
             </tr>
           </thead>
-          {isLoading && (
-          <div className="w-full mt-2">
-            <Skeleton className=" h-[40px] w-full block" />
-            <Skeleton className=" h-[40px] w-full block" />
-            <Skeleton className=" h-[40px] w-full block" />
-          </div>
-        )}
           <tbody>
             {sortedStaffs?.map((staff, i) => {
+              const date = new Date(staff.updatedAt)
+              const hour = date.getHours()
+              const minute = date.getMinutes()
+              const ampm = hour >=12?'pm':'am'
+              const time = `${hour}:${minute.toString().padStart(2, 0)}${ampm}`
               return (
                 <tr className="mt-4 bg-white shadow-md">
                   <td className="bg-[#EAF4E2] p-2 text-[#6e6e6e] capitalize">
@@ -77,21 +79,20 @@ const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
                     {"Admin"}
                   </td>
                   <td className="bg-white p-2 text-[#6e6e6e]  ">
-                    {staff.createdAt || "10:37pm"}
+                    {staff.createdAt.split('T')[0] || "10:37pm"}
                   </td>
 
                   <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
-                    {staff.updatedAt || "10:59pm"}
+                    {time|| "10:59pm"}
                   </td>
                   <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
                     <EditStaff staff={staff} />
                   </td>
-                  {/* <td> <DeleteStaff staff={staff} /></td> */}
                 </tr>
               );
             })}
           </tbody>
-        </table>
+        </table>}
       </div>
       
     </section>

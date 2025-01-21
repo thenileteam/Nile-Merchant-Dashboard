@@ -33,9 +33,9 @@ import ErrorCustomer from "./Components/ErrorElements/ErrorCustomer";
 import CategoryPage from "./Pages/CategoryPage";
 import ReactGA from "react-ga4";
 import Cookies from "js-cookie";
+import SidebarParent from "./Pages/SidebarParent";
 const App = () => {
   const queryClient = new QueryClient();
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -54,8 +54,8 @@ const App = () => {
       element: <ForgotPassword />,
     },
     {
-      // path: "/",
-      // element: <Sidebar />,
+      path: "/",
+      element: <SidebarParent />,
       children: [
         {
           path: "/dashboard",

@@ -1,6 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import ApiInstance from "../../Api/ApiInstance";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 const store = JSON.parse(localStorage.getItem("store"));
 //fetch  roles

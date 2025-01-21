@@ -1,7 +1,6 @@
 import LocationTable from "@/Components/StaffManagement/LocationTable";
 import { useFetchUser } from '../datahooks/users/userhooks'
 import { useSidebarStore } from "@/ZustandStores/sidebarStore";
-import Sidebar from '../Components/Sidebar/Sidebar'
 import Navbar from '../Components/Navbar/Navbar'
 // import AddLocation from '../Components/PopupModals/AddLocation'
 const Location = () => {
@@ -9,7 +8,7 @@ const Location = () => {
   const { isCollapsed } = useSidebarStore();
   return (
     <>
-      <Sidebar />
+      {/* Sidebar  */}
       <div
         className={
           isCollapsed

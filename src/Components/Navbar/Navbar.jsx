@@ -3,8 +3,12 @@
 import ProfileImage from "../PlaceholderImage/PlaceholderImage";
 import { Link } from "react-router-dom";
 import {useSidebarStore} from '../../ZustandStores/sidebarStore'
+import ProfileSetting from "../Store/ProfileSetting";
+import { useProfileStore } from "@/ZustandStores/profileStore";
+import ProfileDropDown from "../Dashboard/ProfileDropDown";
 const Navbar = ({ title, icon, profilePic }) => {
-  const{sidebarOpen, setSidebarOpen,} = useSidebarStore()
+  const { sidebarOpen, setSidebarOpen, } = useSidebarStore()
+  const {toggleProfile} = useProfileStore()
   return (
     <nav className="bg-[#EAF4E2] fixed top-0 shadow-md z-10 w-full py-2">
       <div className="container mx-auto lg:mx-0 lg:px-10 px-4">
@@ -84,11 +88,12 @@ const Navbar = ({ title, icon, profilePic }) => {
                 {/* <Link to="/notification">
               <img src={notification} alt="notification-icon" className="hidden lg:block" />
             </Link> */}
-                <Link to="/profilesetting">
+                  <div className="" onClick={toggleProfile}>
                   <ProfileImage
                     profileImage={profilePic}
                   />
-                </Link>
+                  <ProfileDropDown/>
+              </div>
               </div>
             </div>
           </div>

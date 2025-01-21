@@ -19,9 +19,10 @@ const Product = () => {
   const [isCategoryOpen, setCategoryOpen] = useState(false);
   //category update
   return (
+    <>
     <div className="bg-[#F5F5F5] pb-20">
       <div className="flex">
-        <Sidebar  />
+        {/* <Sidebar  /> */}
         <div className={`flex-grow ${isCollapsed?'lg:ml-20':'lg:ml-56'} overflow-x-hidden`}>
           <Navbar
             title="Products"
@@ -116,7 +117,7 @@ const Product = () => {
               </div>
             </div>
           )}
-          {isActiveTab ? (
+          {isActiveTab? (
             <ProductTable
               data={data}
               isFetching={isFetching}
@@ -128,7 +129,10 @@ const Product = () => {
           {isCategoryOpen && <AddCategory setCategoryOpen={setCategoryOpen} />}
         </div>
       </div>
-    </div>
+      </div>
+      {/* walkthrough */}
+      {/* <Walkthrough/> */}
+    </>
   );
 };
 

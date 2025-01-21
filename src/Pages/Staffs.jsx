@@ -1,6 +1,5 @@
 import { useSidebarStore } from "@/ZustandStores/sidebarStore";
 import Navbar from "../Components/Navbar/Navbar";
-import Sidebar from "../Components/Sidebar/Sidebar";
 import EmptyStaffState from "../Components/StaffManagement/EmptyStaffState";
 import { useFetchUser } from "@/datahooks/users/userhooks";
 import AddStaff from "../Components/PopupModals/AddStaff";
@@ -14,7 +13,7 @@ const Staffs = () => {
   const { staffs, isFetching, isError } = useFetchStaffs();
   return (
     <>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div
         className={
           isCollapsed
@@ -27,14 +26,16 @@ const Staffs = () => {
           profilePic={user && user.image ? user.image : ""}
         />
         <section>
+          {staffs?.length === 0 ?
+         <EmptyStaffState
+         showStaffPopUp={showStaffPopUp}
+         setShowStaffPopUp={setShowStaffPopUp}
+       />:
             <StaffTable
               isCollapsed={isCollapsed}
               setShowStaffPopUp={setShowStaffPopUp}
             />
-          {staffs?.length===0 &&  <EmptyStaffState
-              showStaffPopUp={showStaffPopUp}
-              setShowStaffPopUp={setShowStaffPopUp}
-            />}
+          }
           
           {showStaffPopUp && <AddStaff setShowStaffPopUp={setShowStaffPopUp} />}
         </section>

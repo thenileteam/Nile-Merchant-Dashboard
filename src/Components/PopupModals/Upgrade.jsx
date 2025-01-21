@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import{ useState } from "react";
 
 const Upgrade = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -6,11 +6,10 @@ const Upgrade = () => {
   const handleSaveChanges = () => {
     // Show the popup
     setShowPopup(true);
-
     // Hide the popup after 3 seconds
     setTimeout(() => {
       setShowPopup(false);
-    }, 1000); // 3000ms = 3 seconds
+    }, 1000); 
   };
 
   return (

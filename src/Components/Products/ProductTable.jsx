@@ -14,7 +14,8 @@ const ProductTable = ({ data, isFetching, isError }) => {
   return (
     <>
       {/* Table */}
-      <div  className={`${isCollapsed?'max-w-[1000px]':"max-w-[800px]"} mx-auto  `}>
+      {data?.length > 0 ?
+        <div className={`${isCollapsed ? 'max-w-[1000px]' : "max-w-[800px]"} mx-auto  `}>
         {isFetching ? (
           <div className="bg-[#ffffff] w-full shadow-md">
             <Skeleton className=" w-full h-10" />
@@ -105,6 +106,7 @@ const ProductTable = ({ data, isFetching, isError }) => {
           </table>
         )}
       </div>
+      :null} 
       {/* pagination */}
       {data?.length > itemsPerPage && (
         <Pagination pageCount={pageCount} onPageChange={handlePageChange} />

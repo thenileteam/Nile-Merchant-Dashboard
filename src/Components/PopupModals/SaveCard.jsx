@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const SaveCard = () => {
+const SaveCard = ({showSavedCardAndHideForm}) => {
   const [showPopup, setShowPopup] = useState(false);
 
-  const handleSaveChanges = () => {
+  const saveChanges = () => {
     // Show the popup
     setShowPopup(true);
 
@@ -17,8 +17,12 @@ const SaveCard = () => {
     <div className="relative">
       {/* Onclick Button to Trigger the Popup */}
       <button
+        type="button"
         className="bg-[#004324] font-bold text-[#ffffff] p-3 rounded-md"
-        onClick={handleSaveChanges}
+        onClick={() => { 
+          saveChanges()
+          showSavedCardAndHideForm()
+        }  }
       >
         Save Card
       </button>

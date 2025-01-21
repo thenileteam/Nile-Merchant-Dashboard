@@ -28,8 +28,6 @@ const AddStaff = ({ setShowStaffPopUp }) => {
     );
   };
 
-  // Filtered roles (for now until i have to implement specific roles )
-  const filteredRoles = roles?.filter((_, i) => i !== 0 && i !== 4);
   // Submit data
   const submitData = (data) => {
     if (!roles?.length) {
@@ -37,6 +35,7 @@ const AddStaff = ({ setShowStaffPopUp }) => {
       return;
     }
     const staffData = {
+      // locationId,
       storeId,
       name: data.adminName,
       phone: data.staffNumber,
@@ -47,14 +46,14 @@ const AddStaff = ({ setShowStaffPopUp }) => {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       })),
-    }
+    };
     addStaffToBackend(staffData, {
       onSuccess: () => toast.success("Staff successfully added."),
       onError: (error) => {
         toast.error(error.response?.data?.message || "An error occurred.");
       },
     });
-    setShowStaffPopUp(false)
+    setShowStaffPopUp(false);
   };
 
   return (
@@ -183,7 +182,7 @@ const AddStaff = ({ setShowStaffPopUp }) => {
             <p className="mb-2 text-[#6e6e6e] text-[12px]">
               Choose what the Admin should be able to access:
             </p>
-            {filteredRoles?.map((role) => (
+            {roles?.map((role) => (
               <div
                 className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2"
                 key={role.id}

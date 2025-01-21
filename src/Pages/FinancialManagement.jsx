@@ -15,7 +15,6 @@ import {
 
 import FinancialTable from "../Components/Financial/FinancialTable";
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
-import Sidebar from "../Components/Sidebar/Sidebar";
 import { useFetchUser } from "@/datahooks/users/userhooks";
 import Navbar from "@/Components/Navbar/Navbar";
 import ExpensesTable from "../Components/Financial/ExpensesTable";
@@ -57,7 +56,7 @@ const FinancialManagement = ({ data }) => {
     <>
       <div className="bg-[#F5F5F5] pb-20">
         <div className="flex">
-          <Sidebar />
+          {/* <Sidebar /> */}
           {/* Navbar */}
           <div
             className={

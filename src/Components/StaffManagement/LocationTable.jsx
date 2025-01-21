@@ -1,12 +1,14 @@
 import usePagination from "../Pagination/PaginationHook";
 import AddLocation from "../PopupModals/AddLocation";
 import EditLocation from "../PopupModals/EditLocation";
-import {useState} from 'react'
-import { useFetchLocation } from "@/datahooks/location/useLocationhook";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useFetchLocations } from "@/datahooks/location/useLocationhook";
 import Skeleton from "react-loading-skeleton";
-const LocationTable = ({ isCollapsed, }) => {
+const LocationTable = ({ isCollapsed }) => {
   const [locationOpen, setLocationOpen] = useState(false);
-  const{locations, isError,isFetchingLocation }= useFetchLocation()
+  const { locations, isError, isFetchingLocation } = useFetchLocations();
+  console.log(locations)
   return (
     <section>
       <div
@@ -16,7 +18,7 @@ const LocationTable = ({ isCollapsed, }) => {
       >
         <button
           className="bg-green text-white font-bold p-inherit flex items-center w-[185px] rounded-md p-2 mb-4"
-            onClick={()=>setLocationOpen(true)}
+          onClick={() => setLocationOpen(true)}
         >
           <svg
             width="25"
@@ -40,57 +42,68 @@ const LocationTable = ({ isCollapsed, }) => {
           </svg>
           Add New Location
         </button>
-
-        <table className="w-full border-separate border-spacing-y-5">
-          <thead>
-            <tr className="text-left bg-[#EAF4E2]">
-              <th className=" p-2 shadow-lg">Location Name</th>
-              <th className=" p-2 shadow-lg">Country</th>
-              <th className=" p-2 shadow-lg">State</th>
-              <th className=" p-2 shadow-lg">City</th>
-              <th className=" p-2 shadow-lg">Action</th>
-              <th className=" p-2 shadow-lg">Action</th>
-            </tr>
-          </thead>
-          {isFetchingLocation && (
+        {isFetchingLocation ? (
           <div className="w-full mt-5 border-red-500 border-2">
             <Skeleton className=" h-[40px] w-full block" />
             <Skeleton className=" h-[40px] w-full block" />
             <Skeleton className=" h-[40px] w-full block" />
           </div>
-        )}
-          <tbody>
-            {locations?.map((location, i) => { 
-            return (
-            <tr className="mt-4 bg-white shadow-md">
-              <td className="bg-[#EAF4E2] p-2 text-[#6e6e6e] capitalize">
-                {location.name||"xxxxx"}
-              </td>
-              <td className="bg-white p-2 text-[#6e6e6e]  capitalize">
-                {location.country||"country"}
-              </td>
-              <td className="bg-white p-2 text-[#6e6e6e]  ">{location.state||"state"}</td>
+        ) : (
+          <table className="w-full border-separate border-spacing-y-5">
+            <thead>
+              <tr className="text-left bg-[#EAF4E2]">
+                <th className=" p-2 shadow-lg">Location Name</th>
+                <th className=" p-2 shadow-lg">Country</th>
+                <th className=" p-2 shadow-lg">State</th>
+                <th className=" p-2 shadow-lg">City</th>
+                <th className=" p-2 shadow-lg">Action</th>
+                <th className=" p-2 shadow-lg">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {locations?.map((location, i) => {
+                return (
+                  <tr className="mt-4 bg-white shadow-md" key={location?.id}>
+                    <td className="bg-[#EAF4E2] p-2 text-[#6e6e6e] capitalize">
+                      {location.locationName || "xxxxx"}
+                    </td>
+                    <td className="bg-white p-2 text-[#6e6e6e]  capitalize">
+                      {location.country || "country"}
+                    </td>
+                    <td className="bg-white p-2 text-[#6e6e6e]  ">
+                      {location.state || "state"}
+                    </td>
 
-              <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
-                {location.city||"city"}
-              </td>
-                <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
-                  <Link to={`/branch/${location.id}`}>
-                  <button type="button" className="text-lightGreen font-bold transitions hover:underline  ">
-                </button>
-                  
-                  </Link>
-              </td>
-              <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
-                <EditLocation setLocationOpen={setLocationOpen} />
-              </td>
-            </tr>
-              ); 
-            })} 
-          </tbody>
-        </table>
+                    <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
+                      {location.city || "city"}
+                    </td>
+                    <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
+                      <Link to={`/branch/${i}`}>
+                        <button
+                          type="button"
+                          className="text-lightGreen font-bold transitions hover:underline  "
+                        >
+                          {" "}
+                          View
+                        </button>
+                      </Link>
+                    </td>
+                    <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
+                      <EditLocation location={location}/>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
       </div>
-     {locationOpen && <AddLocation locationOpen={locationOpen} setLocationOpen={setLocationOpen}/>}
+      {locationOpen && (
+        <AddLocation
+          locationOpen={locationOpen}
+          setLocationOpen={setLocationOpen}
+        />
+      )}
     </section>
   );
 };

@@ -1,5 +1,4 @@
 import Navbar from "../Components/Navbar/Navbar";
-import Sidebar from '@/Components/Sidebar/Sidebar';
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 import { useFetchUser } from '@/datahooks/users/userhooks';
@@ -10,7 +9,7 @@ const Branch = () => {
     const {isCollapsed} = useSidebarStore()
   return (
     <>
-    <Sidebar />
+    {/* <Sidebar /> */}
     <div
       className={
         isCollapsed
