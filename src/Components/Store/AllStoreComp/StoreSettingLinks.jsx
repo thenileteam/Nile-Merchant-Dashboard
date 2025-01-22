@@ -1,5 +1,12 @@
 import { accountsetting, notification2 } from "../../../assets";
-import { Icon1, StaffIcon, BankIcon, PlanIcon , LocationIcon} from "./StoreSettingIcons";
+import {
+  Icon1,
+  StaffIcon,
+  BankIcon,
+  PlanIcon,
+  LocationIcon,
+  DomainIcon
+} from "./StoreSettingIcons";
 import StoreSettingLinkTemplate from "./StoreSettingLinkTemplate";
 const StoreSettingLinks = ({
   isCollapsed,
@@ -10,8 +17,10 @@ const StoreSettingLinks = ({
   return (
     <>
       <div
-        className={`transition-all duration-500 ease-in transform h-[120px] ${ isDropDownOpen? 'overflow-y-scroll  custom-scrollbar':''}`}
-            // ${isDropDownOpen ? "opacity-100" : "opacity-0"}`}
+        className={`transition-all duration-500 ease-in transform h-[120px] ${
+          isDropDownOpen ? "overflow-y-scroll  custom-scrollbar" : ""
+        }`}
+        // ${isDropDownOpen ? "opacity-100" : "opacity-0"}`}
       >
         <StoreSettingLinkTemplate
           getLinkClasses={getLinkClasses}
@@ -45,7 +54,7 @@ const StoreSettingLinks = ({
           isCollapsed={isCollapsed}
           icon={PlanIcon}
         />
-          <StoreSettingLinkTemplate
+        <StoreSettingLinkTemplate
           getLinkClasses={getLinkClasses}
           isActive={isActive}
           link="/location"
@@ -53,7 +62,14 @@ const StoreSettingLinks = ({
           isCollapsed={isCollapsed}
           icon={LocationIcon}
         />
-
+        <StoreSettingLinkTemplate
+          getLinkClasses={getLinkClasses}
+          isActive={isActive}
+          link="/domainsetting"
+          text="Domain Management"
+          isCollapsed={isCollapsed}
+          icon={DomainIcon}
+        />
         {/* <Link to="/profilesetting">
           <div className="border mt-5 flex items-center gap-2 rounded-md">
             <img src={accountsetting} alt="" />

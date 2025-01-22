@@ -5,7 +5,8 @@ export const useCreateCard = (onSuccessCallback) => {
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
       mutationFn: (data) => ApiInstance.post(`/store/store/cards`, data),
-      onSuccess: () => {
+      onSuccess: (response) => {
+        console.log(response.data)
         toast.success("card added successfully");
         if (onSuccessCallback) onSuccessCallback();
         queryClient.invalidateQueries(["cards", storeId]);
@@ -27,9 +28,7 @@ export const useFetchCards = () => {
       queryFn: async () => {
         try {
            
-          const res = await ApiInstance.get(`store/store/cards`, {
-            params:{storeId:storeId}
-          })
+          const res = await ApiInstance.get(`store/store/cards` )
           console.log(res.data?.responseObject);
           return res.data?.responseObject || [];
         } catch (error) {

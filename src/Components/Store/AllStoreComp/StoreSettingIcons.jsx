@@ -187,7 +187,7 @@ export const PlanIcon = ({ isActive, link }) => {
   //Location icon
 };
 
-export const LocationIcon = ({isActive, link}) => {
+export const LocationIcon = ({ isActive, link }) => {
   return (
     <svg
       width="24"
@@ -213,6 +213,51 @@ export const LocationIcon = ({isActive, link}) => {
         strokeWidth="1.5"
         strokeLinecap="round"
         stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const DomainIcon = ({ isActive, link }) => {
+  return (
+    <svg
+      width="24"
+      height="25"
+      viewBox="0 0 24 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M19 21.1406C19.4255 20.9496 19.7894 20.7018 20.1088 20.3801C21.5 18.9785 21.5 16.7227 21.5 12.2111C21.5 7.69957 21.5 5.44377 20.1088 4.0422C18.7175 2.64063 16.4783 2.64062 12 2.64062C7.52166 2.64062 5.28249 2.64063 3.89124 4.0422C2.5 5.44377 2.5 7.69957 2.5 12.2111C2.5 16.7227 2.5 18.9785 3.89124 20.3801C4.21056 20.7018 4.57453 20.9496 5 21.1406"
+        stroke={isActive(link) ? "#004324" : "#ffffff"}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M2.5 9.14062H21.5"
+        stroke={isActive(link) ? "#004324" : "#ffffff"}
+        strokeWidth="1.5"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M7 6.14062H7.00898"
+        stroke={isActive(link) ? "#004324" : "#ffffff"}
+        strokeWidth="2"
+        strokeLinecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M11 6.14062H11.009"
+        stroke={isActive(link) ? "#004324" : "#ffffff"}
+        strokeWidth="2"
+        strokeLinecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M10.2596 17.0186C9.1796 17.0186 8.71714 17.7981 8.59714 18.2779C8.47714 18.7576 8.47714 20.4966 8.54914 21.2161C8.78914 22.1156 9.38914 22.4874 9.97714 22.6073C10.5171 22.6553 12.7971 22.6373 13.4571 22.6373C14.4171 22.6553 15.1371 22.2955 15.4371 21.2161C15.4971 20.8563 15.5571 18.8775 15.4071 18.2779C15.0891 17.3184 14.36 17.0186 13.76 17.0186M10.2596 17.0186H13.76M10.2596 17.0186C10.2596 16.9586 10.2582 16.1922 10.2596 15.7579C10.2609 15.361 10.226 14.9784 10.4156 14.6282C11.126 13.2154 13.166 13.3593 13.67 14.7985C13.7573 15.0354 13.7626 15.411 13.76 15.7579C13.7567 16.2011 13.76 17.0186 13.76 17.0186"
+        stroke={isActive(link) ? "#004324" : "#ffffff"}
+        strokeWidth="1.5"
+        strokeLinecap="round"
       />
     </svg>
   );

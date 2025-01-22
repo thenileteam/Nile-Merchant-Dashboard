@@ -5,12 +5,19 @@ import {
   useCreateStaff,
 } from "../../datahooks/staffs/usestaffhook";
 import { toast } from "sonner";
+import { useFetchLocations } from "@/datahooks/location/useLocationhook";
+import { addsquare } from "@/assets";
+import { FaBullseye } from "react-icons/fa6";
 const store = JSON.parse(localStorage.getItem("store"));
 const storeId = store?.id;
 
 const AddStaff = ({ setShowStaffPopUp }) => {
   const { roles } = useFetchRoles();
   const { addStaffToBackend, isStaffPending } = useCreateStaff();
+  const { locations } = useFetchLocations();
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const[isLocationAssigned, setLocationAssigned]= useState(false)
+  console.log(locations)
   const {
     register,
     handleSubmit,
@@ -27,16 +34,21 @@ const AddStaff = ({ setShowStaffPopUp }) => {
       checked ? [...prev, id] : prev.filter((roleId) => roleId !== id)
     );
   };
-
+  const handleLocationSelection = (location) => {
+    setSelectedLocation(location);
+    setLocationAssigned(false);
+  };
   // Submit data
   const submitData = (data) => {
     if (!roles?.length) {
       toast.error("roles data is still loading.");
       return;
     }
+    if (!selectedLocation) {
+      toast.error("Please select a location.");
+      return;
+    }
     const staffData = {
-      // locationId,
-      storeId,
       name: data.adminName,
       phone: data.staffNumber,
       email: data.staffMail,
@@ -46,6 +58,8 @@ const AddStaff = ({ setShowStaffPopUp }) => {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       })),
+      locationId:selectedLocation.id,
+      storeId,
     };
     addStaffToBackend(staffData, {
       onSuccess: () => toast.success("Staff successfully added."),
@@ -81,7 +95,7 @@ const AddStaff = ({ setShowStaffPopUp }) => {
 
         <form
           className="bg-white p-8 mt-32"
-          onSubmit={handleSubmit(submitData)}
+          // onSubmit={handleSubmit(submitData)}
         >
           <div className="mt-4">
             <label
@@ -175,7 +189,31 @@ const AddStaff = ({ setShowStaffPopUp }) => {
               </p>
             )}
           </div>
-
+          {/* assigned location */}
+          <div
+                    className="flex items-center justify-between bg-[#ffffff] border-[#8ED06C] border-2 p-3 rounded-md cursor-pointer my-3"
+                    onClick={()=>setLocationAssigned(prev=>!prev)}
+                  >
+                    <h1 className="text-gray-500 font-bold">
+                  {selectedLocation?.locationName||"Select location to add staff"}
+                    </h1>
+                    <img src={addsquare} alt="Add Square" />
+                  </div>
+                  {isLocationAssigned && (
+                    <div className="absolute w-[380px] border border-[#8ED06C] bg-white rounded-md shadow-lg max-h-[200px] overflow-y-auto">
+                      {
+                        locations?.map((location) => (
+                          <div
+                            key={location.id}
+                            className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
+                            onClick={() => handleLocationSelection(location)}
+                          >
+                            {location.locationName}
+                          </div>
+                        ))
+                      }
+                    </div>
+                  )}
           {/* Permission checkboxes */}
           <div>
             <h3 className="text-green font-bold mt-2">Permissions</h3>
@@ -209,9 +247,10 @@ const AddStaff = ({ setShowStaffPopUp }) => {
           </div>
 
           <button
-            type="submit"
+            type="button"
             className="bg-green text-white mt-8 font-semibold block mx-auto w-[150px] p-2 rounded-md"
             disabled={isStaffPending}
+            onClick={handleSubmit(submitData)}
           >
             {isStaffPending ? "Sending..." : "Send An Invite"}
           </button>
