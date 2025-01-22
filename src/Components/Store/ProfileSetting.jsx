@@ -85,7 +85,7 @@ const ProfileSetting = () => {
     <>
       <div>
         {/* Navbar */}
-        <nav className="bg-[#EAF4E2] p-4 shadow-md flex items-center justify-center gap-5 fixed z-50 w-full">
+        <nav className="bg-[#EAF4E2] p-4 shadow-md flex items-center justify-center gap-5 fixed w-full">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 px-20">
               <Link to="/dashboard">

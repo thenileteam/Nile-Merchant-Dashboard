@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { addsquare } from "../../assets";
-import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
 import { useFetchUser } from "@/datahooks/users/userhooks";
 import { useSidebarStore } from "@/ZustandStores/sidebarStore";
@@ -9,7 +8,6 @@ import useBankDetails from "@/datahooks/banks/usebankhook";
 const BankSetting = () => {
   const { user } = useFetchUser();
   const { isCollapsed } = useSidebarStore();
-
   const {
     banks,
     formData,
@@ -43,7 +41,7 @@ const BankSetting = () => {
   return (
     <div>
       <div className="flex">
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div
           className={
             isCollapsed

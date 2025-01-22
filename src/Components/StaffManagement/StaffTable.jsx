@@ -59,6 +59,7 @@ const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
               <th className=" p-2 shadow-lg">Staff Name</th>
               <th className=" p-2 shadow-lg">Staff Role</th>
               <th className=" p-2 shadow-lg">Date Added</th>
+              <th className=" p-2 shadow-lg">Assigned Location</th>
               <th className=" p-2 shadow-lg">Last Login</th>
               <th className=" p-2 shadow-lg">Action</th>
             </tr>
@@ -81,7 +82,7 @@ const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
                   <td className="bg-white p-2 text-[#6e6e6e]  ">
                     {staff.createdAt.split('T')[0] || "10:37pm"}
                   </td>
-
+                  <td className="bg-white p-2 text-[#6e6e6e] ">{staff?.location.locationName|| 'branch 1'}</td>
                   <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
                     {time|| "10:59pm"}
                   </td>

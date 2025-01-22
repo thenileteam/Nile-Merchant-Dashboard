@@ -1,8 +1,8 @@
 import { useState } from "react";
-
-const SaveCard = ({showSavedCardAndHideForm}) => {
+import { useForm } from "react-hook-form";
+const SaveCard = ({showSavedCardAndHideForm, submitCard, cardPending}) => {
   const [showPopup, setShowPopup] = useState(false);
-
+const {handleSubmit} = useForm()
   const saveChanges = () => {
     // Show the popup
     setShowPopup(true);
@@ -19,11 +19,14 @@ const SaveCard = ({showSavedCardAndHideForm}) => {
       <button
         type="button"
         className="bg-[#004324] font-bold text-[#ffffff] p-3 rounded-md"
-        onClick={() => { 
-          saveChanges()
-          showSavedCardAndHideForm()
-        }  }
+        disabled={cardPending}
+        onClick={() =>handleSubmit(submitCard())}
       >
+         {/* // if (!cardPending) {
+            // saveChanges()
+            // showSavedCardAndHideForm()
+          } */}
+        {/* }  */}
         Save Card
       </button>
 

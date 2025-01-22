@@ -20,7 +20,6 @@ import { useCreateCard } from "@/datahooks/billinghooks/useBillinghook";
 const PlanSetting = () => {
   const {
     register,
-    handleSubmit,
     formState: { errors },
   } = useForm();
   const { user } = useFetchUser();
@@ -37,8 +36,17 @@ const PlanSetting = () => {
     setShowBilling(false)
     setShowCard(true)
   }
-  const addCard = () => {
-    
+  const submitCard = (data) => {
+    const transformedData = {
+      // storeId,
+      cardName:data.cardName,
+      cardNumber: data.cardNumber,
+      cardExpiry: data.expiryDate,
+      cardCvv: data.cardCvv,
+      address: data.address,
+      zip:data.postal,
+    }
+    addCardToBackend(data)
   }
   return (
     <>
@@ -161,9 +169,14 @@ const PlanSetting = () => {
                 </label>
 
                 <input
-                  type="text"
+                    type="text"
+                    maxLength={19}
                   {...register("cardNumber", {
                     required: "card name is required",
+                    maxLength: {
+                      value: 19, 
+                      message: "Card number must not exceed 19 digits", // Error message
+                    },
                   })}
                   placeholder="xxxx xxxx xxxx xxxx"
                   className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
@@ -196,7 +209,8 @@ const PlanSetting = () => {
                   </label>
 
                   <input
-                    type="text"
+                      type="text"
+                    maxLength={3}
                     {...register("cvv", { required: "cvv is required" })}
                     placeholder="XXX"
                     className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
@@ -221,21 +235,23 @@ const PlanSetting = () => {
               </div>
               <div>
                 <label
-                  htmlFor="StoreName"
+                  htmlFor="postal"
                   className="block text-[16px] font-bold text-[#333333]"
                 >
                   Zip/Postal Code
                 </label>
 
                 <input
-                  type="text"
-                  {...register("expiryDate")}
+                    type="text"
+                  maxLength={6}
+                  {...register("postal")}
                   placeholder="xxxxx"
                   className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
               <div className="flex justify-center mt-10">
-                <SaveCard showSavedCardAndHideForm={showSavedCardAndHideForm}/>
+              {/* showSavedCardAndHideForm={showSavedCardAndHideForm} */}
+                  <SaveCard submitCard={submitCard} cardPending={ cardPending } />
               </div>
             </form>
               {/* saved card */}
