@@ -216,11 +216,12 @@ const App = () => {
           element: (
             <ProtectRoutes>
               <Location />
+              {/* <Branch/> */}
             </ProtectRoutes>
           ),
         },
         {
-          path: "/branch:id",
+          path: "/branch/:id",
           element: (
             <ProtectRoutes>
               <Branch/>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { addsquare } from "../../assets";
 import CustomProductSizeSelector from "../Products/CustomProductSizeSelector";
+import AssignLocation from "../StaffManagement/AssignLocation";
 
 const AddProduct = () => {
   // State to control the popup visibility and animation
@@ -39,7 +40,7 @@ const AddProduct = () => {
       setIsPopupOpen(false); // Close the main popup after the animation
       setIsConfirmationOpen(true); // Open the confirmation popup
       setFadeOut(false); // Reset fade-out state
-    }, 200); // Match this duration with your CSS transition duration
+    }, 200);
   };
 
   const toggleConfirmation = () => {
@@ -452,6 +453,7 @@ const AddProduct = () => {
                       placeholder="7842"
                     />
                   </div> */}
+                    
                 </div>
               </div>
                {/* do not remove! space for product image */}

@@ -41,7 +41,7 @@ const Navbar = ({ title, icon, profilePic }) => {
           {/* parent second child */}
           <div className="page-head flex items-center justify-between w-[95%] lg:max-w-[1000px]">
             {/* first */}
-            <div className="flex gap-2 items-center md:pl-8">
+            <div className="flex gap-2 items-center md:pl-16">
               {icon &&
                 //  <Link to={link}> 
                   <img src={icon} alt={`${title} icon`} className="hidden lg:block" />

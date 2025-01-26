@@ -17,7 +17,7 @@ const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
     <section>
       <div
         className={`mt-28 ${
-          isCollapsed ? "max-w-[1000px]" : "max-w-[900px]"
+          isCollapsed ? "max-w-[1000px]" : "max-w-[820px]"
         } mx-auto`}
       >
         <button

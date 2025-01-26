@@ -5,6 +5,7 @@ import {
   arrowleft,
   coverimage,
   done,
+  visa,master,
   image,
   logout,
   notification,
@@ -17,10 +18,14 @@ import { useFetchUser } from "@/datahooks/users/userhooks";
 import { useSidebarStore } from "@/ZustandStores/sidebarStore";
 import { useForm } from "react-hook-form";
 import { useCreateCard } from "@/datahooks/billinghooks/useBillinghook";
+import { getCardType } from "@/utils/formatNumber";
+const store = JSON.parse(localStorage.getItem('store'))
+const storeId = store?.id
 const PlanSetting = () => {
   const {
     register,
     formState: { errors },
+    watch
   } = useForm();
   const { user } = useFetchUser();
   const { isCollapsed } = useSidebarStore();
@@ -36,18 +41,27 @@ const PlanSetting = () => {
     setShowBilling(false)
     setShowCard(true)
   }
+  // const cardNumber = watch("cardNumber");
+  const maskCardNumber = (number) => number.replace(/\d(?=\d{4})/g, "X");
+  const cardNumber = watch("cardNumber");
   const submitCard = (data) => {
-    const transformedData = {
-      // storeId,
-      cardName:data.cardName,
-      cardNumber: data.cardNumber,
-      cardExpiry: data.expiryDate,
-      cardCvv: data.cardCvv,
-      address: data.address,
-      zip:data.postal,
-    }
-    addCardToBackend(data)
-  }
+    console.log(data)
+    const maskedCardNumber = maskCardNumber(data.cardNumber);
+    const cardType = getCardType(data.cardNumber);
+    const payload = {
+       storeId,
+       cardName:data.cardName,
+       cardExpiry: data.expiryDate,
+       cardCvv: data.cardCvv,
+       address: data.address,
+       zip:data.postal,
+      cardType,
+      cardNumber: maskedCardNumber, // Send masked card number
+    };
+
+    addCardToBackend(payload); // Call the mutate function
+  };
+   
   return (
     <>
       <div>
@@ -65,7 +79,7 @@ const PlanSetting = () => {
           />
         </div>
 
-        {/* Input Field */}
+        {/* Input Field  for saving a card*/}
         <div
           className={` mt-24 ${
             isCollapsed ? "ml-20" : "ml-64"
@@ -178,9 +192,10 @@ const PlanSetting = () => {
                       message: "Card number must not exceed 19 digits", // Error message
                     },
                   })}
-                  placeholder="xxxx xxxx xxxx xxxx"
+                    placeholder="xxxx xxxx xxxx xxxx"
                   className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-                />
+                  />
+                   <p>Detected Card Type: {getCardType(cardNumber || "")}</p>
               </div>
               <div className="flex items-center gap-4">
                 <div className="">

@@ -23,7 +23,7 @@ const AddLocation = ({setLocationOpen }) => {
   };
   return (
     <div>
-      <div className="bg-[rgba(0,0,0,0.6)] fixed inset-0">
+      <div className="bg-[rgba(0,0,0,0.6)] fixed inset-0 z-50">
         <div className="max-w-[450px] mx-auto relative">
           <button
             className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"

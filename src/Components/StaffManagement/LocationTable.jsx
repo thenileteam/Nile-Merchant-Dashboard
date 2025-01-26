@@ -8,13 +8,12 @@ import Skeleton from "react-loading-skeleton";
 const LocationTable = ({ isCollapsed }) => {
   const [locationOpen, setLocationOpen] = useState(false);
   const { locations, isError, isFetchingLocation } = useFetchLocations();
-  console.log(locations)
   return (
     <section>
       <div
         className={`mt-28 ${
-          isCollapsed ? "max-w-[1000px]" : "max-w-[900px]"
-        } mx-auto`}
+          isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[820px]"
+        } mx-auto  `}
       >
         <button
           className="bg-green text-white font-bold p-inherit flex items-center w-[185px] rounded-md p-2 mb-4"
@@ -43,7 +42,7 @@ const LocationTable = ({ isCollapsed }) => {
           Add New Location
         </button>
         {isFetchingLocation ? (
-          <div className="w-full mt-5 border-red-500 border-2">
+          <div className="w-full mt-5">
             <Skeleton className=" h-[40px] w-full block" />
             <Skeleton className=" h-[40px] w-full block" />
             <Skeleton className=" h-[40px] w-full block" />
@@ -61,7 +60,8 @@ const LocationTable = ({ isCollapsed }) => {
               </tr>
             </thead>
             <tbody>
-              {locations?.map((location, i) => {
+                {locations?.map((location, i) => {
+                // console.log(location)
                 return (
                   <tr className="mt-4 bg-white shadow-md" key={location?.id}>
                     <td className="bg-[#EAF4E2] p-2 text-[#6e6e6e] capitalize">
@@ -78,7 +78,7 @@ const LocationTable = ({ isCollapsed }) => {
                       {location.city || "city"}
                     </td>
                     <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
-                      <Link to={`/branch/${i}`}>
+                      <Link to={`/branch/${location.id}`}>
                         <button
                           type="button"
                           className="text-lightGreen font-bold transitions hover:underline  "

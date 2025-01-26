@@ -21,9 +21,26 @@ export function formatNumber(number) {
   return `${isNegative ? "-" : ""}${number}`;
 }
 
-// Example Usage:
-console.log(formatNumber(1500)); // Output: "1,500"
-console.log(formatNumber(1500000)); // Output: "1.5M"
-console.log(formatNumber(3500000000)); // Output: "3.5B"
-console.log(formatNumber(-250000)); // Output: "-250,000"
-console.log(formatNumber(999)); // Output: "999"
+export const getCardType = (cardNumber) => {
+    const checkCardNumber = cardNumber.replace(/\D/g, ""); // Remove non-digits
+  //card cases for types
+    if (/^4/.test(checkCardNumber)) {
+      return "Visa";
+    } else if (/^5[1-5]/.test(checkCardNumber)) {
+      return "MasterCard";
+    } else if (/^3[47]/.test(checkCardNumber)) {
+      return "American Express";
+    } else if (/^6(?:011|5)/.test(checkCardNumber)) {
+      return "Discover";
+    } else if (/^5061|^6500/.test(checkCardNumber)) {
+      return "Verve"; // Detect Verve cards
+    } else if (/^3(?:0[0-5]|[68])/.test(checkCardNumber)) {
+      return "Diners Club";
+    } else if (/^35/.test(checkCardNumber)) {
+      return "JCB";
+    } else {
+      return "Unknown";
+    }
+  };
+  
+ 

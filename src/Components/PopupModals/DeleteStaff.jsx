@@ -22,7 +22,7 @@ const DeleteStaff = ({ staff , setEditStaff}) => {
         >
           Delete Admin
         </button>
-      {delStaff&&<div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-100">
+      {delStaff&&<div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
         <div className="bg-white p-6 rounded-lg shadow-lg w-full relative max-w-[250px]">
           <button
             className="text-md text-lightGreen border rounded-sm absolute top-2 right-3"

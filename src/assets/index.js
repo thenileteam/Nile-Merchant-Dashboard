@@ -20,7 +20,7 @@ import packagemoving2 from "./packagemoving2.png";
 import deliveryview from "./product-2.svg";
 import packageoutofstock from "./packageoutofstock.png";
 import star from "./star.png";
-import starhalf from "./starhalf.png";
+import starhalf from "./star-half.svg";
 import starsquare from "./starsquare.png";
 import commentblock from "./commentblock.png";
 import userblock from "./userblock.png";
@@ -81,7 +81,6 @@ import outOfStock from './outOfStock.svg'
 import idea from './idea.svg'
 import visa from './visa.svg'
 import master from './master.svg'
-
 export {
     nilelogosolid,
     nilelogowhite,
@@ -148,5 +147,5 @@ export {
     donBaci,
     dot1,
     dot2, dot3, eye
-    ,tadfarm,lashesIcon,addImage,placeholderImage,iconExpandCollapsible, nileBagOnly, totalExpenseImg, totalInventory, totalRevenue,totalCustomers,totalOrders,totalProfit, outOfStock,idea, visa, master
+    ,tadfarm,lashesIcon,addImage,placeholderImage,iconExpandCollapsible, nileBagOnly, totalExpenseImg, totalInventory, totalRevenue,totalCustomers,totalOrders,totalProfit, outOfStock,idea, visa, master,
 }

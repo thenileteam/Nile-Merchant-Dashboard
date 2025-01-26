@@ -73,3 +73,29 @@ export const useEditLocation = (onSuccessCallback) => {
     isEditingLocation,
   };
 };
+
+
+//fetch single location with its product
+export const useFetchSingleLocation = (locationId) => {
+  const { data, isError, isFetching,  isLoading } = useQuery({
+    queryKey:['singleLocation', locationId],
+    queryFn: async() => {
+      try {
+        const res = await ApiInstance.get(`/store/store/location/products/${locationId}`)
+        return res.data?.responseObject||[]
+      } catch (error) {
+           // console.error("Error fetching locations:", error);
+           throw error;
+      }
+    },
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    retry:3
+  })
+  return {
+    locationProducts: data,
+    isFetchingProductsInLocation: isFetching,
+    isError,
+    isLoading,
+  }; 
+}

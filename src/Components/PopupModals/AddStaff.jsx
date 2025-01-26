@@ -5,19 +5,16 @@ import {
   useCreateStaff,
 } from "../../datahooks/staffs/usestaffhook";
 import { toast } from "sonner";
-import { useFetchLocations } from "@/datahooks/location/useLocationhook";
-import { addsquare } from "@/assets";
 import { FaBullseye } from "react-icons/fa6";
+import AssignLocation from "../StaffManagement/AssignLocation";
+import { useAssignLocationStore } from "@/ZustandStores/locationStore";
 const store = JSON.parse(localStorage.getItem("store"));
 const storeId = store?.id;
 
 const AddStaff = ({ setShowStaffPopUp }) => {
   const { roles } = useFetchRoles();
   const { addStaffToBackend, isStaffPending } = useCreateStaff();
-  const { locations } = useFetchLocations();
-  const [selectedLocation, setSelectedLocation] = useState(null);
-  const[isLocationAssigned, setLocationAssigned]= useState(false)
-  console.log(locations)
+  const {selectedLocation} = useAssignLocationStore()
   const {
     register,
     handleSubmit,
@@ -33,10 +30,6 @@ const AddStaff = ({ setShowStaffPopUp }) => {
     setSelectedRoleIds((prev) =>
       checked ? [...prev, id] : prev.filter((roleId) => roleId !== id)
     );
-  };
-  const handleLocationSelection = (location) => {
-    setSelectedLocation(location);
-    setLocationAssigned(false);
   };
   // Submit data
   const submitData = (data) => {
@@ -58,7 +51,7 @@ const AddStaff = ({ setShowStaffPopUp }) => {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       })),
-      locationId:selectedLocation.id,
+      locationId: selectedLocation.id,
       storeId,
     };
     addStaffToBackend(staffData, {
@@ -71,7 +64,7 @@ const AddStaff = ({ setShowStaffPopUp }) => {
   };
 
   return (
-    <div className="bg-[rgba(0,0,0,0.35)] fixed inset-0 overflow-y-scroll">
+    <div className="bg-[rgba(0,0,0,0.35)] fixed inset-0 overflow-y-scroll z-50">
       <div className="max-w-[450px] mx-auto relative">
         <button
           className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-md"
@@ -190,30 +183,7 @@ const AddStaff = ({ setShowStaffPopUp }) => {
             )}
           </div>
           {/* assigned location */}
-          <div
-                    className="flex items-center justify-between bg-[#ffffff] border-[#8ED06C] border-2 p-3 rounded-md cursor-pointer my-3"
-                    onClick={()=>setLocationAssigned(prev=>!prev)}
-                  >
-                    <h1 className="text-gray-500 font-bold">
-                  {selectedLocation?.locationName||"Select location to add staff"}
-                    </h1>
-                    <img src={addsquare} alt="Add Square" />
-                  </div>
-                  {isLocationAssigned && (
-                    <div className="absolute w-[380px] border border-[#8ED06C] bg-white rounded-md shadow-lg max-h-[200px] overflow-y-auto">
-                      {
-                        locations?.map((location) => (
-                          <div
-                            key={location.id}
-                            className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
-                            onClick={() => handleLocationSelection(location)}
-                          >
-                            {location.locationName}
-                          </div>
-                        ))
-                      }
-                    </div>
-                  )}
+          <AssignLocation title='Staff' formType="addStaff"/>
           {/* Permission checkboxes */}
           <div>
             <h3 className="text-green font-bold mt-2">Permissions</h3>

@@ -10,7 +10,8 @@ import { useSidebarStore } from "../../ZustandStores/sidebarStore";
 const ProductTable = ({ data, isFetching, isError }) => {
   const itemsPerPage = 10
   const { pageCount, currentItems, handlePageChange } = usePagination(data, itemsPerPage)
-  const { isCollapsed}= useSidebarStore()
+  const { isCollapsed } = useSidebarStore()
+  console.log(data)
   return (
     <>
       {/* Table */}

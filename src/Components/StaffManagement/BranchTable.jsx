@@ -1,10 +1,14 @@
+import { useFetchLocations,  useFetchSingleLocation  } from "@/datahooks/location/useLocationhook";
 import usePagination from "../Pagination/PaginationHook";
-import AddLocation from "../PopupModals/AddLocation";
 import AddProduct1 from "../PopupModals/AddProduct1";
-import EditLocation from "../PopupModals/EditLocation";
 import { useParams } from "react-router-dom"
-const BranchTable = ({ isCollapsed }) => {
-const {id} = useParams()
+import Skeleton from "react-loading-skeleton";
+const BranchTable = ({ isCollapsed}) => {
+  const { id } = useParams()
+  const { locationProducts,
+    isFetchingProductsInLocation,
+    isError,
+    isLoading, } = useFetchSingleLocation(id)
   return (
     <section>
       <div
@@ -52,39 +56,41 @@ const {id} = useParams()
               <th className=" p-2 shadow-lg">Unit Sold</th>
             </tr>
           </thead>
-          {/* {isLoading && (
-          <div className="w-full mt-5 border-red-500 border-2">
-            <Skeleton className=" h-[40px] w-full block" />
-            <Skeleton className=" h-[40px] w-full block" />
-            <Skeleton className=" h-[40px] w-full block" />
-          </div>
-        )} */}
           <tbody>
-            {/* {staffs?.map((staff, i) => { */}
-            {/* return ( */}
+            {isFetchingProductsInLocation &&(
+              <div className="w-full mt-5 border-red-500 border-2">
+                <Skeleton className=" h-[40px] w-full block" />
+                <Skeleton className=" h-[40px] w-full block" />
+                <Skeleton className=" h-[40px] w-full block" />
+              </div>
+            )} 
+          {locationProducts?.map((singleLoc) => {
+               console.log(singleLoc) 
+            return (
             <tr className="mt-4 bg-white shadow-md">
+               <td className="bg-white p-2 text-[#6e6e6e]  capitalize">
+                {singleLoc.id||"Admin"}
+              </td>
               <td className="bg-[#EAF4E2] p-2 text-[#6e6e6e] capitalize">
-                {"xxxxx"}
-              </td>
-              <td className="bg-white p-2 text-[#6e6e6e]  capitalize">
-                {"Admin"}
-              </td>
-              <td className="bg-white p-2 text-[#6e6e6e]  ">{"10:37pm"}</td>
-
-              <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
-                {"10:59pm"}
+                { singleLoc.name||"xxxxx"}
               </td>
               <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
-                1
+                {singleLoc.category|| "10:59pm"}
               </td>
-               
+              <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
+                {singleLoc.price}
+              </td>
+              <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
+                {singleLoc.unitSold}
+              </td> 
             </tr>
-            {/* ); */}
-            {/* })} */}
+             ) 
+         })} 
           </tbody>
         </table>
+        {/* } */}
       </div>
-      {/* {locationOpen && <AddLocation locationOpen={locationOpen} setLocationOpen={setLocationOpen}/>} */}
+       
     </section>
   );
 };

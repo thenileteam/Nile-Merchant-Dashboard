@@ -20,7 +20,7 @@ const DomainSetting = () => {
         profilePic={user && user.image ? user.image : ""}
       />
       {/* main body */}
-      <section className={`mx-auto mt-28 ${isCollapsed?"max-w-[1000px]":'max-w-[900px]'}`}>
+      <section className={`mx-auto mt-28 ${isCollapsed?"max-w-[1000px]":'max-w-[820px]'}`}>
         {/* pop up buttons */}
         <div className="mb-4 flex gap-2 font-bold ">
           <AddDomain/>
