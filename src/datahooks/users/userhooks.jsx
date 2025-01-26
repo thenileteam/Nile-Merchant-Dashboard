@@ -18,7 +18,7 @@ import {
 const store = JSON.parse(localStorage.getItem("store"));
 
 export const useLogUserIn = () => {
-  console.log("attempting new login");
+  // console.log("attempting new login");
   const navigate = useNavigate();
   const [error] = useState("");
   const { mutate, isPending } = useMutation({
@@ -52,12 +52,12 @@ export const useLogUserIn = () => {
         toast("Auth Success✔");
         navigate("/dashboard");
       } catch (error) {
-        console.error("Error fetching store data:", error);
+        // console.error("Error fetching store data:", error);
         toast.error("Login successful but error loading store data");
       }
     },
     onError: (err) => {
-      console.log(err);
+      // console.log(err);
       toast.error(err.response.data.message || "An error occurred");
     },
   });
@@ -400,6 +400,7 @@ export const useFetchOrders = () => {
     },
     staleTime: Infinity,
     cacheTime: Infinity,
+    enabled: !!store.id,
   });
 
   return {
