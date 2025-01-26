@@ -1,4 +1,5 @@
-import { accountsetting, notification2 } from "../../../assets";
+/* eslint-disable react/prop-types */
+// import { accountsetting, notification2 } from "../../../assets";
 import {
   Icon1,
   StaffIcon,
