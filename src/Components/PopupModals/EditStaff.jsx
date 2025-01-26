@@ -1,5 +1,4 @@
-import { totalRevenue } from "@/assets";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 // import { useStaffStore } from "../../ZustandStores/staffStore";
 import { Controller } from "react-hook-form";
@@ -11,7 +10,7 @@ import DeleteStaff from "./DeleteStaff";
 const EditStaff = ({ staff }) => {
   const [editStaff, setEditStaff] = useState(false);
   const { roles } = useFetchRoles();
-  // Populate the form when editStaff with existing values
+  // Populate editStaff form with the existing values
   const { addStaffToBackend, isEditingStaff } = useEditStaff(() => setEditStaff(false));
   
 //initialize the form with existing values
@@ -71,9 +70,8 @@ const EditStaff = ({ staff }) => {
           />
         </svg>
       </button>
-
       {editStaff && (
-        <div className="bg-[rgba(0,0,0,0.4)] fixed inset-0">
+        <div className="bg-[rgba(0,0,0,0.4)] fixed inset-0 z-50">
           <div className="max-w-[450px] mx-auto relative">
             <button
               className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"
@@ -121,15 +119,17 @@ const EditStaff = ({ staff }) => {
                 Last Login:{" "}
                 <span className="text-lightBlack">{staff?.updatedAt}</span>
               </h4>
+              <h4 className="text-green font-bold mt-2">
+                Assigned Location:{" "}
+                <span className="text-lightBlack">{staff?.location.locationName}</span>
+              </h4>
               <div>
                 <h3 className="text-green font-bold mt-2">Permissions</h3>
                 <p className="mb-2 text-[#6e6e6e] text-[12px]">
                   Choose What The Admin Should Be Able To Access:
                 </p>
-                {roles
-                  ?.filter((_, i) => i !== 0 && i !== 4)
-                  .map((role, index) => {
-                    // console.log(permission.name)
+                {roles?.
+                  map((role, index) => {
                     return (
                       <div
                         key={index}

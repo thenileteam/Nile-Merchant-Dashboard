@@ -19,7 +19,7 @@ const Links = ({ isCollapsed }) => {
     ${isActive(path) ? "bg-[#fff] text-[#004324]" : "text-[#fff]"}`;
   };
   return (
-    <ul className={`${isCollapsed ? "mt-8" : "mt-14"}  overflow-x-hidden`}>
+    <ul className={`${isCollapsed ? "mt-8" : "mt-9"}  overflow-x-hidden`}>
       {/* Dashboard overview */}
       <Link to="/dashboard">
         <li className={`cursor-pointer mt-4 w-full`}>
@@ -182,10 +182,12 @@ const Links = ({ isCollapsed }) => {
       </Link>
 
       {/* Reviews & Ratings */}
-      {/* <Link to="/reviews">
+      <Link to="/reviews">
         <li  className={`cursor-pointer mt-4 w-full`}>
           <div className={getLinkClasses("/reviews")}>
-            <div className="flex items-center gap-3 transitions">
+            <div  className={`flex items-center  ${
+                isCollapsed ? "mx-auto" : "mx-0"
+              } gap-3`}>
               <svg
                 width="24"
                 height="25"
@@ -201,11 +203,12 @@ const Links = ({ isCollapsed }) => {
                   strokeLinejoin="round"
                 />
               </svg>
-              Reviews & Ratings
+              {isCollapsed ? "" : "  Reviews & Ratings"}
+             
             </div>
           </div>
         </li>
-      </Link> */}
+      </Link>
 
       {/* Customer Management */}
       <Link to="/customer">
@@ -347,7 +350,7 @@ const Links = ({ isCollapsed }) => {
           <div>
             <button
               type="button"
-              className="absolute bottom-10 hover:opacity-50"
+              className="absolute bottom-9 hover:opacity-50"
               onClick={openPolicy}
             >
               Terms and conditions

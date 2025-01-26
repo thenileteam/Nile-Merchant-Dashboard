@@ -22,21 +22,18 @@ const CreateOrderForm = ({
 }) => {
   return (
     <div
-      className=" w-full fixed justify-center items-center flex h-screen  "
+      className=" w-full fixed justify-center items-center flex h-screen  bg-black/30 z-50 inset-0 "
       onClick={() => setCreateOrderForm(false)}
     >
-      <div className="w-full h-full bg-black/30 z-100 fixed inset-0" ></div>
       <div
         style={{
           width: "65%",
-          paddingLeft: "32px",
-          paddingRight: "32px",
-          paddingTop: "32px",
+          padding:'32px ',
           position: "relative",
           zIndex: "99",
           backgroundColor: "white",
+          borderRadius:'10px' 
         }}
-        className=" rounded-[8px] z-50 mx-auto pt-[96px] pb-8 px-8 fixed right-24"
         onClick={(e) => {
           e.stopPropagation();
         }}

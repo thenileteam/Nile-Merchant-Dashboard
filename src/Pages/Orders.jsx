@@ -84,7 +84,7 @@ const Orders = () => {
         salesChannel,
       };
 
-      await addOrderToBackend(orderData);
+      addOrderToBackend(orderData);
     } catch (error) {
       console.error(error);
     }
@@ -100,8 +100,7 @@ const Orders = () => {
               isCollapsed
                 ? "flex-grow lg:ml-20 overflow-x-hidden"
                 : "flex-grow lg:ml-56 overflow-x-hidden"
-            }
-          >
+            }>
             <Navbar
               title="Orders"
               icon={trolley}

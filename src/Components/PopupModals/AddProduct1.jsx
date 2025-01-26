@@ -11,12 +11,14 @@ import { validateForm } from "../../utils/formatdate";
 import { FaSearch } from "react-icons/fa";
 import CustomProductSizeSelector from "../Products/CustomProductSizeSelector";
 import { toast } from "sonner";
+import AssignLocation from "../StaffManagement/AssignLocation";
+import { useAssignLocationStore } from "@/ZustandStores/locationStore";
 const AddProduct1 = () => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
     setIsPopupOpen(false); // close the popup after adding product
   });
   const { categories } = useFetchCategories();
-
+const{selectedLocation} = useAssignLocationStore()
   // State to control the popup visibility and animation
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
@@ -79,13 +81,13 @@ const AddProduct1 = () => {
         toast.error("Unit must be accompanied by a size measurement");
         return;
       }
-      // console.log(validateForm(re));
       if (!store) return;
       if (!validateForm(requiredFields, productDetails)) return;
       const dataToBackend = {
         name: productDetails.name,
         storeId: store.id,
         userId: store.userId,
+        locationId:selectedLocation.id,
         length: productDetails.dimensions.length,
         width: productDetails.dimensions.width,
         description: productDetails.description,
@@ -103,7 +105,7 @@ const AddProduct1 = () => {
         productStatus: "AVAILABLE",
         quantitySizes: `${productDetails.size} ${productDetails.unit}`,
       };
-      // console.log(dataToBackend);
+      console.log(dataToBackend)
       // return;
       addProductToBackend(dataToBackend);
     } catch (error) {
@@ -123,6 +125,7 @@ const AddProduct1 = () => {
         const dataToBackend = {
           name: productDetails.name,
           storeId: store.id,
+          locationId:selectedLocation.id,
           userId: store.userId,
           length: productDetails.dimensions.length,
           width: productDetails.dimensions.width,
@@ -141,7 +144,6 @@ const AddProduct1 = () => {
           productStatus: "AVAILABLE",
           quantitySizes: productDetails.quantitySizes,
         };
-        console.log(dataToBackend);
         addProductToBackend(dataToBackend);
       } catch (error) {
         console.error("Error adding product:", error);
@@ -511,6 +513,7 @@ const AddProduct1 = () => {
                         <img src={addsquare} alt="" />
                       </span>
                     </div>
+                    <AssignLocation title='Product' formType="addProduct"/>
                   </div>
                   {/* <div className="mb-4">
                     <label

@@ -45,7 +45,7 @@ const ConnectDomain = () => {
               </div>
               {/* im toggling the additional step for now  */}
               <button
-                className="bg-green text-white p-1 mt-2 w-[63px] rounded-md translate-x-[300px]"
+                className="bg-green text-white p-1 mt-2 w-[63px] rounded-md lg:translate-x-[300px]"
                 onClick={() => setShowAdditionalStep((prev) => !prev)}
               >
                 Next

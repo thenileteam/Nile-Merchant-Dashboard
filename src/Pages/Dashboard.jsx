@@ -31,7 +31,6 @@ const Dashboard = () => {
     useFetchDashboardData();
   const { customerLength } = useFetchStoreCustomers();
   const { productLength } = useFetchProducts();
-  console.log(productLength)
   const { isCollapsed } = useSidebarStore();
   //username
   // const username =
@@ -45,7 +44,7 @@ const Dashboard = () => {
           <UseCardLoader amount={6} className="mt-20 lg:mt-1 mb-6 px-2" loading={isFetchingDashboardData} error={dashboardDataisError}>
             <div
               className={`mt-20 lg:mt-1 mb-6 px-2 ${
-                isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[880px]"
+                isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[850px]"
               } mx-auto`}
             >
               <div className="grid gap-x-8 gap-y-4 grid-cols-2 md:grid-cols-3">
@@ -100,7 +99,7 @@ const Dashboard = () => {
           <div
             className={`${
               isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[860px]"
-            } mx-auto px-2`}
+            } mx-auto px-2  `}
           >
             <div className="border-2 border-white shadow-[0px_4px_10px_rgba(0,0,0,0.3)]"></div>
           </div>

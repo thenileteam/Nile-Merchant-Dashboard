@@ -103,7 +103,7 @@ const ReviewTable = () => {
               <th className="px-2 py-3 text-center">Ratings</th>
               <th className="px-2 py-3 text-center">Review Text</th>
               <th className="px-2 py-3 text-center">Date</th>
-              <th className="px-2 py-3 text-center">Actions</th>
+              {/* <th className="px-2 py-3 text-center">Actions</th> */}
               <th className="px-2 py-3 text-center">Actions</th>
             </tr>
           </thead>
@@ -115,7 +115,7 @@ const ReviewTable = () => {
               <td className="px-2 py-3 text-center">4.5/5</td>
               <ReviewText />
               <td className="px-2 py-3 text-center">12/09/2024</td>
-              <Respond />
+              {/* <Respond /> */}
               <Publish />
             </tr>
 
@@ -126,7 +126,7 @@ const ReviewTable = () => {
               <td className="px-2 py-3 text-center">1.83/5</td>
               <ReviewText />
               <td className="px-2 py-3 text-center">05/09/2024</td>
-              <Respond />
+              {/* <Respond /> */}
               <Publish />
             </tr>
 
@@ -137,7 +137,7 @@ const ReviewTable = () => {
               <td className="px-2 py-3 text-center">1.83/5</td>
               <ReviewText />
               <td className="px-2 py-3 text-center">05/09/2024</td>
-              <Respond />
+              {/* <Respond /> */}
               <Publish />
             </tr>
 
@@ -148,51 +148,7 @@ const ReviewTable = () => {
               <td className="px-2 py-3 text-center">1.83/5</td>
               <ReviewText />
               <td className="px-2 py-3 text-center">05/09/2024</td>
-              <Respond />
-              <Publish />
-            </tr>
-
-            {/* Row 5 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Darah</td>
-              <td className="px-2 py-3 text-center">3/5</td>
-              <ReviewText />
-              <td className="px-2 py-3 text-center">29/08/2024</td>
-              <Respond />
-              <Publish />
-            </tr>
-
-            {/* Row 6 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Darah</td>
-              <td className="px-2 py-3 text-center">3/5</td>
-              <ReviewText />
-              <td className="px-2 py-3 text-center">29/08/2024</td>
-              <Respond />
-              <Publish />
-            </tr>
-
-            {/* Row 7 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Darah</td>
-              <td className="px-2 py-3 text-center">3/5</td>
-              <ReviewText />
-              <td className="px-2 py-3 text-center">29/08/2024</td>
-              <Respond />
-              <Publish />
-            </tr>
-
-            {/* Row 8 */}
-            <tr className="bg-[#ffffff] shadow-md">
-              <td className="px-2 py-3 text-center">5321</td>
-              <td className="px-2 py-3 text-center">Darah</td>
-              <td className="px-2 py-3 text-center">3/5</td>
-              <ReviewText />
-              <td className="px-2 py-3 text-center">29/08/2024</td>
-              <Respond />
+              {/* <Respond /> */}
               <Publish />
             </tr>
           </tbody>
@@ -200,99 +156,15 @@ const ReviewTable = () => {
       </div>
 
       {/*Pagination*/}
-      <div>
-        <ol className="flex justify-center gap-3 text-xs font-medium mt-3">
-          <li>
-            <a
-              href="#"
-              className="inline-flex size-8 items-center justify-center rounded border border-gray-300 bg-white hover:bg-[#8ED06C] text-gray-900 hover:text-[#E2E8F0] rtl:rotate-180"
-            >
-              <span className="sr-only">Prev Page</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-[#8ED06C] bg-white text-center leading-8 text-[#8ED06C]"
-            >
-              1
-            </a>
-          </li>
-
-          <li className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900">
-            2
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900"
-            >
-              ...
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900"
-            >
-              9
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block size-8 rounded border border-gray-300 bg-white text-center leading-8 text-gray-900"
-            >
-              10
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="inline-flex size-8 items-center justify-center rounded border border-gray-300 bg-white hover:bg-[#8ED06C] text-gray-900 hover:text-[#E2E8F0] rtl:rotate-180"
-            >
-              <span className="sr-only">Next Page</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
-          </li>
-        </ol>
-      </div>
+       
 
       {/* Export CSV Button */}
-      <div className=" flex px-28 justify-end items-center mt-10 gap-24">
+      <button className=" flex px-28 justify-end items-center mt-10 gap-24">
         <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
           <img src={download} alt="" />
           Export CSV
         </h1>
-      </div>
+      </button>
     </>
   );
 };

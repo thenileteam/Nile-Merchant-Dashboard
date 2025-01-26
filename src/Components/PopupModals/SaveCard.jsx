@@ -20,7 +20,7 @@ const {handleSubmit} = useForm()
         type="button"
         className="bg-[#004324] font-bold text-[#ffffff] p-3 rounded-md"
         disabled={cardPending}
-        onClick={() =>handleSubmit(submitCard())}
+        onClick={() =>handleSubmit(submitCard)}
       >
          {/* // if (!cardPending) {
             // saveChanges()

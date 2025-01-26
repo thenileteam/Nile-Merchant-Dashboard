@@ -20,7 +20,7 @@ const Location = () => {
           profilePic={user && user.image ? user.image : ""}
         />
         <section>
-          <LocationTable />
+          <LocationTable isCollapsed={ isCollapsed} />
           {/* <AddLocation/> */}
         </section>
       </div>

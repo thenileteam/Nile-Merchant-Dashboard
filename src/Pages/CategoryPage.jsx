@@ -16,7 +16,6 @@ const CategoryPage = () => {
     category?.name?.split("")[0].toUpperCase() + category?.name.slice(1);
   return (
     <>
-      {/* <Sidebar /> */}
       <div className={`${isCollapsed? 'flex-grow lg:ml-20 ':'flex-grow lg:ml-56 '} overflow-x-hidden`}>
         <Navbar
           title={storeTitle}
