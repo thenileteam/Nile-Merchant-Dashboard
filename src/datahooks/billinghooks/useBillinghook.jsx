@@ -27,7 +27,6 @@ export const useFetchCards = () => {
       queryKey: ["cards", storeId],
       queryFn: async () => {
         try {
-           
           const res = await ApiInstance.get(`store/store/cards` )
           console.log(res.data?.responseObject);
           return res.data?.responseObject || [];

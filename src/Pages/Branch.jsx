@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { useFetchLocations } from "@/datahooks/location/useLocationhook";
 const Branch = () => {
   const { id } = useParams();
+  // console.log(id)
   const { locations } = useFetchLocations();
   const getName = locations?.find((location) => location.id === id);
   const { user } = useFetchUser();
@@ -24,8 +25,8 @@ const Branch = () => {
       >
         <Navbar
           title={
-            getName.locationName.split("")[0].toUpperCase() +
-              getName.locationName.slice(1) || "Branch"
+            getName?.locationName.split("")[0].toUpperCase() +
+              getName?.locationName.slice(1) || "Branch"
           }
           profilePic={user && user.image ? user.image : ""}
         />

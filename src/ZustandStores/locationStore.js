@@ -10,7 +10,7 @@ export const useAssignLocationStore = create((set) => ({
       set((state) => ({
         formStates: {
           ...state.formStates,
-          [formType]: { ...state.formStates[formType], selectedLocation: location, isLocationAssigned: !state.isLocationAssigned },
+          [formType]: { ...state.formStates[formType], selectedLocation: location, isLocationAssigned: !state.formStates[formType].isLocationAssigned },
         },
       })),
     setLocationAssigned: (formType) =>

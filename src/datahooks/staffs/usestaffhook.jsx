@@ -1,9 +1,10 @@
 import ApiInstance from "../../Api/ApiInstance";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import{useStore} from '../../ZustandStores/generalStore'
 import { toast } from "sonner";
-const store = JSON.parse(localStorage.getItem("store"));
 //fetch  roles
 export const useFetchRoles = () => {
+  const{store} = useStore()
   if (!store) return { data: [], isFetching: false, isError: false };
   const {
     data: roles,
@@ -36,6 +37,7 @@ export const useFetchRoles = () => {
 
 // Custom hook for creating staff
 export const useCreateStaff = (onSuccessCallback) => {
+  const{store} = useStore()
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => ApiInstance.post(`store/store/staffs`, data),
@@ -58,6 +60,7 @@ export const useCreateStaff = (onSuccessCallback) => {
 
 //get staffs
 export const useFetchStaffs = () => {
+  const{store} = useStore()
   if (!store) return { data: [], isFetching: false, isError: false };
   const { data, isFetching, isError, isLoading } = useQuery({
     queryKey: ["staff", store?.id],
@@ -86,6 +89,7 @@ export const useFetchStaffs = () => {
 
 //edit staff
 export const useEditStaff = (onSuccessCallback) => {
+  const{store} = useStore()
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: (staff) =>
@@ -108,6 +112,7 @@ export const useEditStaff = (onSuccessCallback) => {
 
 //delete staff
 export const useDeleteStaff = (onSuccessDelete) => {
+  const{store} = useStore()
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation({
     // Mutation function for API call

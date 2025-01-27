@@ -26,7 +26,6 @@ const Customer = () => {
       <div className="bg-[#F5F5F5] min-h-screen pb-20">
         <div className="flex">
           {/* Sidebar */}
-         {/* <Sidebar  /> */}
           {/* Navbar */}
           <div className={isCollapsed? 'flex-grow lg:ml-20 overflow-x-hidden':"flex-grow lg:ml-56 overflow-x-hidden"}>
             <Navbar
