@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deliveryview, packagemoving, packageoutofstock } from "../assets";
+import { deliveryview, packagemoving, packageoutofstock,packagemoving2 } from "../assets";
 import ProductTable from "../Components/Products/ProductTable";
 import AddProduct1 from "../Components/PopupModals/AddProduct1";
 import { useFetchProducts } from "../datahooks/products/productshooks";
@@ -26,7 +26,7 @@ const Product = () => {
         <div className={`flex-grow ${isCollapsed?'lg:ml-20':'lg:ml-56'} overflow-x-hidden`}>
           <Navbar
             title="Products"
-            icon={packagemoving}
+            icon={packagemoving2}
             profilePic={user && user.image ? user.image : ""}
           />
           <div className={`mt-28 mb-6 ${isCollapsed?'max-w-[1000px]':'max-w-[800px]'}   mx-auto`}>

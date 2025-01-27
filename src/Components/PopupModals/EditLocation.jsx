@@ -82,8 +82,7 @@ const EditLocation = ({ location }) => {
             </button>
           {/* form */}
           <form
-            className="bg-white p-8 mt-[100px]  "
-          >
+            className="bg-white p-8 mt-[100px]">
             <div className="grid grid-cols-2 gap-5">
               {/* location Name */}
               <div className="">

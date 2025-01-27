@@ -47,7 +47,7 @@ const LocationTable = ({ isCollapsed }) => {
             <Skeleton className=" h-[40px] w-full block" />
             <Skeleton className=" h-[40px] w-full block" />
           </div>
-        ) : (
+        ):isError?<div className="flex justify-center align-center font-bold"><p>Error fetching location</p> </div> : (
           <table className="w-full border-separate border-spacing-y-5">
             <thead>
               <tr className="text-left bg-[#EAF4E2]">
@@ -61,7 +61,6 @@ const LocationTable = ({ isCollapsed }) => {
             </thead>
             <tbody>
                 {locations?.map((location, i) => {
-                // console.log(location)
                 return (
                   <tr className="mt-4 bg-white shadow-md" key={location?.id}>
                     <td className="bg-[#EAF4E2] p-2 text-[#6e6e6e] capitalize">

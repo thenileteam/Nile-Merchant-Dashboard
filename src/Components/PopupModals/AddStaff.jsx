@@ -14,7 +14,8 @@ const storeId = store?.id;
 const AddStaff = ({ setShowStaffPopUp }) => {
   const { roles } = useFetchRoles();
   const { addStaffToBackend, isStaffPending } = useCreateStaff();
-  const {selectedLocation} = useAssignLocationStore()
+  const { formStates} = useAssignLocationStore()
+  const selectedLocationId = formStates['addStaff'].selectedLocation?.id;
   const {
     register,
     handleSubmit,
@@ -37,7 +38,7 @@ const AddStaff = ({ setShowStaffPopUp }) => {
       toast.error("roles data is still loading.");
       return;
     }
-    if (!selectedLocation) {
+    if (!selectedLocationId) {
       toast.error("Please select a location.");
       return;
     }
@@ -51,7 +52,7 @@ const AddStaff = ({ setShowStaffPopUp }) => {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       })),
-      locationId: selectedLocation.id,
+      locationId: selectedLocationId,
       storeId,
     };
     addStaffToBackend(staffData, {

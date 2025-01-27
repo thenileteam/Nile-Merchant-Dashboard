@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import ApiInstance from "../../Api/ApiInstance";
-
+import { useStore } from "@/ZustandStores/generalStore";
 export const useFetchTransactions = () => {
-    const store = JSON.parse(localStorage.getItem("store"))
+  const {store} = useStore()
   const { data: transactions, isFetching, isError } = useQuery({
     queryKey: ["transactions"],
     queryFn: () => ApiInstance.get(`/store/store/transactions/${store?.id}`),

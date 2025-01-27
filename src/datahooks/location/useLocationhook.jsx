@@ -1,16 +1,16 @@
 import { useMutation, useQuery,  useQueryClient } from "@tanstack/react-query";
 import ApiInstance from "@/Api/ApiInstance";
 import { toast } from "sonner";
-const store = JSON.parse(localStorage.getItem("store"));
-const storeId = store?.id;
+import { useStore } from "../../ZustandStores/generalStore";
 export const useFetchLocations = () => {
+  const{store} = useStore()
   const { data, isFetching, isError, isLoading } = useQuery({
-    queryKey: ["locations", storeId],
+    queryKey: ["locations", store?.id],
     queryFn: async () => {
       try {
         // const res = await ApiInstance.get('/store/store/locations',storeId)
         const res = await ApiInstance.get(`store/store/locations`, {
-          params:{storeId:storeId}
+          params:{storeId:store?.id}
         })
         console.log(res.data?.responseObject);
         return res.data?.responseObject || [];
@@ -31,13 +31,14 @@ export const useFetchLocations = () => {
   };
 };
 export const useCreateLocation = (onSuccessCallback) => {
+  const{store} = useStore()
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => ApiInstance.post(`/store/store/locations`, data),
     onSuccess: () => {
       toast.success("location added successfully");
       if (onSuccessCallback) onSuccessCallback();
-      queryClient.invalidateQueries(["locations", storeId]);
+      queryClient.invalidateQueries(["locations", store?.id]);
     },
     onError: (err) => {
       toast.error(
@@ -51,6 +52,7 @@ export const useCreateLocation = (onSuccessCallback) => {
 
 //edit location
 export const useEditLocation = (onSuccessCallback) => {
+  const{store} = useStore()
   const queryClient = useQueryClient();
   const { mutate, isPending: isEditingLocation } = useMutation({
     mutationFn: ({data, location}) =>
@@ -59,7 +61,7 @@ export const useEditLocation = (onSuccessCallback) => {
       console.log("editData:" ,response.data);
       toast.success("Location Edited Successfully");
       if (onSuccessCallback) onSuccessCallback();
-      queryClient.invalidateQueries(["locations", storeId]);
+      queryClient.invalidateQueries(["locations", store?.id]);
     },
     onError: (err) => {
       toast.error(
@@ -99,3 +101,5 @@ export const useFetchSingleLocation = (locationId) => {
     isLoading,
   }; 
 }
+
+//remains the transfer of products form one branch to another api

@@ -110,7 +110,7 @@ const CustomerTable = ({ customers, isLoading, error, isCollapsed }) => {
       {/* Tables */}
       <div className={`${isCollapsed?'max-w-[1000px]':"max-w-[800px]"} mx-auto`}>
         <CustomAwaitTable isLoading={isLoading} error={error}>
-          <table className=" w-full border-separate border-spacing-y-5">
+        {customers.length>0 &&  <table className=" w-full border-separate border-spacing-y-5">
             <thead>
               <tr className="text-left bg-[#EAF4E2] shadow-lg">
                 <th className="p-2  text-center">Customer ID</th>
@@ -161,7 +161,7 @@ const CustomerTable = ({ customers, isLoading, error, isCollapsed }) => {
                   </tr>
                 ))}
             </tbody>
-          </table>
+          </table>}
         </CustomAwaitTable>
       </div>
       {/*Pagination*/}

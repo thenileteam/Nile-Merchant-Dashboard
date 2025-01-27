@@ -1,3 +1,5 @@
+import {visa, master} from '../assets'
+
 export function formatNumber(number) {
   // If the number is negative, convert it to a positive number for formatting
   const isNegative = number < 0;
@@ -22,7 +24,7 @@ export function formatNumber(number) {
 }
 
 export const getCardType = (cardNumber) => {
-    const checkCardNumber = cardNumber.replace(/\D/g, ""); // Remove non-digits
+    const checkCardNumber = cardNumber?.replace(/\D/g, ""); // Remove non-digits
   //card cases for types
     if (/^4/.test(checkCardNumber)) {
       return "Visa";
@@ -43,4 +45,14 @@ export const getCardType = (cardNumber) => {
     }
   };
   
- 
+// images
+  const cardTypeImages = {
+    Visa: visa,
+    MasterCard: master,
+    // Verve: verve,
+    // "American Express": amexImg,
+    Unknown: '',
+  };
+export const getCardImage= (cardNumber) => {
+   return cardTypeImages[getCardType(cardNumber)]||'Unknown';
+ }

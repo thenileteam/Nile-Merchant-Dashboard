@@ -22,13 +22,13 @@ const ProfileDropDown = () => {
               <span>Profile Settings</span>
             </button>
           </Link>
-          <button
+          {/* <button
             type="button"
             className="my-2 flex items-center gap-1 p-2  w-full hover:bg-zinc-100 transitions"
           >
             <img src={idea}  className='w-5' alt="light bulb" />
             <span className="">Dashboard Walkthrough</span>
-          </button>
+          </button> */}
           <button type="button" className="w-full flex gap-1 items-center p-2 hover:bg-zinc-100 " onClick={() => mutate()}>
             <img src={logout} className='w-5' alt="logout" />
             <span className="text-red-500  ">Logout</span>

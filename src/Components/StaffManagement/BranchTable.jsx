@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom"
 import Skeleton from "react-loading-skeleton";
 const BranchTable = ({ isCollapsed}) => {
   const { id } = useParams()
+  console.log(id)
   const { locationProducts,
     isFetchingProductsInLocation,
     isError,

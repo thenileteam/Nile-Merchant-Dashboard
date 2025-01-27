@@ -18,14 +18,15 @@ const AddProduct1 = () => {
     setIsPopupOpen(false); // close the popup after adding product
   });
   const { categories } = useFetchCategories();
-const{selectedLocation} = useAssignLocationStore()
   // State to control the popup visibility and animation
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isFinalConfirmationOpen, setIsFinalConfirmationOpen] = useState(false);
   const [fadeOut, setFadeOut] = useState(false); // State for fade-out animation
   const store = JSON.parse(localStorage.getItem("store"));
-
+  //to access location
+  const { formStates} = useAssignLocationStore()
+  const selectedLocationId = formStates['addProduct'].selectedLocation?.id;
   // Form fields state
   const [productDetails, setProductDetails] = useState({
     size: "",
@@ -87,7 +88,7 @@ const{selectedLocation} = useAssignLocationStore()
         name: productDetails.name,
         storeId: store.id,
         userId: store.userId,
-        locationId:selectedLocation.id,
+        locationId:selectedLocationId,
         length: productDetails.dimensions.length,
         width: productDetails.dimensions.width,
         description: productDetails.description,
@@ -105,7 +106,6 @@ const{selectedLocation} = useAssignLocationStore()
         productStatus: "AVAILABLE",
         quantitySizes: `${productDetails.size} ${productDetails.unit}`,
       };
-      console.log(dataToBackend)
       // return;
       addProductToBackend(dataToBackend);
     } catch (error) {

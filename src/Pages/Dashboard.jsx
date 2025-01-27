@@ -20,9 +20,9 @@ import {formatNumber} from '../utils/formatNumber'
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 import { useFetchProducts } from "@/datahooks/products/productshooks";
-import DashboardLayout from "@/Components/Layouts/DashboardLayout";
 import { UseCardLoader } from "@/Components/CustomLoaders/loaders";
 import { useFetchExpense } from "@/datahooks/users/expensehook";
+import Navbar from "@/Components/Navbar/Navbar";
 const Dashboard = () => {
   //users image
   const { user } = useFetchUser();
@@ -33,14 +33,14 @@ const Dashboard = () => {
   const { productLength } = useFetchProducts();
   const { isCollapsed } = useSidebarStore();
   //username
-  // const username =
-  //   user && user.name ? user.name.split(" ")[0].toUpperCase() : "User";
+  const userName =
+    user && user.name ? user.name.split(" ")[0].toUpperCase() : "User";
   return (
     <>
-      <DashboardLayout isCollapsed={isCollapsed}>
+      <div className={isCollapsed? 'flex-grow lg:ml-20 overflow-x-hidden':"flex-grow lg:ml-56 overflow-x-hidden"}>
+        <Navbar title={`Welcome ${userName}`}  profilePic={user && user.image ? user.image : ""}/>
         <div className="bg-[#F5F5F5] h-screen pt-[112px] pb-20 lg:overflow-x-hidden">
           {/* Cards */}
-
           <UseCardLoader amount={6} className="mt-20 lg:mt-1 mb-6 px-2" loading={isFetchingDashboardData} error={dashboardDataisError}>
             <div
               className={`mt-20 lg:mt-1 mb-6 px-2 ${
@@ -200,7 +200,7 @@ const Dashboard = () => {
             />
           </div>
         </div>
-      </DashboardLayout>
+      </div>
     </>
   );
 };
