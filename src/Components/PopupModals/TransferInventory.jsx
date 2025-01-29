@@ -1,8 +1,7 @@
 import { useFetchLocations } from "@/datahooks/location/useLocationhook";
 import { useFetchProducts } from "@/datahooks/products/productshooks";
 import { useForm } from "react-hook-form";
-const TransferInventory = ({openTransfer, setOpenTransfer}) => {
-   
+const TransferInventory = ({ openTransfer, setOpenTransfer }) => {
   const {
     handleSubmit,
     formState: { errors },
@@ -45,8 +44,16 @@ const TransferInventory = ({openTransfer, setOpenTransfer}) => {
                       name={product.name}
                       id=""
                       placeholder="quantity"
+                      {...register(`${product.name}`, {
+                        required: "Admin name is required",
+                      })}
                       className="w-20 border-lightGreen rounded-sm border px-1"
                     />
+                    {/* {errors.productName && (
+                      <p className="text-red-500 text-xs">
+                        {errors.adminName.message}
+                      </p>
+                    )} */}
                   </div>
                   <input type="checkbox" name="" id="" />
                 </div>

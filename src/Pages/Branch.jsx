@@ -10,7 +10,7 @@ import TransferInventory from "@/Components/PopupModals/TransferInventory";
 import {useState} from 'react'
 const Branch = () => {
   const { id } = useParams();
-  const [openTransfer, setOpenTransfer] = useState(true);
+  const [openTransfer, setOpenTransfer] = useState(false);
   const { locations } = useFetchLocations();
   const getName = locations?.find((location) => location.id === id);
   const { user } = useFetchUser();
