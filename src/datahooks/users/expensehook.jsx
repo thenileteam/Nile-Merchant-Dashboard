@@ -66,7 +66,7 @@ export const useFetchExpense = (page, limit, sortBy, sortOrder) => {
     enabled: !!store?.id,
     staleTime: Infinity,
     cacheTime: Infinity,
-    refetchOnWindowFocus: false,
+    // refetchOnWindowFocus: false,
   });
   const totalExpense = data?.reduce((acc, curr) => acc + curr.amount, 0);
   return {

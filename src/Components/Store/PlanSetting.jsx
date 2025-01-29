@@ -21,9 +21,11 @@ import { useSidebarStore } from "@/ZustandStores/sidebarStore";
 import { useForm } from "react-hook-form";
 import { useCreateCard } from "@/datahooks/billinghooks/useBillinghook";
 import { getCardType } from "@/utils/formatNumber";
-const store = JSON.parse(localStorage.getItem("store"));
-const storeId = store?.id;
+import { useStore } from "@/ZustandStores/generalStore";
+import DeleteCard from "../PopupModals/DeleteCard";
+import { useFetchCards } from "@/datahooks/billinghooks/useBillinghook";
 const PlanSetting = () => {
+  const { store } = useStore();
   const {
     register,
     formState: { errors },
@@ -39,24 +41,23 @@ const PlanSetting = () => {
     setShowCard(true);
     setShowBilling(false);
   });
+  const { allCards, isFetchingCards } = useFetchCards();
   const handleShowFormAndHidePaymentButton = () => {
     setShowBilling(true);
     setAddPayment(false);
   };
   const maskCardNumber = (number) => number.replace(/\d(?=\d{4})/g, "X");
-  //space out the card numbers
-  function spaceEveryFourNum(str) {
-  return str.replace(/(.{4})/g, '$1 ').trim();
-  }
+  // //space out the card numbers
+  // function spaceEveryFourNum(str) {
+  // return str.replace(/(.{4})/g, '$1 ').trim();
+  // }
   let maskedNumber;
-  const cardNumber = watch("cardNumber");
+  const cardNumber = watch("cardNumber")
   const submitCard = (data) => {
-    console.log(data);
-    console.log("clicked!");
-     maskedNumber = maskCardNumber(data.cardNumber);
+    maskedNumber = maskCardNumber(data.cardNumber);
     const cardType = getCardType(data.cardNumber);
     const transformedData = {
-      storeId,
+      storeId: store?.id,
       cardName: data.cardName,
       cardExpiry: data.expiryDate,
       cardCvv: data.cardCvv,
@@ -65,7 +66,6 @@ const PlanSetting = () => {
       cardType,
       cardNumber: maskedNumber, //masked card number to backend
     };
-
     addCardToBackend(transformedData);
   };
   return (
@@ -76,7 +76,8 @@ const PlanSetting = () => {
             isCollapsed
               ? "flex-grow lg:ml-20 overflow-x-hidden"
               : "flex-grow lg:ml-56 overflow-x-hidden"
-          }>
+          }
+        >
           {/* Navbar */}
           <Navbar
             title="Plan & Billings"
@@ -88,7 +89,8 @@ const PlanSetting = () => {
         <div
           className={` mt-24 ${
             isCollapsed ? "ml-20" : "ml-64"
-          }  flex justify-center gap-10`}>
+          }  flex justify-center gap-10`}
+        >
           <div className="space-y-7">
             <div className="bg-[#EAF4E2] border-[#8ED06C] border-2  p-4 rounded-lg">
               <h1 className="text-[#004324] text-[20px] font-bold">
@@ -294,12 +296,20 @@ const PlanSetting = () => {
                   <span className="text-lightBlack font-bold my-1 block">
                     Your Next Billing is on the Date, Month Year
                   </span>
+
                   <div>
-                    <img src="" alt="" />
-                    <strong className="text-green">{maskedNumber||'XXXXXXXXXXXXX' }</strong>
-                    <button className="bg-transparent float-right underline text-[#DC3545] font-semibold">
-                      Delete
-                    </button>
+                    {allCards?.map((card) => {
+                      return(
+                      <div className="flex items-center justify-between" key={card.id}>
+                        <div className="flex gap-2">
+                          <img src={getCardImage(cardNumber)} alt="" />
+                          <strong className="text-green">
+                            {card.cardNumber || "XXXXXXXXXXXXX"}
+                          </strong>
+                        </div>
+                          <DeleteCard card={ card} />
+                      </div>);
+                    })}
                   </div>
                 </article>
               )}

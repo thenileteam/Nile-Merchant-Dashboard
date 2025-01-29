@@ -9,4 +9,12 @@ export const useStore = create((set) => ({
       set({ store: null });
       localStorage.removeItem('store'); // Clear store 
     }
-  }));
+}));
+  
+
+export const useCardStore = create((set) => ({
+  delCard: false,
+  toggleDelCard:()=>set((state)=>({delCard:!state.delCard})),
+  openDelCard:()=>set({ delCard:true}),
+  closeDelCard:()=>set({ delCard:false})
+}))

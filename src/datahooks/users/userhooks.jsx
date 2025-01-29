@@ -30,8 +30,14 @@ export const useLogUserIn = () => {
 
     onSuccess: async (response) => {
       // First set the tokens
-      Cookies.set("accessToken", response?.data?.accessToken);
-      Cookies.set("refreshToken", response?.data?.refreshToken);
+      Cookies.set("accessToken", response?.data?.accessToken,  {
+        secure: true,
+        sameSite: "Strict",
+      });
+      Cookies.set("refreshToken", response?.data?.refreshToken, {
+        secure: true,
+        sameSite: "Strict",
+      });
       Cookies.set("isUserLoggedIn", "yes");
 
       // Set essential user data
@@ -398,12 +404,11 @@ export const useFetchOrders = () => {
 };
 export const useFetchStoreCustomers = () => {
   const{store}= useStore()
-  // console.log(store);
   const { data, isFetching, isError } = useQuery({
     queryKey: ["customers"],
     queryFn: async () => {
       const res = await ApiInstance.get(
-          `/orders/orders/customers/${store.id}`
+          `/orders/orders/customers/${store?.id}`
       );
 
       return res.data?.responseObject;

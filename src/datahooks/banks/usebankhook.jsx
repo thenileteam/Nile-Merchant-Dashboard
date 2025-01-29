@@ -2,6 +2,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ApiInstance from "@/Api/ApiInstance";
+import { useStore } from "@/ZustandStores/generalStore";
 
 // Fetch Banks from Paystack API
 const fetchBanks = async () => {
@@ -122,8 +123,7 @@ const useBankDetails = () => {
 
   const [resolvingAccount, setResolvingAccount] = useState(false);
   const [accountDetails, setAccountDetails] = useState(null);
-  const store = JSON.parse(localStorage.getItem("store"));
-  console.log(store);
+  const{store} = useStore()
   
 
   // Fetch banks from Paystack

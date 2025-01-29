@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useCreateLocation } from "../../datahooks/location/useLocationhook";
-const store = JSON.parse(localStorage.getItem("store"));
-const storeId = store?.id
+ import {useStore} from '../../ZustandStores/generalStore'
 const AddLocation = ({setLocationOpen }) => {
+  const {store} = useStore()
+  const storeId = store?.id
   const {
     register,
     handleSubmit,
