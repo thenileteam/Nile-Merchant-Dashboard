@@ -6,9 +6,11 @@ import BranchTable from "@/Components/StaffManagement/BranchTable";
 import { totalOrders, outOfStock, totalProfit } from "@/assets";
 import { useParams } from "react-router-dom";
 import { useFetchLocations } from "@/datahooks/location/useLocationhook";
+import TransferInventory from "@/Components/PopupModals/TransferInventory";
+import {useState} from 'react'
 const Branch = () => {
   const { id } = useParams();
-  // console.log(id)
+  const [openTransfer, setOpenTransfer] = useState(false);
   const { locations } = useFetchLocations();
   const getName = locations?.find((location) => location.id === id);
   const { user } = useFetchUser();
@@ -32,8 +34,8 @@ const Branch = () => {
         />
         <div
           className={`${
-            isCollapsed ? "max-w-[1050px]" : "max-w-[950px]"
-          } p-6 mt-28 mx-auto`}
+            isCollapsed ? "max-w-[1050px]" : "max-w-[820px]"
+          } mt-28 mx-auto`}
         >
           <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-2 lg:gap-10">
             <DashboardBox
@@ -64,9 +66,15 @@ const Branch = () => {
         </div>
 
         <section>
-          <BranchTable isCollapsed={isCollapsed} />
+          <BranchTable isCollapsed={isCollapsed} setOpenTransfer={setOpenTransfer} />
         </section>
       </div>
+      {openTransfer && (
+        <TransferInventory
+          openTransfer={openTransfer}
+          setOpenTransfer={setOpenTransfer}
+        />
+      )}
     </>
   );
 };

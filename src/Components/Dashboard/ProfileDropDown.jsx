@@ -11,8 +11,8 @@ const ProfileDropDown = () => {
       <div
         className={
           isProfileOpen
-            ? "visible fixed top-20 right-5 bg-white rounded-md transitions"
-            : "invisible fixed top-20 right-3 bg-white"
+            ? "visible absolute top-16 right-3 bg-white rounded-md transitions w-[200px] shadow-md"
+            : "invisible absolute top-16 right-2 bg-white"
         }
       >
         <div className="text-lightBlack font-semibold p-2">

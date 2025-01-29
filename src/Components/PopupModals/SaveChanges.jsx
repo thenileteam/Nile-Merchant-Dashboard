@@ -1,16 +1,9 @@
 import { BiLoaderCircle } from "react-icons/bi";
-const SaveChanges = ({isEditingStore, handleSubmitStoreInfo, showPopup,}) => {
+const SaveChanges = ({ showPopup,}) => {
 
   return (
     <div className="relative">
       {/* Onclick Button to Trigger The Popup */}
-      <button
-        className="bg-[#004324] font-bold text-[#ffffff] p-3 rounded-lg"
-        onClick={handleSubmitStoreInfo}
-      >
-        {isEditingStore? <BiLoaderCircle className=" animate-spin duration-300 transition-all block mx-auto"/>:'Save Changes'}
-      </button>
-
       {/* Confirmation Popup */}
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">

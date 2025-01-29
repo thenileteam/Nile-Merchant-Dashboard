@@ -25,10 +25,7 @@ export const useFetchProducts = () => {
     enabled: !!store?.id, // Ensures query is enabled only when store.id exists
     staleTime: 1000 * 60 * 5, // Data remains fresh for 5 minutes for the same id
     cacheTime: 1000 * 60 * 30, // Cache data is retained for 30 minutes
-    retry: 3, // Retry up to 3 times on failure
-    // refetchOnWindowFocus: true, // Refetch on window focus
-    // refetchOnReconnect: true, // Refetch when network reconnects
-    // refetchOnMount: (query) => query.isStale, // Only refetch if the query is stale on mount
+    retry: 3,  
   });
   
 
@@ -156,7 +153,6 @@ export const useCreateNewCategory = (onSuccessCallback) => {
 // fetching categories
 export const useFetchCategories = () => {
   const{store} = useStore()
-  
   const { data, isFetching, isError, isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {

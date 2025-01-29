@@ -70,7 +70,7 @@ const AddProduct1 = () => {
       "price",
       "stock",
       "description",
-      "productColorName",
+      // "productColorName",
       "categoryName",
       // "packaging",
     ];

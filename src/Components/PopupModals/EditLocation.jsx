@@ -2,9 +2,9 @@
 import { useEditLocation } from "@/datahooks/location/useLocationhook";
 import { useState,useEffect } from "react";
 import { useForm } from "react-hook-form";
-const store = JSON.parse(localStorage.getItem('store'))
-
+import {useStore} from '../../ZustandStores/generalStore'
 const EditLocation = ({ location }) => {
+  const {store} = useStore()
   const storeId = store?.id
   const [editLocation, setEditLocation]= useState(false)
   const { handleSubmit, register, reset,  formState: { errors },} = useForm({

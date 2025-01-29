@@ -1,6 +1,6 @@
 import { useSidebarStore } from "@/ZustandStores/sidebarStore";
 import Navbar from "../Components/Navbar/Navbar";
-import EmptyStaffState from "../Components/StaffManagement/EmptyStaffState";
+import EmptyState from "../Components/StaffManagement/EmptyState";
 import { useFetchUser } from "@/datahooks/users/userhooks";
 import AddStaff from "../Components/PopupModals/AddStaff";
 import StaffTable from "../Components/StaffManagement/StaffTable";
@@ -26,17 +26,23 @@ const Staffs = () => {
           profilePic={user && user.image ? user.image : ""}
         />
         <section>
-          {staffs?.length === 0 ?
-         <EmptyStaffState
-         showStaffPopUp={showStaffPopUp}
-         setShowStaffPopUp={setShowStaffPopUp}
-       />:
+          {staffs?.length=== 0 ? (
+            <EmptyState
+              title="You don't have staffs yet"
+              description="Add  a staff to see your staffs"
+              buttonText="Add Staff"
+              showPopUp={showStaffPopUp}
+              setShowPopUp={setShowStaffPopUp}
+              PopUpComponent={AddStaff}
+            />
+           ) : (
             <StaffTable
               isCollapsed={isCollapsed}
               setShowStaffPopUp={setShowStaffPopUp}
             />
-          }
-          
+          )
+          } 
+
           {showStaffPopUp && <AddStaff setShowStaffPopUp={setShowStaffPopUp} />}
         </section>
       </div>
