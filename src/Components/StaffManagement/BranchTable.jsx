@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom"
 import Skeleton from "react-loading-skeleton";
 const BranchTable = ({ isCollapsed, setOpenTransfer}) => {
   const { id } = useParams()
-  console.log(id)
   const { locationProducts,
     isFetchingProductsInLocation,
     isError,
@@ -59,7 +58,7 @@ const BranchTable = ({ isCollapsed, setOpenTransfer}) => {
           </thead>
           <tbody>
             {isFetchingProductsInLocation &&(
-              <div className="w-full mt-5 border-red-500 border-2">
+              <div className="w-full mt-5 border-2">
                 <Skeleton className=" h-[40px] w-full block" />
                 <Skeleton className=" h-[40px] w-full block" />
                 <Skeleton className=" h-[40px] w-full block" />

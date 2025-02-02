@@ -6,9 +6,7 @@ import { toast } from "sonner";
 import { useStore } from "../../ZustandStores/generalStore";
 export const useFetchProducts = () => {
   const{store} = useStore()
-  console.log(store);
   if (!store) return { data: [], isFetching: false, isError: false };
-  console.log(store?.id);
   const { data, isFetching, isError, isLoading } = useQuery({
     queryKey: ["products", store.id],
     queryFn: async () => {

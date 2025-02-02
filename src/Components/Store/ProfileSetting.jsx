@@ -43,9 +43,9 @@ const ProfileSetting = () => {
 
   const cancelChanges = () => {
     if (user) {
-      setImage(user.image);
-      setPhoneNumber(user.phoneNumber);
-      if (user.image !== image || user.phoneNumber !== phoneNumber) {
+      setImage(user?.image);
+      setPhoneNumber(user?.phoneNumber);
+      if (user?.image !== image || user?.phoneNumber !== phoneNumber) {
         setCancelMessage("Changes canceled!");
       } else {
         setCancelMessage("You didn't make any new changes");
@@ -82,7 +82,7 @@ const ProfileSetting = () => {
     }
   };
 
-  if (isError) return <div>Something went wrong</div>;
+  if (isError) return <div className="mx-auto flex justify-center items-center text-red-500 h-screen text-2xl font-bold capitalize max-w-[400px] tex-center"><p>Error fetching profile details <br/> please try refreshing</p></div>;
 
   return (
     <>
@@ -102,14 +102,14 @@ const ProfileSetting = () => {
           />
            <div
         className={`${
-          isCollapsed ? "max-w-[1000px]" : "max-w-[800px]"
+          isCollapsed ? "max-w-[500px]" : "max-w-[556px]"
         } mt-28 mb-6 mx-auto`}>
         {/* Input Fields */}
-        <div className="relative">
-          <div className="flex justify-center mx-auto w-[200px] h-[200px] rounded-full">
+        <div className="relative bg-[#EAF4E2]">
+          <div className="flex justify-center items-center mx-auto w-[150px] h-[150px] rounded-full">
             {isFetchingUser ? (
               <Skeleton className=" size-[100px] rounded-full" />
-            ) : user.image ? (
+            ) : user?.image ? (
               <>
                 <label
                   className=" border size-[100px] mt-10 border-zinc-500 rounded-full shrink-0"
@@ -117,7 +117,7 @@ const ProfileSetting = () => {
                 >
                   {" "}
                   <img
-                    src={user.image}
+                    src={user?.image}
                     className=" cursor-pointer shrink-0 rounded-full object-cover w-[100px] h-[100px]"
                     alt="User Image"
                   />
@@ -143,8 +143,8 @@ const ProfileSetting = () => {
               />
             )}
           </div>
-          <div className="sm:flex flex-col w-fit mx-auto sm:justify-end">
-            <form action="#" className="px-4 lg:px-0">
+          <div className="sm:flex flex-col md:w-fit w-full mx-auto sm:justify-end px-4">
+            <form action="#" className=" ">
               <div className="mt-2">
                 <label
                   htmlFor="Name"
@@ -217,7 +217,7 @@ const ProfileSetting = () => {
               <AcccountNumberComp />
             </Sheet>
           </div>
-          <div className="flex items-center justify-center gap-4  md:gap-16 mt-10 px-4 md:px-0">
+          <div className="flex items-center justify-center gap-4  md:gap-16 py-6 px-4 md:px-0">
             <button
               className="border-[#004324] border-2 text-[#004324] font-bold p-3 rounded-lg max-w-[192px] text-sm"
               onClick={cancelChanges}

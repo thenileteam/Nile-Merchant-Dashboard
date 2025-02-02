@@ -2,25 +2,26 @@ import {visa, master} from '../assets'
 
 export function formatNumber(number) {
   // If the number is negative, convert it to a positive number for formatting
-  const isNegative = number < 0;
-  number = Math.abs(number);
+let changeToNumber = Number(number)
+  const isNegative = changeToNumber < 0;
+  changeToNumber = Math.abs(changeToNumber);
 
   // Check if the number is greater than or equal to a million
-  if (number >= 1_000_000_000) {
+  if (changeToNumber >= 1_000_000_000) {
     // Format billions
-    const billions = (number / 1_000_000_000).toFixed(1);
+    const billions = (changeToNumber/ 1_000_000_000).toFixed(1);
     return `${isNegative ? "-" : ""}${billions}B`;
-  } else if (number >= 1_000_000) {
+  } else if (changeToNumber >= 1_000_000) {
     // Format millions
-    const millions = (number / 1_000_000).toFixed(1);
+    const millions = (changeToNumber / 1_000_000).toFixed(1);
     return `${isNegative ? "-" : ""}${millions}M`;
-  } else if (number >= 1_000) {
+  } else if (changeToNumber >= 1_000) {
     // Format thousands with commas
-    return `${isNegative ? "-" : ""}${number.toLocaleString()}`;
+    return `${isNegative ? "-" : ""}${changeToNumber.toLocaleString()}`;
   }
 
   // For numbers less than 1000, return as is
-  return `${isNegative ? "-" : ""}${number}`;
+  return `${isNegative ? "-" : ""}${changeToNumber}`;
 }
 
 export const getCardType = (cardNumber) => {
