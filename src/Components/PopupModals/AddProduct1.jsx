@@ -209,7 +209,7 @@ const AddProduct1 = () => {
       </button>
 
       {isPopupOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50  ">
           <div className="bg-white p-10 rounded-lg shadow-lg max-w-3xl w-full relative">
             {/* Cancel Button in the top-right corner */}
             <button
@@ -233,9 +233,9 @@ const AddProduct1 = () => {
             </button>
             {/* Popup Content */}
             <form>
-              <div className="grid grid-cols-2 gap-12">
+              <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-12 ">
                 <div className="space-y-3">
-                  <div className="flex items-center gap-5">
+                  <div className="flex flex-col lg:flex-row lg:items-center gap-5 ">
                     <div className=" relative mb-4">
                       <label
                         htmlFor="category"
@@ -328,7 +328,7 @@ const AddProduct1 = () => {
                     </div>
                   </div>
 
-                  <div>
+                  <div className="">
                     <CustomProductSizeSelector
                       productDetails={productDetails}
                       setProductDetails={setProductDetails}

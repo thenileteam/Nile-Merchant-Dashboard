@@ -167,9 +167,9 @@ const AddCustomer1 = ({ transparent }) => {
 
             {/* Popup Content */}
             <form>
-              <div className="grid grid-cols-2 gap-12">
+              <div className="grid lg:grid-cols-2 gap-2 lg:gap-12">
                 <div className="space-y-3">
-                  <div>
+                  <div className=""> 
                     <div className="mb-4">
                       <label
                         htmlFor="name"
@@ -261,14 +261,14 @@ const AddCustomer1 = ({ transparent }) => {
                 </div>
               </div>
 
-              <div className="flex justify-center gap-4 mt-16">
+              <div className="flex justify-center gap-4 my-8">
                 {/* Edit Button */}
                 <button
                   className="px-2 py-2 hover:bg-[#004324] bg-[#f5f5f5] border-[#004324] border-2 text-[#004324] font-medium rounded-md shadow-lg hover:text-[#ffffff] transition ease-out duration-700"
                   onClick={showConfirmation}
                   type="button"
                 >
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1  ">
                     <svg
                       width="25"
                       height="24"
