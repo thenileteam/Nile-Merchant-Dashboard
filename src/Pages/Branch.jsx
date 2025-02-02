@@ -5,9 +5,15 @@ import { useFetchUser } from "@/datahooks/users/userhooks";
 import BranchTable from "@/Components/StaffManagement/BranchTable";
 import { totalOrders, outOfStock, totalProfit } from "@/assets";
 import { useParams } from "react-router-dom";
-import { useFetchLocations } from "@/datahooks/location/useLocationhook";
+import {
+  useFetchLocations,
+  useFetchSingleLocation,
+} from "@/datahooks/location/useLocationhook";
 import TransferInventory from "@/Components/PopupModals/TransferInventory";
-import {useState} from 'react'
+import { useState } from "react";
+import EmptyState from "@/Components/StaffManagement/EmptyState";
+import { useFetchProducts } from "@/datahooks/products/productshooks";
+import { useFetchDashboardData } from "@/datahooks/users/userhooks";
 const Branch = () => {
   const { id } = useParams();
   const [openTransfer, setOpenTransfer] = useState(false);
@@ -15,7 +21,10 @@ const Branch = () => {
   const getName = locations?.find((location) => location.id === id);
   const { user } = useFetchUser();
   const { isCollapsed } = useSidebarStore();
-
+  const { locationProducts } = useFetchSingleLocation(id);
+  const { dashboardData,} =
+  useFetchDashboardData();
+const { productLength } = useFetchProducts(); 
   return (
     <>
       <div
@@ -44,7 +53,7 @@ const Branch = () => {
               bgColor="bg-[#FCDADF]"
               width="w-full"
               image={totalOrders}
-              data={"416"}
+              data={dashboardData?.orders?.totalOrders}
             />
             <DashboardBox
               text="In Stock"
@@ -52,7 +61,7 @@ const Branch = () => {
               imgWidth="w-9"
               width="w-full"
               image={totalProfit}
-              data={"411"}
+              data={productLength}
             />
             <DashboardBox
               text="Out of Stock"
@@ -60,21 +69,30 @@ const Branch = () => {
               width="w-full"
               image={outOfStock}
               imgWidth="w-9"
-              data={"24"}
+              data={24}
             />
           </div>
         </div>
 
         <section>
-          <BranchTable isCollapsed={isCollapsed} setOpenTransfer={setOpenTransfer} />
+          {locationProducts?.length === 0 ? (
+            <EmptyState
+              title="You have not added any product to this location yet"
+              description="Add a product to this branch to see your staffs"
+              buttonText="Transfer products"
+              showPopUp={openTransfer}
+              setShowPopUp={setOpenTransfer}
+              PopUpComponent={TransferInventory}
+            />
+          ) : (
+            <BranchTable
+              isCollapsed={isCollapsed}
+              setOpenTransfer={setOpenTransfer}
+            />
+          )}
         </section>
       </div>
-      {openTransfer && (
-        <TransferInventory
-          openTransfer={openTransfer}
-          setOpenTransfer={setOpenTransfer}
-        />
-      )}
+      {openTransfer && <TransferInventory setOpenTransfer={setOpenTransfer} />}
     </>
   );
 };

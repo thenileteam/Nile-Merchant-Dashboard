@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const useFetchStoreSettings = () => {
-  const{store} = useStore
+  const{store} = useStore()
     if (!store) return { data: [], isFetching: false, isError: false };
     const { data, isFetching, isError, isLoading } = useQuery({
       queryKey: ["storeSettings", store?.id],

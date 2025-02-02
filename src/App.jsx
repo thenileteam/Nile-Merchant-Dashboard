@@ -274,7 +274,7 @@ const App = () => {
             <ScrollToTop />
           </RouterProvider>
         </Suspense>
-      </main>
+        </main>
     </QueryClientProvider>
   );
 };
