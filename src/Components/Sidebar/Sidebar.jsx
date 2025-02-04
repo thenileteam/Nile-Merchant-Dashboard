@@ -18,7 +18,7 @@ const Sidebar = () => {
     isCollapsed,
     setIsDesktop,
   } = useSidebarStore();
-  const { policyOpen } = usePolicyStore();
+  const { policyOpen, openPolicy } = usePolicyStore();
   const { isDropdownOpen } = useDropDown();
   useEffect(() => {
     const handleResize = () => {
@@ -43,8 +43,8 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       {/* overflow-x-hidden overflow-y-scroll  */}
-      <div
-        className={`fixed top-0 left-0 h-screen z-20 bg-[#004324] border-2 text-white p-5 transition-all transform ${
+      <aside
+        className={`fixed top-0 left-0 h-screen z-20 bg-[#004324] text-white p-5 transition-all transform ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0  ${
           isCollapsed
@@ -57,7 +57,8 @@ const Sidebar = () => {
         </button>
         <img src={isCollapsed?nileBagOnly:nilelogowhite} alt="" className={`${isCollapsed?'w-[55px] object-fit':'w-[110px]'} flex`} />
         <Links isCollapsed={isCollapsed}  />
-      </div>  
+      </aside>  
+      
       {/* terms and conditions */}
       {policyOpen && <Policy />}
     </>

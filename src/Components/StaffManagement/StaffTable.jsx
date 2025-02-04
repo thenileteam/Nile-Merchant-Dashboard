@@ -95,7 +95,6 @@ const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
           </tbody>
         </table>}
       </div>
-      
     </section>
   );
 };

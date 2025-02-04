@@ -18,9 +18,7 @@ const StoreSettingLinks = ({
   return (
     <>
       <div
-        className={`transition-all duration-500 ease-in transform h-[89px] ${
-          isDropDownOpen ? "overflow-y-scroll  custom-scrollbar" : ""
-        }`}
+        className={`transition-all duration-500 ease-in transform`}
         // ${isDropDownOpen ? "opacity-100" : "opacity-0"}`}
       >
         <StoreSettingLinkTemplate
@@ -47,7 +45,7 @@ const StoreSettingLinks = ({
           isCollapsed={isCollapsed}
           icon={BankIcon}
         />
-        <StoreSettingLinkTemplate
+        {/* <StoreSettingLinkTemplate
           getLinkClasses={getLinkClasses}
           isActive={isActive}
           link="/plansetting"
@@ -63,7 +61,7 @@ const StoreSettingLinks = ({
           text="Domain Management"
           isCollapsed={isCollapsed}
           icon={DomainIcon}
-        />
+        /> */}
         <StoreSettingLinkTemplate
           getLinkClasses={getLinkClasses}
           isActive={isActive}
