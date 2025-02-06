@@ -34,7 +34,6 @@ import CategoryPage from "./Pages/CategoryPage";
 import ReactGA from "react-ga4";
 import Cookies from "js-cookie";
 import SidebarParent from "./Pages/SidebarParent";
-import DomainMangaement from "./Pages/DomainMangaement";
 const App = () => {
   const queryClient = new QueryClient();
   const router = createBrowserRouter([
@@ -229,14 +228,14 @@ const App = () => {
             </ProtectRoutes>
           ),
         },
-        {
-          path: "/store/domainmanagement",
-          element: (
-            <ProtectRoutes>
-              <DomainMangaement />
-            </ProtectRoutes>
-          ),
-        },
+        // {
+        //   path: "/store/domainmanagement",
+        //   element: (
+        //     <ProtectRoutes>
+        //       <DomainMangaement />
+        //     </ProtectRoutes>
+        //   ),
+        // },
       ],
     },
   ]);

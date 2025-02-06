@@ -1,8 +1,34 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from "react";
+import debounce from 'lodash.debounce';
+import ApiInstance from "@/Api/ApiInstance";
+
+
 
 const AddDomain = () => {
   const [showDomainPopUp, setShowDomainPopUp] = useState(false);
+  const [keyword, setKeyword] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  const fetchSuggestions = debounce(async (keyword) => {
+    if (!keyword) return;
+    
+    setLoading(true);
+    try {
+      const response = await ApiInstance.post('/store/store/domains/suggestions', { keyword });
+
+      console.log(response.data);
+      setSuggestions(response.data.responseObject);
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+    }
+    setLoading(false);
+  }, 500); // Adjust the debounce time
+
+  useEffect(() => {
+    fetchSuggestions(keyword);
+  }, [keyword]);
   return (
     <>
       {/* Trigger Button */}
@@ -55,6 +81,8 @@ const AddDomain = () => {
               <div className="search relative">
                 <label htmlFor="domainSearch">Search Domain</label>
                 <input
+                  value={keyword}
+                  onChange={(e) => setKeyword(e.target.value)}
                   type="search"
                   name="domainSearch"
                   className="block w-full p-1 rounded-sm"
@@ -81,6 +109,13 @@ const AddDomain = () => {
                     strokeLinejoin="round"
                   />
                 </svg>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                {loading && <p>Loading...</p>}
+                {suggestions.map((suggestion) => (
+                  <div key={suggestion.id}>{suggestion.name}</div>
+                ))}
               </div>
             </div>
           </div>
