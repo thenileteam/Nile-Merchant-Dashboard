@@ -3,21 +3,10 @@
 import ApiInstance from "../../Api/ApiInstance";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useState, useEffect } from "react";
-
+import { useStore } from "../../ZustandStores/generalStore";
 export const useFetchProducts = () => {
-  const [store, setStore] = useState({ id: null });
-  useEffect(() => {
-    // Check for the stored ID in localStorage after login
-    const storedId = localStorage.getItem("store");
-    if (storedId) {
-      setStore(JSON.parse(storedId));
-    }
-  }, []); // Runs once on mount to initialize the store
-
-  console.log(store);
+  const{store} = useStore()
   if (!store) return { data: [], isFetching: false, isError: false };
-  console.log(store.id);
   const { data, isFetching, isError, isLoading } = useQuery({
     queryKey: ["products", store.id],
     queryFn: async () => {
@@ -34,10 +23,7 @@ export const useFetchProducts = () => {
     enabled: !!store?.id, // Ensures query is enabled only when store.id exists
     staleTime: 1000 * 60 * 5, // Data remains fresh for 5 minutes for the same id
     cacheTime: 1000 * 60 * 30, // Cache data is retained for 30 minutes
-    retry: 3, // Retry up to 3 times on failure
-    refetchOnWindowFocus: true, // Refetch on window focus
-    refetchOnReconnect: true, // Refetch when network reconnects
-    refetchOnMount: (query) => query.isStale, // Only refetch if the query is stale on mount
+    retry: 3,  
   });
   
 
@@ -51,14 +37,7 @@ export const useFetchProducts = () => {
 };
 
 export const useCreateNewProduct = (onSuccessCallback) => {
-  const [store, setStore] = useState({ id: null });
-  useEffect(() => {
-    // Check for the stored ID in localStorage after login
-    const storedId = localStorage.getItem("store");
-    if (storedId) {
-      setStore(JSON.parse(storedId));
-    }
-  }, []); // Runs once on mount to initialize the store
+  const{store} = useStore()
   const queryClient = useQueryClient();
   const { mutate, isPending: isAddingProduct } = useMutation({
     mutationFn: (data) => ApiInstance.post("/products/product/create", data),
@@ -78,14 +57,7 @@ export const useCreateNewProduct = (onSuccessCallback) => {
   };
 };
 export const useEditProduct = (onSuccessCallback) => {
-  const [store, setStore] = useState({ id: null });
-  useEffect(() => {
-    // Check for the stored ID in localStorage after login
-    const storedId = localStorage.getItem("store");
-    if (storedId) {
-      setStore(JSON.parse(storedId));
-    }
-  }, []); // Runs once on mount to initialize the store
+  const{store} = useStore()
   const queryClient = useQueryClient();
   const { mutate, isPending: isEditingProduct } = useMutation({
     mutationFn: (data) =>
@@ -107,14 +79,7 @@ export const useEditProduct = (onSuccessCallback) => {
   };
 };
 export const useDeleteProduct = (onSuccessDelete) => {
-  const [store, setStore] = useState({ id: null });
-  useEffect(() => {
-    // Check for the stored ID in localStorage after login
-    const storedId = localStorage.getItem("store");
-    if (storedId) {
-      setStore(JSON.parse(storedId));
-    }
-  }, []); // Runs once on mount to initialize the store
+ const{store} = useStore()
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: (product) =>
@@ -146,14 +111,8 @@ export const useDeleteProduct = (onSuccessDelete) => {
 
 // creating categories pls do not even look at it for now
 export const useCreateNewCategory = (onSuccessCallback) => {
-  const [store, setStore] = useState({ id: null });
-  useEffect(() => {
-    // Check for the stored ID in localStorage after login
-    const storedId = localStorage.getItem("store");
-    if (storedId) {
-      setStore(JSON.parse(storedId));
-    }
-  }, []); // Runs once on mount to initialize the store
+  const{store} = useStore()
+  
   const queryClient = useQueryClient();
   const { mutate, isPending: isAddingCategory } = useMutation({
     mutationFn: (data) =>
@@ -191,14 +150,7 @@ export const useCreateNewCategory = (onSuccessCallback) => {
 
 // fetching categories
 export const useFetchCategories = () => {
-  const [store, setStore] = useState({ id: null });
-  useEffect(() => {
-    // Check for the stored ID in localStorage after login
-    const storedId = localStorage.getItem("store");
-    if (storedId) {
-      setStore(JSON.parse(storedId));
-    }
-  }, []); // Runs once on mount to initialize the store
+  const{store} = useStore()
   const { data, isFetching, isError, isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
@@ -227,14 +179,7 @@ export const useFetchCategories = () => {
 
 // edit category
 export const useEditCategory = (onSuccessCallback) => {
-  const [store, setStore] = useState({ id: null });
-  useEffect(() => {
-    // Check for the stored ID in localStorage after login
-    const storedId = localStorage.getItem("store");
-    if (storedId) {
-      setStore(JSON.parse(storedId));
-    }
-  }, []); // Runs once on mount to initialize the store
+  const{store} = useStore()
   const queryClient = useQueryClient();
   const { mutate, isPending: isEditingCategory } = useMutation({
     mutationFn: (data) =>
@@ -260,14 +205,7 @@ export const useEditCategory = (onSuccessCallback) => {
 
 // delete category
 export const useDeleteCategory = (onSuccessDelete) => {
-  const [store, setStore] = useState({ id: null });
-  useEffect(() => {
-    // Check for the stored ID in localStorage after login
-    const storedId = localStorage.getItem("store");
-    if (storedId) {
-      setStore(JSON.parse(storedId));
-    }
-  }, []); // Runs once on mount to initialize the store
+  const{store} = useStore()
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation({
     // Mutation function for API call

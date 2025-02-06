@@ -8,13 +8,16 @@ import { toast } from "sonner";
 import { FaBullseye } from "react-icons/fa6";
 import AssignLocation from "../StaffManagement/AssignLocation";
 import { useAssignLocationStore } from "@/ZustandStores/locationStore";
-const store = JSON.parse(localStorage.getItem("store"));
-const storeId = store?.id;
-
+import{useStore} from '../../ZustandStores/generalStore'
 const AddStaff = ({ setShowStaffPopUp }) => {
+  const {store} = useStore()
+  const storeId = store?.id;
   const { roles } = useFetchRoles();
-  const { addStaffToBackend, isStaffPending } = useCreateStaff();
-  const {selectedLocation} = useAssignLocationStore()
+  const { addStaffToBackend, isStaffPending } = useCreateStaff(() => {
+    setShowStaffPopUp(false);
+  });
+  const { formStates} = useAssignLocationStore()
+  const selectedLocationId = formStates['addStaff'].selectedLocation?.id;
   const {
     register,
     handleSubmit,
@@ -37,7 +40,7 @@ const AddStaff = ({ setShowStaffPopUp }) => {
       toast.error("roles data is still loading.");
       return;
     }
-    if (!selectedLocation) {
+    if (!selectedLocationId) {
       toast.error("Please select a location.");
       return;
     }
@@ -51,7 +54,7 @@ const AddStaff = ({ setShowStaffPopUp }) => {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       })),
-      locationId: selectedLocation.id,
+      locationId: selectedLocationId,
       storeId,
     };
     addStaffToBackend(staffData, {
@@ -60,11 +63,11 @@ const AddStaff = ({ setShowStaffPopUp }) => {
         toast.error(error.response?.data?.message || "An error occurred.");
       },
     });
-    setShowStaffPopUp(false);
+     
   };
 
   return (
-    <div className="bg-[rgba(0,0,0,0.35)] fixed inset-0 overflow-y-scroll z-50">
+    <div className="bg-[rgba(0,0,0,0.6)] fixed inset-0 overflow-y-scroll z-50">
       <div className="max-w-[450px] mx-auto relative">
         <button
           className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-md"

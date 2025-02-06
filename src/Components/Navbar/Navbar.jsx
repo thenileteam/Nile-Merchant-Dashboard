@@ -88,7 +88,7 @@ const Navbar = ({ title, icon, profilePic }) => {
                 {/* <Link to="/notification">
               <img src={notification} alt="notification-icon" className="hidden lg:block" />
             </Link> */}
-                  <div className="" onClick={toggleProfile}>
+                  <div className="relative cursor-pointer" onClick={toggleProfile}>
                   <ProfileImage
                     profileImage={profilePic}
                   />

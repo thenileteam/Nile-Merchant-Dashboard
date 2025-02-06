@@ -5,12 +5,14 @@ import {
   arrowleft,
   coverimage,
   done,
-  visa,master,
+  visa,
+  master,
   image,
   logout,
   notification,
   store1,
 } from "../../assets";
+import { getCardImage } from "@/utils/formatNumber";
 import SaveCard from "../PopupModals/SaveCard";
 import Upgrade from "../PopupModals/Upgrade";
 import Navbar from "../Navbar/Navbar";
@@ -19,52 +21,56 @@ import { useSidebarStore } from "@/ZustandStores/sidebarStore";
 import { useForm } from "react-hook-form";
 import { useCreateCard } from "@/datahooks/billinghooks/useBillinghook";
 import { getCardType } from "@/utils/formatNumber";
-const store = JSON.parse(localStorage.getItem('store'))
-const storeId = store?.id
+import { useStore } from "@/ZustandStores/generalStore";
+import DeleteCard from "../PopupModals/DeleteCard";
+import { useFetchCards } from "@/datahooks/billinghooks/useBillinghook";
 const PlanSetting = () => {
+  const { store } = useStore();
   const {
     register,
     formState: { errors },
-    watch
+    handleSubmit,
+    watch,
   } = useForm();
   const { user } = useFetchUser();
   const { isCollapsed } = useSidebarStore();
   const [showBilling, setShowBilling] = useState(false);
   const [addPayment, setAddPayment] = useState(true);
-  const [showCard, setShowCard] = useState(false)
-  const {addCardToBackend, cardPending} = useCreateCard()
-  const handleShowBillingAndHidePaymentButton = () => {
+  const [showCard, setShowCard] = useState(false);
+  const { addCardToBackend, cardPending } = useCreateCard(() => {
+    setShowCard(true);
+    setShowBilling(false);
+  });
+  const { allCards, isFetchingCards } = useFetchCards();
+  const handleShowFormAndHidePaymentButton = () => {
     setShowBilling(true);
     setAddPayment(false);
   };
-  const showSavedCardAndHideForm = () => {
-    setShowBilling(false)
-    setShowCard(true)
-  }
-  // const cardNumber = watch("cardNumber");
   const maskCardNumber = (number) => number.replace(/\d(?=\d{4})/g, "X");
-  const cardNumber = watch("cardNumber");
+  // //space out the card numbers
+  // function spaceEveryFourNum(str) {
+  // return str.replace(/(.{4})/g, '$1 ').trim();
+  // }
+  let maskedNumber;
+  const cardNumber = watch("cardNumber")
   const submitCard = (data) => {
-    console.log(data)
-    const maskedCardNumber = maskCardNumber(data.cardNumber);
+    maskedNumber = maskCardNumber(data.cardNumber);
     const cardType = getCardType(data.cardNumber);
-    const payload = {
-       storeId,
-       cardName:data.cardName,
-       cardExpiry: data.expiryDate,
-       cardCvv: data.cardCvv,
-       address: data.address,
-       zip:data.postal,
+    const transformedData = {
+      storeId: store?.id,
+      cardName: data.cardName,
+      cardExpiry: data.expiryDate,
+      cardCvv: data.cardCvv,
+      address: data.address,
+      zip: data.postal,
       cardType,
-      cardNumber: maskedCardNumber, // Send masked card number
+      cardNumber: maskedNumber, //masked card number to backend
     };
-
-    addCardToBackend(payload); // Call the mutate function
+    addCardToBackend(transformedData);
   };
-   
   return (
     <>
-      <div>
+      <section>
         <div
           className={
             isCollapsed
@@ -144,7 +150,7 @@ const PlanSetting = () => {
                 </p>
                 <button
                   className="border-[#004324] border-2 flex items-center justify-center gap-2 p-2 mt-2 rounded-lg w-full transitions"
-                  onClick={handleShowBillingAndHidePaymentButton}
+                  onClick={handleShowFormAndHidePaymentButton}
                 >
                   <img src={add} alt="" />
                   <span className="text-[#004324] font-bold">
@@ -152,139 +158,161 @@ const PlanSetting = () => {
                   </span>
                 </button>
               </div>
-            <form
-              className={`${
-                showBilling ?"visible" : "invisible"
-              } space-y-5 bg-[#EAF4E2] border-[#8ED06C] border-2 w-[375px] p-4 rounded-lg transitions`}
-            >
-              <div>
-                <label
-                  htmlFor="cardName"
-                  className="block text-[16px] font-bold text-[#333333]"
-                >
-                  Card Holder Name
-                </label>
+              <form
+                className={`${
+                  showBilling ? "visible" : "invisible"
+                } space-y-5 bg-[#EAF4E2] border-[#8ED06C] border-2 w-[375px] p-4 rounded-lg transitions`}
+              >
+                <div>
+                  <label
+                    htmlFor="cardName"
+                    className="block text-[16px] font-bold text-[#333333]"
+                  >
+                    Card Holder Name
+                  </label>
 
-                <input
-                  type="text"
-                  {...register("cardName", {
-                    required: "card name is required",
-                  })}
-                  placeholder="Enter Name On Card"
-                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="cardNumber"
-                  className="text-[16px] font-bold text-[#333333]"
-                >
-                  Card Number
-                </label>
+                  <input
+                    type="text"
+                    {...register("cardName", {
+                      required: "card name is required",
+                    })}
+                    placeholder="Enter Name On Card"
+                    className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  />
+                </div>
+                <div className="relative">
+                  <label
+                    htmlFor="cardNumber"
+                    className="text-[16px] font-bold text-[#333333]"
+                  >
+                    Card Number
+                  </label>
 
-                <input
+                  <input
                     type="text"
                     maxLength={19}
-                  {...register("cardNumber", {
-                    required: "card name is required",
-                    maxLength: {
-                      value: 19, 
-                      message: "Card number must not exceed 19 digits", // Error message
-                    },
-                  })}
-                    placeholder="xxxx xxxx xxxx xxxx"
-                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-                  />
-                   <p>Detected Card Type: {getCardType(cardNumber || "")}</p>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="">
-                  <label
-                    htmlFor="expiryDate"
-                    className="text-[16px] font-bold text-[#333333] block w-full"
-                  >
-                    Expiry Date
-                  </label>
-
-                  <input
-                    type="text"
-                    {...register("expiryDate", {
-                      required: "expiry date is required",
+                    {...register("cardNumber", {
+                      required: "card name is required",
+                      maxLength: {
+                        value: 19,
+                        message: "Card number must not exceed 19 digits", // Error message
+                      },
                     })}
-                    placeholder="MM/YY"
+                    placeholder="xxxx xxxx xxxx xxxx"
+                    className="mt-1 w-full p-3 pl-14 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  />
+                  <img
+                    src={getCardImage(cardNumber)}
+                    alt="card type"
+                    className="absolute left-1 bottom-3"
+                  />
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="">
+                    <label
+                      htmlFor="expiryDate"
+                      className="text-[16px] font-bold text-[#333333] block w-full"
+                    >
+                      Expiry Date
+                    </label>
+
+                    <input
+                      type="text"
+                      {...register("expiryDate", {
+                        required: "expiry date is required",
+                        pattern: {
+                          value: /^(0[1-9]|1[0-2])\/\d{2}$/,
+                          message: "Invalid expiry date format (MM/YY)",
+                        },
+                      })}
+                      placeholder="MM/YY"
+                      className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="cardCvv"
+                      className="text-[16px] font-bold text-[#333333] block full"
+                    >
+                      CVV
+                    </label>
+
+                    <input
+                      type="text"
+                      maxLength={3}
+                      {...register("cardCvv", { required: "cvv is required" })}
+                      placeholder="XXX"
+                      className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    htmlFor="address"
+                    className="text-[16px] font-bold text-[#333333] flex items-center "
+                  >
+                    Address
+                  </label>
+                  <input
+                    type="text"
+                    {...register("address", {
+                      required: "address is required",
+                    })}
+                    placeholder="xxxxxxxxxx"
                     className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                   />
                 </div>
                 <div>
                   <label
-                    htmlFor="cvv"
-                    className="text-[16px] font-bold text-[#333333] block full"
+                    htmlFor="postal"
+                    className="block text-[16px] font-bold text-[#333333]"
                   >
-                    CVV
+                    Zip/Postal Code
                   </label>
 
                   <input
-                      type="text"
-                    maxLength={3}
-                    {...register("cvv", { required: "cvv is required" })}
-                    placeholder="XXX"
+                    type="text"
+                    maxLength={6}
+                    {...register("postal")}
+                    placeholder="xxxxx"
                     className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                   />
                 </div>
-              </div>
-              <div>
-                <label
-                  htmlFor="address"
-                  className="text-[16px] font-bold text-[#333333] flex items-center "
+                <button
+                  type="button"
+                  className="bg-[#004324] font-bold text-[#ffffff] p-3 rounded-md block mx-auto"
+                  disabled={cardPending}
+                  onClick={handleSubmit(submitCard)}
                 >
-                  Address
-                </label>
-                <input
-                  type="text"
-                  {...register("address", {
-                    required: "address is required",
-                  })}
-                  placeholder="xxxxxxxxxx"
-                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="postal"
-                  className="block text-[16px] font-bold text-[#333333]"
-                >
-                  Zip/Postal Code
-                </label>
-
-                <input
-                    type="text"
-                  maxLength={6}
-                  {...register("postal")}
-                  placeholder="xxxxx"
-                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-                />
-              </div>
-              <div className="flex justify-center mt-10">
-              {/* showSavedCardAndHideForm={showSavedCardAndHideForm} */}
-                  <SaveCard submitCard={submitCard} cardPending={ cardPending } />
-              </div>
-            </form>
+                  {cardPending ? "Saving..." : "Save Card"}
+                </button>
+              </form>
               {/* saved card */}
-             { showCard&&<article className="border-2 border-lightGreen bg-[#EAF4E2] w-[375px] rounded-md p-2 absolute top-[200px]">
-                <h3 className="text-green font-bold text-xl">Billing Cycle</h3>
-                <span className="text-lightBlack font-bold my-1 block">
-                  Your Next Billing is on the Date, Month Year
-                </span>
-                <div>
-                  <img src="" alt="" />
-                  <strong className="text-green">XXXXXXXXXXXXX</strong>
-                  <button
-                    className="bg-transparent float-right underline text-[#DC3545] font-semibold"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </article>}
+              {showCard && (
+                <article className="border-2 border-lightGreen bg-[#EAF4E2] w-[375px] rounded-md p-2 absolute top-[200px]">
+                  <h3 className="text-green font-bold text-xl">
+                    Billing Cycle
+                  </h3>
+                  <span className="text-lightBlack font-bold my-1 block">
+                    Your Next Billing is on the Date, Month Year
+                  </span>
+
+                  <div>
+                    {allCards?.map((card) => {
+                      return(
+                      <div className="flex items-center justify-between" key={card.id}>
+                        <div className="flex gap-2">
+                          <img src={getCardImage(cardNumber)} alt="" />
+                          <strong className="text-green">
+                            {card.cardNumber || "XXXXXXXXXXXXX"}
+                          </strong>
+                        </div>
+                          <DeleteCard card={ card} />
+                      </div>);
+                    })}
+                  </div>
+                </article>
+              )}
             </div>
           </div>
           {/* subscription */}
@@ -440,8 +468,7 @@ const PlanSetting = () => {
             </div>
           </div>
         </div>
-        <br />
-      </div>
+      </section>
     </>
   );
 };

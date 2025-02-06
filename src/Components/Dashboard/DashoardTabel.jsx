@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React from "react";
 import { Link } from "react-router-dom";
 import { download } from "../../assets";
 import Skeleton from "react-loading-skeleton";
-
+import {formatNumber} from '../../utils/formatNumber'
 const DashoardTabel = ({ isFetchingDashboardData, dashboardData, isCollapsed }) => {
   // const { orders, product, salesData } = dashboardData;
   // console.log(dashboardData);
@@ -66,13 +65,13 @@ const DashoardTabel = ({ isFetchingDashboardData, dashboardData, isCollapsed }) 
                   {dashboardData?.product?.name}
                 </td>
                 <td className="lg:p-3 p-2 text-center">
-                  {dashboardData?.salesData?.quantitySoldThisWeek} Units
+                  {dashboardData?.salesData?.quantitySoldThisWeek||0} Units
                 </td>
                 <td className="lg:p-3 p-2 text-center">
-                  #{dashboardData?.salesData?.totalSalesThisMonth}
+                  &#8358;{formatNumber(dashboardData?.salesData?.totalSalesThisMonth)||0}
                 </td>
                 <td className="lg:p-3 p-2  text-center">
-                  {dashboardData?.salesData?.totalUnitsSoldThisYear} Units
+                  {dashboardData?.salesData?.totalUnitsSoldThisYear||0} Units
                 </td>
                 <td className="lg:p-3 p-2  text-center bg-[#F5F5F5] text-[#8ED06C] font-extrabold">
                   <Link

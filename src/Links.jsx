@@ -70,7 +70,7 @@ const Links = ({ isCollapsed }) => {
 
       {/* Orders & Shipping */}
       <Link to="/orders">
-        <li className={`cursor-pointer mt-4 w-full`}>
+        <li className={`cursor-pointer mt-4 w-full o`} id='order'>
           <div className={`${getLinkClasses("/orders")}`}>
             <div
               className={`flex items-center  ${
@@ -124,7 +124,7 @@ const Links = ({ isCollapsed }) => {
 
       {/* Products */}
       <Link to="/product">
-        <li className={`cursor-pointer mt-4 w-full`}>
+        <li className={`cursor-pointer mt-4 w-full`} id='product'>
           <div className={`${getLinkClasses("/product")}`}>
             <div
               className={`flex items-center  ${
@@ -182,7 +182,7 @@ const Links = ({ isCollapsed }) => {
       </Link>
 
       {/* Reviews & Ratings */}
-      <Link to="/reviews">
+      {/* <Link to="/reviews">
         <li  className={`cursor-pointer mt-4 w-full`}>
           <div className={getLinkClasses("/reviews")}>
             <div  className={`flex items-center  ${
@@ -208,11 +208,11 @@ const Links = ({ isCollapsed }) => {
             </div>
           </div>
         </li>
-      </Link>
+      </Link>   */}
 
       {/* Customer Management */}
       <Link to="/customer">
-        <li className={`cursor-pointer mt-4 w-full`}>
+        <li className={`cursor-pointer mt-4 w-full`} id='customer'>
           <div className={`${getLinkClasses("/customer")} transitions`}>
             <div
               className={`flex items-center  ${
@@ -262,7 +262,6 @@ const Links = ({ isCollapsed }) => {
                 />
               </svg>
               {isCollapsed ? "" : "Customers Management"}
-              {/* <p className={isCollapsed? 'invisible transitions':'visible transitions'}>Customer Management</p> */}
             </div>
           </div>
         </li>
@@ -323,7 +322,7 @@ const Links = ({ isCollapsed }) => {
       </Link>
 
       {/* Store Setting */}
-        <div className={`mt-4 border-b-2 border-t-2 border-dotted py-3  `}>
+         <div className={`mt-4 border-b-2 border-t-2 border-dotted py-3  `} id='settings'>
         <div className="flex items-center justify-between gap-1 pb-1">
           <li>Store {isCollapsed ? "" : "Settings"}</li>
           <button
@@ -334,16 +333,16 @@ const Links = ({ isCollapsed }) => {
             {isDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
           </button>
         </div>
-        {/*drop down links */}
-       {isDropdownOpen && (
+        {/* drop down links  */}
+         {isDropdownOpen && (
           <StoreSettingsLinks
             isCollapsed={isCollapsed}
             getLinkClasses={getLinkClasses}
             isActive={isActive}
             isDropDownOpen={isDropdownOpen}
-          />
-        )}
-      </div> 
+          /> 
+        )} 
+      </div>    
       {/* Footer */}
       {!isCollapsed && !isDropdownOpen && (
         <footer className="mt-20  ">

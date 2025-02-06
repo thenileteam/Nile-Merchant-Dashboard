@@ -3,7 +3,7 @@ import usePagination from "../Pagination/PaginationHook";
 import AddProduct1 from "../PopupModals/AddProduct1";
 import { useParams } from "react-router-dom"
 import Skeleton from "react-loading-skeleton";
-const BranchTable = ({ isCollapsed}) => {
+const BranchTable = ({ isCollapsed, setOpenTransfer}) => {
   const { id } = useParams()
   const { locationProducts,
     isFetchingProductsInLocation,
@@ -12,15 +12,15 @@ const BranchTable = ({ isCollapsed}) => {
   return (
     <section>
       <div
-        className={`mt-3 ${
-          isCollapsed ? "max-w-[1000px]" : "max-w-[900px]"
+        className={`mt-5 ${
+          isCollapsed ? "max-w-[1000px]" : "max-w-[820px]"
         } mx-auto`}
       >
         <div className="flex gap-3">
           <AddProduct1 />
           <button
             className="bg-transparent border border-lightGreen text-lightGreen font-bold p-inherit flex items-center w-[185px] rounded-md p-2"
-            // onClick={()=>setLocationOpen(true)}
+            onClick={()=>setOpenTransfer(true)}
           >
             <svg
               width="25"
@@ -58,7 +58,7 @@ const BranchTable = ({ isCollapsed}) => {
           </thead>
           <tbody>
             {isFetchingProductsInLocation &&(
-              <div className="w-full mt-5 border-red-500 border-2">
+              <div className="w-full mt-5 border-2">
                 <Skeleton className=" h-[40px] w-full block" />
                 <Skeleton className=" h-[40px] w-full block" />
                 <Skeleton className=" h-[40px] w-full block" />
@@ -71,7 +71,7 @@ const BranchTable = ({ isCollapsed}) => {
                <td className="bg-white p-2 text-[#6e6e6e]  capitalize">
                 {singleLoc.id||"Admin"}
               </td>
-              <td className="bg-[#EAF4E2] p-2 text-[#6e6e6e] capitalize">
+              <td className="bg-white p-2 text-[#6e6e6e] capitalize">
                 { singleLoc.name||"xxxxx"}
               </td>
               <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">

@@ -22,12 +22,7 @@ const {handleSubmit} = useForm()
         disabled={cardPending}
         onClick={() =>handleSubmit(submitCard)}
       >
-         {/* // if (!cardPending) {
-            // saveChanges()
-            // showSavedCardAndHideForm()
-          } */}
-        {/* }  */}
-        Save Card
+        {cardPending ? "Saving..." : "Save Card"}
       </button>
 
       {/* Final Confirmation Popup */}

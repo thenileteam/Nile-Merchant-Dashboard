@@ -5,14 +5,26 @@ import { useFetchUser } from "@/datahooks/users/userhooks";
 import BranchTable from "@/Components/StaffManagement/BranchTable";
 import { totalOrders, outOfStock, totalProfit } from "@/assets";
 import { useParams } from "react-router-dom";
-import { useFetchLocations } from "@/datahooks/location/useLocationhook";
+import {
+  useFetchLocations,
+  useFetchSingleLocation,
+} from "@/datahooks/location/useLocationhook";
+import TransferInventory from "@/Components/PopupModals/TransferInventory";
+import { useState } from "react";
+import EmptyState from "@/Components/StaffManagement/EmptyState";
+import { useFetchProducts } from "@/datahooks/products/productshooks";
+import { useFetchDashboardData } from "@/datahooks/users/userhooks";
 const Branch = () => {
   const { id } = useParams();
+  const [openTransfer, setOpenTransfer] = useState(false);
   const { locations } = useFetchLocations();
   const getName = locations?.find((location) => location.id === id);
   const { user } = useFetchUser();
   const { isCollapsed } = useSidebarStore();
-
+  const { locationProducts } = useFetchSingleLocation(id);
+  const { dashboardData,} =
+  useFetchDashboardData();
+const { productLength } = useFetchProducts(); 
   return (
     <>
       <div
@@ -24,15 +36,15 @@ const Branch = () => {
       >
         <Navbar
           title={
-            getName.locationName.split("")[0].toUpperCase() +
-              getName.locationName.slice(1) || "Branch"
+            getName?.locationName.split("")[0].toUpperCase() +
+              getName?.locationName.slice(1) || "Branch"
           }
           profilePic={user && user.image ? user.image : ""}
         />
         <div
           className={`${
-            isCollapsed ? "max-w-[1050px]" : "max-w-[950px]"
-          } p-6 mt-28 mx-auto`}
+            isCollapsed ? "max-w-[1050px]" : "max-w-[820px]"
+          } mt-28 mx-auto`}
         >
           <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-2 lg:gap-10">
             <DashboardBox
@@ -41,7 +53,7 @@ const Branch = () => {
               bgColor="bg-[#FCDADF]"
               width="w-full"
               image={totalOrders}
-              data={"416"}
+              data={dashboardData?.orders?.totalOrders}
             />
             <DashboardBox
               text="In Stock"
@@ -49,7 +61,7 @@ const Branch = () => {
               imgWidth="w-9"
               width="w-full"
               image={totalProfit}
-              data={"411"}
+              data={productLength}
             />
             <DashboardBox
               text="Out of Stock"
@@ -57,15 +69,30 @@ const Branch = () => {
               width="w-full"
               image={outOfStock}
               imgWidth="w-9"
-              data={"24"}
+              data={24}
             />
           </div>
         </div>
 
         <section>
-          <BranchTable isCollapsed={isCollapsed} />
+          {locationProducts?.length === 0 ? (
+            <EmptyState
+              title="You have not added any product to this location yet"
+              description="Add a product to this branch to see your staffs"
+              buttonText="Transfer products"
+              showPopUp={openTransfer}
+              setShowPopUp={setOpenTransfer}
+              PopUpComponent={TransferInventory}
+            />
+          ) : (
+            <BranchTable
+              isCollapsed={isCollapsed}
+              setOpenTransfer={setOpenTransfer}
+            />
+          )}
         </section>
       </div>
+      {openTransfer && <TransferInventory setOpenTransfer={setOpenTransfer} />}
     </>
   );
 };

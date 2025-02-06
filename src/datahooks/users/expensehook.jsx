@@ -1,8 +1,9 @@
 import ApiInstance from "@/Api/ApiInstance";
+import { useStore } from "@/ZustandStores/generalStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-const store = JSON.parse(localStorage.getItem("store"));
 export const useExpenseHook = (onSuccessFn) => {
+  const {store} = useStore()
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
@@ -46,8 +47,7 @@ export const useExpenseHook = (onSuccessFn) => {
 };
 
 export const useFetchExpense = (page, limit, sortBy, sortOrder) => {
-  const store = JSON.parse(localStorage.getItem("store"));
- 
+  const {store} = useStore()
   const { data, isFetching, isError } = useQuery({
     queryKey: ["expenses"],
     queryFn: async () => {
@@ -66,7 +66,7 @@ export const useFetchExpense = (page, limit, sortBy, sortOrder) => {
     enabled: !!store?.id,
     staleTime: Infinity,
     cacheTime: Infinity,
-    refetchOnWindowFocus: false,
+    // refetchOnWindowFocus: false,
   });
   const totalExpense = data?.reduce((acc, curr) => acc + curr.amount, 0);
   return {

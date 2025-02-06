@@ -15,10 +15,11 @@ import {
   startOfWeek,
   startOfYear,
 } from "date-fns";
-const store = JSON.parse(localStorage.getItem("store"));
+import { useStore } from "../../ZustandStores/generalStore";
 
 export const useLogUserIn = () => {
   // console.log("attempting new login");
+  const {setStore} = useStore()
   const navigate = useNavigate();
   const [error] = useState("");
   const { mutate, isPending } = useMutation({
@@ -29,8 +30,14 @@ export const useLogUserIn = () => {
 
     onSuccess: async (response) => {
       // First set the tokens
-      Cookies.set("accessToken", response?.data?.accessToken);
-      Cookies.set("refreshToken", response?.data?.refreshToken);
+      Cookies.set("accessToken", response?.data?.accessToken,  {
+        secure: true,
+        sameSite: "Strict",
+      });
+      Cookies.set("refreshToken", response?.data?.refreshToken, {
+        secure: true,
+        sameSite: "Strict",
+      });
       Cookies.set("isUserLoggedIn", "yes");
 
       // Set essential user data
@@ -42,13 +49,7 @@ export const useLogUserIn = () => {
         const store = await ApiInstance.get(
           `/store/store/getStoreByUserId?userId=${response?.data?.data?.user?._id}`
         );
-        
-        localStorage.setItem(
-          "store",
-          JSON.stringify(store?.data?.responseObject)
-        );
-        
-        localStorage.setItem("clear", true);
+        setStore(store?.data?.responseObject);
         toast("Auth Success✔");
         navigate("/dashboard");
       } catch (error) {
@@ -122,7 +123,9 @@ export const useModifyProfile = () => {
 };
 
 export const useLogOut = () => {
+  const { clearStore } = useStore(); 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: () => ApiInstance.post("/users/auth/logout"),
     onSuccess: () => {
@@ -132,6 +135,9 @@ export const useLogOut = () => {
       Cookies.remove("accessToken");
       Cookies.remove("refreshToken");
       Cookies.remove("isUserLoggedIn");
+      //clear store
+      clearStore();
+      queryClient.invalidateQueries(["dashboard",'products', 'orders', 'customers', 'user','transactions', 'expenses']);
       toast("Logout Successful✔");
       navigate("/");
     },
@@ -155,12 +161,12 @@ export const useSignUserUp = () => {
       return ApiInstance.post("/users/auth/register", data);
     },
     onSuccess: (response) => {
-      const username = response.data.ownerName;
+      // const username = response.data.ownerName;
       toast("Auth Success✔");
       //store and set users name
       // Navigate to dashboard
       navigate("/");
-      localStorage.setItem("ownerName", JSON.stringify(username));
+      // localStorage.setItem("ownerName", JSON.stringify(username));
       // setUsername(username);
       // console.log(response.data);
     },
@@ -220,12 +226,13 @@ export const useResetPassword = (token) => {
   };
 };
 export const useAddCustomer = (onSuccess) => {
+  const {store} = useStore()
   const queryClient = useQueryClient();
   const [error] = useState("");
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
       return ApiInstance.post(
-        `/orders/orders/customers/create/${store.id}`,
+        `/orders/orders/customers/create/${store?.id}`,
         data
       );
     },
@@ -247,30 +254,19 @@ export const useAddCustomer = (onSuccess) => {
   };
 };
 
+//dashboard data
 export const useFetchDashboardData = () => {
-  // Memoize stores to prevent unnecessary re-renders
-  const store = useMemo(() => {
-    try {
-      const storedStore = localStorage.getItem("store");
-      // console.log("Raw stores from localStorage:", storedStore);
-      return storedStore ? JSON.parse(storedStore) : null;
-    } catch (error) {
-      console.error("Error parsing stores from localStorage", error);
-      return [];
-    }
-  }, []);
-
+const{store}= useStore()
+  // Access the store data directly from Zustand
+  const storeId = store?.id;
   const fetchDashboardData = useCallback(async () => {
     console.group("Dashboard Data Fetching");
     console.log("Stores:", store);
 
     if (!store) {
-      console.error("No store found in localStorage");
-      throw new Error("No store found in localStorage.");
+      console.error("No store found in Zustand");
+      throw new Error("No store found in Zustand.");
     }
-
-    const storeId = store.id;
-    console.log("Store ID:", storeId);
 
     try {
       // Fetch sales data first to get most sold product
@@ -299,9 +295,6 @@ export const useFetchDashboardData = () => {
             )
           : Promise.resolve({ data: { responseObject: null } }),
       ]);
-
-      // console.log("Orders Response:", ordersResponse);
-      // console.log("Product Response:", productResponse);
 
       // Validate orders data
       if (!ordersResponse.data || !ordersResponse.data.responseObject) {
@@ -348,9 +341,7 @@ export const useFetchDashboardData = () => {
       console.groupEnd();
       throw error;
     }
-  }, [store]);
-
-  const storeId = store.id;
+  }, [store]); // Now the `store` comes from Zustand
 
   const {
     data: dashboardData,
@@ -361,12 +352,12 @@ export const useFetchDashboardData = () => {
   } = useQuery({
     queryKey: ["dashboard", storeId],
     queryFn: fetchDashboardData,
-    enabled: !!storeId,
+    enabled: !!storeId, // Ensure that the query is only enabled when there's a storeId
     staleTime: 30 * 60 * 1000, // 5 minutes
     cacheTime: 60 * 60 * 1000, // 100 minutes
     // Optional: Add retry logic
     retry: 2,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    // retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     onSuccess: (_data) => {
       // console.log("Dashboard Data Fetched Successfully:", data);
     },
@@ -383,8 +374,10 @@ export const useFetchDashboardData = () => {
     refetch,
   };
 };
+
+
 export const useFetchOrders = () => {
-  const store = JSON.parse(localStorage.getItem("store"));
+  const{store}= useStore()
   // console.log("storeId etch orders", store.id);
   // console.log(store);
   const { data, isFetching, isError } = useQuery({
@@ -392,7 +385,7 @@ export const useFetchOrders = () => {
     queryFn: async () => {
       const res = await ApiInstance.get(`/orders/orders/stores/${store.id}`, {
         params: {
-          storeId: store.id,
+          storeId: store?.id,
         },
       });
 
@@ -410,13 +403,12 @@ export const useFetchOrders = () => {
   };
 };
 export const useFetchStoreCustomers = () => {
-  const store = JSON.parse(localStorage.getItem("store"));
-  // console.log(store);
+  const{store}= useStore()
   const { data, isFetching, isError } = useQuery({
     queryKey: ["customers"],
     queryFn: async () => {
       const res = await ApiInstance.get(
-          `/orders/orders/customers/${store.id}`
+          `/orders/orders/customers/${store?.id}`
       );
 
       return res.data?.responseObject;
@@ -436,14 +428,16 @@ export const useFetchUser = () => {
   const id = localStorage.getItem("Id");
 
   const { data, isFetching, isError } = useQuery({
-    queryKey: ["user"],
+    queryKey: ["user",id],
     queryFn: async () => {
       const res = await ApiInstance.get(`/users/user/${id}`);
       console.log(res.data);
       return res.data?.responseObject;
     },
-    staleTime: Infinity,
-    cacheTime: Infinity,
+    
+    enabled: !!id,
+    staleTime: 0, // Refetch data if it becomes stale
+    cacheTime: 5 * 60 * 1000,
   });
 
   return {

@@ -216,7 +216,6 @@ const App = () => {
           element: (
             <ProtectRoutes>
               <Location />
-              {/* <Branch/> */}
             </ProtectRoutes>
           ),
         },
@@ -274,7 +273,7 @@ const App = () => {
             <ScrollToTop />
           </RouterProvider>
         </Suspense>
-      </main>
+        </main>
     </QueryClientProvider>
   );
 };

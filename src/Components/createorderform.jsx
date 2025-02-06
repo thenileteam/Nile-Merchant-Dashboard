@@ -22,35 +22,23 @@ const CreateOrderForm = ({
 }) => {
   return (
     <div
-      className=" w-full fixed justify-center items-center flex h-screen  bg-black/30 z-50 inset-0 "
+      className=" w-full fixed justify-center items-center flex h-screen  bg-black/30 z-20 inset-0 "
       onClick={() => setCreateOrderForm(false)}
     >
       <div
-        style={{
-          width: "65%",
-          padding:'32px ',
-          position: "relative",
-          zIndex: "99",
-          backgroundColor: "white",
-          borderRadius:'10px' 
-        }}
+        className="w-full lg:max-w-[65%] p-8 relative z-50 bg-white rounded-xl"
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
         <img
-          style={{
-            position: "absolute",
-            right: "22px",
-            top: "10px",
-          }}
           onClick={() => setCreateOrderForm(false)}
           src="/public/Cancel.svg"
-          className=" cursor-pointer size-8 absolute top-8 right-8"
-          alt=""
+          className=" cursor-pointer size-8 absolute top-[10px] right-[22px]"
+          alt="search bar"
         />
-        <div className=" flex w-full flex-col gap-4  ">
-          <div className=" grid  grid-cols-2 gap-16">
+        <div className="flex flex-col gap-4">
+          <div className=" grid lg:grid-cols-2 gap-2 lg:gap-16">
             {/* <div className=" flex flex-col gap-2">
               <label
                 className=" font-black  text-[16px]  leading-5 "
@@ -69,7 +57,7 @@ const CreateOrderForm = ({
             </div> */}
             <div className=" flex flex-col gap-2">
               <label
-                className=" font-black  text-[16px]  leading-5 "
+                className=" font-black  text-[16px] leading-5 "
                 htmlFor="Sales Channel"
               >
                 Select Customer <span className="text-[#6e6e6e]">(Optional)</span> 
@@ -100,7 +88,7 @@ const CreateOrderForm = ({
               </div>
             </div>
           </div>
-          <div className=" grid grid-cols-2 gap-16">
+          <div className=" grid gap-2 lg:grid-cols-2 lg:gap-16">
             <div className=" flex flex-col gap-2">
               <label
                 className=" font-black  text-[16px]  leading-5 "
@@ -137,7 +125,7 @@ const CreateOrderForm = ({
               </div>
             </div>
           </div>
-          <div className=" grid grid-cols-2 gap-16">
+          <div className=" grid lg:grid-cols-2 gap-2 lg:gap-16">
             <div className=" flex flex-col gap-2">
               <label
                 className=" font-black  text-[16px]  leading-5 "
@@ -159,7 +147,7 @@ const CreateOrderForm = ({
           disabled={isAddingOrder}
           type="submit"
           onClick={addOrder}
-          className=" flex bg-[#004324] justify-center items-center mx-auto mt-16 rounded-[4px] gap-1 p-[10.5px]  text-white "
+          className=" flex bg-[#004324] justify-center items-center mx-auto my-5 rounded-[4px] gap-1 p-[10.5px]  text-white "
         >
           {isAddingOrder ? (
             <AiOutlineLoading className=" animate-spin transition-all" />

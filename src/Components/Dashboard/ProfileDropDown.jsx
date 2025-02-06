@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { logout, accountsetting, idea } from "../../assets";
 import { useLogOut } from "@/datahooks/users/userhooks";
 import { useProfileStore } from "@/ZustandStores/profileStore";
+import Walkthrough from "../PopupModals/WalkThrough";
 const ProfileDropDown = () => {
   const { mutate } = useLogOut();
     const { isProfileOpen } = useProfileStore();
@@ -11,8 +12,8 @@ const ProfileDropDown = () => {
       <div
         className={
           isProfileOpen
-            ? "visible fixed top-20 right-5 bg-white rounded-md transitions"
-            : "invisible fixed top-20 right-3 bg-white"
+            ? "visible absolute top-16 right-3 bg-white rounded-md transitions w-[200px] shadow-md"
+            : "invisible absolute top-16 right-2 bg-white"
         }
       >
         <div className="text-lightBlack font-semibold p-2">
@@ -22,13 +23,8 @@ const ProfileDropDown = () => {
               <span>Profile Settings</span>
             </button>
           </Link>
-          <button
-            type="button"
-            className="my-2 flex items-center gap-1 p-2  w-full hover:bg-zinc-100 transitions"
-          >
-            <img src={idea}  className='w-5' alt="light bulb" />
-            <span className="">Dashboard Walkthrough</span>
-          </button>
+          
+          <Walkthrough/>
           <button type="button" className="w-full flex gap-1 items-center p-2 hover:bg-zinc-100 " onClick={() => mutate()}>
             <img src={logout} className='w-5' alt="logout" />
             <span className="text-red-500  ">Logout</span>

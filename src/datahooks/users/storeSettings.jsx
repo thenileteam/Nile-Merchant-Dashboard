@@ -1,11 +1,11 @@
 import ApiInstance from "@/Api/ApiInstance";
+import { useStore } from "@/ZustandStores/generalStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-const store = JSON.parse(localStorage.getItem("store"));
 
 export const useFetchStoreSettings = () => {
+  const{store} = useStore()
     if (!store) return { data: [], isFetching: false, isError: false };
-  
     const { data, isFetching, isError, isLoading } = useQuery({
       queryKey: ["storeSettings", store?.id],
       queryFn: async () => {
@@ -31,6 +31,7 @@ export const useFetchStoreSettings = () => {
   };
 
 export const useEditStoreSettings = (onSuccessCallback) => {
+  const{store}= useStore()
   const queryClient = useQueryClient();
   const { mutate, isPending: isEditingStore } = useMutation({
       mutationFn: (data) => {

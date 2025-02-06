@@ -18,7 +18,7 @@ const StoreSettingLinks = ({
   return (
     <>
       <div
-        className={`transition-all duration-500 ease-in transform h-[75px] ${
+        className={`transition-all duration-500 ease-in transform h-[89px] ${
           isDropDownOpen ? "overflow-y-scroll  custom-scrollbar" : ""
         }`}
         // ${isDropDownOpen ? "opacity-100" : "opacity-0"}`}
