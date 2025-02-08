@@ -34,7 +34,7 @@ const LoginReviews = () => {
   }, []);
 
   return (
-    <div className="relative hidden lg:flex ">
+    <div className="relative hidden lg:flex">
       <motion.div
         key={currentReview}
         initial={{ opacity: 0 }}

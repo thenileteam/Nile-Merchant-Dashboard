@@ -35,6 +35,7 @@ import ReactGA from "react-ga4";
 import Cookies from "js-cookie";
 import SidebarParent from "./Pages/SidebarParent";
 import DomainMangaement from "./Pages/DomainMangaement";
+import StaffRegister from './Pages/StaffRegister'
 const App = () => {
   const queryClient = new QueryClient();
   const router = createBrowserRouter([
@@ -53,6 +54,10 @@ const App = () => {
     {
       path: "/email/reset-password",
       element: <ForgotPassword />,
+    },
+    {
+      path: "/staff/onboarding",
+      element: <StaffRegister />,
     },
     {
       path: "/",

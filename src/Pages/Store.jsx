@@ -27,7 +27,7 @@ const Store = () => {
   const { isCollapsed } = useSidebarStore()
     return (
     <>
-      <div className="bg-[#F5F5F5] pb-20">
+      <div className=" pb-20">
         <div className="flex">
          {/* <Sidebar /> */}
 

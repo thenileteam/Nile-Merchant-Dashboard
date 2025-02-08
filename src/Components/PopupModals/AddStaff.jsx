@@ -8,16 +8,17 @@ import { toast } from "sonner";
 import { FaBullseye } from "react-icons/fa6";
 import AssignLocation from "../StaffManagement/AssignLocation";
 import { useAssignLocationStore } from "@/ZustandStores/locationStore";
-import{useStore} from '../../ZustandStores/generalStore'
+import { useStore } from "../../ZustandStores/generalStore";
 const AddStaff = ({ setShowStaffPopUp }) => {
-  const {store} = useStore()
+  const { store } = useStore();
   const storeId = store?.id;
   const { roles } = useFetchRoles();
+  console.log(roles)
   const { addStaffToBackend, isStaffPending } = useCreateStaff(() => {
     setShowStaffPopUp(false);
   });
-  const { formStates} = useAssignLocationStore()
-  const selectedLocationId = formStates['addStaff'].selectedLocation?.id;
+  const { formStates } = useAssignLocationStore();
+  const selectedLocationId = formStates["addStaff"].selectedLocation?.id;
   const {
     register,
     handleSubmit,
@@ -63,7 +64,6 @@ const AddStaff = ({ setShowStaffPopUp }) => {
         toast.error(error.response?.data?.message || "An error occurred.");
       },
     });
-     
   };
 
   return (
@@ -164,29 +164,9 @@ const AddStaff = ({ setShowStaffPopUp }) => {
               </p>
             )}
           </div>
-
-          <div className="mt-2">
-            <label
-              htmlFor="adminPWord"
-              className="mb-2 text-lightBlack font-bold"
-            >
-              Admin Password
-            </label>
-            <input
-              {...register("adminPWord", { required: "Password is required" })}
-              type="password"
-              name="adminPWord"
-              placeholder="Input password admin will use to login"
-              className="border border-lightGreen rounded-md p-2 block w-full"
-            />
-            {errors.adminPWord && (
-              <p className="text-red-500 text-xs">
-                {errors.adminPWord.message}
-              </p>
-            )}
-          </div>
+           
           {/* assigned location */}
-          <AssignLocation title='Staff' formType="addStaff"/>
+          <AssignLocation title="Staff" formType="addStaff" />
           {/* Permission checkboxes */}
           <div>
             <h3 className="text-green font-bold mt-2">Permissions</h3>

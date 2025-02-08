@@ -39,7 +39,7 @@ const Dashboard = () => {
     <>
       <div className={isCollapsed? 'flex-grow lg:ml-20 overflow-x-hidden':"flex-grow lg:ml-56 overflow-x-hidden"}>
         <Navbar title={`Welcome ${userName}`}  profilePic={user && user.image ? user.image : ""}/>
-        <div className="bg-[#F5F5F5] h-screen pt-[112px] pb-20 lg:overflow-x-hidden">
+        <div className=" h-screen pt-[112px] pb-20 lg:overflow-x-hidden">
           {/* Cards */}
           <UseCardLoader amount={6} className="mt-20 lg:mt-1 mb-6 px-2" loading={isFetchingDashboardData} error={dashboardDataisError}>
             <div

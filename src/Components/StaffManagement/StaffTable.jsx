@@ -1,6 +1,6 @@
 import { useFetchStaffs } from "@/datahooks/staffs/usestaffhook";
 import EditStaff from "../PopupModals/EditStaff";
-import Skeleton from 'react-loading-skeleton'
+import Skeleton from "react-loading-skeleton";
 import usePagination from "../Pagination/PaginationHook";
 const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
   const { staffs, isLoading, isError } = useFetchStaffs();
@@ -17,7 +17,7 @@ const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
     <section>
       <div
         className={`mt-28 ${
-          isCollapsed ? "max-w-[1000px]" : "max-w-[820px]"
+          isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[820px]"
         } mx-auto`}
       >
         <button
@@ -46,54 +46,61 @@ const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
           </svg>
           Add New Staff
         </button>
-          {isLoading? (
+        {isLoading ? (
           <div className="w-full mt-2">
             <Skeleton className=" h-[40px] w-full block" />
             <Skeleton className=" h-[40px] w-full block" />
             <Skeleton className=" h-[40px] w-full block" />
           </div>
-        ) :
-        <table className="w-full border-separate border-spacing-y-5 ">
-          <thead>
-            <tr className="text-left bg-[#EAF4E2]">
-              <th className=" p-2 shadow-lg">Staff Name</th>
-              <th className=" p-2 shadow-lg">Staff Role</th>
-              <th className=" p-2 shadow-lg">Date Added</th>
-              <th className=" p-2 shadow-lg">Assigned Location</th>
-              <th className=" p-2 shadow-lg">Last Login</th>
-              <th className=" p-2 shadow-lg">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedStaffs?.map((staff, i) => {
-              const date = new Date(staff.updatedAt)
-              const hour = date.getHours()
-              const minute = date.getMinutes()
-              const ampm = hour >=12?'pm':'am'
-              const time = `${hour}:${minute.toString().padStart(2, 0)}${ampm}`
-              return (
-                <tr className="mt-4 bg-white shadow-md">
-                  <td className="bg-[#EAF4E2] p-2 text-[#6e6e6e] capitalize">
-                    {staff.name || "xxxxx"}
-                  </td>
-                  <td className="bg-white p-2 text-[#6e6e6e]  capitalize">
-                    {"Admin"}
-                  </td>
-                  <td className="bg-white p-2 text-[#6e6e6e]  ">
-                    {staff.createdAt.split('T')[0] || "10:37pm"}
-                  </td>
-                  <td className="bg-white p-2 text-[#6e6e6e] ">{staff?.location.locationName|| 'branch 1'}</td>
-                  <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
-                    {time|| "10:59pm"}
-                  </td>
-                  <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
-                    <EditStaff staff={staff} />
-                  </td>
+        ) : (
+          <div className="overflow-x-scroll lg:overflow-auto">
+            <table className="w-full border-separate border-spacing-y-5 ">
+              <thead>
+                <tr className="text-left bg-[#EAF4E2]">
+                  <th className=" p-2 shadow-lg">Staff Name</th>
+                  <th className=" p-2 shadow-lg">Staff Role</th>
+                  <th className=" p-2 shadow-lg">Date Added</th>
+                  <th className=" p-2 shadow-lg">Assigned Location</th>
+                  <th className=" p-2 shadow-lg">Last Login</th>
+                  <th className=" p-2 shadow-lg">Action</th>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>}
+              </thead>
+              <tbody>
+                {sortedStaffs?.map((staff, i) => {
+                  const date = new Date(staff.updatedAt);
+                  const hour = date.getHours();
+                  const minute = date.getMinutes();
+                  const ampm = hour >= 12 ? "pm" : "am";
+                  const time = `${hour}:${minute
+                    .toString()
+                    .padStart(2, 0)}${ampm}`;
+                  return (
+                    <tr className="mt-4 bg-white shadow-md">
+                      <td className="bg-[#EAF4E2] p-2 text-[#6e6e6e] capitalize">
+                        {staff.name || "xxxxx"}
+                      </td>
+                      <td className="bg-white p-2 text-[#6e6e6e]  capitalize">
+                        {"Admin"}
+                      </td>
+                      <td className="bg-white p-2 text-[#6e6e6e]  ">
+                        {staff.createdAt.split("T")[0] || "10:37pm"}
+                      </td>
+                      <td className="bg-white p-2 text-[#6e6e6e] ">
+                        {staff?.location.locationName || "branch 1"}
+                      </td>
+                      <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
+                        {time || "10:59pm"}
+                      </td>
+                      <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
+                        <EditStaff staff={staff} />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </section>
   );

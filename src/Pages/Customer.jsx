@@ -23,7 +23,7 @@ const Customer = () => {
 
   return (
     <>
-      <div className="bg-[#F5F5F5] min-h-screen pb-20">
+      <div className="min-h-screen pb-20">
         <div className="flex">
           {/* Sidebar */}
           {/* Navbar */}

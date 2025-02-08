@@ -86,9 +86,9 @@ const StoreSetting = () => {
     <div className="mt-20">
       <div className="lg:max-w-[1000px] mx-auto">
         <form className=" ">
-          <div className="flex justify-center gap-28">
+          <div className="flex flex-col lg:flex-row justify-center lg:gap-28 gap-5 mx-auto px-4 lg:px-0">
             {/* First Section */}
-            <div className="space-y-5 bg-[#EAF4E2] border-[#8ED06C] border-2 max-w-[338px] p-4 rounded-lg">
+            <div className="space-y-4 bg-[#EAF4E2] border-[#8ED06C] w-full lg:max-w-[350px] border-2 p-4 rounded-lg">
               <div>
                 <label
                   htmlFor="name"
@@ -101,7 +101,7 @@ const StoreSetting = () => {
                   id="name"
                   {...register("name", { required: "Store Name is required" })}
                   placeholder="E.g; Gade’s store"
-                  className="mt-1 w-[296px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
                 {errors.name && (
                   <p className="text-sm text-red-700 my-1">
@@ -150,7 +150,7 @@ const StoreSetting = () => {
                   id="state"
                   {...register("state", { required: "State is required" })}
                   placeholder="Enter it here"
-                  className="mt-1 w-[296px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
               <div>
@@ -165,13 +165,13 @@ const StoreSetting = () => {
                   id="city"
                   {...register("city", { required: "City is required" })}
                   placeholder="Enter it here"
-                  className="mt-1 w-[296px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
             </div>
 
             {/* Second Section social links */}
-            <div className="bg-[#EAF4E2] border-[#8ED06C] border-2 w-[360px] p-4 rounded-lg">
+            <div className="bg-[#EAF4E2] border-[#8ED06C] border-2 w-full lg:max-w-[360px] p-4 rounded-lg">
               <div>
                 <label
                   htmlFor="facebook"
@@ -193,7 +193,7 @@ const StoreSetting = () => {
                     { required: "facebook link is required" }
                   )}
                   placeholder="https://www.facebook.com/Mynile"
-                  className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
                 {errors.facebook && (
                   <p className="text-sm text-red-700 my-1">
@@ -222,7 +222,7 @@ const StoreSetting = () => {
                     { required: "twitter link is required" }
                   )}
                   placeholder="https://www.x.com/Mynile"
-                  className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
                 {errors.twitter && (
                   <p className="text-sm text-red-700 my-1">
@@ -251,7 +251,7 @@ const StoreSetting = () => {
                     { required: "instagram link is required" }
                   )}
                   placeholder="https://www.instagram.com/Mynile"
-                  className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
                 {errors.instagram && (
                   <p className="text-sm text-red-700 my-1">
@@ -280,7 +280,7 @@ const StoreSetting = () => {
                     { required: "linkedin link is required" }
                   )}
                   placeholder="https://www.linkedin.com/Mynile"
-                  className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
                 {errors.linkedin && (
                   <p className="text-sm text-red-700 my-1">

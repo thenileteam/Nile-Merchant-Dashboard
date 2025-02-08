@@ -20,7 +20,7 @@ const Product = () => {
   //category update
   return (
     <>
-    <div className="bg-[#F5F5F5] pb-20">
+    <div className=" pb-20">
       <div className="flex">
         {/* <Sidebar  /> */}
         <div className={`flex-grow ${isCollapsed?'lg:ml-20':'lg:ml-56'} overflow-x-hidden`}>

@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 const CreateAccPaths = ({ text, path,linkText }) => {
   return (
+    <>
+    
     <div className="mt-8 flex items-center gap-1 justify-center">
       <p className="text-center text-[#000000] font-bold">
         {" "}
@@ -8,8 +10,15 @@ const CreateAccPaths = ({ text, path,linkText }) => {
         <Link to={path} className="text-lightGreen font-semibold">
           {linkText}
         </Link>{" "}
+        
       </p>
-    </div>
+      </div>
+      <span className="text-center block">
+      <Link to='/staff/onboarding'> Staff</Link>
+       
+      </span>
+    </>
+      
   );
 };
 

@@ -138,7 +138,7 @@ const Orders = () => {
                 setSelectProductForm={setSelectProductForm}
               />
             )}
-            <div className="bg-[#F5F5F5] min-h-screen overflow-y-hidden pb-20">
+            <div className="min-h-screen overflow-y-hidden pb-20">
               <div
                 className={`mt-20 lg:mt-28 mb-6 px-2 ${
                   isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[800px]"
@@ -238,7 +238,7 @@ const Orders = () => {
                 )}
               </div>
 
-              <div>
+              <div className="overflow-x-scroll lg:overflow-auto">
                 <OrdersTable data={data} isCollapsed={isCollapsed} />
               </div>
             </div>

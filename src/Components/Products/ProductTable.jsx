@@ -3,40 +3,48 @@ import { download, preference1 } from "../../assets";
 import EditProduct from "../PopupModals/EditProduct";
 import DeleteProduct from "../PopupModals/DeleteProduct";
 import Skeleton from "react-loading-skeleton";
-import Pagination from '../Pagination/Pagination'
+import Pagination from "../Pagination/Pagination";
 import usePagination from "../Pagination/PaginationHook";
 import { useSidebarStore } from "../../ZustandStores/sidebarStore";
 // code start
 const ProductTable = ({ data, isFetching, isError }) => {
-  const itemsPerPage = 10
-  const { pageCount, currentItems, handlePageChange } = usePagination(data, itemsPerPage)
-  const { isCollapsed } = useSidebarStore()
-  console.log(data)
+  const itemsPerPage = 10;
+  const { pageCount, currentItems, handlePageChange } = usePagination(
+    data,
+    itemsPerPage
+  );
+  const { isCollapsed } = useSidebarStore();
+  console.log(data);
   return (
     <>
       {/* Table */}
-      {data?.length > 0 ?
-        <div className={`${isCollapsed ? 'max-w-[1000px]' : "max-w-[800px]"} mx-auto  `}>
-        {isFetching ? (
-          <div className="bg-[#ffffff] w-full shadow-md">
-            <Skeleton className=" w-full h-10" />
-            <Skeleton className=" w-full  h-10" />
-            <Skeleton className=" w-full h-10" />
-          </div>
-        ) : isError ? (
-          "An error occurred"
-        ) : (
-          <table className=" w-full border-separate border-spacing-y-5">
-            <thead>
-              <tr className="text-left bg-[#EAF4E2] shadow-lg">
-                <th className="lg:p-2 text-center">Product ID</th>
-                <th className="lg:p-2  text-center">Product Name</th>
-                <th className="lg:p-2  text-center">Category</th>
-                <th className="lg:p-2  text-center">Price</th>
-                <th className="lg:p-2  text-center">Unit Sold</th>
-                <th className="lg:p-2 text-center">Stock Level</th>
-                <th className="lg:p-2 text-center">Actions</th>
-                {/* <th className="px-2 py-3 text-center flex items-center gap-1 justify-center">
+      {data?.length > 0 ? (
+        <div
+          className={`${
+            isCollapsed ? "max-w-[1000px]" : "max-w-[800px]"
+          } mx-auto  `}
+        >
+          {isFetching ? (
+            <div className="bg-[#ffffff] w-full shadow-md">
+              <Skeleton className=" w-full h-10" />
+              <Skeleton className=" w-full  h-10" />
+              <Skeleton className=" w-full h-10" />
+            </div>
+          ) : isError ? (
+            "An error occurred"
+          ) : (
+            <div className=" overflow-x-scroll lg:overflow-auto">
+              <table className=" w-full border-separate border-spacing-y-5">
+                <thead>
+                  <tr className="text-left bg-[#EAF4E2] shadow-lg">
+                    <th className="lg:p-2 text-center">Product ID</th>
+                    <th className="lg:p-2  text-center">Product Name</th>
+                    <th className="lg:p-2  text-center">Category</th>
+                    <th className="lg:p-2  text-center">Price</th>
+                    <th className="lg:p-2  text-center">Unit Sold</th>
+                    <th className="lg:p-2 text-center">Stock Level</th>
+                    <th className="lg:p-2 text-center">Actions</th>
+                    {/* <th className="px-2 py-3 text-center flex items-center gap-1 justify-center">
                   Bulk Action
                   <svg
                     width="32"
@@ -71,29 +79,33 @@ const ProductTable = ({ data, isFetching, isError }) => {
                     />
                   </svg>
                 </th> */}
-              </tr>
-            </thead>
+                  </tr>
+                </thead>
 
-            <tbody>
-              {currentItems?.map((product) => (
-                <tr key={product.id} className="bg-[#ffffff] shadow-md">
-                  <td className="lg:p-2 px-2 text-center">{product.id}</td>
-                  <td className="lg:p-2 px-2 text-center capitalize">
-                    {product.name}
-                  </td>
-                  <td className="lg:p-2 px-2  text-center capitalize">
-                    {product.category.name}
-                  </td>
-                  <td className="lg:p-2 px-2 text-center">{product.price}</td>
-                  <td className="lg:p-2 px-2  text-center">
-                    {product.unitsSold || 0}
-                  </td>
-                  <td className="lg:p-2 px-2  text-center">{product.stock}</td>
-                  <td className="lg:p-2 px-2 text-center flex items-center gap-1 justify-center ">
-                    <EditProduct product={product} />
-                    <DeleteProduct product={product} />
-                  </td>
-                  {/* <td className="px-2 py-3 text-center">
+                <tbody>
+                  {currentItems?.map((product) => (
+                    <tr key={product.id} className="bg-[#ffffff] shadow-md">
+                      <td className="lg:p-2 px-2 text-center">{product.id}</td>
+                      <td className="lg:p-2 px-2 text-center capitalize">
+                        {product.name}
+                      </td>
+                      <td className="lg:p-2 px-2  text-center capitalize">
+                        {product.category.name}
+                      </td>
+                      <td className="lg:p-2 px-2 text-center">
+                        {product.price}
+                      </td>
+                      <td className="lg:p-2 px-2  text-center">
+                        {product.unitsSold || 0}
+                      </td>
+                      <td className="lg:p-2 px-2  text-center">
+                        {product.stock}
+                      </td>
+                      <td className="lg:p-2 px-2 text-center flex items-center gap-1 justify-center ">
+                        <EditProduct product={product} />
+                        <DeleteProduct product={product} />
+                      </td>
+                      {/* <td className="px-2 py-3 text-center">
                     <input
                       type="checkbox"
                       id={`product-${product.id}`}
@@ -101,13 +113,14 @@ const ProductTable = ({ data, isFetching, isError }) => {
                       className="size-5 rounded-md bg-white shadow-sm"
                     />
                   </td> */}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
-      :null} 
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      ) : null}
       {/* pagination */}
       {data?.length > itemsPerPage && (
         <Pagination pageCount={pageCount} onPageChange={handlePageChange} />
