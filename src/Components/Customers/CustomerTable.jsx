@@ -35,7 +35,7 @@ const CustomerTable = ({ customers, isLoading, error, isCollapsed }) => {
   return (
     <>
       {/* Filter Dropdown Section */}
-      <div className="flex items-center justify-end px-24 relative">
+      <div className="flex items-center justify-end lg:px-24 relative">
         <h1 className="text-[#333333] font-bold text-[16px]">Filter By :</h1>
         <button
           onClick={toggleFilterDropdown}
@@ -110,7 +110,9 @@ const CustomerTable = ({ customers, isLoading, error, isCollapsed }) => {
       {/* Tables */}
       <div className={`${isCollapsed?'max-w-[1000px]':"max-w-[800px]"} mx-auto`}>
         <CustomAwaitTable isLoading={isLoading} error={error}>
-        {customers?.length>0 &&  <table className=" w-full border-separate border-spacing-y-5">
+          {customers?.length > 0 &&
+            <div className='overflow-x-scroll lg:overflow-auto'>
+            <table className=" w-full border-separate border-spacing-y-5">
             <thead>
               <tr className="text-left bg-[#EAF4E2] shadow-lg">
                 <th className="p-2  text-center">Customer ID</th>
@@ -161,7 +163,8 @@ const CustomerTable = ({ customers, isLoading, error, isCollapsed }) => {
                   </tr>
                 ))}
             </tbody>
-          </table>}
+              </table>
+              </div>}
         </CustomAwaitTable>
       </div>
       {/*Pagination*/}

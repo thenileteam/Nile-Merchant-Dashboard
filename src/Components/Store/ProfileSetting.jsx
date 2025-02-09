@@ -68,6 +68,7 @@ const ProfileSetting = () => {
   const handleSaveChanges = async () => {
     if (!image || !phoneNumber) {
       console.error("No changes made!");
+      <p className="">No changes made!</p>
       return;
     }
 

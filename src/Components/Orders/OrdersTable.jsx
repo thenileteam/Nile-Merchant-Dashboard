@@ -123,7 +123,7 @@ const OrdersTable = ({ data, isCollapsed }) => {
         </div>
       )}
       {/* Filter Dropdown Section */}
-      <div className="flex items-center justify-end px-24  relative">
+      <div className="flex items-center justify-end lg:px-24  relative">
         <h1 className="text-[#333333] font-bold text-[16px]">Filter By :</h1>
         <button
           onClick={toggleFilterDropdown}

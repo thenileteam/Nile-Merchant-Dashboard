@@ -1,15 +1,22 @@
 import { useForm } from "react-hook-form";
 import { useCreateLocation } from "../../datahooks/location/useLocationhook";
  import {useStore} from '../../ZustandStores/generalStore'
+import { useFetchCountries } from "../GetCountries/GetCountries";
+
+// Country fetch function
+ 
 const AddLocation = ({setLocationOpen }) => {
   const {store} = useStore()
   const storeId = store?.id
+  const { data: countries, isLoading, isError } = useFetchCountries();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { addLocationToBackend, locationPending } = useCreateLocation();
+  const { addLocationToBackend, locationPending } = useCreateLocation(() => {
+    setLocationOpen(false)
+  });
   const submitLocation = (data) => {
     const locationData = {
       storeId,
@@ -19,7 +26,6 @@ const AddLocation = ({setLocationOpen }) => {
       city: data.city,
       country: data.country,
     };
-    console.log(locationData);
     addLocationToBackend(locationData)
   };
   return (
@@ -63,7 +69,7 @@ const AddLocation = ({setLocationOpen }) => {
                     required: "Location name is required",
                   })}
                   placeholder="Enter Location Name "
-                  className="border border-lightGreen rounded-md p-2 block w-full"
+                  className="border-2 border-lightGreen rounded-md p-2 block w-full"
                 />
                 {errors.locationName && (
                   <p className="text-red-500">{errors.locationName.message}</p>
@@ -76,12 +82,25 @@ const AddLocation = ({setLocationOpen }) => {
                 >
                   Country
                 </label>
-                <input
-                  type="text"
-                  {...register("country", { required: "Country is required" })}
-                  placeholder="Enter country"
+                
+                 <select
+                  {...register("country", { 
+                    required: "Country is required",
+                    validate: value => value !== "" || "Please select a country"
+                  })}
                   className="border border-lightGreen rounded-md p-2 block w-full"
-                />
+                  disabled={isLoading || isError}
+                >
+                  <option value="">Select a country</option>
+                  {countries?.map((country) => (
+                    <option key={country.name.common} value={country.name.common}>
+                      {country.name.common}
+                    </option>
+                  ))}
+                </select>
+
+                {isLoading && <p className="text-sm text-gray-500">Loading countries...</p>}
+                {isError && <p className="text-sm text-red-500">Error loading countries</p>}
                 {errors.country && (
                   <p className="text-red-500">{errors.country.message}</p>
                 )}
@@ -97,7 +116,7 @@ const AddLocation = ({setLocationOpen }) => {
                   type="text"
                   {...register("state", { required: "State is required" })}
                   placeholder="Enter Admin State"
-                  className="border border-lightGreen rounded-md p-2 block w-full"
+                  className="border-2 border-lightGreen rounded-md p-2 block w-full"
                 />
                 {errors.state && (
                   <p className="text-red-500">{errors.state.message}</p>
@@ -114,7 +133,7 @@ const AddLocation = ({setLocationOpen }) => {
                   type="text"
                   {...register("city", { required: "City is required" })}
                   placeholder="Enter City"
-                  className="border border-lightGreen rounded-md p-2 block w-full"
+                  className="border-2 border-lightGreen rounded-md p-2 block w-full"
                 />
                 {errors.city && (
                   <p className="text-red-500">{errors.city.message}</p>

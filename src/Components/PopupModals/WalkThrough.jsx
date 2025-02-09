@@ -66,14 +66,13 @@ const Walkthrough = () => {
       <Joyride
         steps={tourSteps}
         run={runTour}
-        continuous={true} // Continue to the next step automatically
-        // disableBeacon={true}
+        continuous={true}  
         beaconComponent={null}
-        showProgress={false} // Show progress as you go through the steps
-        showSkipButton={true} /// skip the tour
+        showProgress={false} 
+        showSkipButton={true} 
         callback={(data) => {
           if (data.status === "finished" || data.status === "skipped") {
-            setRunTour(false); // Stop the tour when it's finished or skipped
+            setRunTour(false);  
           }
         }}
         styles={{
@@ -81,7 +80,13 @@ const Walkthrough = () => {
             width: "228px",
              arrowColor: 'transparent'
           },
-          
+          beaconInner: {
+            backgroundColor: "black",  
+            borderColor: "black",  
+          },
+          beaconOuter: {
+            borderColor: "black",  
+          },
           buttonNext: {
             backgroundColor: "#004324",
             color: "#fff",

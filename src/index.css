@@ -8,6 +8,7 @@ body{
 
   font-family: 'Nunito', sans-serif;
   scroll-behavior: smooth;
+  background: #fff;
 }
 
 :root {
@@ -24,7 +25,7 @@ body{
     @apply transition-all delay-100 duration-200 ease-in;
   }
   .custom-scrollbar::-webkit-scrollbar {
-    width: 8px; 
+    width: 6px; 
   }
 }
 .text-gradient {

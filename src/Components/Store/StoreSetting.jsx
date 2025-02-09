@@ -5,16 +5,17 @@ import {
   useFetchStoreSettings,
 } from "@/datahooks/users/storeSettings";
 import { useState, useEffect } from "react";
+import {useFetchCountries} from "../GetCountries/GetCountries";
 
 const StoreSetting = () => {
   const { data } = useFetchStoreSettings();
-  console.log(data);
   const [showPopup, setShowPopup] = useState(false);
   const { isEditingStore, addStoreSettingsToBackend } = useEditStoreSettings(
-    // () => {
-    //   setShowPopup(false);
-    // }
+    () => {
+      setShowPopup(false);
+    }
   );
+  const { data: countries, isLoading, isError } = useFetchCountries();
 
   const {
     register,
@@ -37,10 +38,9 @@ const StoreSetting = () => {
       twitter: data?.twitter,
     }
   });
-  const socialMediaRegex = /^https?:\/\/(www\.)?(facebook|x|linkedin|instagram)\.com\/[A-Za-z0-9_.-]+$/i;
+ const socialMediaRegex = /^https?:\/\/(www\.)?(facebook|x|linkedin|instagram)\.com\/[a-zA-Z0-9_]+\/?$/i;
 
   const currentValues = getValues();
-
   useEffect(() => {
     if (data) {
       // Set values only if new data exists; preserve old data for unchanged fields
@@ -86,9 +86,9 @@ const StoreSetting = () => {
     <div className="mt-20">
       <div className="lg:max-w-[1000px] mx-auto">
         <form className=" ">
-          <div className="flex justify-center gap-28">
+          <div className="flex flex-col lg:flex-row justify-center lg:gap-28 gap-5 mx-auto px-4 lg:px-0">
             {/* First Section */}
-            <div className="space-y-5 bg-[#EAF4E2] border-[#8ED06C] border-2 max-w-[338px] p-4 rounded-lg">
+            <div className="space-y-4 bg-[#EAF4E2] border-[#8ED06C] w-full lg:max-w-[350px] border-2 p-4 rounded-lg">
               <div>
                 <label
                   htmlFor="name"
@@ -101,7 +101,7 @@ const StoreSetting = () => {
                   id="name"
                   {...register("name", { required: "Store Name is required" })}
                   placeholder="E.g; Gade’s store"
-                  className="mt-1 w-[296px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
                 {errors.name && (
                   <p className="text-sm text-red-700 my-1">
@@ -109,20 +109,34 @@ const StoreSetting = () => {
                   </p>
                 )}
               </div>
-              <div>
+               <div>
                 <label
                   htmlFor="country"
                   className="text-[16px] font-bold text-[#333333] flex items-center"
                 >
                   Country
-                </label>
-                <input
-                  type="text"
-                  id="country"
-                  {...register("country")}
-                  placeholder="Enter it here"
-                  className="mt-1 w-[296px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-                />
+                </label> 
+                <select
+                  {...register("country", { 
+                    required: "Country is required",
+                    validate: value => value !== "" || "Please select a country"
+                  })}
+                  className="border border-lightGreen rounded-md p-2 block w-full"
+                  disabled={isLoading || isError}
+                >
+                  <option value="">Select a country</option>
+                  {countries?.map((country) => (
+                    <option key={country.name.common} value={country.name.common}>
+                      {country.name.common}
+                    </option>
+                  ))}
+                </select>
+
+                {isLoading && <p className="text-sm text-gray-500">Loading countries...</p>}
+                {isError && <p className="text-sm text-red-500">Error loading countries</p>}
+                {errors.country && (
+                  <p className="text-red-500">{errors.country.message}</p>
+                )}
               </div>
               <div>
                 <label
@@ -136,7 +150,7 @@ const StoreSetting = () => {
                   id="state"
                   {...register("state", { required: "State is required" })}
                   placeholder="Enter it here"
-                  className="mt-1 w-[296px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
               <div>
@@ -151,13 +165,13 @@ const StoreSetting = () => {
                   id="city"
                   {...register("city", { required: "City is required" })}
                   placeholder="Enter it here"
-                  className="mt-1 w-[296px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
             </div>
 
             {/* Second Section social links */}
-            <div className="bg-[#EAF4E2] border-[#8ED06C] border-2 w-[360px] p-4 rounded-lg">
+            <div className="bg-[#EAF4E2] border-[#8ED06C] border-2 w-full lg:max-w-[360px] p-4 rounded-lg">
               <div>
                 <label
                   htmlFor="facebook"
@@ -178,8 +192,8 @@ const StoreSetting = () => {
                     },
                     { required: "facebook link is required" }
                   )}
-                  placeholder="https://www.facebook.com/Mynile.store"
-                  className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  placeholder="https://www.facebook.com/Mynile"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
                 {errors.facebook && (
                   <p className="text-sm text-red-700 my-1">
@@ -207,8 +221,8 @@ const StoreSetting = () => {
                     },
                     { required: "twitter link is required" }
                   )}
-                  placeholder="https://www.x.com/Mynile.store"
-                  className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  placeholder="https://www.x.com/Mynile"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
                 {errors.twitter && (
                   <p className="text-sm text-red-700 my-1">
@@ -236,8 +250,8 @@ const StoreSetting = () => {
                     },
                     { required: "instagram link is required" }
                   )}
-                  placeholder="https://www.instagram.com/Mynile.store"
-                  className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  placeholder="https://www.instagram.com/Mynile"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
                 {errors.instagram && (
                   <p className="text-sm text-red-700 my-1">
@@ -265,8 +279,8 @@ const StoreSetting = () => {
                     },
                     { required: "linkedin link is required" }
                   )}
-                  placeholder="https://www.linkedin.com/Mynile.store"
-                  className="mt-1 w-[316px] p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  placeholder="https://www.linkedin.com/Mynile"
+                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
                 />
                 {errors.linkedin && (
                   <p className="text-sm text-red-700 my-1">

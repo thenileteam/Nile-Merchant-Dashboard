@@ -5,7 +5,7 @@ import DownloadInvoice from "../PopupModals/DownloadInvoice";
 // import RequestPayout from "../PopupModals/RequestPayout";
 import { useFetchTransactions } from "@/datahooks/users/transactions";
 import { UserTableListLoader } from "../CustomLoaders/loaders";
-
+import{useBankDetails} from '../../datahooks/banks/usebankhook'
 const FinancialTable = () => {
   const { transactions, isFetching, isError } = useFetchTransactions();
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
@@ -27,6 +27,9 @@ const FinancialTable = () => {
     setPopupVisible(false);
     setSelectedText("");
   };
+
+  const {dbBanks}= useBankDetails()
+  console.log(dbBanks)
   return (
     <>
       {/* Filter section dropdown */}

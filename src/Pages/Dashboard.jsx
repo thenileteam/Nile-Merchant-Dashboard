@@ -34,16 +34,16 @@ const Dashboard = () => {
   const { isCollapsed } = useSidebarStore();
   //username
   const userName =
-    user && user.name ? user.name.split(" ")[0].toUpperCase() : "User";
+    user && user.name ? user.name.split(" ")[0].toUpperCase() : "";
   return (
     <>
       <div className={isCollapsed? 'flex-grow lg:ml-20 overflow-x-hidden':"flex-grow lg:ml-56 overflow-x-hidden"}>
         <Navbar title={`Welcome ${userName}`}  profilePic={user && user.image ? user.image : ""}/>
-        <div className="bg-[#F5F5F5] h-screen pt-[112px] pb-20 lg:overflow-x-hidden">
+        <div className=" h-screen pt-[112px] pb-20 lg:overflow-x-hidden">
           {/* Cards */}
           <UseCardLoader amount={6} className="mt-20 lg:mt-1 mb-6 px-2" loading={isFetchingDashboardData} error={dashboardDataisError}>
             <div
-              className={`mt-20 lg:mt-1 mb-6 px-2 ${
+              className={`lg:mt-1 mb-6 px-2 ${
                 isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[850px]"
               } mx-auto`}
             >
@@ -55,17 +55,13 @@ const Dashboard = () => {
                   bgColor="bg-[#FCDADF]"
                   data={`${formatNumber(dashboardData?.salesData?.totalSales)  || 0}`}
                 />
-                <div className="relative">
-                   
                   <DashboardBox
                     text="Total Expenses"
                     image={totalExpenseImg}
                     bgColor="bg-[#FFE8DF]"
                     data={totalExpense}
                   />
-                </div>
                 <div className="relative">
-                   
                   <DashboardBox
                     text="Total Profits"
                     image={totalProfit}

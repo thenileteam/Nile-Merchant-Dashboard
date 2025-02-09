@@ -54,9 +54,8 @@ const FinancialManagement = ({ data }) => {
   const navigate = useNavigate();
   return (
     <>
-      <div className="bg-[#F5F5F5] pb-20">
+      <div className=" pb-20">
         <div className="flex">
-          {/* <Sidebar /> */}
           {/* Navbar */}
           <div
             className={

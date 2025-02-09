@@ -117,7 +117,7 @@ const EditStaff = ({ staff }) => {
               {/* Permissions */}
               <h4 className="text-green font-bold mt-2">
                 Last Login:{" "}
-                <span className="text-lightBlack">{staff?.updatedAt}</span>
+                <span className="text-lightBlack">{staff?.updatedAt.split('T')[0]||'00:00pm'}</span>
               </h4>
               <h4 className="text-green font-bold mt-2">
                 Assigned Location:{" "}
@@ -143,13 +143,6 @@ const EditStaff = ({ staff }) => {
                             {role.description}
                           </p>
                         </div>
-                        {/* <label htmlFor={permission.name}>
-                          <input
-                            type="checkbox"
-                            {...register(`${permission.name}`)}
-                           
-                          />
-                        </label> */}
                         <Controller
                           name={`roles.${role.id}`}
                           control={control}
@@ -177,7 +170,6 @@ const EditStaff = ({ staff }) => {
                   type="submit"
                   className="bg-green text-white w-[150px] p-2 rounded-md"
                   disabled={isEditingStaff}
-                  // onClick={handleSubmit(onSubmit)}
                 >
                   {isEditingStaff ? "Saving..." : "Save Changes"}
                 </button>

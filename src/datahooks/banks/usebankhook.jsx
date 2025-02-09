@@ -88,7 +88,7 @@ const useBankMutations= (storeId) => {
   return{addBank, removeBank, isAdding, isRemoving}
 }
 //get stored banks
-const useStoredBanks = (storeId) => {
+ const useStoredBanks = (storeId) => {
   const {
     data: dbBanks,
     isFetching: dbBanksFetching,
@@ -113,7 +113,7 @@ const useStoredBanks = (storeId) => {
   return{dbBanks,dbBanksFetching,dbBanksLoading,dbBanksError}
 }
 // Custom Hook for Bank Details Management
-const useBankDetails = () => {
+export const useBankDetails = () => {
   const [formData, setFormData] = useState({
     accountName: "",
     accountNumber: "",
@@ -124,8 +124,6 @@ const useBankDetails = () => {
   const [resolvingAccount, setResolvingAccount] = useState(false);
   const [accountDetails, setAccountDetails] = useState(null);
   const{store} = useStore()
-  
-
   // Fetch banks from Paystack
   const { data: banks, isLoading: banksLoading, error: banksError } = useQuery({
     queryKey: ["banks-paystack"],
@@ -181,9 +179,9 @@ const useBankDetails = () => {
 
   // Handle form submission
   const{addBank, removeBank, isRemoving,isAdding}= useBankMutations(store?.id)
-//   return {
-//     deleteProduct: mutate,
-//   };
+   //   return {
+  //     deleteProduct: mutate,
+  //   };
 
   return {
     removeBank,

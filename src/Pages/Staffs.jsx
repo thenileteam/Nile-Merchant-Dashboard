@@ -45,6 +45,7 @@ const Staffs = () => {
 
           {showStaffPopUp && <AddStaff setShowStaffPopUp={setShowStaffPopUp} />}
         </section>
+      
       </div>
     </>
   );

@@ -248,7 +248,7 @@ const SignUp = () => {
                     e.preventDefault();
                     validateForm();
                   }}
-                  className="text-[#ffffff] flex justify-center disabled:bg-opacity-50 bg-[#004324] w-full py-4 text-center text-[14px] font-semibold rounded-md shadow-md"
+                  className="text-[#ffffff] flex justify-center disabled:bg-opacity-50 bg-green w-full py-4 text-center text-[14px] font-semibold rounded-md shadow-md"
                 >
                   Continue
                 </button>

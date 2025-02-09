@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom"; // Make sure this is imported if using React Router
+import { useNavigate } from "react-router-dom";  
 import { useCallback, useMemo, useState } from "react";
 import { toast } from "sonner";
 import ApiInstance from "../../Api/ApiInstance";
