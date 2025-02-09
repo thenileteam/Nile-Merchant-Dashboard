@@ -233,14 +233,14 @@ const App = () => {
             </ProtectRoutes>
           ),
         },
-        {
-          path: "/store/domainmanagement",
-          element: (
-            <ProtectRoutes>
-              <DomainMangaement />
-            </ProtectRoutes>
-          ),
-        },
+        // {
+        //   path: "/store/domainmanagement",
+        //   element: (
+        //     <ProtectRoutes>
+        //       <DomainMangaement />
+        //     </ProtectRoutes>
+        //   ),
+        // },
       ],
     },
   ]);
