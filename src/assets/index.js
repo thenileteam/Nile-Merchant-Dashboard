@@ -1,5 +1,6 @@
 import nilelogosolid from "./nilelogosolid.png";
-import nilelogowhite from "./nile-logo-thin-white.png";
+import nilelogogreen from "./nile-green.svg";
+import nilelogowhite from './nile-logo-thin-white.png'
 import notification from "./notification.png";
 import image from "./image.png";
 import transaction from "./transaction.png";
@@ -67,7 +68,7 @@ import dot3 from './dot3.svg'
 import eye from './Eye-icon.svg'
 import tadfarm from './tadFarm.jpg'
 import lashesIcon from './lashes-icon.svg'
-import addImage from './add-image.svg'
+import addImage from './addimage.svg'
 import placeholderImage from './placeholderImage.svg'
 import iconExpandCollapsible from './icon-expand-collapseBar.svg'
 import nileBagOnly from './nile-bagOnly-logo.svg'
@@ -83,6 +84,7 @@ import visa from './visa.svg'
 import master from './master.svg'
 export {
     nilelogosolid,
+    nilelogogreen,
     nilelogowhite,
     notification,
     image,

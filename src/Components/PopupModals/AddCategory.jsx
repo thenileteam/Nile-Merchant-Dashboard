@@ -36,10 +36,10 @@ const AddCategory = ({ setCategoryOpen}) => {
   };
  
   return (
-    <div className="bg-[rgba(0,0,0,0.6)] fixed inset-0 z-20">
-      <div className="max-w-[450px] mx-auto relative">
+    <div className="bg-[rgba(0,0,0,0.3)] fixed inset-0 z-20 backdrop-blur-sm">
+      <div className="bg-white w-[90%] lg:w-[35%] rounded-tl-lg rounded-bl-lg mx-auto fixed right-0 top-0 bottom-0">
         <button
-          className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"
+          className="absolute top-4 left-4 text-green rounded-lg"
           onClick={() => setCategoryOpen(false)}
         >
           <svg
@@ -58,7 +58,8 @@ const AddCategory = ({ setCategoryOpen}) => {
           </svg>
         </button>
 
-        <form action="" className="bg-white p-8 mt-32">
+        <form action="" className="bg-white p-6">
+          <h2 className="text-[32px] border-b border-lightBlack my-6">Add Category</h2>
           <div className=" ">
             <label htmlFor="categoryName" className="mb-2">
               Category Name
@@ -68,7 +69,7 @@ const AddCategory = ({ setCategoryOpen}) => {
               name="categoryName"
               value={categoryDetails.categoryName}
               placeholder="Apparel"
-              className="border border-lightGreen rounded-lg  p-3 block w-full"
+              className="border border-lightBlack rounded-lg  p-3 block w-full"
               onChange={handleCategoryChange}
               required
             />
@@ -86,7 +87,7 @@ const AddCategory = ({ setCategoryOpen}) => {
               name="categoryDescription"
               placeholder="input info about the category  "
               value={categoryDetails.categoryDescription}
-              className="border border-lightGreen rounded-lg  p-3 block w-full"
+              className="border border-lightBlack rounded-lg  p-3 block w-full"
               onChange={handleCategoryChange}
               required
             />
@@ -95,7 +96,7 @@ const AddCategory = ({ setCategoryOpen}) => {
             type="button"
             disabled={isAddingCategory}
             onClick={handleAddCategory}
-            className="bg-green text-white mt-8 font-semibold block mx-auto w-[120px] p-2 rounded-lg"
+            className="bg-green text-white mt-8 w-full font-semibold block mx-auto hover:bg-[#004315]  p-2 rounded-lg"
           >
             {isAddingCategory ? (
               <BiLoaderCircle className=" animate-spin duration-300 transition-all block mx-auto" />

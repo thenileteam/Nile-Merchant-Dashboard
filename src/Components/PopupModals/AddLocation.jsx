@@ -30,10 +30,10 @@ const AddLocation = ({setLocationOpen }) => {
   };
   return (
     <div>
-      <div className="bg-[rgba(0,0,0,0.6)] fixed inset-0 z-50">
-        <div className="max-w-[450px] mx-auto relative">
+      <div className="bg-[rgba(0,0,0,0.3)] fixed inset-0 z-50 backdrop-blur-sm">
+        <div className="fixed top-0 right-0 bottom-0 lg:w-[35%] w-[90%] bg-white rounded-bl-lg rounded-tl-lg  ">
           <button
-            className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"
+            className="absolute top-4 left-4 text-green rounded-lg"
             onClick={() => setLocationOpen(false)}
           >
             <svg
@@ -52,9 +52,10 @@ const AddLocation = ({setLocationOpen }) => {
             </svg>
           </button>
           <form
-            className="bg-white p-8 mt-[100px]  "
+            className=" p-8"
           >
-            <div className="grid grid-cols-2 gap-5">
+            <div className=" ">
+            <h2 className="text-[32px] border-b border-lightBlack my-6">Add New Branch</h2>
               {/* location Name */}
               <div className="">
                 <label
@@ -69,13 +70,13 @@ const AddLocation = ({setLocationOpen }) => {
                     required: "Location name is required",
                   })}
                   placeholder="Enter Location Name "
-                  className="border-2 border-lightGreen rounded-md p-2 block w-full"
+                  className="border border-lightBlack rounded-md p-2 block w-full"
                 />
                 {errors.locationName && (
                   <p className="text-red-500">{errors.locationName.message}</p>
                 )}
               </div>
-              <div className="">
+              <div className="mt-5">
                 <label
                   htmlFor="country"
                   className="mb-2 text-lightBlack font-bold"
@@ -88,7 +89,7 @@ const AddLocation = ({setLocationOpen }) => {
                     required: "Country is required",
                     validate: value => value !== "" || "Please select a country"
                   })}
-                  className="border border-lightGreen rounded-md p-2 block w-full"
+                  className="border border-lightBlack rounded-md p-2 block w-full"
                   disabled={isLoading || isError}
                 >
                   <option value="">Select a country</option>
@@ -105,7 +106,7 @@ const AddLocation = ({setLocationOpen }) => {
                   <p className="text-red-500">{errors.country.message}</p>
                 )}
               </div>
-              <div className="">
+              <div className="mt-5">
                 <label
                   htmlFor="state"
                   className="mb-2 text-lightBlack font-bold"
@@ -116,13 +117,13 @@ const AddLocation = ({setLocationOpen }) => {
                   type="text"
                   {...register("state", { required: "State is required" })}
                   placeholder="Enter Admin State"
-                  className="border-2 border-lightGreen rounded-md p-2 block w-full"
+                  className="border border-lightBlack rounded-md p-2 block w-full"
                 />
                 {errors.state && (
                   <p className="text-red-500">{errors.state.message}</p>
                 )}
               </div>
-              <div className="">
+              <div className="mt-5">
                 <label
                   htmlFor="city"
                   className="mb-2 text-lightBlack font-bold"
@@ -133,7 +134,7 @@ const AddLocation = ({setLocationOpen }) => {
                   type="text"
                   {...register("city", { required: "City is required" })}
                   placeholder="Enter City"
-                  className="border-2 border-lightGreen rounded-md p-2 block w-full"
+                  className="border border-lightBlack rounded-md p-2 block w-full"
                 />
                 {errors.city && (
                   <p className="text-red-500">{errors.city.message}</p>
@@ -143,7 +144,7 @@ const AddLocation = ({setLocationOpen }) => {
             {/* Buttons */}
             <button
               type="button"
-              className="bg-green text-white w-[150px] p-2 rounded-md block mx-auto mt-5"
+              className="bg-green text-white w-full p-2 rounded-md block mx-auto mt-5 hover:bg-[#004315]"
               disabled={locationPending}
               onClick={handleSubmit(submitLocation)}
             >

@@ -5,8 +5,10 @@ import {
   useFetchStoreSettings,
 } from "@/datahooks/users/storeSettings";
 import { useState, useEffect } from "react";
-import {useFetchCountries} from "../GetCountries/GetCountries";
-
+import { useFetchCountries } from "../GetCountries/GetCountries";
+import DashboardIntro from "../Dashboard/DashboardIntro";
+import EnableEdit from "./EnableEdit";
+import { useEnableEdit } from "@/ZustandStores/enableEdit";
 const StoreSetting = () => {
   const { data } = useFetchStoreSettings();
   const [showPopup, setShowPopup] = useState(false);
@@ -16,7 +18,7 @@ const StoreSetting = () => {
     }
   );
   const { data: countries, isLoading, isError } = useFetchCountries();
-
+  const { buttonStates, disableEditMode } = useEnableEdit();
   const {
     register,
     handleSubmit,
@@ -29,31 +31,32 @@ const StoreSetting = () => {
       name: data?.name,
       currency: data?.currency,
       country: data?.country,
-      city: data?.city,
+      address: data?.address,
       state: data?.state,
       logo: data?.logo,
       facebook: data?.facebook,
       instagram: data?.instagram,
       linkedin: data?.linkedin,
       twitter: data?.twitter,
-    }
+    },
   });
- const socialMediaRegex = /^https?:\/\/(www\.)?(facebook|x|linkedin|instagram)\.com\/[a-zA-Z0-9_]+\/?$/i;
+  const socialMediaRegex =
+    /^https?:\/\/(www\.)?(facebook|x|linkedin|instagram)\.com\/[a-zA-Z0-9_]+\/?$/i;
 
   const currentValues = getValues();
   useEffect(() => {
     if (data) {
       // Set values only if new data exists; preserve old data for unchanged fields
-      setValue('name', data.name || currentValues.name || "");
-      setValue('city', data.city || currentValues.city || "");
-      setValue('country', data.country || currentValues.country || "");
-      setValue('logo', data.logo || currentValues.logo || "");
-      setValue('state', data.state || currentValues.state || "");
-      setValue('facebook', data.facebook || currentValues.facebook || "");
-      setValue('instagram', data.instagram || currentValues.instagram || "");
-      setValue('linkedin', data.linkedin || currentValues.linkedin || "");
-      setValue('twitter', data.twitter || currentValues.twitter || "");
-      setValue('currency', data.currency || currentValues.currency || "");
+      setValue("name", data.name || currentValues.name || "");
+      setValue("city", data.city || currentValues.address || "");
+      setValue("country", data.country || currentValues.country || "");
+      setValue("logo", data.logo || currentValues.logo || "");
+      setValue("state", data.state || currentValues.state || "");
+      setValue("facebook", data.facebook || currentValues.facebook || "");
+      setValue("instagram", data.instagram || currentValues.instagram || "");
+      setValue("linkedin", data.linkedin || currentValues.linkedin || "");
+      setValue("twitter", data.twitter || currentValues.twitter || "");
+      setValue("currency", data.currency || currentValues.currency || "");
     }
   }, [data, currentValues, setValue]);
   const onSubmit = (formData) => {
@@ -61,7 +64,7 @@ const StoreSetting = () => {
       name: formData.name,
       currency: formData.currency,
       country: formData.country,
-      city: formData.city,
+      address: formData.address,
       state: formData.state,
       logo: formData.logo,
       facebook: formData.facebook,
@@ -82,66 +85,112 @@ const StoreSetting = () => {
     });
   };
 
+  const submitDetailsAndDisableEditing = () => {
+    handleSubmit(onSubmit);
+    disableEditMode("store");
+  };
   return (
-    <div className="mt-20">
-      <div className="lg:max-w-[1000px] mx-auto">
-        <form className=" ">
-          <div className="flex flex-col lg:flex-row justify-center lg:gap-28 gap-5 mx-auto px-4 lg:px-0">
-            {/* First Section */}
-            <div className="space-y-4 bg-[#EAF4E2] border-[#8ED06C] w-full lg:max-w-[350px] border-2 p-4 rounded-lg">
+    <div className="">
+      <div className="lg:max-w-[800px] mx-auto mt-[73px] ">
+        <article className="flex flex-col gap-4 lg:flex-row lg:gap-0 md:justify-between lg:items-center  ">
+          <DashboardIntro
+            introText={
+              buttonStates.store.editMode ? "Edit Mode" : "Store Information"
+            }
+          />
+          <EnableEdit text="Store Information" buttonKey="store" />
+        </article>
+        <form className="mt-8">
+          {/* First Section */}
+          <div className="space-y-4 w-full p-4 shadow-lg border rounded-md">
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-[16px] font-bold text-[#333333]"
+              >
+                Store Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                {...register("name", { required: "Store Name is required" })}
+                placeholder="E.g; Gade’s store"
+                className={`mt-1 w-full p-3 rounded-md border-lightBlack border bg-white text-sm text-gray-700 ${
+                  buttonStates.store.editMode ? "" : "cursor-not-allowed"
+                }`}
+                readOnly={!buttonStates.store.editMode}
+              />
+              {errors.name && (
+                <p className="text-sm text-red-700 my-1">
+                  {errors.name.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <label
+                htmlFor="address"
+                className="block text-[16px] font-bold text-lightBlack"
+              >
+                Address
+              </label>
+              <input
+                type="text"
+                id="address"
+                {...register("address", { required: "address is required" })}
+                placeholder="Enter it here"
+                className={`mt-1 w-full p-3 rounded-md border-lightBlack border bg-white text-sm text-gray-700 ${
+                  buttonStates.store.editMode ? "" : "cursor-not-allowed"
+                }`}
+              />
+            </div>
+            <article className="grid-container grid md:grid-cols-2 lg:gap-4 lg:items-center">
               <div>
-                <label
-                  htmlFor="name"
-                  className="block text-[16px] font-bold text-[#333333]"
-                >
-                  Store Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  {...register("name", { required: "Store Name is required" })}
-                  placeholder="E.g; Gade’s store"
-                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-                />
-                {errors.name && (
-                  <p className="text-sm text-red-700 my-1">
-                    {errors.name.message}
-                  </p>
-                )}
-              </div>
-               <div>
                 <label
                   htmlFor="country"
                   className="text-[16px] font-bold text-[#333333] flex items-center"
                 >
                   Country
-                </label> 
+                </label>
                 <select
-                  {...register("country", { 
+                  {...register("country", {
                     required: "Country is required",
-                    validate: value => value !== "" || "Please select a country"
+                    validate: (value) =>
+                      value !== "" || "Please select a country",
                   })}
-                  className="border border-lightGreen rounded-md p-2 block w-full"
+                  className={`border border-lightBlack rounded-md p-3 block w-full ${
+                    buttonStates.store.editMode ? "" : "cursor-not-allowed"
+                  }`}
                   disabled={isLoading || isError}
+                  readOnly={!buttonStates.store.editMode}
                 >
                   <option value="">Select a country</option>
                   {countries?.map((country) => (
-                    <option key={country.name.common} value={country.name.common}>
+                    <option
+                      key={country.name.common}
+                      value={country.name.common}
+                    >
                       {country.name.common}
                     </option>
                   ))}
                 </select>
 
-                {isLoading && <p className="text-sm text-gray-500">Loading countries...</p>}
-                {isError && <p className="text-sm text-red-500">Error loading countries</p>}
+                {isLoading && (
+                  <p className="text-sm text-gray-500">Loading countries...</p>
+                )}
+                {isError && (
+                  <p className="text-sm text-red-500">
+                    Error loading countries
+                  </p>
+                )}
                 {errors.country && (
                   <p className="text-red-500">{errors.country.message}</p>
                 )}
               </div>
+
               <div>
                 <label
                   htmlFor="state"
-                  className="text-[16px] font-bold text-[#333333] flex items-center"
+                  className="text-[16px] font-bold text-[#333333]"
                 >
                   State
                 </label>
@@ -150,29 +199,17 @@ const StoreSetting = () => {
                   id="state"
                   {...register("state", { required: "State is required" })}
                   placeholder="Enter it here"
-                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className={`mt-1 w-full p-3 rounded-md border-lightBlack border bg-white text-sm text-gray-700 ${
+                    buttonStates.store.editMode ? "" : "cursor-not-allowed"
+                  }`}
+                  readOnly={!buttonStates.store.editMode}
                 />
               </div>
-              <div>
-                <label
-                  htmlFor="city"
-                  className="block text-[16px] font-bold text-[#333333]"
-                >
-                  City
-                </label>
-                <input
-                  type="text"
-                  id="city"
-                  {...register("city", { required: "City is required" })}
-                  placeholder="Enter it here"
-                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
-                />
-              </div>
-            </div>
+            </article>
 
             {/* Second Section social links */}
-            <div className="bg-[#EAF4E2] border-[#8ED06C] border-2 w-full lg:max-w-[360px] p-4 rounded-lg">
-              <div>
+            <div className="w-full">
+              <div className="mt-4">
                 <label
                   htmlFor="facebook"
                   className="block text-[16px] font-bold text-[#333333]"
@@ -193,7 +230,10 @@ const StoreSetting = () => {
                     { required: "facebook link is required" }
                   )}
                   placeholder="https://www.facebook.com/Mynile"
-                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className={`mt-1 w-full p-3 rounded-md border-lightBlack border bg-white text-sm text-gray-700 ${
+                    buttonStates.store.editMode ? "" : "cursor-not-allowed"
+                  }`}
+                  readOnly={!buttonStates.store.editMode}
                 />
                 {errors.facebook && (
                   <p className="text-sm text-red-700 my-1">
@@ -201,7 +241,7 @@ const StoreSetting = () => {
                   </p>
                 )}
               </div>
-              <div>
+              <div className="mt-4">
                 <label
                   htmlFor="twitter"
                   className="block text-[16px] font-bold text-[#333333]"
@@ -222,7 +262,10 @@ const StoreSetting = () => {
                     { required: "twitter link is required" }
                   )}
                   placeholder="https://www.x.com/Mynile"
-                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className={`mt-1 w-full p-3 rounded-md border-lightBlack border bg-white text-sm text-gray-700 ${
+                    buttonStates.store.editMode ? "" : "cursor-not-allowed"
+                  }`}
+                  readOnly={!buttonStates.store.editMode}
                 />
                 {errors.twitter && (
                   <p className="text-sm text-red-700 my-1">
@@ -230,7 +273,7 @@ const StoreSetting = () => {
                   </p>
                 )}
               </div>
-              <div>
+              <div className="mt-4">
                 <label
                   htmlFor="instagram"
                   className="block text-[16px] font-bold text-[#333333]"
@@ -251,7 +294,10 @@ const StoreSetting = () => {
                     { required: "instagram link is required" }
                   )}
                   placeholder="https://www.instagram.com/Mynile"
-                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className={`mt-1 w-full p-3 rounded-md border-lightBlack border bg-white text-sm text-gray-700 ${
+                    buttonStates.store.editMode ? "" : "cursor-not-allowed"
+                  }`}
+                  readOnly={!buttonStates.store.editMode}
                 />
                 {errors.instagram && (
                   <p className="text-sm text-red-700 my-1">
@@ -259,7 +305,7 @@ const StoreSetting = () => {
                   </p>
                 )}
               </div>
-              <div>
+              <div className="mt-4">
                 <label
                   htmlFor="linkedin"
                   className="block text-[16px] font-bold text-[#333333]"
@@ -280,7 +326,10 @@ const StoreSetting = () => {
                     { required: "linkedin link is required" }
                   )}
                   placeholder="https://www.linkedin.com/Mynile"
-                  className="mt-1 w-full p-3 rounded-md border-[#8ED06C] border-2 bg-white text-sm text-gray-700 shadow-sm"
+                  className={`mt-1 w-full p-3 rounded-md border-lightBlack border bg-white text-sm text-gray-700 ${
+                    buttonStates.store.editMode ? "" : "cursor-not-allowed"
+                  }`}
+                  readOnly={!buttonStates.store.editMode}
                 />
                 {errors.linkedin && (
                   <p className="text-sm text-red-700 my-1">
@@ -291,7 +340,7 @@ const StoreSetting = () => {
               {/* radio buttons */}
               <div className="text-[#333] font-semibold mt-4">
                 Store Currency
-                <div className="border-2 border-[#8ED06C] rounded-md flex justify-between p-2">
+                <div className="border border-lightBlack rounded-md flex justify-between p-2">
                   <label htmlFor="currency-usd">USD</label>
                   <Controller
                     name="currency"
@@ -307,7 +356,7 @@ const StoreSetting = () => {
                     )}
                   />
                 </div>
-                <div className="border-2 border-[#8ED06C] mt-2 rounded-md flex justify-between p-2">
+                <div className="border border-lightBlack mt-2 rounded-md flex justify-between p-2">
                   <label htmlFor="currency-naira">NAIRA</label>
                   <Controller
                     name="currency"
@@ -325,19 +374,20 @@ const StoreSetting = () => {
                 </div>
               </div>
             </div>
+            <button
+              type="button"
+              className="bg-green text-white font-semibold ml-auto block p-2 w-[128px] rounded-md my-12"
+              onClick={submitDetailsAndDisableEditing}
+            >
+              Save Changes
+            </button>
           </div>
-          <button type="button" className="bg-green text-white font-semibold mx-auto block p-2 w-[128px] rounded-md mt-10" onClick={handleSubmit(onSubmit)}>
-            Save Changes
-          </button>
         </form>
       </div>
 
       {/* Save Changes Button */}
       <div className="mt-10">
-        <SaveChanges
-          isEditingStore={isEditingStore}
-          showPopup={showPopup}
-        />
+        <SaveChanges isEditingStore={isEditingStore} showPopup={showPopup} />
       </div>
     </div>
   );

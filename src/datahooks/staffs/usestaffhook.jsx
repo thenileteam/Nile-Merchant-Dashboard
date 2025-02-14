@@ -43,7 +43,7 @@ export const useCreateStaff = (onSuccessCallback) => {
     mutationFn: (data) => ApiInstance.post(`store/store/staffs`, data),
     onSuccess: (response) => {
       console.log(response.data);
-      toast.success("Staff added successfully");
+      toast.success("Staff added successfully.");
       if (onSuccessCallback) onSuccessCallback();
       queryClient.invalidateQueries(["staff", store?.id]);
       // console.log("Invalidated queries for staffs");
@@ -138,5 +138,36 @@ export const useDeleteStaff = (onSuccessDelete) => {
   return {
     deleteStaff: mutate,
     isDeletingStaff: isLoading,
+  };
+};
+
+
+
+//fetch single staff
+export const useFetchStaff = (staffId) => {
+  const{store} = useStore()
+  if (!store) return { data: [], isFetching: false, isError: false };
+  const { data, isFetching, isError, isLoading } = useQuery({
+    queryKey: ["singleStaff", store?.id],
+    queryFn: async () => {
+      try {
+        const res = await ApiInstance.get(`/store/store/staffs/single/${staffId}`);
+        console.log(res.data?.responseObject);
+        return res.data?.responseObject || [];
+      } catch (error) {
+        console.error("Error fetching staff:", error);
+        throw error;
+      }
+    },
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    retry: 3,
+  });
+
+  return {
+    staff: data,
+    isFetching,
+    isError,
+    isLoading,
   };
 };

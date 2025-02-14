@@ -52,8 +52,8 @@ export function ExpenseForm({ open, onClose, setDisplaySuccessModal }) {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="bg-white ">
-        <div className="sm:max-w-[425px] p-6">
+      <DialogContent className="bg-white">
+        <div className="sm:max-w-[425px] p-6 ">
           <button
             onClick={onClose}
             className="absolute right-4 border-[1.5px] border-[#8ED06C]  bg-white  top-4 rounded-md size-[30px] flex items-center justify-center opacity-70 ring-offset-background transition-opacity hover:opacity-100"

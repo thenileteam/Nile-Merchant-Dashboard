@@ -1,28 +1,19 @@
 /* eslint-disable no-unused-vars */
-import { Link } from "react-router-dom";
-import {
-  store,
-  totalExpenseImg,
-  totalInventory,
-  totalRevenue,
-  totalCustomers,
-  totalOrders,
-  totalProfit,
-} from "../assets";
-// import Policy from '../Components/PopupModals/Policy'
 import DashoardTabel from "../Components/Dashboard/DashoardTabel";
 import {
   useFetchDashboardData,
   useFetchStoreCustomers,
   useFetchUser,
 } from "../datahooks/users/userhooks";
-import {formatNumber} from '../utils/formatNumber'
+import { Link } from 'react-router-dom'
+import { formatNumber } from "../utils/formatNumber";
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 import { useFetchProducts } from "@/datahooks/products/productshooks";
 import { UseCardLoader } from "@/Components/CustomLoaders/loaders";
 import { useFetchExpense } from "@/datahooks/users/expensehook";
-import Navbar from "@/Components/Navbar/Navbar";
+import AddProduct1 from "../Components/PopupModals/AddProduct1";
+import DashboardIntro from "../Components/Dashboard/DashboardIntro";
 const Dashboard = () => {
   //users image
   const { user } = useFetchUser();
@@ -35,56 +26,77 @@ const Dashboard = () => {
   //username
   const userName =
     user && user.name ? user.name.split(" ")[0].toUpperCase() : "";
+  const dashboardRevenue =
+    dashboardData?.salesData?.totalSales > totalExpense
+      ? dashboardData?.salesData?.totalSales - totalExpense
+      : 0;
   return (
     <>
-      <div className={isCollapsed? 'flex-grow lg:ml-20 overflow-x-hidden':"flex-grow lg:ml-56 overflow-x-hidden"}>
-        <Navbar title={`Welcome ${userName}`}  profilePic={user && user.image ? user.image : ""}/>
-        <div className=" h-screen pt-[112px] pb-20 lg:overflow-x-hidden">
-          {/* Cards */}
-          <UseCardLoader amount={6} className="mt-20 lg:mt-1 mb-6 px-2" loading={isFetchingDashboardData} error={dashboardDataisError}>
+      <div
+        className={`mt-[70px]
+          ${
+            isCollapsed
+              ? "  lg:ml-20 overflow-x-hidden"
+              : "  lg:ml-56 overflow-x-hidden "
+          }
+        `}
+      >
+        <div className="lg:overflow-x-hidden">
+          <UseCardLoader
+            amount={4}
+            className="mt-20 lg:mt-1 mb-6 px-2"
+            loading={isFetchingDashboardData}
+            error={dashboardDataisError}
+          >
             <div
-              className={`lg:mt-1 mb-6 px-2 ${
-                isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[850px]"
+              className={`mb-6 ${
+                isCollapsed ? "lg:max-w-[1120px]" : "lg:max-w-[950px]"
               } mx-auto`}
             >
-              <div className="grid gap-x-8 gap-y-4 grid-cols-2 md:grid-cols-3">
-                <DashboardBox
-                  text="Revenue"
-                  naira="&#8358;"
-                  image={totalRevenue}
-                  bgColor="bg-[#FCDADF]"
-                  data={`${formatNumber(dashboardData?.salesData?.totalSales)  || 0}`}
+              {/* welcome message */}
+              <article className="flex justify-between flex-col gap-4 lg:gap-0 lg:flex-row">
+                <DashboardIntro
+                  introText={`Welcome ${userName}`}
+                  overview="Here's an overview of your inventory system"
                 />
-                  <DashboardBox
-                    text="Total Expenses"
-                    image={totalExpenseImg}
-                    bgColor="bg-[#FFE8DF]"
-                    data={totalExpense}
-                  />
+                <Link to="products">
+                  <AddProduct1 />
+                </Link>
+              </article>
+              <div className="grid gap-x-2 gap-y-3 grid-cols-2 md:grid-cols-4 mt-10">
+                {/* Cards */}
                 <div className="relative">
                   <DashboardBox
-                    text="Total Profits"
-                    image={totalProfit}
-                    bgColor="bg-[#FFDBFA]"
-                    data={totalRevenue>totalExpense?totalRevenue-totalExpense: 0}
+                    text="Available Balance"
+                    naira="&#8358;"
+                    spacing="my-6"
+                    data={formatNumber(dashboardRevenue)}
                   />
                 </div>
                 <DashboardBox
+                  text="Total Sales"
+                  naira="&#8358;"
+                  spacing="my-6"
+                  data={`${
+                    formatNumber(dashboardData?.salesData?.totalSales) || 0
+                  }`}
+                />
+                <DashboardBox
+                  text="Total Payouts"
+                  spacing="my-6"
+                  data={totalExpense}
+                />
+
+                {/* <DashboardBox
                   text="Total Orders"
                   image={totalOrders}
                   bgColor="bg-[#F3D1FF]"
                   data={dashboardData?.orders?.totalOrders}
-                />
-                <DashboardBox
-                  text="Total Inventory"
-                  image={totalInventory}
-                  bgColor="bg-[#E7FFD4]"
-                  data={productLength}
-                />
+                /> */}
+
                 <DashboardBox
                   text="Total Customers"
-                  image={totalCustomers}
-                  bgColor="bg-[#D8FFEE]"
+                  spacing="my-6"
                   data={customerLength}
                 />
               </div>
@@ -92,13 +104,12 @@ const Dashboard = () => {
           </UseCardLoader>
 
           {/* Line */}
-          <div
+          {/* <div
             className={`${
               isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[860px]"
-            } mx-auto px-2  `}
-          >
+            } mx-auto px-2  `}>
             <div className="border-2 border-white shadow-[0px_4px_10px_rgba(0,0,0,0.3)]"></div>
-          </div>
+          </div> */}
 
           {/* <div className="px-36 mt-10 space-y-7">
               <div className="flex items-center justify-between">

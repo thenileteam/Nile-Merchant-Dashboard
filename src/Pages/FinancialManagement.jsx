@@ -25,6 +25,7 @@ import { useFetchTransactions } from "@/datahooks/users/transactions";
 import { useFetchExpense } from "@/datahooks/users/expensehook";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 import RequestPayout from "../Components/PopupModals/RequestPayout";
+import DashboardIntro from "../Components/Dashboard/DashboardIntro";
 const FinancialManagement = ({ data }) => {
   const { user } = useFetchUser();
   const { isCollapsed } = useSidebarStore();
@@ -54,101 +55,22 @@ const FinancialManagement = ({ data }) => {
   const navigate = useNavigate();
   return (
     <>
-      <div className=" pb-20">
-        <div className="flex">
-          {/* Navbar */}
+      <div className="mt-[73px]">
+        <div
+          className={
+            isCollapsed
+              ? " lg:ml-20 overflow-x-hidden"
+              : "lg:ml-56 overflow-x-hidden"
+          }
+        >
+          {/* Cards */}
           <div
-            className={
-              isCollapsed
-                ? "flex-grow lg:ml-20 overflow-x-hidden"
-                : "flex-grow lg:ml-56 overflow-x-hidden"
-            }
+            className={`${
+              isCollapsed ? "max-w-[1100px]" : "max-w-[950px]"
+            } mx-auto`}
           >
-            <Navbar
-              title="Financial Management"
-              icon={bitcoingraph}
-              profilePic={user && user.image ? user.image : ""}
-            />
-            {/* Cards */}
-            <div
-              className={`${
-                isCollapsed ? "max-w-[1000px]" : "max-w-[900px]"
-              } p-6 mt-28 mx-auto`}
-            >
-              <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-2 lg:gap-10">
-                <DashboardBox
-                  text="Total Revenue"
-                  imgWidth="w-9"
-                  bgColor="bg-[#FCDADF]"
-                  width="w-full"
-                  image={bitcoinbag}
-                  data={totalRevenue}
-                />
-                <DashboardBox
-                  text="Total Expenses"
-                  bgColor="bg-[#FFE8DF]"
-                  imgWidth="w-9"
-                  width="w-full"
-                  image={bitcoin}
-                  data={totalExpense}
-                />
-                <DashboardBox
-                  text="Total Revenue For The Month"
-                  bgColor="bg-[#FFDBFA]  "
-                  width="w-full"
-                  image={bitcoindown}
-                  imgWidth="w-9"
-                  data={totalRevenueForMonth}
-                />
-              </div>
-            </div>
-
-            {emptyState && (
-              <div className="px-24 mt-32  ">
-                <div>
-                  <img
-                    src={moneysend}
-                    alt=""
-                    className="flex justify-center mx-auto"
-                  />
-                  <h1 className="text-[24px] font-extrabold text-center">
-                    Nothing To See Yet
-                  </h1>
-                  <p className="text-[#6E6E6E] font-bold text-center">
-                    Go Make sales and request for your funds here
-                  </p>
-                </div>
-                <div className="flex justify-center mt-3">
-                  <Link to="/dashboard">
-                    <button className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md">
-                      Go To Dashboard
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            )}
-            <div className="px-24 mt-6 w-full flex justify-between ">
-              <div className="flex gap-1 items-center">
-                {tabs.map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => {
-                      setTabs(
-                        tabs.map((t) => ({ ...t, active: t.id === tab.id }))
-                      );
-                      navigate(`?expense=${tab.id === 2 ? true : false}`);
-                    }}
-                    className={`${
-                      searchParams.get("expense") ===
-                      `${tab.id === 2 ? true : false}`
-                        ? "bg-[#004324] text-[#ffffff] p-2 rounded-md"
-                        : "bg-[#ffffff] text-[#004324] p-2 rounded-md"
-                    }`}
-                  >
-                    {tab.name}
-                  </button>
-                ))}
-              </div>
+            <article className="flex items-center justify-between">
+              <DashboardIntro introText="Financial Management" />
               {searchParams.get("expense") === "true" ? (
                 <button
                   onClick={() => setOpen(true)}
@@ -160,30 +82,97 @@ const FinancialManagement = ({ data }) => {
               ) : (
                 <RequestPayout />
               )}
-              <ExpenseForm
-                open={open}
-                onClose={() => setOpen(false)}
-                setDisplaySuccessModal={setDisplaySuccessModal}
+            </article>
+            <div className="mt-10 grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-2 lg:gap-10">
+              <DashboardBox
+                text="Total Revenue"
+                spacing="my-4"
+                width="w-full"
+                data={totalRevenue}
               />
-            </div>
-            <div>
-              {displaySuccessModal && (
-                <div className="fixed top-0 z-[100000] left-0 w-full h-full bg-black/30 flex justify-center items-center">
-                  <div className="bg-white flex flex-col items-center  p-4 rounded-md">
-                    <h1 className="text-[16px] font-bold">
-                      Expense Added Successfully
-                    </h1>
+              <DashboardBox
+                text="Total Expenses"
+                spacing="my-4"
+                width="w-full"
+                data={totalExpense}
+              />
+              <DashboardBox
+                text="Total Revenue For The Month"
+                spacing="my-4"
+                width="w-full"
+                data={totalRevenueForMonth}
+              />
+
+              {emptyState && (
+                <div className="px-24 mt-32  ">
+                  <div>
                     <img
-                      src="/src/assets/tick-double-03.png"
-                      className=" mt-4 size-10 object-cover"
+                      src={moneysend}
                       alt=""
+                      className="flex justify-center mx-auto"
                     />
+                    <h1 className="text-[24px] font-extrabold text-center">
+                      Nothing To See Yet
+                    </h1>
+                    <p className="text-[#6E6E6E] font-bold text-center">
+                      Go Make sales and request for your funds here
+                    </p>
+                  </div>
+                  <div className="flex justify-center mt-3">
+                    <Link to="/dashboard">
+                      <button className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md">
+                        Go To Dashboard
+                      </button>
+                    </Link>
                   </div>
                 </div>
               )}
-              {searchParams.get("expense") === "false" && <FinancialTable />}
-              {searchParams.get("expense") === "true" && <ExpensesTable />}
+              <div className="mt-6 w-full flex justify-between ">
+                <div className="flex gap-1">
+                  {tabs.map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => {
+                        setTabs(
+                          tabs.map((t) => ({ ...t, active: t.id === tab.id }))
+                        );
+                        navigate(`?expense=${tab.id === 2 ? true : false}`);
+                      }}
+                      className={`${
+                        searchParams.get("expense") ===
+                        `${tab.id === 2 ? true : false}`
+                          ? "bg-[#004324] text-[#ffffff] p-2 rounded-md"
+                          : "bg-[#ffffff] text-[#004324] p-2 rounded-md"
+                      }`}
+                    >
+                      {tab.name}
+                    </button>
+                  ))}
+                </div>
+                <ExpenseForm
+                  open={open}
+                  onClose={() => setOpen(false)}
+                  setDisplaySuccessModal={setDisplaySuccessModal}
+                />
+              </div>
             </div>
+            <div></div>
+            {displaySuccessModal && (
+              <div className="fixed top-0 z-[100000] left-0 w-full h-full bg-black/30 flex justify-center items-center">
+                <div className="bg-white flex flex-col items-center  p-4 rounded-md">
+                  <h1 className="text-[16px] font-bold">
+                    Expense Added Successfully
+                  </h1>
+                  <img
+                    src="/src/assets/tick-double-03.png"
+                    className=" mt-4 size-10 object-cover"
+                    alt=""
+                  />
+                </div>
+              </div>
+            )}
+            {searchParams.get("expense") === "false" && <FinancialTable />}
+            {searchParams.get("expense") === "true" && <ExpensesTable />}
           </div>
         </div>
       </div>

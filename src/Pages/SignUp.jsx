@@ -18,7 +18,10 @@ const SignUp = () => {
     passwordConfirm: "",
     storeName: "",
     storeURL: "",
-    marketing_accept: false,
+    marketingAccept: false,
+    isStaff: false,
+    staffId: '',
+    branchId:''
   });
 
   const { signUpMutate, signUpIsPending } = useSignUserUp();
@@ -51,9 +54,9 @@ const SignUp = () => {
 
   // Validate form before proceeding to Step 2
   const validateForm = () => {
-    const { name, email, storeName, marketing_accept } = formData;
+    const { name, email, storeName, marketingAccept } = formData;
     //check if checkbox is clicked too
-    if (!name || !email || !storeName || marketing_accept !== true) {
+    if (!name || !email || !storeName || marketingAccept !== true) {
       toast.error("Please fill in all fields before proceeding.");
       return false;
     }
@@ -79,7 +82,7 @@ const SignUp = () => {
         passwordConfirm: "",
         storeName: "",
         storeURL: "",
-        marketing_accept: false,
+        marketingAccept: false,
       });
     }
   }, [step]);
@@ -218,8 +221,8 @@ const SignUp = () => {
                   <input
                     type="checkbox"
                     id="MarketingAccept"
-                    name="marketing_accept"
-                    checked={formData.marketing_accept}
+                    name="marketingAccept"
+                    checked={formData.marketingAccept}
                     onChange={handleChange}
                     className="size-5 rounded-md border-gray-200 bg-white shadow-sm"
                   />

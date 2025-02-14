@@ -4,7 +4,7 @@ import Skeleton from "react-loading-skeleton";
 const CustomAwaitTable = ({ children, isLoading, error }) => {
   if (isLoading) {
     return (
-      <div className=" mt-10 flex flex-col gap-5 w-full min-w-48">
+      <div className=" mt-[73px] flex flex-col gap-5 w-full lg:w-[48px]">
         <Skeleton className=" w-full h-[60px]" />
         <Skeleton className=" w-full h-[60px]" />
         <Skeleton className=" w-full h-[60px]" />

@@ -6,27 +6,28 @@ import {
 } from "../../datahooks/products/productshooks";
 import { addsquare, addImage } from "../../assets";
 import { BiLoaderCircle } from "react-icons/bi";
-// import UploadImage from "../UploadImage/UploadImage";
+import UploadImage from "../UploadImage/UploadImage";
 import { validateForm } from "../../utils/formatdate";
 import { FaSearch } from "react-icons/fa";
+import { FiArrowLeft } from "react-icons/fi";
 import CustomProductSizeSelector from "../Products/CustomProductSizeSelector";
 import { toast } from "sonner";
 import AssignLocation from "../StaffManagement/AssignLocation";
 import { useAssignLocationStore } from "@/ZustandStores/locationStore";
-const AddProduct1 = () => {
+const AddProduct1 = ({ isPopupOpen, setPopupOpen }) => {
+  console.log(setPopupOpen)
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
-    setIsPopupOpen(false); // close the popup after adding product
+    setPopupOpen(false); // close the popup after adding product
   });
   const { categories } = useFetchCategories();
   // State to control the popup visibility and animation
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isFinalConfirmationOpen, setIsFinalConfirmationOpen] = useState(false);
   const [fadeOut, setFadeOut] = useState(false); // State for fade-out animation
   const store = JSON.parse(localStorage.getItem("store"));
   //to access location
-  const { formStates} = useAssignLocationStore()
-  const selectedLocationId = formStates['addProduct'].selectedLocation?.id;
+  const { formStates } = useAssignLocationStore();
+  const selectedLocationId = formStates["addProduct"].selectedLocation?.id;
   // Form fields state
   const [productDetails, setProductDetails] = useState({
     size: "",
@@ -46,15 +47,12 @@ const AddProduct1 = () => {
     // packaging: "",
     handlingTime: "",
   });
-  // Function to toggle the main popup visibility
-  const togglePopup = () => {
-    setIsPopupOpen(!isPopupOpen);
-  };
+  
   // Function to show the confirmation popup and hide the main popup
   const showConfirmation = () => {
     setFadeOut(true); // Start fade-out animation for the main popup
     setTimeout(() => {
-      setIsPopupOpen(false); // Close the main popup after the animation
+      setPopupOpen(false); // Close the main popup after the animation
       setIsConfirmationOpen(true); // Open the confirmation popup
       setFadeOut(false); // Reset fade-out state
     }, 200); // Match this duration with your CSS transition duration
@@ -88,7 +86,7 @@ const AddProduct1 = () => {
         name: productDetails.name,
         storeId: store.id,
         userId: store.userId,
-        locationId:selectedLocationId,
+        locationId: selectedLocationId,
         length: productDetails.dimensions.length,
         width: productDetails.dimensions.width,
         description: productDetails.description,
@@ -117,7 +115,6 @@ const AddProduct1 = () => {
     setFadeOut(true);
     setTimeout(async () => {
       setIsConfirmationOpen(false);
-
       setFadeOut(false);
 
       try {
@@ -125,7 +122,7 @@ const AddProduct1 = () => {
         const dataToBackend = {
           name: productDetails.name,
           storeId: store.id,
-          locationId:selectedLocation.id,
+          locationId: selectedLocation.id,
           userId: store.userId,
           length: productDetails.dimensions.length,
           width: productDetails.dimensions.width,
@@ -157,7 +154,6 @@ const AddProduct1 = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-
     if (name.startsWith("dimensions.")) {
       const key = name.split(".")[1];
       setProductDetails((prev) => ({
@@ -182,8 +178,8 @@ const AddProduct1 = () => {
   return (
     <>
       {/* Button to trigger the popup */}
-      <button onClick={togglePopup}>
-        <h1 className="flex font-bold gap-1 items-center border-[#004324] bg-[#004324] text-[#ffffff] duration-500 border-2 rounded-md w-[150px] p-2 h-[48px]">
+      {!isPopupOpen&&<button onClick={()=>setPopupOpen(true)}>
+        <h1 className="flex font-light gap-1 items-center border-[#004324] bg-[#004324] text-[#ffffff] duration-500 border-2 rounded-md w-[140px] p-1 h-[38px]">
           <svg
             width="25"
             height="24"
@@ -206,224 +202,108 @@ const AddProduct1 = () => {
           </svg>
           Add Product
         </h1>
-      </button>
+      </button>}
 
       {isPopupOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50  ">
-          <div className="bg-white p-10 rounded-lg shadow-lg max-w-3xl w-full relative">
-            {/* Cancel Button in the top-right corner */}
-            <button
-              className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"
-              onClick={() => setIsPopupOpen(false)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-            {/* Popup Content */}
-            <form>
-              <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-12 ">
-                <div className="space-y-3">
-                  <div className="flex flex-col lg:flex-row lg:items-center gap-5 ">
-                    <div className=" relative mb-4">
-                      <label
-                        htmlFor="category"
-                        className="block text-[16px] font-bold text-[#333333]"
-                      >
-                        Product Category
-                      </label>
-                      <FaSearch className="absolute top-[37px] right-3 text-[#6e6e6e] bg-zinc-100 w-4 h-5" />
-                      <input
-                        id="category"
-                        name="categoryName"
-                        type="text"
-                        list="categories"
-                        value={productDetails.categoryName}
-                        onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] appearance-none rounded-md p-2"
-                        placeholder="E.g:Apparel"
-                      />
-                      {/* pop up for categories list if there are any */}
-                      {categories?.length > 0 ? (
-                        <datalist
-                          id="categories"
-                          className="h-[250px] overflow-y-scroll"
-                        >
-                          {categories?.map((item, i) => (
-                            <option key={i} className="list-none">
-                              {item.name}
-                            </option>
-                          ))}
-                        </datalist>
-                      ) : (
-                        <p>no categories found</p>
-                      )}
-                    </div>
-
-                    <div className="mb-4">
-                      <label
-                        htmlFor="name"
-                        className="block text-[16px] font-bold text-[#333333]"
-                      >
-                        Product Name
-                      </label>
-                      <input
-                        id="name"
-                        name="name"
-                        type="text"
-                        value={productDetails.name}
-                        onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
-                        placeholder="E.g:Floki"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-5">
-                    <div className="mb-4">
-                      <label
-                        htmlFor="details"
-                        className="block text-[16px] font-bold text-[#333333]"
-                      >
-                        Product Details
-                      </label>
-                      <input
-                        id="details"
-                        name="description"
-                        type="text"
-                        value={productDetails.description}
-                        onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
-                        placeholder="Input Details"
-                      />
-                    </div>
-
-                    <div className="mb-4">
-                      <label
-                        htmlFor="stockQuantity"
-                        className="block text-[16px] font-bold text-[#333333]"
-                      >
-                        Stock Quantity
-                      </label>
-                      <input
-                        id="stockQunatity"
-                        name="stock"
-                        type="text"
-                        value={productDetails.stock}
-                        onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
-                        placeholder="321"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="">
-                    <CustomProductSizeSelector
-                      productDetails={productDetails}
-                      setProductDetails={setProductDetails}
-                    />
-                  </div>
-                  <div>
-                    <div className="relative">
-                      <label
-                        htmlFor="color"
-                        className="block text-[16px] font-bold text-[#333333]"
-                      >
-                        Product Color
-                      </label>
-                      {/* dropdown and manual input fields */}
-                      <div className="flex flex-col w-full">
-                        <input
-                          list="color-options" // Links to the datalist below
-                          name="productColorName"
-                          id="color"
-                          value={productDetails.productColorName}
-                          onChange={handleInputChange}
-                          className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
-                          placeholder="Select or enter a color"
-                        />
-                        {/* Datalist with predefined options */}
-                        <datalist id="color-options">
-                          <option value="Red" />
-                          <option value="Blue" />
-                          <option value="Pink" />
-                        </datalist>
-                      </div>
-
-                      <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
-                        <img src={addsquare} alt="add product icon" />
-                      </span>
-                    </div>
-                  </div>
-                  {/* <div className="mb-4">
+       
+        <div className="max-w-[800px] mx-auto w-full relative">
+          {/* Popup Content */}
+          <div className="flex gap-2 items-center cursor-pointer" onClick={()=>setPopupOpen(false)}>
+            <FiArrowLeft />
+          <h2 className="text-green text-[32px]  ">Add Product</h2>
+          </div>
+          <form>
+            <div className="container mt-8">
+              <div className="border rounded-md shadow-sm flex flex-col lg:flex-row p-4">
+                <div className="w-full">
+                  <div className="relative mb-4">
                     <label
-                      htmlFor="weight"
-                      className="block text-[16px] font-bold text-[#333333]"
+                      htmlFor="category"
+                      className="block text-[16px] font-bold text-lightBlack"
                     >
-                      Shipping Weight (In KG)
+                      Product Category
+                    </label>
+                    <FaSearch className="absolute top-[37px] right-3 text-[#6e6e6e] bg-zinc-100 w-4 h-5" />
+                    <input
+                      id="category"
+                      name="categoryName"
+                      type="text"
+                      list="categories"
+                      value={productDetails.categoryName}
+                      onChange={handleInputChange}
+                      className="w-full border-[#6e6e6e] border bg-[#f5f5f5] appearance-none rounded-md p-2"
+                      placeholder="E.g:Apparel"
+                    />
+                    {/* pop up for categories list if there are any */}
+                    {categories?.length > 0 ? (
+                      <datalist
+                        id="categories"
+                        className="h-[250px] overflow-y-scroll"
+                      >
+                        {categories?.map((item, i) => (
+                          <option key={i} className="list-none">
+                            {item.name}
+                          </option>
+                        ))}
+                      </datalist>
+                    ) : (
+                      <p>no categories found</p>
+                    )}
+                  </div>
+
+                  <div className="mb-4">
+                    <label
+                      htmlFor="name"
+                      className="block text-[16px] font-bold text-lightBlack"
+                    >
+                      Product Name
                     </label>
                     <input
-                      id="weight"
-                      name="shippingWeight"
+                      id="name"
+                      name="name"
                       type="text"
-                      value={productDetails.shippingWeight}
+                      value={productDetails.name}
                       onChange={handleInputChange}
-                      className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
-                      placeholder="E.g:20kg"
+                      className="w-full border-[#6e6e6e] border bg-[#F5F5F5] rounded-md p-2"
+                      placeholder="E.g:Floki"
                     />
-                  </div> */}
-                  {/* <div>
-                    <h1 className="block text-[16px] font-bold text-[#333333]">
-                      Offer Free Shipping ?
-                    </h1>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between bg-[#F5F5F5] border-[#8ED06C] border-2 p-2 rounded-md">
-                        <h1 className="text-gray-500 font-bold">Yes</h1>
-                        <div className="flex items-center">
-                          &#8203;
-                          <input
-                            type="checkbox"
-                            value={productDetails.freeShipping}
-                            onChange={handleInputChange}
-                            className="size-4 rounded border-gray-300"
-                            id="Option2"
-                          />
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between bg-[#F5F5F5] border-[#8ED06C] border-2 p-2 rounded-md">
-                        <h1 className="text-gray-500 font-bold">No</h1>
-                        <div className="flex items-center">
-                          &#8203;
-                          <input
-                            type="checkbox"
-                            value={productDetails.freeShipping}
-                            onChange={handleInputChange}
-                            className="size-4 rounded border-gray-300"
-                            id="Option2"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div> */}
-                </div>
-                <div className="space-y-3">
+                  </div>
+
                   <div className="mb-4">
+                    <label
+                      htmlFor="details"
+                      className="block text-[16px] font-bold text-[#333333]"
+                    >
+                      Product Description
+                    </label>
+                    <textarea
+                      id="details"
+                      name="description"
+                      type="text"
+                      value={productDetails.description}
+                      onChange={handleInputChange}
+                      className="w-full border border-[#6e6e6e] bg-[#f5f5f5] rounded-md p-2 min-h-[150px]"
+                      placeholder="Input Details"
+                    ></textarea>
+                  </div>
+                </div>
+                {/* <UploadImage
+                  image={addImage}
+                  parentStyle={"lg:w-[50%] border border-red-700"}
+                  style="w-full h-[250px] rounded-xl"
+                /> */}
+              </div>
+
+              {/* second section */}
+              <article className="border mt-6 rounded-md shadow-md px-4 py-5">
+                <h3 className='pb-5 font-bold'>Pricing and Quantity</h3>
+                <div className="flex-container flex flex-col gap-3 lg:flex-row lg:gap-4">
+                  <div className="mb-4 lg:w-[50%]">
                     <label
                       htmlFor="price"
                       className="block text-[16px] font-bold text-[#333333]"
                     >
-                      Product Real Price
+                      Product Price
                     </label>
                     <input
                       id="price"
@@ -431,16 +311,16 @@ const AddProduct1 = () => {
                       type="number"
                       value={productDetails.price}
                       onChange={handleInputChange}
-                      className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                      className="w-full border-[#6e6e6e] border bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
                   </div>
-                  <div className="mb-4">
+                  <div className="mb-4 lg:w-[50%]">
                     <label
                       htmlFor="discountedPrice"
                       className="block text-[16px] font-bold text-[#333333]"
                     >
-                      Discounted Price
+                      Discount %
                     </label>
                     <input
                       id="discountedPrice"
@@ -448,74 +328,133 @@ const AddProduct1 = () => {
                       type="number"
                       value={productDetails.discountedPrice}
                       onChange={handleInputChange}
-                      className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                      className="w-full border-[#6e6e6e] border bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
                   </div>
+                </div>
+                <div className="mb-4  ">
+                  <label
+                    htmlFor="stockQuantity"
+                    className="block text-[16px] font-bold text-[#333333]"
+                  >
+                    Product Quantity
+                  </label>
+                  <input
+                    id="stockQunatity"
+                    name="stock"
+                    type="text"
+                    value={productDetails.stock}
+                    onChange={handleInputChange}
+                    className="w-full border-[#6e6e6e] border bg-[#F5F5F5] rounded-md p-2"
+                    placeholder="321"
+                  />
+                </div>
+              </article>
+                {/* third section */}
+              
+              <div className="border shadow-md rounded-md mt-4 p-4">
+                <div className="relative">
+                  <label
+                    htmlFor="color"
+                    className="block text-[16px] font-bold text-[#333333]"
+                  >
+                    Product Color
+                  </label>
+                  {/* dropdown and manual input fields */}
+                  <div className="flex flex-col w-full">
+                    <input
+                      list="color-options" // Links to the datalist below
+                      name="productColorName"
+                      id="color"
+                      value={productDetails.productColorName}
+                      onChange={handleInputChange}
+                      className="rounded-lg border-[#6e6e6e] bg-[#F5F5F5] border5] text-gray-700 sm:text-sm p-3"
+                      placeholder="Select or enter a color"
+                    />
+                    {/* Datalist with predefined options */}
+                    <datalist id="color-options">
+                      <option value="Red" />
+                      <option value="Blue" />
+                      <option value="Pink" />
+                    </datalist>
+                  </div>
 
-                  <div>
+                  <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
+                    <img src={addsquare} alt="add product icon" />
+                  </span>
+                </div>
+                <div className="">
+                <CustomProductSizeSelector
+                  productDetails={productDetails}
+                  setProductDetails={setProductDetails}
+                />
+              </div>
+               
+              <div className="space-y-3">
+                <div>
+                  <label
+                    htmlFor="dimensionsLength"
+                    className="block text-[16px] font-bold text-[#333333]"
+                  >
+                    Product Dimensions
+                  </label>
+                  <div className="mb-4 flex items-center gap-3">
+                    <input
+                      id="dimensionsLength"
+                      name="dimensions.length"
+                      type="text"
+                      value={productDetails.dimensions.length}
+                      onChange={handleInputChange}
+                      className="w-full border-[#6e6e6e] border bg-[#F5F5F5] rounded-md p-2"
+                      placeholder="Length"
+                    />
+                    <input
+                      id="dimensionsWidth"
+                      name="dimensions.width"
+                      type="text"
+                      value={productDetails.dimensions.width}
+                      onChange={handleInputChange}
+                      className="w-full border-[#6e6e6e] border bg-[#F5F5F5] rounded-md p-2"
+                      placeholder="Width"
+                    />
+                    <input
+                      id="dimensionsHeight"
+                      name="dimensions.height"
+                      type="text"
+                      value={productDetails.dimensions.height}
+                      onChange={handleInputChange}
+                      className="w-full border-[#6e6e6e] border bg-[#F5F5F5] rounded-md p-2"
+                      placeholder="Height"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="relative">
                     <label
-                      htmlFor="dimensionsLength"
+                      htmlFor="packaging"
                       className="block text-[16px] font-bold text-[#333333]"
                     >
-                      Product Dimensions
+                      Packaging Preference
                     </label>
-                    <div className="mb-4 flex items-center gap-3">
-                      <input
-                        id="dimensionsLength"
-                        name="dimensions.length"
-                        type="text"
-                        value={productDetails.dimensions.length}
-                        onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
-                        placeholder="Length"
-                      />
-                      <input
-                        id="dimensionsWidth"
-                        name="dimensions.width"
-                        type="text"
-                        value={productDetails.dimensions.width}
-                        onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
-                        placeholder="Width"
-                      />
-                      <input
-                        id="dimensionsHeight"
-                        name="dimensions.height"
-                        type="text"
-                        value={productDetails.dimensions.height}
-                        onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
-                        placeholder="Height"
-                      />
-                    </div>
+                    <select
+                      name="packaging"
+                      id="packaging"
+                      value={productDetails.packaging}
+                      onChange={handleInputChange}
+                      className="w-full rounded-lg border-[#6e6e6e] bg-[#f5f5f5] border pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
+                    >
+                      <option value="">Choose Package Type</option>
+                      <option value="BOX">Box Size</option>
+                      <option value="MATERIAL">Packaging Materials</option>
+                    </select>
+                    <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
+                      <img src={addsquare} alt="" />
+                    </span>
                   </div>
-                  <div>
-                    <div className="relative">
-                      <label
-                        htmlFor="packaging"
-                        className="block text-[16px] font-bold text-[#333333]"
-                      >
-                        Packaging Preference
-                      </label>
-                      <select
-                        name="packaging"
-                        id="packaging"
-                        value={productDetails.packaging}
-                        onChange={handleInputChange}
-                        className="w-full rounded-lg border-[#8ED06C] bg-[#f5f5f5] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
-                      >
-                        <option value="">Choose Package Type</option>
-                        <option value="BOX">Box Size</option>
-                        <option value="MATERIAL">Packaging Materials</option>
-                      </select>
-                      <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
-                        <img src={addsquare} alt="" />
-                      </span>
-                    </div>
-                    <AssignLocation title='Product' formType="addProduct"/>
-                  </div>
-                  {/* <div className="mb-4">
+                  <AssignLocation title="Product" formType="addProduct" />
+                </div>
+                {/* <div className="mb-4">
                     <label
                       htmlFor="handlingTime"
                       className="block text-[16px] font-bold text-[#333333]"
@@ -528,56 +467,30 @@ const AddProduct1 = () => {
                       type="text"
                       value={productDetails.handlingTime}
                       onChange={handleInputChange}
-                      className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                      className="w-full border-[#6e6e6e] border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
                   </div> */}
-                </div>
               </div>
-
-              {/* <UploadImage image={addImage } /> */}
-              <div className="flex justify-center gap-4 mt-16">
-                {/* Edit Button */}
-                <button
-                  disabled={isAddingProduct}
-                  className="px-2 py-2 hover:bg-[#004324] bg-[#f5f5f5] border-[#004324] border-2 text-[#004324] font-medium rounded-md shadow-lg hover:text-[#ffffff] transition ease-out duration-700"
-                  onClick={handleAddProduct}
-                  type="button"
-                >
-                  {isAddingProduct ? (
-                    <div className="w-[100px] grid justify-center h-[40px] border-4 border-white border-t-transparent rounded-full ">
-                      {" "}
-                      <BiLoaderCircle className=" animate-spin duration-300 transition-all" />
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-1">
-                      <svg
-                        width="25"
-                        height="24"
-                        viewBox="0 0 25 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M12.5 8V16M16.5 12H8.5"
-                          stroke="currentcolor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M3 12C3 7.52166 3 5.28249 4.39124 3.89124C5.78249 2.5 8.02166 2.5 12.5 2.5C16.9783 2.5 19.2175 2.5 20.6088 3.89124C22 5.28249 22 7.52166 22 12C22 16.4783 22 18.7175 20.6088 20.1088C19.2175 21.5 16.9783 21.5 12.5 21.5C8.02166 21.5 5.78249 21.5 4.39124 20.1088C3 18.7175 3 16.4783 3 12Z"
-                          stroke="currentcolor"
-                          strokeWidth="1.5"
-                        />
-                      </svg>
-                      <p>Add Product</p>
-                    </div>
-                  )}
-                </button>
-              </div>
-            </form>
-          </div>
+            </div>
+            </div>
+            <div className="flex justify-center gap-4 my-6">
+              {/* Edit Button */}
+              <button
+                disabled={isAddingProduct}
+                className="px-2 py-2 bg-green text-white font-medium rounded-md shadow-lg   transition ease-out duration-700 hover:bg-[#004315] lg:w-[150px]"
+                onClick={handleAddProduct}
+                type="button"
+              >
+                {isAddingProduct? (
+                  <div className="w-[100px] grid justify-center h-[40px] border-4 border-white border-t-transparent rounded-full ">
+                    {" "}
+                    <BiLoaderCircle className=" animate-spin duration-300 transition-all" />
+                  </div>
+                ):'Add Product'}
+              </button>
+            </div>
+          </form>
         </div>
       )}
 

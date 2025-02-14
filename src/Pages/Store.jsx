@@ -37,9 +37,7 @@ const Store = () => {
                 ? "flex-grow lg:ml-20 overflow-x-hidden"
                 : "flex-grow lg:ml-56 overflow-x-hidden"
             }>
-             <Navbar  title="Store Information"
-              icon={store}
-              profilePic={user && user.image ? user.image : ""}/>
+              
             {/* Cards */}
               <StoreSetting />
           </div>

@@ -48,23 +48,25 @@ const AddCustomer1 = ({ transparent }) => {
   };
   const addCustomer = () => {
     // console.log("clicked", customerData);
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const phoneRegex = /^\d{11}$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{11}$/;
     if (
       !customerData.name ||
-      !customerData.email||
-      !customerData.phoneNumber &&phoneRegex
+      !customerData.email ||
+      (!customerData.phoneNumber && phoneRegex)
     ) {
       setIsFinalConfirmationOpen(false);
       toast.error("Please fill in all required fields");
       // console.log("are we here");
       return;
-    }else if (customerData.email && !emailRegex.test(customerData.email)) {
-      toast.error('Please include @ in your email');
-    } else if (customerData.phoneNumber && !phoneRegex.test(customerData.phoneNumber)) {
-      toast.error('Phone number must not be more that 11 digits');
-    }
-    else {
+    } else if (customerData.email && !emailRegex.test(customerData.email)) {
+      toast.error("Please include @ in your email");
+    } else if (
+      customerData.phoneNumber &&
+      !phoneRegex.test(customerData.phoneNumber)
+    ) {
+      toast.error("Phone number must not be more that 11 digits");
+    } else {
       setIsFinalConfirmationOpen(false);
       // console.log("here");
       addCustomerQuery(customerData);
@@ -110,10 +112,10 @@ const AddCustomer1 = ({ transparent }) => {
       {/* Button to trigger the popup */}
       <button
         onClick={togglePopup}
-        className={
-          transparent
-          ? "text-[#ffffff] bg-[#004324] p-3 flex flex-row font-bold rounded-md transitions border-[#004324] border-2"
-            : "text-[#004324] flex flex-row font-bold gap-1 items-center hover:bg-[#004324] hover:text-[#ffffff] duration-500 p-2 rounded-md"
+        className={`flex flex-row gap-1 rounded-md p-1 w-fit
+          ${transparent
+            ? "text-[#ffffff] bg-green transitions border-green border-2"
+            : "text-[#004324] items-center hover:bg-green hover:text-[#ffffff] duration-500 "}`
         }
       >
         {transparent && (
@@ -141,12 +143,12 @@ const AddCustomer1 = ({ transparent }) => {
         Add Customers
       </button>
 
-      {isPopupOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"  >
-          <div className="bg-white p-10 rounded-lg shadow-lg max-w-3xl w-full relative">
+      <div className={`fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 transition-transform duration-500 ease-in-out ${isPopupOpen?"block":"hidden"} `}>
+      {/* {isPopupOpen && ( */}
+          <div className={`p-10 rounded-tl-lg rounded-bl-lg shadow-lg w-[90%] max-w-3xl fixed right-0 lg:w-[35%] bg-white top-0 bottom-0   ${isPopupOpen?"translate-x-0":"translate-x-full"}`}>
             {/* Cancel Button in the top-right corner */}
             <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+              className="absolute top-4 left-4 text-gray-500 hover:text-gray-800"
               onClick={() => setIsPopupOpen(false)}
             >
               <svg
@@ -167,53 +169,49 @@ const AddCustomer1 = ({ transparent }) => {
 
             {/* Popup Content */}
             <form>
-              <div className="grid lg:grid-cols-2 gap-2 lg:gap-12">
-                <div className="space-y-3">
-                  <div className=""> 
-                    <div className="mb-4">
-                      <label
-                        htmlFor="name"
-                        className="block text-[16px] font-bold text-[#333333]"
-                      >
-                        Name
-                      </label>
-                      <input
-                        id="name"
-                        type="text"
-                        name="name"
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
-                        placeholder="Add The Customer's Name"
-                        value={customerData.name}
-                        onChange={handleCustomerDataChange}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="phonenumber"
-                        className="block text-[16px] font-bold text-[#333333]"
-                      >
-                        Phone Number
-                      </label>
-                      <input
-                        id="phoneNumber"
-                        type="text"
-                        name="phoneNumber"
-                        pattern="\d{11}"
-                        maxLength="11"
-                        title="Phone number must be exactly 11 digits"
-                        required
-                        placeholder="Enter 11-digit Phone number"
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
-                        value={customerData.phoneNumber}
-                        onChange={handleCustomerDataChange}
-                      />
-                    </div>
-                  </div>
+              <h2 className="font-bold text-lightBlack border-b border-lightBlack my-7 text-[32px]">
+                Add Customer
+              </h2>
+              <div className="form-container">
+                <div className="mb-4">
+                  <label
+                    htmlFor="name"
+                    className="block text-[16px] font-bold text-[#333333]"
+                  >
+                    Name
+                  </label>
+                  <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    className="w-full border-lightBlack border rounded-md p-2"
+                    placeholder="Add The Customer's Name"
+                    value={customerData.name}
+                    onChange={handleCustomerDataChange}
+                  />
                 </div>
-                <div className="space-y-3">
+                <div className="mb-4">
+                  <label
+                    htmlFor="phonenumber"
+                    className="block text-[16px] font-bold text-[#333333]"
+                  >
+                    Phone Number
+                  </label>
+                  <input
+                    id="phoneNumber"
+                    type="text"
+                    name="phoneNumber"
+                    pattern="\d{11}"
+                    maxLength="11"
+                    title="Phone number must be exactly 11 digits"
+                    required
+                    placeholder="Enter 11-digit Phone number"
+                    className="w-full border-lightBlack border rounded-md p-2"
+                    value={customerData.phoneNumber}
+                    onChange={handleCustomerDataChange}
+                  />
+                </div>
+                <div className="">
                   <div className="mb-4">
                     <label
                       htmlFor="emailaddress"
@@ -226,49 +224,22 @@ const AddCustomer1 = ({ transparent }) => {
                       type="email"
                       name="email"
                       title="email must include '@' "
-                      className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                      className="w-full border-lightBlack border rounded-md p-2"
                       placeholder="Add The Customer's Email"
                       value={customerData.email}
                       onChange={handleCustomerDataChange}
                     />
                   </div>
-                  {/* <div className="relative">
-                    <label
-                      htmlFor=""
-                      className="block font-bold text-[16px] text-[#333333]"
-                    >
-                      {" "}
-                      Customer ID{" "}
-                    </label>
-                    <input
-                      type="text"
-                      id=""
-                      placeholder="Generate Code"
-                      className="w-full rounded-md border-[#8ED06C] border-2 bg-[#F5F5F5] py-2 pe-10 shadow-sm p-2"
-                      value={customerID}
-                      readOnly
-                    />
-                    <span className="absolute inset-y-0 end-0 grid w-10 place-content-center mt-6">
-                      <button
-                        type="button"
-                        onClick={generateCustomerID}
-                        className="text-gray-600 hover:text-gray-700"
-                      >
-                        <img src={reload} alt="" />
-                      </button>
-                    </span>
-                  </div> */}
                 </div>
               </div>
-
               <div className="flex justify-center gap-4 my-8">
                 {/* Edit Button */}
                 <button
-                  className="px-2 py-2 hover:bg-[#004324] bg-[#f5f5f5] border-[#004324] border-2 text-[#004324] font-medium rounded-md shadow-lg hover:text-[#ffffff] transition ease-out duration-700"
+                  className="px-2 py-2 bg-green hover:bg-transparent hover:border-green border-2 text-white hover:text-green font-medium rounded-md shadow-lg transition ease-out duration-700 block w-full "
                   onClick={showConfirmation}
                   type="button"
                 >
-                  <div className="flex items-center gap-1  ">
+                  <div className="flex items-center justify-center gap-1  ">
                     <svg
                       width="25"
                       height="24"
@@ -295,8 +266,8 @@ const AddCustomer1 = ({ transparent }) => {
               </div>
             </form>
           </div>
+       {/* )} */}
         </div>
-      )}
 
       {/* Confirmation Modal */}
       {isConfirmationOpen && (

@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { useStore } from "@/ZustandStores/generalStore";
 import { Link } from "react-router-dom";
 import { useFetchStaffs } from "@/datahooks/staffs/usestaffhook";
-
+import { useSignUserUp } from "@/datahooks/users/userhooks";
 const StaffRegister = () => {
   const { store } = useStore();
   const { showPassword, handleShowPassword } = useShowPasswordStore();
@@ -15,31 +15,31 @@ const StaffRegister = () => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm();
+    watch,
+  } = useForm(
+    { mode: "onChange" } //triggers on every key stroke
+  );
 
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-    const staffId = searchParams.get("staffId");
-    console.log(staffId)
-    const { staffs } = useFetchStaffs()
-    const staff = staffs?.find((item)=>item?.id === staffId)
-    console.log(staff)
-  
-  // Redirect user if no staffId is found
-  //   useEffect(() => {
-  //     if (!staffId) {
-  //       navigate("/"); // Redirects to homepage if staffId is missing
-  //     }
-  //   }, [staffId, navigate]);
+  //   const navigate = useNavigate();
+  const staffId = searchParams.get("staffId");
+  const { staffs } = useFetchStaffs();
+  const staff = staffs?.find((item) => item?.id === staffId);
+  console.log(staff, staffId);
+  const password = watch("password");
+  const { signUpMutate, signUpIsPending } = useSignUserUp();
   const submitStaffDetails = (data) => {
-      const newData = {
-          name: staff.name,
-          email: staff.email,
-          staffId: staffId,
-          isStaff: true,
-          branchId:staff.locationId
-
-      }
+    const newData = {
+      name: staff?.name,
+      email: staff?.email,
+      staffId: staffId,
+      isStaff: true,
+      branchId: staff?.locationId,
+      password: data.password,
+      passwordConfirm: data.confirmPassword,
+    };
+    console.log(newData);
+    signUpMutate(newData);
   };
   return (
     <section className="h-screen">
@@ -51,14 +51,14 @@ const StaffRegister = () => {
               alt="nile logo"
               className="flex justify-center mx-auto w-[165px] max-w-full"
             />
-            <h1 className="text-[#333333] text-center text-[24px] font-bold mt-8">
+            <h1 className="text-[#333333] text-center text-[24px] font-semibold mt-8">
               Welcome To{" "}
               <span className="text-lightGreen font-bold capitalize">{`${
                 store?.name || "my Store"
               }'s`}</span>{" "}
               Store on Nile
             </h1>
-            <p className="text-center text-[#6E6E6E] text-[20px] font-semibold">
+            <p className="text-center text-[#6E6E6E] text-[16px] font-semibold">
               Before you begin, set up your login credentials to access your
               dashboard.
             </p>
@@ -72,9 +72,9 @@ const StaffRegister = () => {
             <div className="relative">
               <label htmlFor="password">Password</label>
               <input
-                type="password"
+                type={showPassword.password ? "text" : "password"}
                 id="password"
-                {...register("password")}
+                {...register("password", { required: "Password is required" })}
                 placeholder="*******"
                 className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
               />
@@ -89,9 +89,13 @@ const StaffRegister = () => {
             <div className="relative">
               <label htmlFor="confirmPassword">Confirm Password</label>
               <input
-                type="password"
+                type={showPassword.confirmPassword ? "text" : "password"}
                 id="confirmPassword"
-                {...register("confirmPassword")}
+                {...register("confirmPassword", {
+                  required: "Please confirm your password",
+                  validate: (value) =>
+                    value === password || "Passwords do not match",
+                })}
                 placeholder="********"
                 className="mt-1 w-full p-3 rounded-md border-lightGreen border bg-white text-sm text-gray-700 shadow-sm"
               />
@@ -101,13 +105,20 @@ const StaffRegister = () => {
                 className="absolute top-11 right-2 w-7 h-4 cursor-pointer"
                 onClick={() => handleShowPassword("confirmPassword")}
               />
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.confirmPassword.message}
+                </p>
+              )}
             </div>
 
             <button
               type="submit"
               className="mx-auto block bg-green rounded-md text-white w-full py-3 text-center text-[14px] mt-4 font-semibold"
+              onClick={handleSubmit(submitStaffDetails)}
+              disabled={signUpIsPending}
             >
-              Complete Setup
+              {signUpIsPending ? "Completing.." : "Complete Setup"}
             </button>
             <Link to="/">Login</Link>
           </form>

@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-// import { useStaffStore } from "../../ZustandStores/staffStore";
 import { Controller } from "react-hook-form";
 import {
   useEditStaff,
   useFetchRoles,
 } from "../../datahooks/staffs/usestaffhook";
-import DeleteStaff from "./DeleteStaff";
 const EditStaff = ({ staff }) => {
   const [editStaff, setEditStaff] = useState(false);
   const { roles } = useFetchRoles();
@@ -44,9 +42,8 @@ const EditStaff = ({ staff }) => {
   return (
     <div>
       <button
-        className="hover:scale-110 duration-300 hover:border-[#8ED06C] border-[#ffffff] border-b-[2px] transition underline-offset-2 decoration-[2px] inline-block hover:-translate-x-1"
-        onClick={handleEditClick}
-      >
+        className="hover:scale-110 duration-300 hover:border-lightBlack border-[#ffffff] border-b-[2px] transition underline-offset-2 decoration-[2px] inline-block hover:-translate-x-1"
+        onClick={handleEditClick}>
         <svg
           width="24"
           height="24"
@@ -57,24 +54,24 @@ const EditStaff = ({ staff }) => {
           {/* SVG Content */}
           <path
             d="M16.2141 4.98239L17.6158 3.58063C18.39 2.80646 19.6452 2.80646 20.4194 3.58063C21.1935 4.3548 21.1935 5.60998 20.4194 6.38415L19.0176 7.78591M16.2141 4.98239L10.9802 10.2163C9.93493 11.2616 9.41226 11.7842 9.05637 12.4211C8.70047 13.058 8.3424 14.5619 8 16C9.43809 15.6576 10.942 15.2995 11.5789 14.9436C12.2158 14.5877 12.7384 14.0651 13.7837 13.0198L19.0176 7.78591M16.2141 4.98239L19.0176 7.78591"
-            stroke="#8ED06C"
+            stroke="#6e6e6e"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
             d="M21 12C21 16.2426 21 18.364 19.682 19.682C18.364 21 16.2426 21 12 21C7.75736 21 5.63604 21 4.31802 19.682C3 18.364 3 16.2426 3 12C3 7.75736 3 5.63604 4.31802 4.31802C5.63604 3 7.75736 3 12 3"
-            stroke="#8ED06C"
+            stroke="#6e6e6e"
             strokeWidth="1.5"
             strokeLinecap="round"
           />
         </svg>
       </button>
       {editStaff && (
-        <div className="bg-[rgba(0,0,0,0.4)] fixed inset-0 z-50">
-          <div className="max-w-[450px] mx-auto relative">
+        <div className="bg-[rgba(0,0,0,0.3)] fixed inset-0 z-50 backdrop-blur-sm">
+          <div className="fixed w-[90%] lg:w-[35%] rounded-tl-lg rounded-bl-lg shadow-lg top-0 bottom-0 right-0 bg-white  ">
             <button
-              className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"
+              className="absolute top-4 left-4 text-green  rounded-lg"
               onClick={() => setEditStaff(false)}
             >
               <svg
@@ -95,8 +92,9 @@ const EditStaff = ({ staff }) => {
 
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="bg-white p-8 mt-[100px]"
+              className="p-8"
             >
+              <h2 className='text-[32px] font-bold border-b border-lightBlack my-6'>Edit Staff</h2>
               {/* Admin Name */}
               <div className="mt-4">
                 <label
@@ -164,17 +162,14 @@ const EditStaff = ({ staff }) => {
                   })}
               </div>
 
-              {/* Buttons */}
-              <div className="mt-6 flex gap-3 max-w-[327px] mx-auto">
+              {/*edit Button*/}
                 <button
                   type="submit"
-                  className="bg-green text-white w-[150px] p-2 rounded-md"
+                  className="bg-green text-white w-full block p-2 rounded-md mt-5"
                   disabled={isEditingStaff}
                 >
                   {isEditingStaff ? "Saving..." : "Save Changes"}
                 </button>
-                <DeleteStaff staff={staff} setEditStaff={ setEditStaff} />
-              </div>
             </form>
           </div>
         </div>

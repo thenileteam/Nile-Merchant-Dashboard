@@ -15,7 +15,7 @@ const RequestPayout = () => {
   return (
     <div>
       <button type='button'
-         className="text-[#fff] bg-green flex font-bold gap-1 items-center   hover:bg-transparent hover:text-[#004324] hover:border-[#004324] duration-500 border-2 p-2 rounded-md cursor-pointer"
+         className="text-[#fff] bg-green flex font-bold gap-1 items-center hover:bg-transparent hover:text-[#004324] hover:border-[#004324] duration-500 border-2 p-2 rounded-md cursor-pointer"
         onClick={() => setIsModalOpen(true)} // Open the first modal on click
       >
         <div>
@@ -125,7 +125,7 @@ const RequestPayout = () => {
                 </h1>
               </button>
               <button
-                className="hover:bg-[#004324] hover:text-white duration-500 border-[#004324] border-2 font-bold text-[#004324] bg-[#f5f5f5] px-10 py-2 rounded"
+                className="hover:bg-[#004324] hover:text-white duration-500 font-bold text-[#004324] bg-[#f5f5f5] px-10 py-2 rounded"
                 onClick={() => setIsModalOpen(false)} // Close modal
               >
                 Cancel

@@ -30,6 +30,7 @@ export const useLogUserIn = () => {
 
     onSuccess: async (response) => {
       // First set the tokens
+      console.log(response?.data)
       Cookies.set("accessToken", response?.data?.accessToken,  {
         secure: true,
         sameSite: "Strict",
@@ -158,7 +159,19 @@ export const useSignUserUp = () => {
   const [error] = useState("");
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
-      return ApiInstance.post("/users/auth/register", data);
+      const { name, email, isStaff, branchId, staffId, password, storeName, passwordConfirm, marketingAccept } = data;
+
+      return ApiInstance.post("/users/auth/register",
+        { password, storeName, marketingAccept, passwordConfirm }, {
+        params: { 
+          name, 
+          email, 
+          isStaff, 
+          branchId, 
+          staffId 
+        },
+      }    //body request data
+      );
     },
     onSuccess: (response) => {
       // const username = response.data.ownerName;

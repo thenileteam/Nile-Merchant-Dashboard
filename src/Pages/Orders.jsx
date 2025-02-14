@@ -16,12 +16,14 @@ import SelectCustomerform from "../Components/Orders/selectcustomerform";
 import SelectProductForm from "../Components/Orders/selectproductform";
 import { useCreateNewOrder } from "../datahooks/orders/orderhooks";
 import Skeleton from "react-loading-skeleton";
-import Navbar from "../Components/Navbar/Navbar";
 import { toast } from "sonner";
 import CreateOrderForm from "../Components/createorderform";
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 import { UseCardLoader } from "@/Components/CustomLoaders/loaders";
+import DashboardIntro from "@/Components/Dashboard/DashboardIntro";
+import EmptyState from "@/Components/StaffManagement/EmptyState";
+import{EmptyOrderIcon} from '../Components/Store/AllStoreComp/StoreSettingIcons'
 const Orders = () => {
   //user profile image
   const { user } = useFetchUser();
@@ -93,21 +95,38 @@ const Orders = () => {
 
   return (
     <>
-      <div>
-        <div className="flex">
-          <div
-            className={
+      <div
+        className={`mt-[73px]
+            ${
               isCollapsed
                 ? "flex-grow lg:ml-20 overflow-x-hidden"
                 : "flex-grow lg:ml-56 overflow-x-hidden"
-            }>
-            <Navbar
-              title="Orders"
-              icon={trolley}
-              profilePic={user && user.image ? user.image : ""}
+            }
+         `}
+      >
+        <div className="overflow-y-hidden border border-red-600">
+          {selectCustomerForm && (
+            <SelectCustomerform
+              selectedCustomer={selectedCustomer}
+              setSelectedCustomer={setSelectedCustomer}
+              setSelectCustomerForm={setSelectCustomerForm}
             />
-
-            {createOrderForm && (
+          )}
+          {selectProductForm && (
+            <SelectProductForm
+              cart={cart}
+              setCart={setCart}
+              setSelectProductForm={setSelectProductForm}
+            />
+          )}
+          <div
+            className={`mb-6 px-2 ${
+              isCollapsed ? "lg:max-w-[1100px]" : "lg:max-w-[950px]"
+            }   lg:px-0 mx-auto max-w-full`}
+          >
+            <section></section>
+            <article className="flex justify-between mb-10 items-center">
+              <DashboardIntro introText="Order Management" />
               <CreateOrderForm
                 addOrder={addOrder}
                 isAddingOrder={isAddingOrder}
@@ -122,128 +141,60 @@ const Orders = () => {
                 setSelectCustomerForm={setSelectCustomerForm}
                 setCreateOrderForm={setCreateOrderForm}
                 setSelectedCustomer={setSelectedCustomer}
+                createOrderForm={createOrderForm}
               />
-            )}
-            {selectCustomerForm && (
-              <SelectCustomerform
-                selectedCustomer={selectedCustomer}
-                setSelectedCustomer={setSelectedCustomer}
-                setSelectCustomerForm={setSelectCustomerForm}
-              />
-            )}
-            {selectProductForm && (
-              <SelectProductForm
-                cart={cart}
-                setCart={setCart}
-                setSelectProductForm={setSelectProductForm}
-              />
-            )}
-            <div className="min-h-screen overflow-y-hidden pb-20">
-              <div
-                className={`mt-20 lg:mt-28 mb-6 px-2 ${
-                  isCollapsed ? "lg:max-w-[1000px]" : "lg:max-w-[800px]"
-                }   lg:px-0 mx-auto max-w-full`}
-              >
-                {/* Cards */}
-                <div className="flex gap-8 lg:gap-20">
-                  <UseCardLoader
-                    amount={2}
-                    loading={isFetching}
-                    error={isError}
-                  >
-                    <>
-                      <DashboardBox
-                        text="Total Orders"
-                        bgColor="bg-[#FCDADF]"
-                        image={shoppingcart}
-                        data={data?.length || 0}
-                        imgWidth="w-9"
-                        width="w-[50%]"
-                      />
-                      <DashboardBox
-                        text="Pending Shipments"
-                        bgColor="bg-[#FFE8DF]"
-                        imgWidth="w-9"
-                        image={truck1}
-                        data={0}
-                        width="w-[50%]"
-                      />
-                      {/*  data?.filter(item => item.status === 'pending' ) */}
-                      {/* <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
+            </article>
+            {/* Cards */}
+            <div className="flex gap-8 lg:gap-20">
+              <UseCardLoader amount={2} loading={isFetching} error={isError}>
+                <>
+                  <DashboardBox
+                    text="Total Orders"
+                    data={data?.length || 0}
+                    spacing="my-5"
+                    width="w-[50%]"
+                  />
+                  <DashboardBox
+                    text="Total Complete Order"
+                    data={0}
+                    spacing="my-5"
+                    width="w-[50%]"
+                  />
+                  {/*  data?.filter(item => item.status === 'pending' ) */}
+                  {/* <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                       <img src={timer} alt="" />
                       <h1 className="text-[#333333] text-[22px] font-bold mt-1">
                         0
                       </h1>
                       <p className="text-[#6E6E6E]">Average Delivery Time</p>
                     </div> */}
-                    </>
-                  </UseCardLoader>
-                </div>
-              </div>
-              <div
-                className={`${
-                  isCollapsed ? "max-w-[1000px]" : "max-w-[800px]"
-                }  mx-auto`}
-              >
-                <div className="flex items-center">
-                  <button
-                    type="button"
-                    onClick={() => setCreateOrderForm(true)}
-                    className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px] text-white "
-                  >
-                    <img src="/public/plus.svg" alt="plus icon" />
-                    Create Order
-                  </button>
-                  {/* <button className=" flex bg-white rounded-[4px] border border-[#8ED06C] gap-1 p-[10.5px]  text-[#8ED06C] ">
-            <div className="max-w-[650px] mx-auto mt-4">
-              <div className="flex items-center gap-16 ">
-                <button
-                  onClick={() => setCreateOrderForm(true)}
-                  className=" flex bg-[#004324] rounded-[4px] gap-1 p-[10.5px]  text-white "
-                >
-                  <img src="/public/plus.svg" alt="plus icon" />
-                  Create Order
-                </button>
-                {/* <button className=" flex bg-white rounded-[4px] border border-[#8ED06C] gap-1 p-[10.5px]  text-[#8ED06C] ">
-                    <img src="/public/export.svg" alt="" />
-                    Export CSV
-                  </button> */}
-                </div>
-
-                {data && data.length === 0 && (
-                  <>
-                    <div>
-                      <img
-                        src={shoppingcartremove}
-                        alt=""
-                        className="flex justify-center mx-auto"
-                      />
-                      <h1 className="text-[24px] font-extrabold text-center">
-                        You Have No orders Yet
-                      </h1>
-                      <p className="text-[#6E6E6E] font-bold text-center">
-                        You’ll get notified when you receive your first order
-                      </p>
-                    </div>
-
-                    <div className="flex justify-center mt-3">
-                      <button
-                        type="button"
-                        className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md"
-                      >
-                        Check Your Customers
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
-
-              <div className="overflow-x-scroll lg:overflow-auto">
-                <OrdersTable data={data} isCollapsed={isCollapsed} />
-              </div>
+                </>
+              </UseCardLoader>
             </div>
           </div>
+          <div className="overflow-x-scroll lg:overflow-auto">
+            <OrdersTable data={data} isCollapsed={isCollapsed} />
+          </div>
         </div>
+      </div>
+
+      <div
+        className={`${
+          isCollapsed ? "max-w-[1000px]" : "max-w-[800px]"
+        }  mx-auto `}>
+        <div className="flex items-center"></div>
+        {data && data.length === 0 && (
+      
+             <EmptyState
+                 title="You have  no orders yet"
+                 description="You'll get notified when receive your first order"
+                 buttonText="Check your Customers"
+                 icon={EmptyOrderIcon}
+                 createOrderForm={createOrderForm}
+                 setCreateOrderForm={setCreateOrderForm}
+                 PopUpComponent={CreateOrderForm}
+               /> 
+        )}
       </div>
     </>
   );

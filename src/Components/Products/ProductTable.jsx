@@ -21,8 +21,8 @@ const ProductTable = ({ data, isFetching, isError }) => {
       {data?.length > 0 ? (
         <div
           className={`${
-            isCollapsed ? "max-w-[1000px]" : "max-w-[800px]"
-          } mx-auto  `}
+            isCollapsed ? "max-w-[1100px]" : "max-w-[940px]"
+          } mx-auto  bg-white rounded-md shadow-md p-4  border-[0.5px]`}
         >
           {isFetching ? (
             <div className="bg-[#ffffff] w-full shadow-md">
@@ -33,17 +33,17 @@ const ProductTable = ({ data, isFetching, isError }) => {
           ) : isError ? (
             "An error occurred"
           ) : (
-            <div className=" overflow-x-scroll lg:overflow-auto">
-              <table className=" w-full border-separate border-spacing-y-5">
+            <div className=" overflow-x-scroll lg:overflow-auto text-lightBlack ">
+              <table className=" w-full border-separate border-spacing-y-4">
                 <thead>
                   <tr className="text-left bg-[#EAF4E2] shadow-lg">
-                    <th className="lg:p-2 text-center">Product ID</th>
-                    <th className="lg:p-2  text-center">Product Name</th>
-                    <th className="lg:p-2  text-center">Category</th>
-                    <th className="lg:p-2  text-center">Price</th>
-                    <th className="lg:p-2  text-center">Unit Sold</th>
-                    <th className="lg:p-2 text-center">Stock Level</th>
-                    <th className="lg:p-2 text-center">Actions</th>
+                    <th className="lg:p-3 text-center">Product ID</th>
+                    <th className="lg:p-3  text-center">Product Name</th>
+                    <th className="lg:p-3  text-center">Category</th>
+                    <th className="lg:p-3  text-center">Price</th>
+                    <th className="lg:p-3  text-center">Unit Sold</th>
+                    <th className="lg:p-3 text-center">Stock Level</th>
+                    <th className="lg:p-3 text-center">Actions</th>
                     {/* <th className="px-2 py-3 text-center flex items-center gap-1 justify-center">
                   Bulk Action
                   <svg
@@ -85,23 +85,23 @@ const ProductTable = ({ data, isFetching, isError }) => {
                 <tbody>
                   {currentItems?.map((product) => (
                     <tr key={product.id} className="bg-[#ffffff] shadow-md">
-                      <td className="lg:p-2 px-2 text-center">{product.id}</td>
-                      <td className="lg:p-2 px-2 text-center capitalize">
+                      <td className="lg:p-3 text-center bg-[#EAF4E2] font-bold">{String(product.id).padStart(4, 0)}</td>
+                      <td className="lg:p-3 text-center capitalize text-[#6e6e6e]">
                         {product.name}
                       </td>
-                      <td className="lg:p-2 px-2  text-center capitalize">
+                      <td className="lg:p-3  text-center capitalize text-[#6e6e6e]">
                         {product.category.name}
                       </td>
-                      <td className="lg:p-2 px-2 text-center">
-                        {product.price}
+                      <td className="lg:p-3 text-center text-[#6e6e6e]">
+                        &#8358;{product.price}
                       </td>
-                      <td className="lg:p-2 px-2  text-center">
+                      <td className="lg:p-3  text-center text-[#6e6e6e]">
                         {product.unitsSold || 0}
                       </td>
-                      <td className="lg:p-2 px-2  text-center">
+                      <td className="lg:p-3  text-center text-[#6e6e6e]">
                         {product.stock}
                       </td>
-                      <td className="lg:p-2 px-2 text-center flex items-center gap-1 justify-center ">
+                      <td className="lg:p-3 text-center flex items-center gap-1 justify-center ">
                         <EditProduct product={product} />
                         <DeleteProduct product={product} />
                       </td>

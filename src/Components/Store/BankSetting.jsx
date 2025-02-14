@@ -41,7 +41,7 @@ const BankSetting = () => {
   return (
     <div>
       <div className="flex">
-        {/* <Sidebar /> */}
+       
         <div
           className={
             isCollapsed
@@ -49,10 +49,7 @@ const BankSetting = () => {
               : "flex-grow lg:ml-56 overflow-x-hidden"
           }
         >
-          <Navbar
-            title="Bank Details"
-            profilePic={user && user.image ? user.image : ""}
-          />
+         
           <div className="max-w-[800px] mt-28 mb-6 mx-auto">
             <div className="text-center">
               <h1 className="text-[#004324] text-[24px] font-bold">

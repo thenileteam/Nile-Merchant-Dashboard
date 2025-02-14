@@ -37,14 +37,14 @@ const StoreSettingLinks = ({
           isCollapsed={isCollapsed}
           icon={StaffIcon}
         />
-        <StoreSettingLinkTemplate
+        {/* <StoreSettingLinkTemplate
           getLinkClasses={getLinkClasses}
           isActive={isActive}
           link="/banksetting"
           text="Bank Details"
           isCollapsed={isCollapsed}
           icon={BankIcon}
-        />
+        /> */}
         {/* <StoreSettingLinkTemplate
           getLinkClasses={getLinkClasses}
           isActive={isActive}

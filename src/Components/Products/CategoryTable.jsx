@@ -19,7 +19,7 @@ const CategoryTable = () => {
     <>
       <section
         className={`mt-2 ${
-          isCollapsed ? "max-w-[1000px]" : "max-w-[800px]"
+          isCollapsed ? "max-w-[1100px]" : "max-w-[950px]"
         }  mx-auto`}
       >
         {isFetchingCategories ? (
@@ -31,28 +31,28 @@ const CategoryTable = () => {
         ) : isError ? (
           "An error occurred"
         ) : (
-          <div className="overflow-x-scroll lg:overflow-auto">
-            <table className="w-full border-separate border-spacing-y-5">
+          <div className="overflow-x-scroll text-lightBlack bg-white rounded-md shadow-md p-4 border-[0.5px]">
+            <table className="w-full border-separate border-spacing-y-4">
               <thead>
                 <tr className="text-left bg-[#EAF4E2]">
-                  <th className=" p-2 shadow-lg">Category </th>
-                  <th className=" p-2 shadow-lg">Descriptions</th>
-                  <th className=" p-2 shadow-lg">Products</th>
-                  <th className=" p-2 shadow-lg">Actions</th>
-                  {/* <th className=" p-2 shadow-lg">Bulk Actions</th> */}
+                  <th className=" p-3 shadow-lg">Category </th>
+                  <th className=" p-3 shadow-lg">Descriptions</th>
+                  <th className=" p-3 shadow-lg">Products</th>
+                  <th className=" p-3 shadow-lg">Actions</th>
+                  {/* <th className=" p-3 shadow-lg">Bulk Actions</th> */}
                 </tr>
               </thead>
               <tbody>
                 {currentItems?.map((category, i) => {
                   return (
                     <tr className="mt-4 bg-white shadow-md" key={category.id}>
-                      <td className="bg-white p-2 text-[#6e6e6e] capitalize">
+                      <td className="bg-white p-3 text-[#6e6e6e] capitalize">
                         {category?.name}
                       </td>
-                      <td className="bg-white p-2 text-[#6e6e6e]  capitalize">
+                      <td className="bg-white p-3 text-[#6e6e6e]  capitalize">
                         {category?.description || "NA"}
                       </td>
-                      <td className="bg-white p-2 text-[#6e6e6e]  ">
+                      <td className="bg-white p-3 text-[#6e6e6e]  ">
                         {category?.products?.length || 0}
                         <Link to={`/categories/${i}`}>
                           <button
@@ -63,11 +63,11 @@ const CategoryTable = () => {
                           </button>
                         </Link>
                       </td>
-                      <td className="bg-white p-2 flex text-[#6e6e6e]  items-center gap-1 capitalize">
+                      <td className="bg-white p-3 flex text-[#6e6e6e]  items-center gap-1 capitalize">
                         <EditCategory category={category} />
                         <DeleteCategory category={category} />
                       </td>
-                      {/* <td className="bg-white p-2 text-[#6e6e6e] font-semibold capitalize">
+                      {/* <td className="bg-white p-3 text-[#6e6e6e] font-semibold capitalize">
                     </td> */}
                     </tr>
                   );

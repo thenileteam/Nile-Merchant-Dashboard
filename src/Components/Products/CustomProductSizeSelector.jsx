@@ -106,11 +106,11 @@ const CustomProductSizeSelector = ({setProductDetails, productDetails}) => {
 
   return (
     <div className="flex flex-col gap-3">
-      <p>Enter Product Weight and SI Unit</p>
+      <label className="mt-2 font-bold text-lightBlack">Enter Product Weight and SI Unit</label>
       <div className="flex flex-col lg:flex-row gap-3 mb-3">
         <input
           type="text"
-          className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
+          className="rounded-lg border-[#6e6e6e] bg-[#F5F5F5] border text-gray-700 sm:text-sm p-3"
           placeholder="Enter Weight"
           value={size}
           onChange={handleSizeChange}
@@ -123,14 +123,14 @@ const CustomProductSizeSelector = ({setProductDetails, productDetails}) => {
           }}
         >
           <input
-            className="rounded-lg cursor-pointer relative w-full border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
+            className="rounded-lg cursor-pointer relative w-full border-[#6e6e6e] bg-[#F5F5F5] border text-gray-700 sm:text-sm p-3"
             readOnly
             value={unit || 'Select Unit'}
           />
           {openSelect && (
             <div
             ref={modalRef}
-              className="flex  z-[100] w-fit py-5  bg-white  absolute rounded-lg top-[105%] border-zinc-100 border  left-0 right-0 h-fit  flex-col  divide-y-2 divide-zinc-100"
+              className="flex  z-[100] w-full py-5  bg-white  absolute rounded-lg top-[105%] border-zinc-100 border  left-0 right-0 h-fit  flex-col  divide-y-2 divide-zinc-100"
             >
               <div className=" max-h-[150px] overflow-y-auto">
                 {sizes.map((size) => (
@@ -164,7 +164,7 @@ const CustomProductSizeSelector = ({setProductDetails, productDetails}) => {
                     <div>
                       <input
                         type="text"
-                        className="rounded-lg mb-3 border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
+                        className="rounded-lg mb-3 border-[#6e6e6e] bg-[#F5F5F5] border text-gray-700 sm:text-sm p-3"
                         placeholder="Enter Custom Si Unit Text "
                         value={siUnit.text}
                         onChange={(e) => handleCustomSiUnitChange(e)}
@@ -172,7 +172,7 @@ const CustomProductSizeSelector = ({setProductDetails, productDetails}) => {
                       <input
                         type="text"
                         value={siUnit.value}
-                        className="rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3"
+                        className="rounded-lg border-[#6e6e6e] bg-[#F5F5F5] border text-gray-700 sm:text-sm p-3"
                         placeholder="Enter Custom Si Unit Value"
                         onChange={(e) => handleCustomSiUnitValueChange(e)}
                       />

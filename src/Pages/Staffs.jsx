@@ -6,6 +6,7 @@ import AddStaff from "../Components/PopupModals/AddStaff";
 import StaffTable from "../Components/StaffManagement/StaffTable";
 import { useState } from "react";
 import { useFetchStaffs } from "@/datahooks/staffs/usestaffhook";
+import {EmptyStateIcon} from '../Components/Store/AllStoreComp/StoreSettingIcons'
 const Staffs = () => {
   const [showStaffPopUp, setShowStaffPopUp] = useState(false);
   const { user } = useFetchUser();
@@ -13,7 +14,6 @@ const Staffs = () => {
   const { staffs, isFetching, isError } = useFetchStaffs();
   return (
     <>
-      {/* <Sidebar /> */}
       <div
         className={
           isCollapsed
@@ -21,10 +21,7 @@ const Staffs = () => {
             : "flex-grow lg:ml-56 overflow-x-hidden"
         }
       >
-        <Navbar
-          title="Staff Management"
-          profilePic={user && user.image ? user.image : ""}
-        />
+        
         <section>
           {staffs?.length=== 0 ? (
             <EmptyState
@@ -32,6 +29,7 @@ const Staffs = () => {
               description="Add  a staff to see your staffs"
               buttonText="Add Staff"
               showPopUp={showStaffPopUp}
+              icon={EmptyStateIcon}
               setShowPopUp={setShowStaffPopUp}
               PopUpComponent={AddStaff}
             />
@@ -45,7 +43,6 @@ const Staffs = () => {
 
           {showStaffPopUp && <AddStaff setShowStaffPopUp={setShowStaffPopUp} />}
         </section>
-      
       </div>
     </>
   );

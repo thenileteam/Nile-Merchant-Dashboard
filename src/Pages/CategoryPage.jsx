@@ -17,12 +17,6 @@ const CategoryPage = () => {
   return (
     <>
       <div className={`${isCollapsed? 'flex-grow lg:ml-20 ':'flex-grow lg:ml-56 '} overflow-x-hidden`}>
-        <Navbar
-          title={storeTitle}
-          icon={arrowleft}
-          // link='/product'
-          profilePic={user && user.image ? user.image : ""}
-        />
         <section className={`mt-28 mb-6 ${isCollapsed? ' max-w-[1000px]':' max-w-[800px]'}  mx-auto`}>
           <AddProduct1 />
           <table className="w-full border-separate border-spacing-y-5">

@@ -14,7 +14,7 @@ const AssignLocation = ({title,formType}) => {
   return (
     <>
       <div
-        className="flex items-center justify-between bg-[#ffffff] border-[#8ED06C] border-2 p-3 rounded-md cursor-pointer my-3"
+        className="flex items-center justify-between bg-[#ffffff] border-lightBlack border p-3 rounded-md cursor-pointer my-3"
         onClick={() => setLocationAssigned(formType)}
       >
         <h1 className="text-gray-500 font-bold">

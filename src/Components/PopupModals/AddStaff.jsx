@@ -47,7 +47,7 @@ const AddStaff = ({ setShowStaffPopUp }) => {
     }
     const staffData = {
       name: data.adminName,
-      phone: data.staffNumber,
+      // phone: data.staffNumber,
       email: data.staffMail,
       roles: selectedRoleIds.map((roleId) => ({
         id: roleId,
@@ -59,7 +59,7 @@ const AddStaff = ({ setShowStaffPopUp }) => {
       storeId,
     };
     addStaffToBackend(staffData, {
-      onSuccess: () => toast.success("Staff successfully added."),
+      onSuccess: () => toast.success("Staff successfully added,, invite has been sent to staff email."),
       onError: (error) => {
         toast.error(error.response?.data?.message || "An error occurred.");
       },
@@ -67,10 +67,10 @@ const AddStaff = ({ setShowStaffPopUp }) => {
   };
 
   return (
-    <div className="bg-[rgba(0,0,0,0.6)] fixed inset-0 overflow-y-scroll z-50">
-      <div className="max-w-[450px] mx-auto relative">
+    <div className="bg-[rgba(0,0,0,0.3)] fixed inset-0 overflow-y-scroll z-50 backdrop-blur-sm">
+      <div className="w-[90%] lg:w-[35%] rounded-tl-lg rounded-bl-lg shadow-lg mx-auto fixed top-0 right-0 bottom-0 bg-white h-screen overflow-y-auto custom-scrollbar">
         <button
-          className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-md"
+          className="absolute top-4 left-4 text-green rounded-md"
           onClick={() => setShowStaffPopUp(false)}
         >
           <svg
@@ -90,10 +90,11 @@ const AddStaff = ({ setShowStaffPopUp }) => {
         </button>
 
         <form
-          className="bg-white p-8 mt-32"
+          className="bg-white p-6"
           // onSubmit={handleSubmit(submitData)}
         >
-          <div className="mt-4">
+          <h2 className='my-6 font-bold border-b border-lightBlack text-[32px]'>Add New Staff</h2>
+          <div className="">
             <label
               htmlFor="adminName"
               className="mb-2 text-lightBlack font-bold"
@@ -105,7 +106,7 @@ const AddStaff = ({ setShowStaffPopUp }) => {
               type="text"
               name="adminName"
               placeholder="Enter Admin Name e.g Farouk Kola"
-              className="border border-lightGreen rounded-md p-2 block w-full"
+              className="border border-lightBlack rounded-md p-2 block w-full"
             />
             {errors.adminName && (
               <p className="text-red-500 text-xs">{errors.adminName.message}</p>
@@ -130,52 +131,23 @@ const AddStaff = ({ setShowStaffPopUp }) => {
               type="email"
               name="staffMail"
               placeholder="e.g farouk@gmail.com"
-              className="border border-lightGreen rounded-md p-2 block w-full"
+              className="border border-lightBlack rounded-md p-2 block w-full"
             />
             {errors.staffMail && (
               <p className="text-red-500 text-xs">{errors.staffMail.message}</p>
             )}
           </div>
-
-          <div className="mt-2">
-            <label
-              htmlFor="staffNumber"
-              className="mb-2 text-lightBlack font-bold"
-            >
-              Phone Number
-            </label>
-            <input
-              {...register("staffNumber", {
-                required: "Phone number is required",
-                max: {
-                  value: 9999999999,
-                  message: "Number cannot exceed 11 digits",
-                },
-              })}
-              type="text"
-              name="staffNumber"
-              maxLength={11}
-              placeholder="Input staff number"
-              className="border border-lightGreen rounded-md p-2 block w-full"
-            />
-            {errors.staffNumber && (
-              <p className="text-red-500 text-xs">
-                {errors.staffNumber.message}
-              </p>
-            )}
-          </div>
-           
           {/* assigned location */}
           <AssignLocation title="Staff" formType="addStaff" />
           {/* Permission checkboxes */}
           <div>
-            <h3 className="text-green font-bold mt-2">Permissions</h3>
+            <h3 className="text-lightBlack font-bold mt-2">Permissions</h3>
             <p className="mb-2 text-[#6e6e6e] text-[12px]">
               Choose what the Admin should be able to access:
             </p>
             {roles?.map((role) => (
               <div
-                className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2"
+                className="border border-lightBlack rounded-md flex mt-2 justify-between items-center px-2"
                 key={role.id}
               >
                 <div>
@@ -201,7 +173,7 @@ const AddStaff = ({ setShowStaffPopUp }) => {
 
           <button
             type="button"
-            className="bg-green text-white mt-8 font-semibold block mx-auto w-[150px] p-2 rounded-md"
+            className="bg-green w-full text-white mt-4 font-semibold block mx-auto p-2 rounded-2xl hover:bg-opacity-95 transitions"
             disabled={isStaffPending}
             onClick={handleSubmit(submitData)}
           >

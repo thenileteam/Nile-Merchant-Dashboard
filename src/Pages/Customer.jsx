@@ -4,16 +4,13 @@ import { userlist, usergroup, usercheck, userblock } from "../assets";
 import CustomerTable from "../Components/Customers/CustomerTable";
 import AddCustomer1 from "../Components/PopupModals/AddCustomer1";
 import {
-  useFetchStoreCustomers,
-  useFetchUser,
-} from "../datahooks/users/userhooks";
+  useFetchStoreCustomers} from "../datahooks/users/userhooks";
 import CustomAwaitCard from "../Components/uicomps/customawaitcard";
-import Navbar from "../Components/Navbar/Navbar";
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
+import DashboardIntro from '../Components/Dashboard/DashboardIntro'
 const Customer = () => {
   //show user profile image
-  const { user } = useFetchUser();
   const {
     customers,
     isFetchingCustomers: isLoading,
@@ -23,23 +20,18 @@ const Customer = () => {
 
   return (
     <>
-      <div className="min-h-screen pb-20">
-        <div className="flex">
-          {/* Sidebar */}
-          {/* Navbar */}
-          <div className={isCollapsed? 'flex-grow lg:ml-20 overflow-x-hidden':"flex-grow lg:ml-56 overflow-x-hidden"}>
-            <Navbar
-              title="Customers Management"
-              icon={userlist}
-              profilePic={user && user.image ? user.image : ""}
-            />
-
+      <div className="min-h-screen mt-[73px]">
+        <div className={`${isCollapsed ? 'lg:ml-20 overflow-x-hidden' : "flex-grow lg:ml-56 overflow-x-hidden"}`}>
             {/* Cards */}
-            <div className={`${isCollapsed?'max-w-[1000px]':'max-w-[800px]'} mt-28 mb-6 mx-auto`}>
+            <div className={`${isCollapsed?'max-w-[1100px]':'max-w-[950px]'} mb-6 mx-auto`}>
+          <article className="flex flex-col lg:flex-row gap-3 lg:gap-0 justify-between lg:items-center ">
+            <DashboardIntro introText={'Customer Management'} />
+            <AddCustomer1 transparent={true}/>
+          </article>
               <CustomAwaitCard isLoading={isLoading} error={error}>
-                <div className="flex gap-20">
-                  <DashboardBox text='Total Customers' imgWidth='w-9'  bgColor='bg-[#FCDADF]' image={ usergroup} data={customers?.length}  width='w-[50%]' />
-                  <DashboardBox bgColor='bg-[#FFE8DF]' text='Active Customers' imgWidth='w-9' image={usercheck} data={customers?.length} width='w-[50%]'  />
+                <div className="flex gap-20 mt-10">
+                  <DashboardBox text='Total Customers' spacing='my-5' data={customers?.length}  width='w-[50%]' />
+                  <DashboardBox text='Active Customers' spacing='my-5' data={customers?.length} width='w-[50%]'  />
                   {/*<div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                     <img src={userarrow} alt="" />
                     <h1 className="text-[#333333] text-[22px] font-bold mt-1">
@@ -49,15 +41,6 @@ const Customer = () => {
                   </div>*/}
                 </div>
               </CustomAwaitCard>
-            </div>
-            {/* Add Customer & Export CSV Button */}
-            <div className={`flex ${isCollapsed?'max-w-[1000px]':'max-w-[800px]'}   mx-auto items-center`}>
-              <AddCustomer1 transparent={true} />
-
-              {/* <h1 className="text-[#ffffff] flex font-bold gap-1 items-center bg-[#004324] p-2.5 rounded-md">
-          <img src={download} alt="" />
-          Export CSV
-        </h1> */}
             </div>
             {customers?.length === 0 && (
               <div className="px-24 mt-20">
@@ -91,7 +74,6 @@ const Customer = () => {
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 };
