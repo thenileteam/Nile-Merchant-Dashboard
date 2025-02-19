@@ -2,15 +2,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import LoginReviews from "@/Components/LoginReviews/LoginReviews";
 import { nilelogosolid, eye, lashesIcon } from "../assets";
+import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useShowPasswordStore } from "../ZustandStores/showPasswordStore";
 import { useForm } from "react-hook-form";
 // import { useStore } from "@/ZustandStores/generalStore";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useSearchParams } from "react-router-dom";
+
 const StaffRegister = () => {
-  const [searchParams] = useSearchParams();
+  const location = useLocation();
+
+  // Extract query params
+  const searchParams = new URLSearchParams(location.search);
   const staffId = searchParams.get("staffId");
 
   const url = "https://api.nile.ng/store/store/staffs/single";
@@ -43,16 +47,30 @@ const StaffRegister = () => {
     handleSubmit
   } = useForm();
 
-  const submitStaffDetails = (data) => {
-      const newData = {
-          name: staff.name,
-          email: staff.email,
-          staffId: staffId,
-          isStaff: true,
-          branchId:staff.locationId
+  // const [searchParams] = useSearchParams();
+  // const navigate = useNavigate();
+  //   const staffId = searchParams.get("staffId");
+  //   console.log(staffId)
+  //   const { staffs } = useFetchStaffs()
+  //   const staff = staffs?.find((item)=>item?.id === staffId)
+  //   console.log(staff)
 
-      }
-  };
+  // // Redirect user if no staffId is found
+  // //   useEffect(() => {
+  // //     if (!staffId) {
+  // //       navigate("/"); // Redirects to homepage if staffId is missing
+  // //     }
+  // //   }, [staffId, navigate]);
+  // const submitStaffDetails = (data) => {
+  //     const newData = {
+  //         name: staff.name,
+  //         email: staff.email,
+  //         staffId: staffId,
+  //         isStaff: true,
+  //         branchId:staff.locationId
+
+  //     }
+  // };
   if (fetchingStaffDetails)
     return (
       <div className=" h-screen w-full flex justify-center">
@@ -80,10 +98,7 @@ const StaffRegister = () => {
               Before you begin, set up your login credentials to access your
               dashboard.
             </p>
-            {/* Show staff ID for debugging or user confirmation */}
-            {/* <p className="text-center text-gray-500 text-sm">
-                Staff ID: {staffId}
-              </p> */}
+           
           </div>
 
           <form>
@@ -133,10 +148,8 @@ const StaffRegister = () => {
             <button
               type="submit"
               className="mx-auto block bg-green rounded-md text-white w-full py-3 text-center text-[14px] mt-4 font-semibold"
-              onClick={handleSubmit(submitStaffDetails)}
-              disabled={fetchingStaffDetails}
             >
-              {fetchingStaffDetails ? "Completing.." : "Complete Setup"}
+              Complete Setup
             </button>
             <Link to="/" className="text-center block mt-4"> Login</Link>
           </form>
