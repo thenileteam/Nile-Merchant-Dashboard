@@ -15,6 +15,7 @@ const StoreSetting = () => {
   const { isEditingStore, addStoreSettingsToBackend } = useEditStoreSettings(
     () => {
       setShowPopup(false);
+      disableEditMode("store");
     }
   );
   const { data: countries, isLoading, isError } = useFetchCountries();
@@ -85,10 +86,6 @@ const StoreSetting = () => {
     });
   };
 
-  const submitDetailsAndDisableEditing = () => {
-    handleSubmit(onSubmit);
-    disableEditMode("store");
-  };
   return (
     <div className="">
       <div className="lg:max-w-[800px] mx-auto mt-[73px] ">
@@ -115,7 +112,7 @@ const StoreSetting = () => {
                 id="name"
                 {...register("name", { required: "Store Name is required" })}
                 placeholder="E.g; Gade’s store"
-                className={`mt-1 w-full p-3 rounded-md border-lightBlack border bg-white text-sm text-gray-700 ${
+                className={`mt-1 w-full p-3 rounded-md border-[#6e6e6e] border bg-white text-sm text-gray-700 ${
                   buttonStates.store.editMode ? "" : "cursor-not-allowed"
                 }`}
                 readOnly={!buttonStates.store.editMode}
@@ -138,7 +135,7 @@ const StoreSetting = () => {
                 id="address"
                 {...register("address", { required: "address is required" })}
                 placeholder="Enter it here"
-                className={`mt-1 w-full p-3 rounded-md border-lightBlack border bg-white text-sm text-gray-700 ${
+                className={`mt-1 w-full p-3 rounded-md border-[#6e6e6e] border bg-white text-sm text-gray-700 ${
                   buttonStates.store.editMode ? "" : "cursor-not-allowed"
                 }`}
               />
@@ -157,7 +154,7 @@ const StoreSetting = () => {
                     validate: (value) =>
                       value !== "" || "Please select a country",
                   })}
-                  className={`border border-lightBlack rounded-md p-3 block w-full ${
+                  className={`border border-[#6e6e6e] rounded-md p-3 block w-full ${
                     buttonStates.store.editMode ? "" : "cursor-not-allowed"
                   }`}
                   disabled={isLoading || isError}
@@ -199,7 +196,7 @@ const StoreSetting = () => {
                   id="state"
                   {...register("state", { required: "State is required" })}
                   placeholder="Enter it here"
-                  className={`mt-1 w-full p-3 rounded-md border-lightBlack border bg-white text-sm text-gray-700 ${
+                  className={`mt-1 w-full p-3 rounded-md border-[#6e6e6e] border bg-white text-sm text-gray-700 ${
                     buttonStates.store.editMode ? "" : "cursor-not-allowed"
                   }`}
                   readOnly={!buttonStates.store.editMode}
@@ -230,7 +227,7 @@ const StoreSetting = () => {
                     { required: "facebook link is required" }
                   )}
                   placeholder="https://www.facebook.com/Mynile"
-                  className={`mt-1 w-full p-3 rounded-md border-lightBlack border bg-white text-sm text-gray-700 ${
+                  className={`mt-1 w-full p-3 rounded-md border-[#6e6e6e] border bg-white text-sm text-gray-700 ${
                     buttonStates.store.editMode ? "" : "cursor-not-allowed"
                   }`}
                   readOnly={!buttonStates.store.editMode}
@@ -262,7 +259,7 @@ const StoreSetting = () => {
                     { required: "twitter link is required" }
                   )}
                   placeholder="https://www.x.com/Mynile"
-                  className={`mt-1 w-full p-3 rounded-md border-lightBlack border bg-white text-sm text-gray-700 ${
+                  className={`mt-1 w-full p-3 rounded-md border-[#6e6e6e] border bg-white text-sm text-gray-700 ${
                     buttonStates.store.editMode ? "" : "cursor-not-allowed"
                   }`}
                   readOnly={!buttonStates.store.editMode}
@@ -294,7 +291,7 @@ const StoreSetting = () => {
                     { required: "instagram link is required" }
                   )}
                   placeholder="https://www.instagram.com/Mynile"
-                  className={`mt-1 w-full p-3 rounded-md border-lightBlack border bg-white text-sm text-gray-700 ${
+                  className={`mt-1 w-full p-3 rounded-md border-[#6e6e6e] border bg-white text-sm text-gray-700 ${
                     buttonStates.store.editMode ? "" : "cursor-not-allowed"
                   }`}
                   readOnly={!buttonStates.store.editMode}
@@ -326,7 +323,7 @@ const StoreSetting = () => {
                     { required: "linkedin link is required" }
                   )}
                   placeholder="https://www.linkedin.com/Mynile"
-                  className={`mt-1 w-full p-3 rounded-md border-lightBlack border bg-white text-sm text-gray-700 ${
+                  className={`mt-1 w-full p-3 rounded-md border-[#6e6e6e] border bg-white text-sm text-gray-700 ${
                     buttonStates.store.editMode ? "" : "cursor-not-allowed"
                   }`}
                   readOnly={!buttonStates.store.editMode}
@@ -340,7 +337,7 @@ const StoreSetting = () => {
               {/* radio buttons */}
               <div className="text-[#333] font-semibold mt-4">
                 Store Currency
-                <div className="border border-lightBlack rounded-md flex justify-between p-2">
+                <div className="border border-[#6e6e6e] rounded-md flex justify-between p-2">
                   <label htmlFor="currency-usd">USD</label>
                   <Controller
                     name="currency"
@@ -356,7 +353,7 @@ const StoreSetting = () => {
                     )}
                   />
                 </div>
-                <div className="border border-lightBlack mt-2 rounded-md flex justify-between p-2">
+                <div className="border border-[#6e6e6e] mt-2 rounded-md flex justify-between p-2">
                   <label htmlFor="currency-naira">NAIRA</label>
                   <Controller
                     name="currency"
@@ -374,20 +371,21 @@ const StoreSetting = () => {
                 </div>
               </div>
             </div>
-            <button
+           {buttonStates.store.editMode&&<button
               type="button"
               className="bg-green text-white font-semibold ml-auto block p-2 w-[128px] rounded-md my-12"
-              onClick={submitDetailsAndDisableEditing}
+              onClick={handleSubmit(onSubmit)}
             >
-              Save Changes
-            </button>
+              {isEditingStore?'Saving..':'  Save Changes'}
+             
+            </button>}
           </div>
         </form>
       </div>
 
       {/* Save Changes Button */}
       <div className="mt-10">
-        <SaveChanges isEditingStore={isEditingStore} showPopup={showPopup} />
+        <SaveChanges isEditingStore={isEditingStore} showPopup={showPopup} setShowPopup={ setShowPopup} />
       </div>
     </div>
   );

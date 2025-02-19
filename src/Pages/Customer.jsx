@@ -28,7 +28,7 @@ const Customer = () => {
             <DashboardIntro introText={'Customer Management'} />
             <AddCustomer1 transparent={true}/>
           </article>
-              <CustomAwaitCard isLoading={isLoading} error={error}>
+              <CustomAwaitCard isLoading={isLoading} error={error} isCollapsed={isCollapsed}>
                 <div className="flex gap-20 mt-10">
                   <DashboardBox text='Total Customers' spacing='my-5' data={customers?.length}  width='w-[50%]' />
                   <DashboardBox text='Active Customers' spacing='my-5' data={customers?.length} width='w-[50%]'  />

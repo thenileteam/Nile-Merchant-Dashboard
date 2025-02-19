@@ -24,6 +24,7 @@ import { UseCardLoader } from "@/Components/CustomLoaders/loaders";
 import DashboardIntro from "@/Components/Dashboard/DashboardIntro";
 import EmptyState from "@/Components/StaffManagement/EmptyState";
 import{EmptyOrderIcon} from '../Components/Store/AllStoreComp/StoreSettingIcons'
+import { FiPlus } from "react-icons/fi";
 const Orders = () => {
   //user profile image
   const { user } = useFetchUser();
@@ -102,9 +103,26 @@ const Orders = () => {
                 ? "flex-grow lg:ml-20 overflow-x-hidden"
                 : "flex-grow lg:ml-56 overflow-x-hidden"
             }
-         `}
-      >
-        <div className="overflow-y-hidden border border-red-600">
+         `}>
+        {createOrderForm ?
+          <CreateOrderForm
+            addOrder={addOrder}
+            isAddingOrder={isAddingOrder}
+            handleDateChange={handleDateChange}
+            cart={cart}
+            setPaymentStatus={setPaymentStatus}
+            paymentStatus={paymentStatus}
+            setSelectProductForm={setSelectProductForm}
+            salesChannel={salesChannel}
+            setSalesChannel={setSalesChannel}
+            selectedCustomer={selectedCustomer}
+            setSelectCustomerForm={setSelectCustomerForm}
+            setCreateOrderForm={setCreateOrderForm}
+            setSelectedCustomer={setSelectedCustomer}
+            createOrderForm={createOrderForm}
+            setCart={setCart}
+          />:
+         <div className="overflow-y-hidden ">
           {selectCustomerForm && (
             <SelectCustomerform
               selectedCustomer={selectedCustomer}
@@ -112,40 +130,20 @@ const Orders = () => {
               setSelectCustomerForm={setSelectCustomerForm}
             />
           )}
-          {selectProductForm && (
-            <SelectProductForm
-              cart={cart}
-              setCart={setCart}
-              setSelectProductForm={setSelectProductForm}
-            />
-          )}
+         
           <div
             className={`mb-6 px-2 ${
               isCollapsed ? "lg:max-w-[1100px]" : "lg:max-w-[950px]"
             }   lg:px-0 mx-auto max-w-full`}
           >
-            <section></section>
-            <article className="flex justify-between mb-10 items-center">
+           
+            <article className="flex flex-col lg:flex-row gap-2 lg:justify-between mb-10 lg:items-center">
               <DashboardIntro introText="Order Management" />
-              <CreateOrderForm
-                addOrder={addOrder}
-                isAddingOrder={isAddingOrder}
-                handleDateChange={handleDateChange}
-                cart={cart}
-                setPaymentStatus={setPaymentStatus}
-                paymentStatus={paymentStatus}
-                setSelectProductForm={setSelectProductForm}
-                salesChannel={salesChannel}
-                setSalesChannel={setSalesChannel}
-                selectedCustomer={selectedCustomer}
-                setSelectCustomerForm={setSelectCustomerForm}
-                setCreateOrderForm={setCreateOrderForm}
-                setSelectedCustomer={setSelectedCustomer}
-                createOrderForm={createOrderForm}
-              />
-            </article>
+              <button type="button" className="bg-green text-white p-2 w-[140px] flex items-center rounded-md justify-center gap-1" onClick={()=>setCreateOrderForm(true)}><FiPlus/>Create Order</button>
+               
+            </article> 
             {/* Cards */}
-            <div className="flex gap-8 lg:gap-20">
+             <div className="flex gap-8 lg:gap-20">
               <UseCardLoader amount={2} loading={isFetching} error={isError}>
                 <>
                   <DashboardBox
@@ -159,7 +157,7 @@ const Orders = () => {
                     data={0}
                     spacing="my-5"
                     width="w-[50%]"
-                  />
+                  /> 
                   {/*  data?.filter(item => item.status === 'pending' ) */}
                   {/* <div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
                       <img src={timer} alt="" />
@@ -168,21 +166,24 @@ const Orders = () => {
                       </h1>
                       <p className="text-[#6E6E6E]">Average Delivery Time</p>
                     </div> */}
-                </>
+                 </>
               </UseCardLoader>
             </div>
-          </div>
-          <div className="overflow-x-scroll lg:overflow-auto">
+          </div> 
+            <div className="overflow-x-scroll lg:overflow-auto">
             <OrdersTable data={data} isCollapsed={isCollapsed} />
-          </div>
-        </div>
+          </div> 
+        </div> 
+        }
       </div>
 
+
+      {/* empty State */}
       <div
         className={`${
           isCollapsed ? "max-w-[1000px]" : "max-w-[800px]"
         }  mx-auto `}>
-        <div className="flex items-center"></div>
+        {/* <div className="flex items-center"></div> */}
         {data && data.length === 0 && (
       
              <EmptyState

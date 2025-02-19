@@ -1,12 +1,11 @@
 import LoginReviews from "@/Components/LoginReviews/LoginReviews";
 import { nilelogosolid, eye, lashesIcon } from "../assets";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useShowPasswordStore } from "../ZustandStores/showPasswordStore";
 import { useForm } from "react-hook-form";
 import { useStore } from "@/ZustandStores/generalStore";
 import { Link } from "react-router-dom";
-import { useFetchStaffs } from "@/datahooks/staffs/usestaffhook";
+import { useFetchStaff } from "@/datahooks/staffs/usestaffhook";
 import { useSignUserUp } from "@/datahooks/users/userhooks";
 const StaffRegister = () => {
   const { store } = useStore();
@@ -17,14 +16,13 @@ const StaffRegister = () => {
     handleSubmit,
     watch,
   } = useForm(
-    { mode: "onChange" } //triggers on every key stroke
+    { mode: "onChange" } //check if password matches confirm password on every key stroke
   );
 
   const [searchParams] = useSearchParams();
   //   const navigate = useNavigate();
   const staffId = searchParams.get("staffId");
-  const { staffs } = useFetchStaffs();
-  const staff = staffs?.find((item) => item?.id === staffId);
+  const { staff } = useFetchStaff(staffId);
   console.log(staff, staffId);
   const password = watch("password");
   const { signUpMutate, signUpIsPending } = useSignUserUp();
@@ -33,8 +31,8 @@ const StaffRegister = () => {
       name: staff?.name,
       email: staff?.email,
       staffId: staffId,
-      isStaff: true,
       branchId: staff?.locationId,
+      isStaff: true,
       password: data.password,
       passwordConfirm: data.confirmPassword,
     };
@@ -44,7 +42,7 @@ const StaffRegister = () => {
   return (
     <section className="h-screen">
       <div className="container md:max-w-[700px] lg:max-w-[1184px] mx-auto mt-28 lg:flex lg:gap-[100px] items-center bg-dimWhite rounded-lg p-4 lg:p-16 shadow-md shadow-gray-300">
-        <article className="mb-10 lg:w-[60%]">
+        <article className="mb-10 lg:w-[40%]">
           <div>
             <img
               src={nilelogosolid}
@@ -69,7 +67,7 @@ const StaffRegister = () => {
           </div>
 
           <form>
-            <div className="relative">
+            <div className="relative  ">
               <label htmlFor="password">Password</label>
               <input
                 type={showPassword.password ? "text" : "password"}
@@ -120,7 +118,7 @@ const StaffRegister = () => {
             >
               {signUpIsPending ? "Completing.." : "Complete Setup"}
             </button>
-            <Link to="/">Login</Link>
+            <Link to="/" className="text-center block mt-4"> Login</Link>
           </form>
         </article>
         <LoginReviews />

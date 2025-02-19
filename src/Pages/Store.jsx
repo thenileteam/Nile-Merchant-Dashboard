@@ -18,27 +18,20 @@ import {
   websecurity,
 } from "../assets";
 import DeleteAccount from "../Components/Store/DeleteAccount";
-import {useFetchUser} from '../datahooks/users/userhooks'
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
-import Navbar from '../Components/Navbar/Navbar'
 import StoreSetting from "../Components/Store/StoreSetting";
 const Store = () => {
-  const { user } = useFetchUser()
   const { isCollapsed } = useSidebarStore()
     return (
     <>
       <div className=" pb-20">
         <div className="flex">
-         {/* <Sidebar /> */}
-
-          {/* Navbar */}
-          <div   className={
+          <div  className={
               isCollapsed
                 ? "flex-grow lg:ml-20 overflow-x-hidden"
                 : "flex-grow lg:ml-56 overflow-x-hidden"
             }>
-              
-            {/* Cards */}
+            {/* setting form */}
               <StoreSetting />
           </div>
         </div>

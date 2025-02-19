@@ -1,13 +1,10 @@
 /* eslint-disable react/prop-types */
 
-import ProfileImage from "../PlaceholderImage/PlaceholderImage";
-import { Link } from "react-router-dom";
 import { useSidebarStore } from "../../ZustandStores/sidebarStore";
-import ProfileSetting from "../Store/ProfileSetting";
 import { useProfileStore } from "@/ZustandStores/profileStore";
-import ProfileDropDown from "../Dashboard/ProfileDropDown";
 import { nilelogogreen } from "@/assets";
 import { FiSearch } from "react-icons/fi";
+import ProfileImageDropDown from '../PlaceholderImage/ProfileImageDropdown'
 const Navbar = ({ profilePic }) => {
   const { sidebarOpen, setSidebarOpen } = useSidebarStore();
   const { toggleProfile } = useProfileStore();
@@ -55,10 +52,8 @@ const Navbar = ({ profilePic }) => {
               />
               <FiSearch className={`absolute top-[13px]  left-4 stroke-current stroke-[1px] text-sm`} />
             </div>
-            <div className="relative cursor-pointer" onClick={toggleProfile}>
-              <ProfileImage profileImage={profilePic} />
-              <ProfileDropDown />
-            </div>
+            {/* profileimage */}
+            <ProfileImageDropDown profilePic={profilePic} />
           </div>
         </div>
       </div>

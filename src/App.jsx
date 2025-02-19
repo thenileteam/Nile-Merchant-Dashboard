@@ -229,7 +229,7 @@ const App = () => {
           element: (
             <ProtectRoutes>
               <Branch/>
-            </ProtectRoutes>
+             </ProtectRoutes>
           ),
         },
         // {

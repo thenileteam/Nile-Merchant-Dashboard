@@ -1,6 +1,7 @@
 import { useAssignLocationStore } from "@/ZustandStores/locationStore";
 import { addsquare } from "../../assets";
 import { useFetchLocations } from "@/datahooks/location/useLocationhook";
+import { FiChevronDown } from "react-icons/fi";
 
 const AssignLocation = ({title,formType}) => {
     const { locations } = useFetchLocations();
@@ -20,10 +21,10 @@ const AssignLocation = ({title,formType}) => {
         <h1 className="text-gray-500 font-bold">
           {selectedLocation?.locationName || `Select location to add  ${title}`}
         </h1>
-        <img src={addsquare} alt="Add Square" />
+        <FiChevronDown className='text-[#6e6e6e]'/>
       </div>
       {isLocationAssigned && (
-        <div className="absolute max-w-[380px] w-full border border-[#8ED06C] bg-white rounded-md shadow-lg max-h-[200px] overflow-y-auto">
+        <div className="absolute max-w-[380px] w-full border border-[#6e6e6e] bg-white rounded-md shadow-lg max-h-[200px] overflow-y-auto">
           {locations?.map((location) => (
             <div
               key={location.id}

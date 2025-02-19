@@ -5,7 +5,7 @@ import {
   useFetchStoreCustomers,
   useFetchUser,
 } from "../datahooks/users/userhooks";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { formatNumber } from "../utils/formatNumber";
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
@@ -14,6 +14,10 @@ import { UseCardLoader } from "@/Components/CustomLoaders/loaders";
 import { useFetchExpense } from "@/datahooks/users/expensehook";
 import AddProduct1 from "../Components/PopupModals/AddProduct1";
 import DashboardIntro from "../Components/Dashboard/DashboardIntro";
+import { useTransferStore } from '../ZustandStores/transferStore'
+import TransferInventory from "@/Components/PopupModals/TransferInventory";
+import { useFetchStoreSettings } from "@/datahooks/users/storeSettings";
+import { convertNairaToDollar} from '../utils/formatNumber'
 const Dashboard = () => {
   //users image
   const { user } = useFetchUser();
@@ -23,6 +27,10 @@ const Dashboard = () => {
   const { customerLength } = useFetchStoreCustomers();
   const { productLength } = useFetchProducts();
   const { isCollapsed } = useSidebarStore();
+  const { data: storeData } = useFetchStoreSettings()
+  console.log(storeData);
+  
+  const {isTransferOpen, setOpenTransfer} = useTransferStore()
   //username
   const userName =
     user && user.name ? user.name.split(" ")[0].toUpperCase() : "";
@@ -44,10 +52,11 @@ const Dashboard = () => {
         <div className="lg:overflow-x-hidden">
           <UseCardLoader
             amount={4}
-            className="mt-20 lg:mt-1 mb-6 px-2"
+            className={`mt-20 lg:mt-1 mb-6 mx-auto  ${
+              isCollapsed ? "lg:max-w-[1120px]" : "lg:max-w-[950px]"
+            }`}
             loading={isFetchingDashboardData}
-            error={dashboardDataisError}
-          >
+            error={dashboardDataisError}>
             <div
               className={`mb-6 ${
                 isCollapsed ? "lg:max-w-[1120px]" : "lg:max-w-[950px]"
@@ -59,27 +68,35 @@ const Dashboard = () => {
                   introText={`Welcome ${userName}`}
                   overview="Here's an overview of your inventory system"
                 />
-                <Link to="products">
-                  <AddProduct1 />
-                </Link>
+                <div className="flex items-center gap-1">
+                  <Link to='/product'>
+                    <AddProduct1 />
+                  </Link>
+                  <button
+                    type="button"
+                    className="border-2 border-green p-[6px] rounded-md text-green"
+                    onClick={()=>setOpenTransfer(true)}
+                  >
+                    Transfer inventory
+                  </button>
+                </div>
               </article>
               <div className="grid gap-x-2 gap-y-3 grid-cols-2 md:grid-cols-4 mt-10">
                 {/* Cards */}
                 <div className="relative">
                   <DashboardBox
                     text="Available Balance"
-                    naira="&#8358;"
+                    naira={storeData?.currency==='Naira'? '₦' : '$'}
                     spacing="my-6"
-                    data={formatNumber(dashboardRevenue)}
+                    data={storeData?.currency==='Naira'?formatNumber(dashboardRevenue):formatNumber(convertNairaToDollar(dashboardRevenue))}
                   />
                 </div>
                 <DashboardBox
                   text="Total Sales"
-                  naira="&#8358;"
+                  naira={storeData?.currency==='Naira'? '₦' : '$'}
                   spacing="my-6"
-                  data={`${
-                    formatNumber(dashboardData?.salesData?.totalSales) || 0
-                  }`}
+                  data={storeData?.currency==='Naira'?formatNumber(dashboardData?.salesData?.totalSales):formatNumber(convertNairaToDollar(dashboardData?.salesData?.totalSales))||0}
+                  
                 />
                 <DashboardBox
                   text="Total Payouts"
@@ -208,6 +225,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      <TransferInventory setOpenTransfer={setOpenTransfer} isTransferOpen={isTransferOpen} />
     </>
   );
 };

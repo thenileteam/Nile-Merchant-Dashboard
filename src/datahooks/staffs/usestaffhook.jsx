@@ -141,8 +141,6 @@ export const useDeleteStaff = (onSuccessDelete) => {
   };
 };
 
-
-
 //fetch single staff
 export const useFetchStaff = (staffId) => {
   const{store} = useStore()

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useCreateNewCategory } from "../../datahooks/products/productshooks";
 import { BiLoaderCircle } from "react-icons/bi";
 import { validateForm } from "../../utils/formatdate";
-const AddCategory = ({ setCategoryOpen}) => {
+const AddCategory = ({isCategoryOpen, setCategoryOpen}) => {
   const store = JSON.parse(localStorage.getItem("store"));
   const { addCategoryToBackend, isAddingCategory } = useCreateNewCategory(() => {
     setCategoryOpen(false);
@@ -36,8 +36,8 @@ const AddCategory = ({ setCategoryOpen}) => {
   };
  
   return (
-    <div className="bg-[rgba(0,0,0,0.3)] fixed inset-0 z-20 backdrop-blur-sm">
-      <div className="bg-white w-[90%] lg:w-[35%] rounded-tl-lg rounded-bl-lg mx-auto fixed right-0 top-0 bottom-0">
+    <div className={`bg-[rgba(0,0,0,0.3)] fixed inset-0 z-20 backdrop-blur-sm ${isCategoryOpen?"visible":"invisible"}`}>
+      <div className={`bg-white p-8  w-[90%] lg:w-[35%] rounded-tl-xl mx-auto fixed right-0 top-0 bottom-0 transform ${isCategoryOpen? "translate-x-0":"translate-x-full"} transition-all duration-200 ease-in`}>
         <button
           className="absolute top-4 left-4 text-green rounded-lg"
           onClick={() => setCategoryOpen(false)}
@@ -58,7 +58,7 @@ const AddCategory = ({ setCategoryOpen}) => {
           </svg>
         </button>
 
-        <form action="" className="bg-white p-6">
+        <form action="" className="bg-white">
           <h2 className="text-[32px] border-b border-lightBlack my-6">Add Category</h2>
           <div className=" ">
             <label htmlFor="categoryName" className="mb-2">
@@ -82,15 +82,15 @@ const AddCategory = ({ setCategoryOpen}) => {
                 (Optional)
               </span>
             </label>
-            <input
+            <textarea
               type="text"
               name="categoryDescription"
-              placeholder="input info about the category  "
+              placeholder="input info about the category"
               value={categoryDetails.categoryDescription}
-              className="border border-lightBlack rounded-lg  p-3 block w-full"
+              className="border border-lightBlack rounded-lg  p-3 block w-full min-h-[200px]"
               onChange={handleCategoryChange}
               required
-            />
+            ></textarea>
           </div>
           <button
             type="button"

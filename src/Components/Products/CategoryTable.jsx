@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import usePagination from "../Pagination/PaginationHook";
 import Pagination from "../Pagination/Pagination";
 import { useSidebarStore } from "../../ZustandStores/sidebarStore";
+import { FaEye } from "react-icons/fa";
 const CategoryTable = () => {
   const { categories, isFetchingCategories, isError } = useFetchCategories();
   const { isCollapsed } = useSidebarStore();
@@ -52,14 +53,15 @@ const CategoryTable = () => {
                       <td className="bg-white p-3 text-[#6e6e6e]  capitalize">
                         {category?.description || "NA"}
                       </td>
-                      <td className="bg-white p-3 text-[#6e6e6e]  ">
-                        {category?.products?.length || 0}
+                      <td className="bg-white p-3 text-[#6e6e6e]">
+                       
                         <Link to={`/categories/${i}`}>
                           <button
-                            className="text-lightGreen capitalize"
+                            className="text-[#6e6e6e] capitalize flex items-center gap-[2px]"
                             disabled={category?.products?.length === 0}
                           >
-                            View
+                              {category?.products?.length || 0}
+                            <FaEye/>
                           </button>
                         </Link>
                       </td>

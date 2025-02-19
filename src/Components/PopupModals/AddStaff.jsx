@@ -9,11 +9,12 @@ import { FaBullseye } from "react-icons/fa6";
 import AssignLocation from "../StaffManagement/AssignLocation";
 import { useAssignLocationStore } from "@/ZustandStores/locationStore";
 import { useStore } from "../../ZustandStores/generalStore";
-const AddStaff = ({ setShowStaffPopUp }) => {
+import * as Switch  from "@radix-ui/react-switch";
+import { FiHome, FiPackage, FiShoppingCart, FiUser,FiBarChart2 } from "react-icons/fi";
+const AddStaff = ({ showStaffPopUp, setShowStaffPopUp }) => {
   const { store } = useStore();
   const storeId = store?.id;
   const { roles } = useFetchRoles();
-  console.log(roles)
   const { addStaffToBackend, isStaffPending } = useCreateStaff(() => {
     setShowStaffPopUp(false);
   });
@@ -28,13 +29,13 @@ const AddStaff = ({ setShowStaffPopUp }) => {
   // State to manage selected role IDs
   const [selectedRoleIds, setSelectedRoleIds] = useState([]);
 
-  // Handle checkbox toggle
-  const handleCheckboxChange = (e) => {
-    const { id, checked } = e.target;
+   
+  const handleRoleToggle = (roleId, checked) => {
     setSelectedRoleIds((prev) =>
-      checked ? [...prev, id] : prev.filter((roleId) => roleId !== id)
+      checked ? [...prev, roleId] : prev.filter((id) => id !== roleId)
     );
   };
+  
   // Submit data
   const submitData = (data) => {
     if (!roles?.length) {
@@ -59,7 +60,10 @@ const AddStaff = ({ setShowStaffPopUp }) => {
       storeId,
     };
     addStaffToBackend(staffData, {
-      onSuccess: () => toast.success("Staff successfully added,, invite has been sent to staff email."),
+      onSuccess: () =>
+        toast.success(
+          "Staff successfully added,, invite has been sent to staff email."
+        ),
       onError: (error) => {
         toast.error(error.response?.data?.message || "An error occurred.");
       },
@@ -67,8 +71,16 @@ const AddStaff = ({ setShowStaffPopUp }) => {
   };
 
   return (
-    <div className="bg-[rgba(0,0,0,0.3)] fixed inset-0 overflow-y-scroll z-50 backdrop-blur-sm">
-      <div className="w-[90%] lg:w-[35%] rounded-tl-lg rounded-bl-lg shadow-lg mx-auto fixed top-0 right-0 bottom-0 bg-white h-screen overflow-y-auto custom-scrollbar">
+    <div
+      className={`bg-[rgba(0,0,0,0.3)] fixed inset-0 z-50 backdrop-blur-sm ${
+        showStaffPopUp ? "visible" : "invisible"
+      }`}
+    >
+      <div
+        className={`w-[90%] lg:w-[35%] rounded-tl-xl shadow-lg mx-auto fixed top-0 right-0 bottom-0 bg-white h-screen overflow-y-auto custom-scrollbar ${
+          showStaffPopUp ? "translate-x-0" : "translate-x-full"
+        } transition-all duration-200 ease-in`}
+      >
         <button
           className="absolute top-4 left-4 text-green rounded-md"
           onClick={() => setShowStaffPopUp(false)}
@@ -93,7 +105,9 @@ const AddStaff = ({ setShowStaffPopUp }) => {
           className="bg-white p-6"
           // onSubmit={handleSubmit(submitData)}
         >
-          <h2 className='my-6 font-bold border-b border-lightBlack text-[32px]'>Add New Staff</h2>
+          <h2 className="my-6 font-bold border-b border-lightBlack text-[32px]">
+            Add New Staff
+          </h2>
           <div className="">
             <label
               htmlFor="adminName"
@@ -145,28 +159,36 @@ const AddStaff = ({ setShowStaffPopUp }) => {
             <p className="mb-2 text-[#6e6e6e] text-[12px]">
               Choose what the Admin should be able to access:
             </p>
-            {roles?.map((role) => (
+            {roles?.map((role, index) => (
               <div
-                className="border border-lightBlack rounded-md flex mt-2 justify-between items-center px-2"
+                className="border bg-[#EAF4E2] rounded-md flex mt-2 justify-between items-center p-3"
                 key={role.id}
               >
-                <div>
-                  <h3 className="text-gray-800 font-semibold text-sm">
-                    {role.name}
+                <div className="flex items-center gap-1">
+                     {index===0?<FiPackage className="text-lightGreen"/>:index===1?<FiBarChart2 className="text-lightGreen"/>: index===2?<FiShoppingCart className="text-lightGreen"/>:< FiUser className="text-lightGreen"/>}  
+                  <h3 className="text-gray-800 font-normal text-sm">
+                    {role.name.split(' ')[0]}
                   </h3>
-                  <p className="text-gray-500 text-[12px]">
-                    {role.description}
-                  </p>
                 </div>
-                <label htmlFor={role.name}>
+                <Switch.Root
+                  className="w-10 h-5 bg-gray-300 rounded-full relative transition data-[state=checked]:bg-lightGreen"
+                  id={role.id}
+                  checked={selectedRoleIds.includes(role.id)}
+                  onCheckedChange={(checked) => handleRoleToggle(role.id, checked)}
+                >
+                  <Switch.Thumb className="w-4 h-4 bg-white rounded-full absolute left-1 top-1 transition-transform  duration-300 ease-in-out data-[state=checked]:translate-x-4" />
+                </Switch.Root>
+                {/* <label htmlFor={role.name}>
                   <input
                     type="checkbox"
                     id={role.id}
                     name={role.name}
                     checked={selectedRoleIds.includes(role.id)}
+                    // className="sr-only peer"
                     onChange={handleCheckboxChange}
                   />
-                </label>
+                  
+                </label> */}
               </div>
             ))}
           </div>

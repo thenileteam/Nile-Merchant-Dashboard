@@ -6,6 +6,7 @@ import Skeleton from "react-loading-skeleton";
 import Pagination from "../Pagination/Pagination";
 import usePagination from "../Pagination/PaginationHook";
 import { useSidebarStore } from "../../ZustandStores/sidebarStore";
+import { useEditProductStore } from "@/ZustandStores/transferStore";
 // code start
 const ProductTable = ({ data, isFetching, isError }) => {
   const itemsPerPage = 10;
@@ -14,7 +15,8 @@ const ProductTable = ({ data, isFetching, isError }) => {
     itemsPerPage
   );
   const { isCollapsed } = useSidebarStore();
-  console.log(data);
+  const { setEditingProduct, editingProduct } = useEditProductStore();
+  console.log(editingProduct)
   return (
     <>
       {/* Table */}
@@ -84,16 +86,18 @@ const ProductTable = ({ data, isFetching, isError }) => {
 
                 <tbody>
                   {currentItems?.map((product) => (
-                    <tr key={product.id} className="bg-[#ffffff] shadow-md">
-                      <td className="lg:p-3 text-center bg-[#EAF4E2] font-bold">{String(product.id).padStart(4, 0)}</td>
+                    <tr key={product?.id} className="bg-[#ffffff] shadow-md">
+                      <td className="lg:p-3 text-center bg-[#EAF4E2] font-bold">
+                        {String(product.id).padStart(4, 0)}
+                      </td>
                       <td className="lg:p-3 text-center capitalize text-[#6e6e6e]">
                         {product.name}
                       </td>
                       <td className="lg:p-3  text-center capitalize text-[#6e6e6e]">
-                        {product.category.name}
+                        {product?.category?.name}
                       </td>
                       <td className="lg:p-3 text-center text-[#6e6e6e]">
-                        &#8358;{product.price}
+                        &#8358;{product?.price}
                       </td>
                       <td className="lg:p-3  text-center text-[#6e6e6e]">
                         {product.unitsSold || 0}
@@ -102,7 +106,32 @@ const ProductTable = ({ data, isFetching, isError }) => {
                         {product.stock}
                       </td>
                       <td className="lg:p-3 text-center flex items-center gap-1 justify-center ">
-                        <EditProduct product={product} />
+                        <button
+                          onClick={() => setEditingProduct(product)}
+                          className="hover:scale-110 duration-300 hover:border-lightBlack border-[#ffffff] border-b-[2px] transition underline-offset-2 decoration-[2px] inline-block hover:-translate-x-1"
+                        >
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M16.2141 4.98239L17.6158 3.58063C18.39 2.80646 19.6452 2.80646 20.4194 3.58063C21.1935 4.3548 21.1935 5.60998 20.4194 6.38415L19.0176 7.78591M16.2141 4.98239L10.9802 10.2163C9.93493 11.2616 9.41226 11.7842 9.05637 12.4211C8.70047 13.058 8.3424 14.5619 8 16C9.43809 15.6576 10.942 15.2995 11.5789 14.9436C12.2158 14.5877 12.7384 14.0651 13.7837 13.0198L19.0176 7.78591M16.2141 4.98239L19.0176 7.78591"
+                              stroke="#6e6e6e"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M21 12C21 16.2426 21 18.364 19.682 19.682C18.364 21 16.2426 21 12 21C7.75736 21 5.63604 21 4.31802 19.682C3 18.364 3 16.2426 3 12C3 7.75736 3 5.63604 4.31802 4.31802C5.63604 3 7.75736 3 12 3"
+                              stroke="#6e6e6e"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                        </button>
                         <DeleteProduct product={product} />
                       </td>
                       {/* <td className="px-2 py-3 text-center">

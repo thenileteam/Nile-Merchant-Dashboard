@@ -57,3 +57,11 @@ export const getCardType = (cardNumber) => {
 export const getCardImage= (cardNumber) => {
    return cardTypeImages[getCardType(cardNumber)]||'Unknown';
  }
+
+
+ //dollar
+ export const convertNairaToDollar = (nairaAmount, exchangeRate = 1600) => {
+  // Convert Naira to Dollar
+  const dollarAmount = nairaAmount / exchangeRate;
+  return dollarAmount;
+};

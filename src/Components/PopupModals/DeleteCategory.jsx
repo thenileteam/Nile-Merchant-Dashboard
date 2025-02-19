@@ -55,7 +55,7 @@ const DeleteCategory = ({category}) => {
 
       {delCategory && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full relative">
+          <div className={`bg-white p-6 rounded-lg shadow-lg max-w-sm w-full relative`}>
             <div>
               <h1 className="text-[16px] font-bold text-[#333333]">
                 Are You Sure You Want To Delete This category ?

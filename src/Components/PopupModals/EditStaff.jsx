@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Controller } from "react-hook-form";
+import * as Switch from "@radix-ui/react-switch";
+import { FiHome, FiPackage, FiShoppingCart, FiUser,FiBarChart2 } from "react-icons/fi";
 import {
   useEditStaff,
   useFetchRoles,
@@ -16,7 +18,7 @@ const EditStaff = ({ staff }) => {
     defaultValues: {
       adminName: staff?.name || "",
       roles: roles?.reduce((acc, role) => {
-        acc[role.id] = staff?.roles?.some((r) => r.id === role.id) || false;
+        acc[role.id] = staff?.roles?.some((item) => item.id === role.id) || false;
         return acc;
       }, {}),
     },
@@ -67,9 +69,9 @@ const EditStaff = ({ staff }) => {
           />
         </svg>
       </button>
-      {editStaff && (
-        <div className="bg-[rgba(0,0,0,0.3)] fixed inset-0 z-50 backdrop-blur-sm">
-          <div className="fixed w-[90%] lg:w-[35%] rounded-tl-lg rounded-bl-lg shadow-lg top-0 bottom-0 right-0 bg-white  ">
+      {/* {editStaff && ( */}
+        <div className={`bg-[rgba(0,0,0,0.3)] fixed inset-0 z-50 backdrop-blur-sm ${editStaff?'visible':'invisible'}`}>
+          <div className={`fixed w-[90%] lg:w-[35%] rounded-tl-xl shadow-lg top-0 bottom-0 right-0 bg-white  ${editStaff? "translate-x-0":"translate-x-full"} transition-all duration-200 ease-in overflow-y-auto custom-scrollbar`}>
             <button
               className="absolute top-4 left-4 text-green  rounded-lg"
               onClick={() => setEditStaff(false)}
@@ -107,7 +109,7 @@ const EditStaff = ({ staff }) => {
                   type="text"
                   {...register("adminName")}
                   placeholder="Enter Admin Name e.g Farouk Kola"
-                  className="border border-lightGreen rounded-md p-2 block w-full"
+                  className="border border-[#6e6e6e] rounded-md p-2 block w-full"
                   required
                 />
               </div>
@@ -131,15 +133,13 @@ const EditStaff = ({ staff }) => {
                     return (
                       <div
                         key={index}
-                        className="border border-lightGreen rounded-md flex mt-2 justify-between items-center px-2"
+                        className="border bg-[#EAF4E2] rounded-md flex mt-2 justify-between items-center p-3"
                       >
-                        <div>
-                          <h3 className="text-gray-800 font-semibold text-sm">
+                        <div className="flex items-center gap-1">
+                        {index===0?<FiPackage className="text-lightGreen"/>:index===1?<FiBarChart2 className="text-lightGreen"/>: index===2?<FiShoppingCart className="text-lightGreen"/>:< FiUser className="text-lightGreen"/>} 
+                          <h3 className="text-gray-800 font-normal text-sm">
                             {role.name}
                           </h3>
-                          <p className="text-gray-500 text-[12px]">
-                            {role.description}
-                          </p>
                         </div>
                         <Controller
                           name={`roles.${role.id}`}
@@ -150,11 +150,13 @@ const EditStaff = ({ staff }) => {
                             ) || false
                           }
                           render={({ field }) => (
-                            <input
-                              type="checkbox"
-                              {...field}
-                              checked={field.value}
-                            />
+                            <Switch.Root
+                            className="w-10 h-6 bg-gray-300 rounded-full relative data-[state=checked]:bg-lightGreen"
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          >
+                            <Switch.Thumb className="block w-5 h-5 bg-white rounded-full transition-transform transform data-[state=checked]:translate-x-[18px]" />
+                          </Switch.Root>
                           )}
                         />
                       </div>
@@ -173,7 +175,7 @@ const EditStaff = ({ staff }) => {
             </form>
           </div>
         </div>
-      )}
+      {/* )} */}
     </div>
   );
 };

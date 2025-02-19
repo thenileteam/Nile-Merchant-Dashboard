@@ -3,7 +3,9 @@
 import { Link } from "react-router-dom";
 import { download } from "../../assets";
 import Skeleton from "react-loading-skeleton";
-import { formatNumber } from "../../utils/formatNumber";
+import { formatNumber, convertNairaToDollar } from "../../utils/formatNumber";
+import { FaEye } from "react-icons/fa";
+import { useFetchStoreSettings } from "@/datahooks/users/storeSettings";
 const DashoardTabel = ({
   isFetchingDashboardData,
   dashboardData,
@@ -11,6 +13,7 @@ const DashoardTabel = ({
 }) => {
   // const { orders, product, salesData } = dashboardData;
   // console.log(dashboardData);
+  const {data:storeData} = useFetchStoreSettings()
   return (
     <>
       <div
@@ -57,16 +60,16 @@ const DashoardTabel = ({
                   <td className="lg:p-3 p-2 text-center bg-[#F5F5F5] text-[#8ED06C] font-extrabold">
                     <Link
                       to="/orders"
-                      className="hover:border-[#8ED06C] border-[#f5f5f5] border-b-2 transition duration-300 underline-offset-4 decoration-[2px] inline-block hover:-translate-x-1"
+                      className="hover:border-[#6e6e6e] border-[#f5f5f5] border-b-2 transition duration-300 underline-offset-4 decoration-[2px] inline-block hover:-translate-x-1"
                     >
-                      View Orders
+                      <FaEye className="text-[#6e6e6e]"/>
                     </Link>
                   </td>
                 </tr>
 
                 {/* Row 2 */}
                 <tr className="bg-[#ffffff] shadow-md rounded-md">
-                  <td className="lg:p-3 p-2 bg-[#EAF4E2] font-bold">
+                  <td className="lg:p-3 p-2  bg-[#EAF4E2] font-bold">
                     Best-selling Products
                   </td>
                   <td className="lg:p-3 p-2 text-center font-light">
@@ -77,9 +80,9 @@ const DashoardTabel = ({
                     {dashboardData?.salesData?.quantitySoldThisWeek || 0} Units
                   </td>
                   <td className="lg:p-3 p-2 text-center font-light">
-                    &#8358;
-                    {formatNumber(
-                      dashboardData?.salesData?.totalSalesThisMonth
+                      <span>{storeData?.currency==='Naira'? '₦' : '$'}</span>
+                    {storeData?.currency==='Naira'?formatNumber( dashboardData?.salesData?.totalSalesThisMonth): formatNumber(convertNairaToDollar(
+                      dashboardData?.salesData?.totalSalesThisMonth)
                     ) || 0}
                   </td>
                   <td className="lg:p-3 p-2  text-center font-light">
@@ -89,9 +92,9 @@ const DashoardTabel = ({
                   <td className="lg:p-3 p-2  text-center bg-[#F5F5F5] text-[#8ED06C] font-extrabold">
                     <Link
                       to="/orders"
-                      className="hover:border-[#8ED06C] border-[#f5f5f5] border-b-2 transition duration-300 underline-offset-4 decoration-[2px] inline-block hover:-translate-x-1"
+                      className="hover:border-[#6e6e6e] border-[#f5f5f5] border-b-2 transition duration-300 underline-offset-4 decoration-[2px] inline-block hover:-translate-x-1"
                     >
-                      View
+                       <FaEye className="text-[#6e6e6e]"/>
                     </Link>
                   </td>
                 </tr>

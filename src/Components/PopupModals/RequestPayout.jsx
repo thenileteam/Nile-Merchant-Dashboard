@@ -53,7 +53,7 @@ const RequestPayout = () => {
       {/* First Modal (Confirmation) */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="relative bg-[#f5f5f5] p-16 rounded-md shadow-lg w-[553px] h-[377px]">
+          <div className="fixed right-0 top-0 bottom-0 bg-[#f5f5f5] rounded-md shadow-md border border-yellow-600">
             <button type="button" className="absolute right-2 top-2 text-lightGreen border border-lightGreen w-6 rounded-md"  onClick={() => setIsModalOpen(false)}>x</button>
             <div className="flex justify-center gap-20">
               <div>

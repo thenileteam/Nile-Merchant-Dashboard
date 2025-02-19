@@ -58,9 +58,9 @@ const EditLocation = ({ location }) => {
       </button>
 
       {/* form content */}
-      {editLocation && (
-        <div className="bg-[rgba(0,0,0,0.4)] fixed inset-0 z-50 backdrop-blur-sm">
-          <div className="fixed top-0 right-0 bottom-0 lg:w-[35%] w-[90%] bg-white rounded-bl-lg rounded-tl-lg">
+      {/* {editLocation && ( */}
+        <div className={`bg-[rgba(0,0,0,0.4)] fixed inset-0 z-50 backdrop-blur-sm ${editLocation?"visible":'invisible'}`}>
+          <div className={`fixed top-0 right-0 bottom-0 lg:w-[35%] w-[90%] bg-white rounded-tl-xl  ${editLocation? "translate-x-0":"translate-x-full"} transition-all duration-200 ease-in`}>
             <button
               className="absolute top-4 left-4 text-green rounded-lg"
               onClick={() => setEditLocation(false)}
@@ -169,7 +169,7 @@ const EditLocation = ({ location }) => {
           </form>
           </div>
           </div>
-      )}
+      {/* )} */}
     </div>
   );
 };

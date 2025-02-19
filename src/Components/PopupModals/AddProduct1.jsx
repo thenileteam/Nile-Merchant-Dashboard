@@ -9,13 +9,12 @@ import { BiLoaderCircle } from "react-icons/bi";
 import UploadImage from "../UploadImage/UploadImage";
 import { validateForm } from "../../utils/formatdate";
 import { FaSearch } from "react-icons/fa";
-import { FiArrowLeft } from "react-icons/fi";
+import { FiArrowLeft, FiPlus } from "react-icons/fi";
 import CustomProductSizeSelector from "../Products/CustomProductSizeSelector";
 import { toast } from "sonner";
 import AssignLocation from "../StaffManagement/AssignLocation";
 import { useAssignLocationStore } from "@/ZustandStores/locationStore";
-const AddProduct1 = ({ isPopupOpen, setPopupOpen }) => {
-  console.log(setPopupOpen)
+const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
     setPopupOpen(false); // close the popup after adding product
   });
@@ -52,7 +51,7 @@ const AddProduct1 = ({ isPopupOpen, setPopupOpen }) => {
   const showConfirmation = () => {
     setFadeOut(true); // Start fade-out animation for the main popup
     setTimeout(() => {
-      setPopupOpen(false); // Close the main popup after the animation
+      closePopup(); // Close the main popup after the animation
       setIsConfirmationOpen(true); // Open the confirmation popup
       setFadeOut(false); // Reset fade-out state
     }, 200); // Match this duration with your CSS transition duration
@@ -178,38 +177,17 @@ const AddProduct1 = ({ isPopupOpen, setPopupOpen }) => {
   return (
     <>
       {/* Button to trigger the popup */}
-      {!isPopupOpen&&<button onClick={()=>setPopupOpen(true)}>
-        <h1 className="flex font-light gap-1 items-center border-[#004324] bg-[#004324] text-[#ffffff] duration-500 border-2 rounded-md w-[140px] p-1 h-[38px]">
-          <svg
-            width="25"
-            height="24"
-            viewBox="0 0 25 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12.5 8V16M16.5 12H8.5"
-              stroke="currentcolor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M3 12C3 7.52166 3 5.28249 4.39124 3.89124C5.78249 2.5 8.02166 2.5 12.5 2.5C16.9783 2.5 19.2175 2.5 20.6088 3.89124C22 5.28249 22 7.52166 22 12C22 16.4783 22 18.7175 20.6088 20.1088C19.2175 21.5 16.9783 21.5 12.5 21.5C8.02166 21.5 5.78249 21.5 4.39124 20.1088C3 18.7175 3 16.4783 3 12Z"
-              stroke="currentcolor"
-              strokeWidth="1.5"
-            />
-          </svg>
-          Add Product
-        </h1>
+      {!isPopupOpen&&<button  className='flex font-light gap-1 items-center w-[130px] p-2 rounded-md justify-center bg-[#004324] text-[#fff]' onClick={openPopup}> <FiPlus/> Add Product
       </button>}
 
       {isPopupOpen && (
        
         <div className="max-w-[800px] mx-auto w-full relative">
           {/* Popup Content */}
-          <div className="flex gap-2 items-center cursor-pointer" onClick={()=>setPopupOpen(false)}>
-            <FiArrowLeft />
+          <div className="flex gap-2 items-center"  >
+            <button type="button" onClick={closePopup}>
+            <FiArrowLeft  className='text-2xl text-green'/>
+            </button>
           <h2 className="text-green text-[32px]  ">Add Product</h2>
           </div>
           <form>
@@ -333,7 +311,7 @@ const AddProduct1 = ({ isPopupOpen, setPopupOpen }) => {
                     />
                   </div>
                 </div>
-                <div className="mb-4  ">
+                <div className="mb-4">
                   <label
                     htmlFor="stockQuantity"
                     className="block text-[16px] font-bold text-[#333333]"
@@ -341,7 +319,7 @@ const AddProduct1 = ({ isPopupOpen, setPopupOpen }) => {
                     Product Quantity
                   </label>
                   <input
-                    id="stockQunatity"
+                    id="stockQuantity"
                     name="stock"
                     type="text"
                     value={productDetails.stock}

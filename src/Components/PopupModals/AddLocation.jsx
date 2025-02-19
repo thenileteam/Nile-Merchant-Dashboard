@@ -5,7 +5,7 @@ import { useFetchCountries } from "../GetCountries/GetCountries";
 
 // Country fetch function
  
-const AddLocation = ({setLocationOpen }) => {
+const AddLocation = ({locationOpen, setLocationOpen }) => {
   const {store} = useStore()
   const storeId = store?.id
   const { data: countries, isLoading, isError } = useFetchCountries();
@@ -30,8 +30,8 @@ const AddLocation = ({setLocationOpen }) => {
   };
   return (
     <div>
-      <div className="bg-[rgba(0,0,0,0.3)] fixed inset-0 z-50 backdrop-blur-sm">
-        <div className="fixed top-0 right-0 bottom-0 lg:w-[35%] w-[90%] bg-white rounded-bl-lg rounded-tl-lg  ">
+      <div className={`bg-[rgba(0,0,0,0.3)] fixed inset-0 z-50 backdrop-blur-sm ${locationOpen? 'visible': 'invisible'}`}>
+        <div className={`fixed top-0 right-0 bottom-0 lg:w-[35%] w-[90%] bg-white rounded-tl-xl ${locationOpen? "translate-x-0":"translate-x-full"} transition-all duration-200 ease-in`}>
           <button
             className="absolute top-4 left-4 text-green rounded-lg"
             onClick={() => setLocationOpen(false)}
@@ -144,7 +144,7 @@ const AddLocation = ({setLocationOpen }) => {
             {/* Buttons */}
             <button
               type="button"
-              className="bg-green text-white w-full p-2 rounded-md block mx-auto mt-5 hover:bg-[#004315]"
+              className="bg-green text-white w-full p-2 rounded-md block mx-auto mt-16 hover:bg-[#004315]"
               disabled={locationPending}
               onClick={handleSubmit(submitLocation)}
             >

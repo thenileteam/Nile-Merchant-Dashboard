@@ -16,18 +16,17 @@ import {
 import FinancialTable from "../Components/Financial/FinancialTable";
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import { useFetchUser } from "@/datahooks/users/userhooks";
-import Navbar from "@/Components/Navbar/Navbar";
 import ExpensesTable from "../Components/Financial/ExpensesTable";
 import { ExpenseForm } from "@/Components/Financial/ExpenseForm";
 import { useExpenseHook } from "@/datahooks/users/expensehook";
 import { validateForm } from "@/utils/formatdate";
+import { FiPlus } from "react-icons/fi";
 import { useFetchTransactions } from "@/datahooks/users/transactions";
 import { useFetchExpense } from "@/datahooks/users/expensehook";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 import RequestPayout from "../Components/PopupModals/RequestPayout";
 import DashboardIntro from "../Components/Dashboard/DashboardIntro";
 const FinancialManagement = ({ data }) => {
-  const { user } = useFetchUser();
   const { isCollapsed } = useSidebarStore();
   const [displaySuccessModal, setDisplaySuccessModal] = useState(false);
   const [open, setOpen] = useState(false);
@@ -69,21 +68,23 @@ const FinancialManagement = ({ data }) => {
               isCollapsed ? "max-w-[1100px]" : "max-w-[950px]"
             } mx-auto`}
           >
-            <article className="flex items-center justify-between">
+            <article className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
               <DashboardIntro introText="Financial Management" />
-              {searchParams.get("expense") === "true" ? (
+              {/* {searchParams.get("expense") === "true" ? */}
+                {/* ( */}
                 <button
                   onClick={() => setOpen(true)}
-                  className="bg-[#004324] text-[#ffffff] p-2 rounded-md flex items-center gap-2"
+                  className="bg-[#004324] text-[#fff] p-2 w-[140px] rounded-md flex items-center gap-2"
                 >
-                  <img src="/plus.svg" alt="" />
+                  <FiPlus />
                   Add Expense
                 </button>
-              ) : (
-                <RequestPayout />
-              )}
+              {/* ) */}
+              {/* //   : (
+              //   <RequestPayout />
+              // ) */}
             </article>
-            <div className="mt-10 grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-2 lg:gap-10">
+            <div className="mt-10 grid grid-cols-2 md:grid-cols-3 gap-2 lg:gap-10">
               <DashboardBox
                 text="Total Revenue"
                 spacing="my-4"
@@ -91,7 +92,7 @@ const FinancialManagement = ({ data }) => {
                 data={totalRevenue}
               />
               <DashboardBox
-                text="Total Expenses"
+                text="Expenses"
                 spacing="my-4"
                 width="w-full"
                 data={totalExpense}
@@ -103,32 +104,8 @@ const FinancialManagement = ({ data }) => {
                 data={totalRevenueForMonth}
               />
 
-              {emptyState && (
-                <div className="px-24 mt-32  ">
-                  <div>
-                    <img
-                      src={moneysend}
-                      alt=""
-                      className="flex justify-center mx-auto"
-                    />
-                    <h1 className="text-[24px] font-extrabold text-center">
-                      Nothing To See Yet
-                    </h1>
-                    <p className="text-[#6E6E6E] font-bold text-center">
-                      Go Make sales and request for your funds here
-                    </p>
-                  </div>
-                  <div className="flex justify-center mt-3">
-                    <Link to="/dashboard">
-                      <button className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md">
-                        Go To Dashboard
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              )}
-              <div className="mt-6 w-full flex justify-between ">
-                <div className="flex gap-1">
+              <div className="w-full flex justify-between col-span-2 ">
+                <div className="flex gap-1 bg-[#f5f5f5] rounded-md">
                   {tabs.map((tab) => (
                     <button
                       key={tab.id}
@@ -142,7 +119,7 @@ const FinancialManagement = ({ data }) => {
                         searchParams.get("expense") ===
                         `${tab.id === 2 ? true : false}`
                           ? "bg-[#004324] text-[#ffffff] p-2 rounded-md"
-                          : "bg-[#ffffff] text-[#004324] p-2 rounded-md"
+                          : "text-[#004324] p-2 rounded-md"
                       }`}
                     >
                       {tab.name}
@@ -175,6 +152,31 @@ const FinancialManagement = ({ data }) => {
             {searchParams.get("expense") === "true" && <ExpensesTable />}
           </div>
         </div>
+
+        {emptyState && (
+          <div className="px-24 mt-32  ">
+            <div>
+              <img
+                src={moneysend}
+                alt=""
+                className="flex justify-center mx-auto"
+              />
+              <h1 className="text-[24px] font-extrabold text-center">
+                Nothing To See Yet
+              </h1>
+              <p className="text-[#6E6E6E] font-bold text-center">
+                Go Make sales and request for your funds here
+              </p>
+            </div>
+            <div className="flex justify-center mt-3">
+              <Link to="/dashboard">
+                <button className="text-[#ffffff] bg-[#004324] p-3 font-bold rounded-md">
+                  Go To Dashboard
+                </button>
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

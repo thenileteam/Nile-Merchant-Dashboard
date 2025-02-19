@@ -19,7 +19,15 @@ const BranchTable = ({ isCollapsed, setOpenTransfer }) => {
         } mx-auto`}
       >
         
-        <div className="overflow-x-scroll lg:overflow-x-auto">
+        <div className="overflow-x-scroll lg:overflow-x-auto bg-white p-4 border rounded-md shadow-md mt-8">
+        {isFetchingProductsInLocation? (
+                <div className="w-full mt-5">
+                  <Skeleton className=" h-[40px] w-full block" />
+                  <Skeleton className=" h-[40px] w-full block" />
+                  <Skeleton className=" h-[40px] w-full block" />
+                </div>
+          ) :
+            
           <table className="w-full border-separate border-spacing-y-5">
             <thead>
               <tr className="text-left bg-[#EAF4E2]">
@@ -31,18 +39,12 @@ const BranchTable = ({ isCollapsed, setOpenTransfer }) => {
               </tr>
             </thead>
             <tbody>
-              {isFetchingProductsInLocation && (
-                <div className="w-full mt-5 border-2">
-                  <Skeleton className=" h-[40px] w-full block" />
-                  <Skeleton className=" h-[40px] w-full block" />
-                  <Skeleton className=" h-[40px] w-full block" />
-                </div>
-              )}
+               
               {locationProducts?.map((singleLoc) => {
                 console.log(singleLoc)
                 return (
                   <tr className="mt-4 bg-white shadow-md">
-                    <td className="bg-[#EAF4E2] p-2 text-lightBlack font-bold  capitalize">
+                    <td className="bg-[#EAF4E2] p-2 text-lightBlack font-bold capitalize">
                       {String(singleLoc.id).padStart(4, 0) || "Admin"}
                     </td>
                     <td className="bg-white p-2 text-[#6e6e6e] capitalize">
@@ -62,8 +64,8 @@ const BranchTable = ({ isCollapsed, setOpenTransfer }) => {
               })}
             </tbody>
           </table>
+        }
         </div>
-        {/* } */}
       </div>
     </section>
   );

@@ -1,8 +1,6 @@
 import LocationTable from "@/Components/StaffManagement/LocationTable";
-import { useFetchUser } from '../datahooks/users/userhooks'
 import { useSidebarStore } from "@/ZustandStores/sidebarStore";
 const Location = () => {
-  const { user } = useFetchUser();
   const { isCollapsed } = useSidebarStore();
   return (
     <>

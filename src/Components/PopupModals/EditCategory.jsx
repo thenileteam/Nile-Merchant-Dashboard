@@ -61,9 +61,8 @@ const EditCategory = ({ category }) => {
       </button>
 
       {/* form to edit category */}
-      {showForm && (
-        <div className="bg-[rgba(0,0,0,0.4)] fixed inset-0 z-50 backdrop-blur-sm">
-          <div className="w-[90%] lg:w-[35%] fixed right-0 bottom-0 top-0 bg-white">
+        <div className={`bg-[rgba(0,0,0,0.4)] fixed inset-0 z-50 backdrop-blur-sm ${showForm?'visible':'invisible'}`}>
+          <div className={`w-[90%] lg:w-[35%]  rounded-tl-xl fixed right-0 bottom-0 top-0 bg-white  ${showForm? "translate-x-0":"translate-x-full"} transition-all duration-200 ease-in`}>
             <button
               className="absolute top-4 left-4 text-green rounded-lg"
               onClick={() => setShowForm(false)}
@@ -132,7 +131,7 @@ const EditCategory = ({ category }) => {
             </form>
           </div>
         </div>
-      )}
+      {/* )} */}
     </>
   );
 };

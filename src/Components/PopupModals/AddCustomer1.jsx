@@ -5,6 +5,7 @@ import { reload } from "../../assets";
 import { useAddCustomer } from "../../datahooks/users/userhooks";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { FiPlus } from "react-icons/fi";
 
 const AddCustomer1 = ({ transparent }) => {
   const { addCustomerQuery, addCustomerQueryError, addCustomerQueryIsPending } =
@@ -112,40 +113,21 @@ const AddCustomer1 = ({ transparent }) => {
       {/* Button to trigger the popup */}
       <button
         onClick={togglePopup}
-        className={`flex flex-row gap-1 rounded-md p-1 w-fit
+        className={`flex flex-row gap-1 rounded-md p-1 w-fit items-center
           ${transparent
             ? "text-[#ffffff] bg-green transitions border-green border-2"
             : "text-[#004324] items-center hover:bg-green hover:text-[#ffffff] duration-500 "}`
         }
       >
         {transparent && (
-          <svg
-            width="25"
-            height="24"
-            viewBox="0 0 25 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12.5 8V16M16.5 12H8.5"
-              stroke="currentcolor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M3 12C3 7.52166 3 5.28249 4.39124 3.89124C5.78249 2.5 8.02166 2.5 12.5 2.5C16.9783 2.5 19.2175 2.5 20.6088 3.89124C22 5.28249 22 7.52166 22 12C22 16.4783 22 18.7175 20.6088 20.1088C19.2175 21.5 16.9783 21.5 12.5 21.5C8.02166 21.5 5.78249 21.5 4.39124 20.1088C3 18.7175 3 16.4783 3 12Z"
-              stroke="currentcolor"
-              strokeWidth="1.5"
-            />
-          </svg>
+          <FiPlus/>
         )}
         Add Customers
       </button>
 
-      <div className={`fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 transition-transform duration-500 ease-in-out ${isPopupOpen?"block":"hidden"} `}>
+      <div className={`fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50   ${isPopupOpen?"visible":"invisible"} `}>
       {/* {isPopupOpen && ( */}
-          <div className={`p-10 rounded-tl-lg rounded-bl-lg shadow-lg w-[90%] max-w-3xl fixed right-0 lg:w-[35%] bg-white top-0 bottom-0   ${isPopupOpen?"translate-x-0":"translate-x-full"}`}>
+          <div className={`p-10 rounded-tl-xl shadow-lg w-[90%] max-w-3xl fixed right-0 lg:w-[35%] bg-white top-0 bottom-0 transform ${isPopupOpen?"translate-x-0":"translate-x-full"} transition duration-200 ease-in`}>
             {/* Cancel Button in the top-right corner */}
             <button
               className="absolute top-4 left-4 text-gray-500 hover:text-gray-800"
@@ -235,33 +217,12 @@ const AddCustomer1 = ({ transparent }) => {
               <div className="flex justify-center gap-4 my-8">
                 {/* Edit Button */}
                 <button
-                  className="px-2 py-2 bg-green hover:bg-transparent hover:border-green border-2 text-white hover:text-green font-medium rounded-md shadow-lg transition ease-out duration-700 block w-full "
+                  className="py-2 bg-green hover:bg-transparent hover:border-green border-2 text-white hover:text-green font-medium rounded-md shadow-lg transition ease-out duration-500 w-full flex items-center justify-center gap-1"
                   onClick={showConfirmation}
                   type="button"
-                >
-                  <div className="flex items-center justify-center gap-1  ">
-                    <svg
-                      width="25"
-                      height="24"
-                      viewBox="0 0 25 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12.5 8V16M16.5 12H8.5"
-                        stroke="currentcolor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M3 12C3 7.52166 3 5.28249 4.39124 3.89124C5.78249 2.5 8.02166 2.5 12.5 2.5C16.9783 2.5 19.2175 2.5 20.6088 3.89124C22 5.28249 22 7.52166 22 12C22 16.4783 22 18.7175 20.6088 20.1088C19.2175 21.5 16.9783 21.5 12.5 21.5C8.02166 21.5 5.78249 21.5 4.39124 20.1088C3 18.7175 3 16.4783 3 12Z"
-                        stroke="currentcolor"
-                        strokeWidth="1.5"
-                      />
-                    </svg>
-                    <p>Add Customer</p>
-                  </div>
+              >
+                <FiPlus/>
+                 Add Customer
                 </button>
               </div>
             </form>

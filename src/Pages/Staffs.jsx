@@ -1,7 +1,5 @@
 import { useSidebarStore } from "@/ZustandStores/sidebarStore";
-import Navbar from "../Components/Navbar/Navbar";
 import EmptyState from "../Components/StaffManagement/EmptyState";
-import { useFetchUser } from "@/datahooks/users/userhooks";
 import AddStaff from "../Components/PopupModals/AddStaff";
 import StaffTable from "../Components/StaffManagement/StaffTable";
 import { useState } from "react";
@@ -9,7 +7,6 @@ import { useFetchStaffs } from "@/datahooks/staffs/usestaffhook";
 import {EmptyStateIcon} from '../Components/Store/AllStoreComp/StoreSettingIcons'
 const Staffs = () => {
   const [showStaffPopUp, setShowStaffPopUp] = useState(false);
-  const { user } = useFetchUser();
   const { isCollapsed } = useSidebarStore();
   const { staffs, isFetching, isError } = useFetchStaffs();
   return (
@@ -21,7 +18,6 @@ const Staffs = () => {
             : "flex-grow lg:ml-56 overflow-x-hidden"
         }
       >
-        
         <section>
           {staffs?.length=== 0 ? (
             <EmptyState
@@ -40,8 +36,8 @@ const Staffs = () => {
             />
           )
           } 
-
-          {showStaffPopUp && <AddStaff setShowStaffPopUp={setShowStaffPopUp} />}
+        {/*   { showStaffPopUp && */}
+          <AddStaff showStaffPopUp={showStaffPopUp} setShowStaffPopUp={setShowStaffPopUp} />
         </section>
       </div>
     </>
