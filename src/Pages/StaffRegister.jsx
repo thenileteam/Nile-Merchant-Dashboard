@@ -1,44 +1,64 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import LoginReviews from "@/Components/LoginReviews/LoginReviews";
 import { nilelogosolid, eye, lashesIcon } from "../assets";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useShowPasswordStore } from "../ZustandStores/showPasswordStore";
 import { useForm } from "react-hook-form";
-import { useStore } from "@/ZustandStores/generalStore";
+// import { useStore } from "@/ZustandStores/generalStore";
 import { Link } from "react-router-dom";
-import { useFetchStaff } from "@/datahooks/staffs/usestaffhook";
-import { useSignUserUp } from "@/datahooks/users/userhooks";
+import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 const StaffRegister = () => {
-  const { store } = useStore();
+  const [searchParams] = useSearchParams();
+  const staffId = searchParams.get("staffId");
+
+  const url = "https://api.nile.ng/store/store/staffs/single";
+  const [fetchingStaffDetails, setFetchingStaffDetails] = useState(false);
+  const [staff, setStaff] = useState(null);
+  const fetchStaffDetails = async () => {
+    try {
+      setFetchingStaffDetails(true);
+      const data = await axios.get(`${url}/${staffId}`);
+     
+      setStaff(data?.data.responseObject);
+      console.log(data?.data)
+      setFetchingStaffDetails(false);
+    } catch (error) {
+      setFetchingStaffDetails(false);
+      console.log(error);
+    }
+  };
+
+  console.log(staff)
+  useEffect(() => {
+    fetchStaffDetails();
+  }, [staffId]);
+
+  // const { store } = useStore();
   const { showPassword, handleShowPassword } = useShowPasswordStore();
   const {
     register,
     formState: { errors },
-    handleSubmit,
-    watch,
-  } = useForm(
-    { mode: "onChange" } //check if password matches confirm password on every key stroke
-  );
+    handleSubmit
+  } = useForm();
 
-  const [searchParams] = useSearchParams();
-  //   const navigate = useNavigate();
-  const staffId = searchParams.get("staffId");
-  const { staff } = useFetchStaff(staffId);
-  console.log(staff, staffId);
-  const password = watch("password");
-  const { signUpMutate, signUpIsPending } = useSignUserUp();
   const submitStaffDetails = (data) => {
-    const newData = {
-      name: staff?.name,
-      email: staff?.email,
-      staffId: staffId,
-      branchId: staff?.locationId,
-      isStaff: true,
-      password: data.password,
-      passwordConfirm: data.confirmPassword,
-    };
-    console.log(newData);
-    signUpMutate(newData);
+      const newData = {
+          name: staff.name,
+          email: staff.email,
+          staffId: staffId,
+          isStaff: true,
+          branchId:staff.locationId
+
+      }
   };
+  if (fetchingStaffDetails)
+    return (
+      <div className=" h-screen w-full flex justify-center">
+        Show Proper Loading Sscreen
+      </div>
+    );
   return (
     <section className="h-screen">
       <div className="container md:max-w-[700px] lg:max-w-[1184px] mx-auto mt-28 lg:flex lg:gap-[100px] items-center bg-dimWhite rounded-lg p-4 lg:p-16 shadow-md shadow-gray-300">
@@ -52,7 +72,7 @@ const StaffRegister = () => {
             <h1 className="text-[#333333] text-center text-[24px] font-semibold mt-8">
               Welcome To{" "}
               <span className="text-lightGreen font-bold capitalize">{`${
-                store?.name || "my Store"
+                staff?.store?.name || "my Store"
               }'s`}</span>{" "}
               Store on Nile
             </h1>
@@ -114,9 +134,9 @@ const StaffRegister = () => {
               type="submit"
               className="mx-auto block bg-green rounded-md text-white w-full py-3 text-center text-[14px] mt-4 font-semibold"
               onClick={handleSubmit(submitStaffDetails)}
-              disabled={signUpIsPending}
+              disabled={fetchingStaffDetails}
             >
-              {signUpIsPending ? "Completing.." : "Complete Setup"}
+              {fetchingStaffDetails ? "Completing.." : "Complete Setup"}
             </button>
             <Link to="/" className="text-center block mt-4"> Login</Link>
           </form>
