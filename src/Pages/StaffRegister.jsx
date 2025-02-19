@@ -1,46 +1,82 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import LoginReviews from "@/Components/LoginReviews/LoginReviews";
 import { nilelogosolid, eye, lashesIcon } from "../assets";
-import { useSearchParams, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useShowPasswordStore } from "../ZustandStores/showPasswordStore";
 import { useForm } from "react-hook-form";
-import { useStore } from "@/ZustandStores/generalStore";
+// import { useStore } from "@/ZustandStores/generalStore";
 import { Link } from "react-router-dom";
-import { useFetchStaffs } from "@/datahooks/staffs/usestaffhook";
+import axios from "axios";
 
 const StaffRegister = () => {
-  const { store } = useStore();
+  const location = useLocation();
+
+  // Extract query params
+  const searchParams = new URLSearchParams(location.search);
+  const staffId = searchParams.get("staffId");
+
+  const url = "https://api.nile.ng/store/store/staffs/single";
+  const [fetchingStaffDetails, setFetchingStaffDetails] = useState(false);
+  const [staff, setStaff] = useState(null);
+  const fetchStaffDetails = async () => {
+    try {
+      setFetchingStaffDetails(true);
+      const data = await axios.get(`${url}/${staffId}`);
+     
+      setStaff(data?.data.responseObject);
+      console.log(data?.data)
+      setFetchingStaffDetails(false);
+    } catch (error) {
+      setFetchingStaffDetails(false);
+      console.log(error);
+    }
+  };
+
+  console.log(staff)
+  useEffect(() => {
+    fetchStaffDetails();
+  }, [staffId]);
+
+  // const { store } = useStore();
   const { showPassword, handleShowPassword } = useShowPasswordStore();
   const {
     register,
     formState: { errors },
-    handleSubmit,
+    handleSubmit
   } = useForm();
 
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-    const staffId = searchParams.get("staffId");
-    console.log(staffId)
-    const { staffs } = useFetchStaffs()
-    const staff = staffs?.find((item)=>item?.id === staffId)
-    console.log(staff)
-  
-  // Redirect user if no staffId is found
-  //   useEffect(() => {
-  //     if (!staffId) {
-  //       navigate("/"); // Redirects to homepage if staffId is missing
-  //     }
-  //   }, [staffId, navigate]);
-  const submitStaffDetails = (data) => {
-      const newData = {
-          name: staff.name,
-          email: staff.email,
-          staffId: staffId,
-          isStaff: true,
-          branchId:staff.locationId
+  // const [searchParams] = useSearchParams();
+  // const navigate = useNavigate();
+  //   const staffId = searchParams.get("staffId");
+  //   console.log(staffId)
+  //   const { staffs } = useFetchStaffs()
+  //   const staff = staffs?.find((item)=>item?.id === staffId)
+  //   console.log(staff)
 
-      }
-  };
+  // // Redirect user if no staffId is found
+  // //   useEffect(() => {
+  // //     if (!staffId) {
+  // //       navigate("/"); // Redirects to homepage if staffId is missing
+  // //     }
+  // //   }, [staffId, navigate]);
+  // const submitStaffDetails = (data) => {
+  //     const newData = {
+  //         name: staff.name,
+  //         email: staff.email,
+  //         staffId: staffId,
+  //         isStaff: true,
+  //         branchId:staff.locationId
+
+  //     }
+  // };
+  if (fetchingStaffDetails)
+    return (
+      <div className=" h-screen w-full flex justify-center">
+        Show Proper Loading Sscreen
+      </div>
+    );
   return (
     <section className="h-screen">
       <div className="container md:max-w-[700px] lg:max-w-[1184px] mx-auto mt-28 lg:flex lg:gap-[100px] items-center bg-dimWhite rounded-lg p-4 lg:p-16 shadow-md shadow-gray-300">
@@ -54,7 +90,7 @@ const StaffRegister = () => {
             <h1 className="text-[#333333] text-center text-[24px] font-bold mt-8">
               Welcome To{" "}
               <span className="text-lightGreen font-bold capitalize">{`${
-                store?.name || "my Store"
+                staff?.store?.name || "my Store"
               }'s`}</span>{" "}
               Store on Nile
             </h1>

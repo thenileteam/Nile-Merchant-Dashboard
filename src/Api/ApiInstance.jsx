@@ -24,6 +24,7 @@ const isAuthenticatingPage = () => {
     "/auth",
     "/authentication",
     "/reset-password",
+    "/staff/onboarding"
   ];
   return authPaths.includes(currentPath);
 };

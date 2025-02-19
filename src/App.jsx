@@ -27,37 +27,37 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "react-loading-skeleton/dist/skeleton.css";
 import ProtectRoutes from "./Components/ProtectRoutes";
 import { Suspense, useEffect } from "react";
-import Location from './Pages/Location'
-import Branch from './Pages/Branch'
+import Location from "./Pages/Location";
+import Branch from "./Pages/Branch";
 import ErrorCustomer from "./Components/ErrorElements/ErrorCustomer";
 import CategoryPage from "./Pages/CategoryPage";
 import ReactGA from "react-ga4";
 import Cookies from "js-cookie";
 import SidebarParent from "./Pages/SidebarParent";
-import DomainMangaement from "./Pages/DomainMangaement";
-import StaffRegister from './Pages/StaffRegister'
+// import DomainMangaement from "./Pages/DomainMangaement";
+import StaffRegister from "./Pages/StaffRegister";
 const App = () => {
   const queryClient = new QueryClient();
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <SignIn />,
+      element: <SignIn />
     },
     {
       path: "/signup",
-      element: <SignUp />,
+      element: <SignUp />
     },
     {
       path: "/email",
-      element: <Email />,
+      element: <Email />
     },
     {
       path: "/email/reset-password",
-      element: <ForgotPassword />,
+      element: <ForgotPassword />
     },
     {
       path: "/staff/onboarding",
-      element: <StaffRegister />,
+      element: <StaffRegister />
     },
     {
       path: "/",
@@ -69,7 +69,7 @@ const App = () => {
             <ProtectRoutes>
               <Dashboard />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/orders",
@@ -77,7 +77,7 @@ const App = () => {
             <ProtectRoutes>
               <Orders />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/product",
@@ -85,7 +85,7 @@ const App = () => {
             <ProtectRoutes>
               <Product />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/categories/:id",
@@ -93,7 +93,7 @@ const App = () => {
             <ProtectRoutes>
               <CategoryPage />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/reviews",
@@ -101,7 +101,7 @@ const App = () => {
             <ProtectRoutes>
               <Reviews />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/customer",
@@ -110,7 +110,7 @@ const App = () => {
               <Customer />
             </ProtectRoutes>
           ),
-          errorElement: <ErrorCustomer />,
+          errorElement: <ErrorCustomer />
         },
         {
           path: "/financial",
@@ -118,7 +118,7 @@ const App = () => {
             <ProtectRoutes>
               <FinancialManagement />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/store",
@@ -126,7 +126,7 @@ const App = () => {
             <ProtectRoutes>
               <Store />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/notification",
@@ -134,7 +134,7 @@ const App = () => {
             <ProtectRoutes>
               <Notification />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/profilesetting",
@@ -142,7 +142,7 @@ const App = () => {
             <ProtectRoutes>
               <ProfileSetting />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/storesetting",
@@ -150,7 +150,7 @@ const App = () => {
             <ProtectRoutes>
               <StoreSetting />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/paymentsetting",
@@ -158,7 +158,7 @@ const App = () => {
             <ProtectRoutes>
               <PaymentSetting />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/usersetting",
@@ -166,7 +166,7 @@ const App = () => {
             <ProtectRoutes>
               <UserSetting />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/notificationsetting",
@@ -174,7 +174,7 @@ const App = () => {
             <ProtectRoutes>
               <NotificationSetting />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/staffs",
@@ -182,7 +182,7 @@ const App = () => {
             <ProtectRoutes>
               <Staffs />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/banksetting",
@@ -190,7 +190,7 @@ const App = () => {
             <ProtectRoutes>
               <BankSetting />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/plansetting",
@@ -198,7 +198,7 @@ const App = () => {
             <ProtectRoutes>
               <PlanSetting />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/shippingsetting",
@@ -206,7 +206,7 @@ const App = () => {
             <ProtectRoutes>
               <ShippingSetting />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/domainsetting",
@@ -214,7 +214,7 @@ const App = () => {
             <ProtectRoutes>
               <DomainSetting />
             </ProtectRoutes>
-          ),
+          )
         },
 
         {
@@ -223,16 +223,16 @@ const App = () => {
             <ProtectRoutes>
               <Location />
             </ProtectRoutes>
-          ),
+          )
         },
         {
           path: "/branch/:id",
           element: (
             <ProtectRoutes>
-              <Branch/>
+              <Branch />
             </ProtectRoutes>
-          ),
-        },
+          )
+        }
         // {
         //   path: "/store/domainmanagement",
         //   element: (
@@ -241,13 +241,13 @@ const App = () => {
         //     </ProtectRoutes>
         //   ),
         // },
-      ],
-    },
+      ]
+    }
   ]);
   ReactGA.initialize("G-LJT7FW6H2G");
   ReactGA.send({
     hitType: "pageview",
-    path: window.location.pathname,
+    path: window.location.pathname
   });
 
   //Trigger Re Auth To Clear Local Storage And Cookies
@@ -258,7 +258,8 @@ const App = () => {
       return;
     } else if (
       window.location.pathname === "/" ||
-      window.location.pathname === "/signup"
+      window.location.pathname === "/signup" ||
+      window.location.pathname === "/staff/onboarding"
     ) {
       return;
     } else {
@@ -279,7 +280,7 @@ const App = () => {
             <ScrollToTop />
           </RouterProvider>
         </Suspense>
-        </main>
+      </main>
     </QueryClientProvider>
   );
 };
