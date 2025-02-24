@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-import { download, preference1 } from "../../assets";
-import EditProduct from "../PopupModals/EditProduct";
+
 import DeleteProduct from "../PopupModals/DeleteProduct";
 import Skeleton from "react-loading-skeleton";
 import Pagination from "../Pagination/Pagination";

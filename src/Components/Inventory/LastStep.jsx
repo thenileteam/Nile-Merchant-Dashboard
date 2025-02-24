@@ -14,9 +14,10 @@ export const LastStep = ({
 }) => {
   console.log(transferStat, "stats");
   return (
-    <div className="last-step relative">
+    <div className="_last-step h-[82vh] relative">
+      <div className=" max-h-[70vh] overflow-y-auto">
       <p className="text-[#6e6e6e] font-semibold">Products Transferring</p>
-      <div className=" flex flex-col gap-4  mt-4">
+      <div className="  flex flex-col gap-4  mt-4">
         {selectedProducts?.map((product, i) => (
           <div
             key={i}
@@ -77,7 +78,9 @@ export const LastStep = ({
           </span>
         </div>
       </div>
-      <div className="w-full flex gap-8 items-center justify-center mx-auto absolute top-[400px] left-1/2 transform -translate-x-1/2  ">
+      </div>
+    
+      <div className="w-full absolute flex gap-8 items-center justify-center mx-auto  bottom-[10px] left-1/2 transform -translate-x-1/2  ">
         {/* Submit Button */}
         {!transferStat?.transfering && (
           <>

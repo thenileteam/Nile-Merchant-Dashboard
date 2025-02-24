@@ -129,6 +129,7 @@ const Product = () => {
                     </button>
                   </div>
                 </div>
+                
                 {data?.length === 0 && (
                   <div className="px-24 mt-28">
                     <div>

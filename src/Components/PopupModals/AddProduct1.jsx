@@ -464,12 +464,12 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
               {/* Edit Button */}
               <button
                 disabled={isAddingProduct}
-                className="px-2 py-2 bg-green text-white font-medium rounded-md shadow-lg   transition ease-out duration-700 hover:bg-[#004315] lg:w-[150px]"
+                className="px-2 py-2 bg-green w-[120px] text-white font-medium rounded-md shadow-lg   transition ease-out duration-700 hover:bg-[#004315] lg:w-[150px]"
                 onClick={handleAddProduct}
                 type="button"
               >
                 {isAddingProduct ? (
-                  <div className="w-[100px] grid justify-center h-[40px] border-4 border-white border-t-transparent rounded-full ">
+                  <div className="w-full grid justify-center h-[40px] border-4 border-white border-t-transparent rounded-full ">
                     {" "}
                     <BiLoaderCircle className=" animate-spin duration-300 transition-all" />
                   </div>

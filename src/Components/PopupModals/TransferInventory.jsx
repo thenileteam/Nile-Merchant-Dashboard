@@ -100,7 +100,9 @@ const TransferInventory = ({ isTransferOpen, setOpenTransfer }) => {
           setSelectedProducts([])
           setSelectedLocation(null)
           queryClient.invalidateQueries(["products", selectedLocation?.storeId]);
-       
+          setTimeout(() => {
+            setOpenTransfer(false);
+          }, 1000);
           
         } else {
           toast.success("Transfer Successful 🔥🔥🔥");

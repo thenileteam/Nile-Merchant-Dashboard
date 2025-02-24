@@ -81,7 +81,7 @@ export const useEditProduct = (onSuccessCallback) => {
 export const useDeleteProduct = (onSuccessDelete) => {
   const { store } = useStore();
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+  const { mutate,isPending } = useMutation({
     mutationFn: (product) =>
       ApiInstance.delete(
         `/products/product/delete/${product.uuid}`,
@@ -105,7 +105,8 @@ export const useDeleteProduct = (onSuccessDelete) => {
   });
 
   return {
-    deleteProduct: mutate
+    deleteProduct: mutate,
+    deletingProduct:isPending
   };
 };
 
