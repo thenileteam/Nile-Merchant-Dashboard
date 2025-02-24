@@ -1,9 +1,7 @@
 import { useState } from "react";
 import {
-  deliveryview,
-  packagemoving,
+  
   packageoutofstock,
-  packagemoving2,
 } from "../assets";
 import ProductTable from "../Components/Products/ProductTable";
 import AddProduct1 from "../Components/PopupModals/AddProduct1";

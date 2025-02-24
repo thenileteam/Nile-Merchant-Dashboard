@@ -5,7 +5,7 @@ import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useStore } from "../../ZustandStores/generalStore";
 export const useFetchProducts = () => {
-  const{store} = useStore()
+  const { store } = useStore();
   if (!store) return { data: [], isFetching: false, isError: false };
   const { data, isFetching, isError, isLoading } = useQuery({
     queryKey: ["products", store.id],
@@ -19,25 +19,24 @@ export const useFetchProducts = () => {
         throw error;
       }
     },
-    
+
     enabled: !!store?.id, // Ensures query is enabled only when store.id exists
     staleTime: 1000 * 60 * 5, // Data remains fresh for 5 minutes for the same id
     cacheTime: 1000 * 60 * 30, // Cache data is retained for 30 minutes
-    retry: 3,  
+    retry: 3
   });
-  
 
   return {
     data,
     productLength: data?.length,
     isFetching,
     isError,
-    isLoading,
+    isLoading
   };
 };
 
 export const useCreateNewProduct = (onSuccessCallback) => {
-  const{store} = useStore()
+  const { store } = useStore();
   const queryClient = useQueryClient();
   const { mutate, isPending: isAddingProduct } = useMutation({
     mutationFn: (data) => ApiInstance.post("/products/product/create", data),
@@ -48,16 +47,16 @@ export const useCreateNewProduct = (onSuccessCallback) => {
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "An error occurred");
-    },
+    }
   });
 
   return {
     addProductToBackend: mutate,
-    isAddingProduct,
+    isAddingProduct
   };
 };
 export const useEditProduct = (onSuccessCallback) => {
-  const{store} = useStore()
+  const { store } = useStore();
   const queryClient = useQueryClient();
   const { mutate, isPending: isEditingProduct } = useMutation({
     mutationFn: (data) =>
@@ -70,16 +69,16 @@ export const useEditProduct = (onSuccessCallback) => {
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "An error occurred");
-    },
+    }
   });
 
   return {
     addProductToBackend: mutate,
-    isEditingProduct,
+    isEditingProduct
   };
 };
 export const useDeleteProduct = (onSuccessDelete) => {
- const{store} = useStore()
+  const { store } = useStore();
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: (product) =>
@@ -88,8 +87,8 @@ export const useDeleteProduct = (onSuccessDelete) => {
         { storeId: product.storeId },
         {
           params: {
-            id: product.uuid,
-          },
+            id: product.uuid
+          }
         }
       ),
     onSuccess: () => {
@@ -101,18 +100,18 @@ export const useDeleteProduct = (onSuccessDelete) => {
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "An error occurred");
-    },
+    }
   });
 
   return {
-    deleteProduct: mutate,
+    deleteProduct: mutate
   };
 };
 
 // creating categories pls do not even look at it for now
 export const useCreateNewCategory = (onSuccessCallback) => {
-  const{store} = useStore()
-  
+  const { store } = useStore();
+
   const queryClient = useQueryClient();
   const { mutate, isPending: isAddingCategory } = useMutation({
     mutationFn: (data) =>
@@ -128,7 +127,7 @@ export const useCreateNewCategory = (onSuccessCallback) => {
         id: response.data._id,
         name: response.data.categoryName,
         description: response.data.categoryDescription || "NA",
-        products: response.data.products || [],
+        products: response.data.products || []
       };
       toast.success("Category Added Successfully");
       if (onSuccessCallback) onSuccessCallback(transformedData);
@@ -139,18 +138,18 @@ export const useCreateNewCategory = (onSuccessCallback) => {
         err.response?.data?.message ||
           "An error occurred while creating categories"
       );
-    },
+    }
   });
 
   return {
     addCategoryToBackend: mutate,
-    isAddingCategory,
+    isAddingCategory
   };
 };
 
 // fetching categories
 export const useFetchCategories = () => {
-  const{store} = useStore()
+  const { store } = useStore();
   const { data, isFetching, isError, isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
@@ -166,7 +165,7 @@ export const useFetchCategories = () => {
     },
     staleTime: Infinity,
     cacheTime: Infinity,
-    retry: 3,
+    retry: 3
   });
 
   return {
@@ -174,13 +173,13 @@ export const useFetchCategories = () => {
     isFetchingCategories: isFetching,
     isError,
     isLoading,
-    categoryLength:data?.length
+    categoryLength: data?.length
   };
 };
 
 // edit category
 export const useEditCategory = (onSuccessCallback) => {
-  const{store} = useStore()
+  const { store } = useStore();
   const queryClient = useQueryClient();
   const { mutate, isPending: isEditingCategory } = useMutation({
     mutationFn: (data) =>
@@ -196,23 +195,23 @@ export const useEditCategory = (onSuccessCallback) => {
         err.response?.data?.message ||
           "An error occurred while editing category"
       );
-    },
+    }
   });
   return {
     addCategoryToBackend: mutate,
-    isEditingCategory,
+    isEditingCategory
   };
 };
 
 // delete category
 export const useDeleteCategory = (onSuccessDelete) => {
-  const{store} = useStore()
+  const { store } = useStore();
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation({
     // Mutation function for API call
     mutationFn: (category) =>
       ApiInstance.delete(`/products/product/store/categories/${category?.id}`, {
-        params: { storeId: category.storeId, id: category.uuid },
+        params: { storeId: category.storeId, id: category.uuid }
       }),
 
     // On success callback
@@ -230,11 +229,31 @@ export const useDeleteCategory = (onSuccessDelete) => {
         err.response?.data?.message ||
           "An error occurred while deleting category"
       );
-    },
+    }
   });
 
   return {
     deleteCategory: mutate,
-    isDeleting: isLoading,
+    isDeleting: isLoading
+  };
+};
+
+export const useTransferProduct = () => {
+  const { mutateAsync, isPending } = useMutation({
+    // Mutation function for API call
+    mutationFn: (data) => ApiInstance.post(`/products/product/transfer`, data),
+
+    
+    onError: (err) => {
+      toast.error(
+        err.response?.data?.message ||
+          "An error occurred while transfering product"
+      );
+    }
+  });
+
+  return {
+    transferProduct: mutateAsync,
+    isTransfering: isPending
   };
 };

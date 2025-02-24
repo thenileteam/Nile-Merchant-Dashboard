@@ -1,31 +1,50 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useFetchLocations } from "@/datahooks/location/useLocationhook";
-import { useFetchProducts } from "@/datahooks/products/productshooks";
+import {
+  useFetchProducts,
+  useTransferProduct
+} from "@/datahooks/products/productshooks";
 import { useForm } from "react-hook-form";
 import { useEditProduct } from "@/datahooks/products/productshooks";
-import { toast } from "sonner";
-import { X } from "lucide-react";
+import { Minus, Plus, Store, X } from "lucide-react";
 import { FiShoppingBag } from "react-icons/fi";
-import { useState } from "react";
-import { FaToggleOff } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { AiOutlineLoading } from "react-icons/ai";
 import * as Switch from "@radix-ui/react-switch";
+import { CustomLoading } from "../uicomps/custom-loading";
+import clsx from "clsx";
+import { toast } from "sonner";
+import { StepOne, StepTwo } from "../Inventory/StepOne";
+import { LastStep } from "../Inventory/LastStep";
+import { useQueryClient } from "@tanstack/react-query";
 const TransferInventory = ({ isTransferOpen, setOpenTransfer }) => {
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-    watch,
-    setValue,
-  } = useForm();
+  const queryClient = useQueryClient();
+
+  // const {
+  //   handleSubmit,
+  //   formState: { errors },
+  //   register,
+  //   watch,
+  //   setValue
+  // } = useForm();
   const { locations } = useFetchLocations();
-  const { data: products } = useFetchProducts();
+  const { data: products, isFetching } = useFetchProducts();
   const { addProductToBackend } = useEditProduct(() => {
     setOpenTransfer(false);
   });
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [transferStat, setTransferStat] = useState({
+    transferSuccessfully: 1,
+    transfering: false,
+    totalProductsToTrans: 0
+  });
+  const { transferProduct, isTransfering } = useTransferProduct();
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [selectedProducts, setSelectedProducts] = useState([]);
   const [step, setStep] = useState(0);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  // Add this near your other useEffect hooks
+
   const handleSearch = (e) => {
     const searchQuery = e.target.value.toLowerCase();
     const filtered = products.filter((item) =>
@@ -33,10 +52,126 @@ const TransferInventory = ({ isTransferOpen, setOpenTransfer }) => {
     );
     setFilteredProducts(filtered); // Update filtered products based on search input
   };
-  const toggleLocation = (locationId) => {
-    setSelectedLocation(locationId); // Only allow one location to be selected
+  const toggleLocation = (location) => {
+    setSelectedLocation(location); // Only allow one location to be selected
+  };
+  const handleTransfer = async () => {
+    setTransferStat({
+      ...transferStat,
+      totalProductsToTrans: selectedProducts.length,
+      transfering: true, // Set this once at the start
+      transferSuccessfully: 0, // Reset to 0 to ensure accurate counting
+    });
+  
+    if (!selectedLocation) {
+      toast.error("Please Select A Location 👌");
+      setTransferStat({ ...transferStat, transfering: false });
+      return;
+    }
+  
+    try {
+      for (let i = 0; i < selectedProducts.length; i++) {
+        const product = selectedProducts[i];
+  
+        if (product.quantityToTransfer > parseInt(product.stock)) {
+          toast.error("Product Quantity is greater than stock");
+          setTransferStat({ ...transferStat, transfering: false });
+          return;
+        }
+  
+        const updatedProduct = {
+          storeId: selectedLocation.storeId,
+          productId: product.uuid,
+          branchId: selectedLocation.id,
+          amount: parseInt(product.quantityToTransfer),
+        };
+  
+        // Await the mutation function
+        await transferProduct(updatedProduct);
+  
+        setTransferStat((prev) => ({
+          ...prev,
+          transferSuccessfully: prev.transferSuccessfully + 1,
+          transfering: i < selectedProducts.length - 1, // Keep true until the last product
+        }));
+  
+        if (i === selectedProducts.length - 1) {
+          toast.success("Inventory Transfer Complete 🎉🎉");
+          queryClient.invalidateQueries(["products", selectedLocation?.storeId]);
+          setOpenTransfer(false);
+        } else {
+          toast.success("Transfer Successful 🔥🔥🔥");
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setTransferStat((prev) => ({
+        ...prev,
+        transfering: false,
+      }));
+      toast.error("Transfer failed due to an error.");
+    }
+  };
+  
+  
+  useEffect(() => {
+    setFilteredProducts(products);
+  }, [products]);
+
+  console.log(selectedLocation, "selected location");
+  const validateSelectedProducts = () => {
+    console.log(selectedProducts);
+    if (selectedProducts.length === 0) {
+      toast.error("Please select at least one product.");
+      return false;
+    }
+    if (selectedProducts.length > 0) {
+      const invalidProducts = selectedProducts.filter((product) => {
+        const quantity = product.quantityToTransfer;
+        return (
+          isNaN(quantity) || quantity <= 0 || quantity > parseInt(product.stock)
+        );
+      });
+
+      if (invalidProducts.length > 0) {
+        toast.error("Please enter valid quantities for all selected products.");
+        return false;
+      }
+    }
+    return true;
   };
 
+  const handleQuantity = (type, product) => {
+    console.log("got called");
+    setSelectedProducts((prev) =>
+      prev?.map((p) => {
+        if (p.id === product.id) {
+          if (type === "Plus") {
+            return {
+              ...p,
+              quantityToTransfer:
+                p.quantityToTransfer === p.stock
+                  ? p.quantityToTransfer
+                  : parseInt(p.quantityToTransfer) + 1
+            };
+          } else {
+            return {
+              ...p,
+              quantityToTransfer:
+                p.quantityToTransfer === 1
+                  ? p.quantityToTransfer
+                  : parseInt(p.quantityToTransfer) - 1
+            };
+          }
+        } else {
+          return p;
+        }
+      })
+    );
+  };
+  // console.log(selectedProducts);
+
+  // console.log(filteredProducts)
   return (
     <>
       {/* overlay */}
@@ -61,154 +196,42 @@ const TransferInventory = ({ isTransferOpen, setOpenTransfer }) => {
         </button>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4   ">
+        <form className="space-y-4   ">
           <h3 className="border-b border-lightBlack my-6 text-[32px]">
             Transfer Inventory
           </h3>
           {/* first Step */}
           {step === 0 && (
-            <div className="first-step">
-              <input
-                type="search"
-                name=""
-                id=""
-                className="block w-full p-1 my-4 border border-lightBlack rounded-md"
-                placeholder="Search.."
-                onChange={handleSearch}
-              />
-              <p className="text-[#6e6e6e] font-bold">
-                Select Products To Transfer
-              </p>
-              {filteredProducts?.map((product) => {
-                return (
-                  <div
-                    key={product.id}
-                    className="border bg-[#F1F6EDEB] p-3 flex justify-between gap-3 items-center mt-4 rounded-md"
-                  >
-                    <div className="flex flex-1 gap-2  ">
-                      <FiShoppingBag className="w-6 h-6 text-lightGreen" />
-                      <div className=" flex-1">
-                        <div className="flex justify-between">
-                          <label
-                            className=" text-[#6e6e6e] capitalize"
-                            htmlFor={product.id}
-                          >
-                            {product.name}
-                          </label>
-                          <input
-                            type="number"
-                            min="1"
-                            placeholder="quantity"
-                            {...register(`${product.id}`, {
-                              required: "Quantity is required",
-                            })}
-                            className="w-[87px] border-lightGreen rounded-md border px-1 capitalize"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <input
-                      type="checkbox"
-                      {...register(`products.${product.id}.selected`)}
-                      className="mr-2"
-                    />
-                  </div>
-                );
-              })}
-              <button
-                type="submit"
-                className="mt-12 mx-auto w-full bg-green text-white p-2 rounded-md hover:bg[#004315] transition disabled:bg-opacity-25 disabled:cursor-wait "
-                onClick={() => setStep(1)}
-              >
-                Next
-              </button>
-            </div>
+            <StepOne
+              isFetching={isFetching}
+              selectedProducts={selectedProducts}
+              setSelectedProducts={setSelectedProducts}
+              setStep={setStep}
+              validateSelectedProducts={validateSelectedProducts}
+              filteredProducts={filteredProducts}
+              handleSearch={handleSearch}
+            />
           )}
           {/* second step */}
           {step === 1 && (
-            <div className="relative">
-              <p className="text-[#6e6e6e] font-semibold">
-                Select Branch Transferring To
-              </p>
-              <article>
-                {locations?.map((location) => {
-                  return (
-                    <div
-                      className="bg-[#F1F6EDEB] p-3 flex justify-between mt-4 rounded-md"
-                      key={location.id}
-                    >
-                      <div>
-                        <p className="text-[#6e6e6e] font-semibold">
-                          {location.locationName}
-                        </p>
-                      </div>
-                      {/* Radix UI Switch */}
-                      <Switch.Root
-                          className={`relative w-10 h-6 rounded-full transition-colors ${
-                            selectedLocation === location.id ? "bg-lightGreen" : "bg-gray-300"
-                          }`}
-                        id={`switch-${location.id}`}
-                        checked={selectedLocation === location.id}
-                        onCheckedChange={() => toggleLocation(location.id)}
-                      >
-                        <Switch.Thumb
-                          className={`block w-4 h-4 bg-white rounded-full shadow-md transform transition-transform ${
-                            selectedLocation === location.id
-                              ? "translate-x-4"
-                              : "translate-x-0"
-                          }`}
-                        />
-                      </Switch.Root>
-                    </div>
-                  );
-                })}
-                <div className="flex gap-8 justify-center items-center mt-12">
-                  <button
-                    type="button"
-                    className="border-2 lg:w-[130px] border-green text-green rounded-md p-3"
-                    onClick={() => setStep(0)}
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="button"
-                    className="bg-green text-white p-3 rounded-md hover:bg-[#004315] transitions"
-                    onClick={() => setStep(2)}
-                  >
-                    Proceed To Review
-                  </button>
-                </div>
-              </article>
-            </div>
+            <StepTwo
+              locations={locations}
+              selectedLocation={selectedLocation}
+              setStep={setStep}
+              toggleLocation={toggleLocation}
+            />
           )}
           {/* last step */}
           {step == 2 && (
-            <div className="last-step relative">
-              <p className="text-[#6e6e6e] font-semibold">
-                Products Transferring
-              </p>
-              <div className="w-full flex gap-8 items-center justify-center mx-auto absolute top-[400px] left-1/2 transform -translate-x-1/2  ">
-                <button
-                  type="button"
-                  className="border-2 border-green text-green lg:w-[110px] rounded-md p-3"
-                  onClick={() => setStep(1)}
-                >
-                  Back
-                </button>
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="bg-green text-white p-3 rounded-md hover:bg-[#004315] transitions disabled:bg-opacity-25 disabled:cursor-wait"
-                >
-                  {/* {isPending ? (
-                    <AiOutlineLoading className="size-4 duration-300 animate-spin" />
-                  ) : (
-                    " Confirm Transfer"
-                  )} */}
-                  Confirm Transfer
-                </button>
-              </div>
-            </div>
+            <LastStep
+              handleQuantity={handleQuantity}
+              handleTransfer={handleTransfer}
+              isTransfering={isTransfering}
+              transferStat={transferStat}
+              selectedProducts={selectedProducts}
+              selectedLocation={selectedLocation}
+              setStep={setStep}
+            />
           )}
         </form>
       </motion.div>
