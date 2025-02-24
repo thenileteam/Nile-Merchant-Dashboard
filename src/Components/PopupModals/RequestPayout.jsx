@@ -15,7 +15,7 @@ const RequestPayout = () => {
   return (
     <div>
       <button type='button'
-         className="text-[#fff] bg-green flex font-bold gap-1 items-center   hover:bg-transparent hover:text-[#004324] hover:border-[#004324] duration-500 border-2 p-2 rounded-md cursor-pointer"
+         className="text-[#fff] bg-green flex font-bold gap-1 items-center hover:bg-transparent hover:text-[#004324] hover:border-[#004324] duration-500 border-2 p-2 rounded-md cursor-pointer"
         onClick={() => setIsModalOpen(true)} // Open the first modal on click
       >
         <div>
@@ -53,7 +53,7 @@ const RequestPayout = () => {
       {/* First Modal (Confirmation) */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="relative bg-[#f5f5f5] p-16 rounded-md shadow-lg w-[553px] h-[377px]">
+          <div className="fixed right-0 top-0 bottom-0 bg-[#f5f5f5] rounded-md shadow-md border border-yellow-600">
             <button type="button" className="absolute right-2 top-2 text-lightGreen border border-lightGreen w-6 rounded-md"  onClick={() => setIsModalOpen(false)}>x</button>
             <div className="flex justify-center gap-20">
               <div>
@@ -125,7 +125,7 @@ const RequestPayout = () => {
                 </h1>
               </button>
               <button
-                className="hover:bg-[#004324] hover:text-white duration-500 border-[#004324] border-2 font-bold text-[#004324] bg-[#f5f5f5] px-10 py-2 rounded"
+                className="hover:bg-[#004324] hover:text-white duration-500 font-bold text-[#004324] bg-[#f5f5f5] px-10 py-2 rounded"
                 onClick={() => setIsModalOpen(false)} // Close modal
               >
                 Cancel

@@ -102,12 +102,12 @@ const SelectCustomerForm = ({
         <div className="gap-8 w-full p-8">
           <div className="flex w-[371px] flex-col">
             <div className="flex mb-2 w-full justify-between items-center">
-              <p>Select Customer</p>
-              <div className="border h-[26px] bg-[#F5F5F5] border-[#8ED06C] rounded-[4px]">
+              <p className="font-semibold text-[#6e6e6e]">Select Customer</p>
+              <div className="border h-[26px] bg-[#F5F5F5] border-[#6e6e6e] rounded-[4px]">
                 {/* search input */}
                 <input
                   type="text"
-                  className="bg-transparent text-[#6E6E6E80] leading-[18px] px-1 font-[700] text-[14px] outline-none w-full h-full"
+                  className="bg-transparent text-[#6E6E6E] leading-[18px] px-1 font-[700] text-[14px] outline-none w-full h-full"
                   placeholder="Search Customer"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -125,7 +125,7 @@ const SelectCustomerForm = ({
                 filteredCustomers.map((customer, index) => (
                   <li
                     key={index}
-                    className="w-full border rounded-[4px] border-[#8ED06C] flex justify-between p-2 bg-[#F5F5F5]"
+                    className="w-full border rounded-[4px] border-[#6e6e6e] flex justify-between p-2 bg-[#F5F5F5]"
                   >
                     <span>{customer.name || customer.email}</span>
                     <input

@@ -33,7 +33,7 @@ const CustomDropdown = ({ paymentStatus, setPaymentStatus }) => {
           "Choose Payment Status"}
       </button>
       {modalOpen && (
-        <ul className="absolute z-[4000000] top-full w-fit bg-white border border-gray-300 rounded-lg">
+        <ul className="absolute z-[4000000] top-full w-full bg-white border border-gray-300 rounded-lg">
           {options.map((option) => (
             <li
               onClick={() => {

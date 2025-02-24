@@ -1,101 +1,59 @@
 /* eslint-disable react/prop-types */
 
-import ProfileImage from "../PlaceholderImage/PlaceholderImage";
-import { Link } from "react-router-dom";
-import {useSidebarStore} from '../../ZustandStores/sidebarStore'
-import ProfileSetting from "../Store/ProfileSetting";
+import { useSidebarStore } from "../../ZustandStores/sidebarStore";
 import { useProfileStore } from "@/ZustandStores/profileStore";
-import ProfileDropDown from "../Dashboard/ProfileDropDown";
-const Navbar = ({ title, icon, profilePic }) => {
-  const { sidebarOpen, setSidebarOpen, } = useSidebarStore()
-  const {toggleProfile} = useProfileStore()
+import { nilelogogreen } from "@/assets";
+import { FiSearch } from "react-icons/fi";
+import ProfileImageDropDown from '../PlaceholderImage/ProfileImageDropdown'
+const Navbar = ({ profilePic }) => {
+  const { sidebarOpen, setSidebarOpen } = useSidebarStore();
+  const { toggleProfile } = useProfileStore();
   return (
-    <nav className="bg-[#EAF4E2] fixed top-0 shadow-md z-10 w-full py-2">
-      <div className="container mx-auto lg:mx-0 lg:px-10 px-4">
-        <div className="flex-container flex gap-4 lg:gap-10">
-          {/*parent first child */}
-          <button
-            type="button"
-            className="lg:hidden text-gray-800"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+    <nav className="bg-white fixed top-0 border-b z-20 w-full py-2">
+      <div className="container mx-auto px-4  ">
+        <div className="flex-container flex items-center justify-between lg:gap-24">
+          {/*menu and logo container */}
+          <div className="flex items-center gap-2 ">
+            <button
+              type="button"
+              className="lg:hidden text-gray-800"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d={
-                  sidebarOpen
-                    ? "M6 18L18 6M6 6l12 12" // Close icon
-                    : "M4 6h16M4 12h16M4 18h16" // Menu icon
-                }
-              />
-            </svg>
-          </button>
-          {/* parent second child */}
-          <div className="page-head flex items-center justify-between w-[95%] lg:max-w-[1000px]">
-            {/* first */}
-            <div className="flex gap-2 items-center md:pl-16">
-              {icon &&
-                //  <Link to={link}> 
-                  <img src={icon} alt={`${title} icon`} className="hidden lg:block" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d={
+                    sidebarOpen
+                      ? "M6 18L18 6M6 6l12 12" // Close icon
+                      : "M4 6h16M4 12h16M4 18h16" // Menu icon
                   }
-              <h1 className={icon?"lg:text-[32px] text-[24px]  font-bold" : 'lg:text-[32px] text-[24px]  font-bold pl-2'}>{title}</h1>
-            </div>
-            {/* second */}
-            <div className="flex gap-4 items-center lg:pr-3">
-              <div className="input-div relative hidden lg:block">
-                <label htmlFor="Search" className="sr-only">
-                  {" "}
-                  Search{" "}
-                </label>
-                <input
-                  type="search"
-                  id="Search"
-                  placeholder=""
-                  className="lg:block rounded-md border-[#6E6E6E] border py-1"
                 />
-                <button
-                  type="button"
-                  className="text-gray-600 hover:text-gray-700 absolute top-[9px] left-2"
-                >
-                  <span className="sr-only">Search</span>
-
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="size-4  "
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div className="flex gap-4 items-center">
-                {/*  */}
-                {/* <Link to="/notification">
-              <img src={notification} alt="notification-icon" className="hidden lg:block" />
-            </Link> */}
-                  <div className="relative cursor-pointer" onClick={toggleProfile}>
-                  <ProfileImage
-                    profileImage={profilePic}
-                  />
-                  <ProfileDropDown/>
-              </div>
-              </div>
+              </svg>
+            </button>
+            <img src={nilelogogreen} alt="" className="w-[120px]" />
+          </div>
+          {/* search bar and profile picture */}
+          <div className="lg:flex-1 flex items-center justify-between  ">
+            <div className="relative hidden lg:block">
+              <input
+                type="search"
+                id=""
+                name=""
+                placeholder="Search.."
+                className="  rounded-3xl border border-zinc-300 py-[6px] pl-9 pr-3 w-[250px] font-extralight"
+              />
+              <FiSearch className={`absolute top-[13px]  left-4 stroke-current stroke-[1px] text-sm`} />
             </div>
+            {/* profileimage */}
+            <ProfileImageDropDown profilePic={profilePic} />
           </div>
         </div>
       </div>

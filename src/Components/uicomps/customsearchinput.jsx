@@ -98,7 +98,7 @@ const CustomSearchInput = ({ setSelectedCustomer, selectedCustomer }) => {
         value={input}
         placeholder={selectedCustomer[0]?.name || "Enter Customer Name"}
         type="text"
-        className={`w-full bg-[#F5F5F5] rounded-[4px] border-[#8ED06C] border-[1px] placeholder:text-[#6E6E6E80] h-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+        className={`w-full bg-[#F5F5F5] rounded-[4px] border-[#6e6e6e] border-[1px] placeholder:text-[#6E6E6E80] h-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
           selectedCustomer[0]?.name
             ? "placeholder:text-black"
             : "placeholder:text-[#6E6E6E80]"

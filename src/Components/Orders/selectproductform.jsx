@@ -5,9 +5,8 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 import { useFetchProducts } from "../../datahooks/products/productshooks";
 import { toast } from "sonner";
 
-const SelectProductForm = ({ cart, setCart, setSelectProductForm }) => {
+const SelectProductForm = ({ cart, setCart, setSelectProductForm, selectProductForm }) => {
   const { data, isFetching, isError } = useFetchProducts();
-  console.log(data);
   const [products, setProducts] = useState();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -108,7 +107,7 @@ const SelectProductForm = ({ cart, setCart, setSelectProductForm }) => {
       totalAmount: total_cart_price,
       timeSaved: Date.now(),
     };
-    console.log(itemsData, "items dataa");
+    console.log(itemsData, "items data");
     localStorage.setItem("orderItems", JSON.stringify(itemsData));
     if (!close) {
       toast.success("Order Items Added");
@@ -118,28 +117,29 @@ const SelectProductForm = ({ cart, setCart, setSelectProductForm }) => {
   };
 
   return (
-    <div className="fixed z-[100000] w-full right-0 left-0 h-screen grid place-items-center">
-      <div
+    <div className=" relative">
+      {/* <div
         // onClick={() => setSelectProductForm(false)}
-        className="absolute w-full h-full left-0 right-0 top-0 bg-black/20"
-      ></div>
-      <div className="bg-white max-w-fit flex flex-col pb-8 justify-center items-center  relative rounded-[8px]">
+        className="bg-white  w-[300px] h-[400px] border border-red-500"
+      ></div> */}
+      <div className="bg-white flex flex-col pb-4  rounded-[8px]">
         <img
           onClick={() => {
+            setSelectProductForm(false)
             addProductData(true);
           }}
           src="/public/Cancel.svg"
           className=" cursor-pointer size-6 absolute top-2 right-2"
           alt=""
         />
-        <div className=" gap-8 w-full grid grid-cols-1 md:grid-cols-2 p-8">
-          <div className="flex  w-full md:w-[371px] flex-col">
-            <div className="flex mb-2 w-full justify-between items-center">
+        <div className="gap-8 w-full grid grid-cols-1 p-2">
+          <div className="w-full border border-blue-500">
+            <div className="mb-2 w-full">
               <p>Select Product</p>
-              <div className="border h-[26px] bg-[#F5F5F5] border-[#8ED06C] rounded-[4px]">
+              <div className="border h-[26px] bg-[#F5F5F5] border-lightBlack rounded-[4px]">
                 <input
                   type="text"
-                  className="bg-transparent text-[#6E6E6E80] leading-[18px] px-1 font-[700] text-[14px] outline-none w-full h-full"
+                  className="bg-transparent text-[rgba(110,110,110,0.5)] leading-[18px] px-1 font-[700] text-[14px] outline-none w-full h-full"
                   placeholder="Search Product"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -148,12 +148,12 @@ const SelectProductForm = ({ cart, setCart, setSelectProductForm }) => {
             </div>
 
             {/* Product List */}
-            <ul className="flex h-auto max-h-[250px] overflow-y-auto flex-col gap-1">
+            <ul className="flex absolute z-50 top-6 h-auto max-h-[220px] overflow-y-auto flex-col gap-1 w-full bg-white">
               {filteredProducts?.length > 0 ? (
                 filteredProducts?.map((product, index) => (
                   <li
                     key={index}
-                    className="w-full border rounded-[4px] border-[#8ED06C] flex justify-between p-2 bg-[#F5F5F5]"
+                    className="w-full border rounded-[4px] border-lightBlack flex justify-between p-2 bg-[#F5F5F5]"
                   >
                     <span>{product.name}</span>
                     <input
@@ -170,7 +170,7 @@ const SelectProductForm = ({ cart, setCart, setSelectProductForm }) => {
           </div>
 
           {/* Display Selected Cart Items */}
-          <div className="">
+          {/* <div className="">
             <h1 className="mb-2  font-bold">Your Cart</h1>
             {cart.length > 0 ? (
               <ul className="flex h-auto max-h-[250px] overflow-y-auto flex-col gap-1">
@@ -217,9 +217,9 @@ const SelectProductForm = ({ cart, setCart, setSelectProductForm }) => {
                 </span>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
-        {cart.length > 0 && (
+        {/* {cart.length > 0 && (
           <button
             onClick={() => {
               addProductData(false);
@@ -229,7 +229,7 @@ const SelectProductForm = ({ cart, setCart, setSelectProductForm }) => {
           >
             Add Selected
           </button>
-        )}
+        )} */}
       </div>
     </div>
   );

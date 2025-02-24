@@ -50,7 +50,7 @@ const SignIn = () => {
   if (checkingUser) return null;
   return (
     <section className="h-screen">
-      <div className="container md:max-w-[700px] lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-2xl lg:shadow-md lg:shadow-gray-300 p-4 lg:p-16">
+      <div className="container md:max-w-[700px] lg:max-w-[1184px] mx-auto mt-28 lg:flex gap-[120px] items-center bg-dimWhite rounded-2xl lg:shadow-md lg:shadow-gray-300 p-4 lg:p-16 ">
         <div className="mb-10">
           <div>
             <img
@@ -62,7 +62,8 @@ const SignIn = () => {
               Welcome To The Merchant Dashboard
             </h1>
           </div>
-          <div className="mx-auto">
+          <div className="mx-auto">  
+            {/*   */}
             <form onSubmit={handleLogin} className="space-y-6 mt-6">
               {/* Display error message */}
               {error && (
@@ -145,8 +146,8 @@ const SignIn = () => {
                 {isPending ? (
                   <div className="w-4 h-4 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
                 ) : (
-                  "Log In"
-                )}
+                "  Log In"
+                )} 
               </button>
 
               <CreateAccPaths

@@ -3,7 +3,8 @@
 const UploadImage = ({ handleFileChange, style, image , parentStyle, labelFor}) => {
 
   return (
-    <div className={`relative text-center ${parentStyle} lg:w-[308px] mx-auto`}>
+    <div className={`relative text-center ${parentStyle} mx-auto`}>
+      <h4 className="text-left text-[#6e6e6e] font-semibold">Upload Profile Photo</h4>
       <input
         type="file"
         name= {labelFor}
@@ -16,7 +17,7 @@ const UploadImage = ({ handleFileChange, style, image , parentStyle, labelFor}) 
       <label htmlFor={labelFor} className="cursor-pointer">
         <img
           src={image}
-          className={`block ${style} `}
+          className={`block ${style}`}
           alt="add image placeholder icon"
         />
       </label>
