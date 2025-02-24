@@ -31,7 +31,7 @@ const Reviews = () => {
                 ? "flex-grow lg:ml-20 overflow-x-hidden"
                 : "flex-grow lg:ml-56 overflow-x-hidden"
             }>
-            <Navbar title="Reviews and Ratings" icon={starhalf} profilePic={user&&user.image?user.image:null} />
+            
 
             {/* Cards */}
             <div className="p-6 mt-28 px-32">

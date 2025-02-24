@@ -43,14 +43,14 @@ export const UserTableListLoader = ({
 };
 
 /* eslint-disable react/prop-types */
-export const UseCardLoader = ({ children, loading, error, className ,amount}) => {
+export const UseCardLoader = ({ children, loading, error, className,amount}) => {
   if (loading)
     return (
-      <div className={`  w-fit mx-auto  bg-transparent mb-5  grid grid-cols-3 gap-10 ${className}`}>
+      <div className={`w-full bg-transparent mb-5 grid grid-cols-4 gap-10 ${className}`}>
         {Array.from({length: amount}).map((_, index) => (
           <div
             key={index}
-            className={` w-[250px] h-[100px]  animate-pulse bg-gray-200 flex space-x-10 justify-between   p-2 rounded-md`}
+            className={`min-w-[210px] h-[180px]  animate-pulse bg-gray-200 flex justify-between p-2 rounded-md`}
           ></div>
         ))}
       </div>

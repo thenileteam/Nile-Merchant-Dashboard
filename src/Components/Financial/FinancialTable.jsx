@@ -100,14 +100,14 @@ const FinancialTable = () => {
       )}
 
       {/* Table */}
-      <div className="px-24 w-full ">
+      <div className="w-full mt-6 bg-white rounded-md shadow-md p-4 mx-auto border-[0.5px]">
         <UserTableListLoader
           data={transactions}
           loading={isFetching}
           error={isError}
           cols={4}
         >
-          <table className=" w-full  border-separate border-spacing-y-5">
+          <table className=" w-full  border-separate border-spacing-y-4">
             <thead>
               <tr className="text-left bg-[#EAF4E2] shadow-lg">
                 <th className="px-2 py-3 text-center">Transaction ID</th>
@@ -126,7 +126,7 @@ const FinancialTable = () => {
               {/* Row 1 */}
               {transactions?.map((transaction, index) => (
                 <tr key={index} className="bg-[#ffffff] shadow-md">
-                  <td className="px-2 py-3 text-center">
+                  <td className="px-2 py-3 text-center bg-[#EAF4E2]">
                     {transaction?.id.slice(0, 6)}
                   </td>
                   <td className="px-2 py-3 text-center">{transaction?.type}</td>

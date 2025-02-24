@@ -30,6 +30,7 @@ export const useLogUserIn = () => {
 
     onSuccess: async (response) => {
       // First set the tokens
+      console.log(response?.data)
       Cookies.set("accessToken", response?.data?.accessToken,  {
         secure: true,
         sameSite: "Strict",
@@ -43,7 +44,8 @@ export const useLogUserIn = () => {
       // Set essential user data
       localStorage.setItem("Id", response?.data?.data?.user?._id);
       localStorage.setItem("refreshToken", response?.data?.refreshToken);
-
+      const role = response.data.role
+      console.log(role);
       // Now fetch store data with the token available
       try {
         const store = await ApiInstance.get(
@@ -51,7 +53,11 @@ export const useLogUserIn = () => {
         );
         setStore(store?.data?.responseObject);
         toast("Auth Success✔");
-        navigate("/dashboard");
+        if (role === 'STORE_OWNER') {
+          navigate("/dashboard");
+        } else {
+          navigate('/')
+        }
       } catch (error) {
         // console.error("Error fetching store data:", error);
         toast.error("Login successful but error loading store data");
@@ -158,13 +164,25 @@ export const useSignUserUp = () => {
   const [error] = useState("");
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
-      return ApiInstance.post("/users/auth/register", data);
+      const { name, email, isStaff, branchId, staffId, password, storeName, passwordConfirm, marketingAccept } = data;
+
+      return ApiInstance.post("/users/auth/register",
+        { password, storeName, marketingAccept, passwordConfirm }, {
+        params: { 
+          name, 
+          email, 
+          isStaff, 
+          branchId, 
+          staffId 
+        },
+      }    //body request data
+      );
     },
     onSuccess: (response) => {
       // const username = response.data.ownerName;
       toast("Auth Success✔");
-      //store and set users name
       // Navigate to dashboard
+   
       navigate("/");
       // localStorage.setItem("ownerName", JSON.stringify(username));
       // setUsername(username);

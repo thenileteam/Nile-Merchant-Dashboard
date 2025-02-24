@@ -5,47 +5,41 @@ import { addsquare, addImage } from "../../assets";
 import UploadImage from "../UploadImage/UploadImage";
 import { useEditProduct } from "../../datahooks/products/productshooks";
 import { Loader2 } from "lucide-react";
-
-
-const EditProduct = ({ product }) => {
-
+import { FiArrowLeft } from "react-icons/fi";
+import { useEditProductStore } from "@/ZustandStores/transferStore";
+ 
+const EditProduct = ( ) => {
   // State to control the popup visibility and animation
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const { editingProduct, closeEditingProduct } = useEditProductStore();
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isFinalConfirmationOpen, setIsFinalConfirmationOpen] = useState(false);
   const [fadeOut, setFadeOut] = useState(false); // State for fade-out animation
-
   // Form fields state
   const [productDetails, setProductDetails] = useState({
-    category: product.category.name || "",
-    name: product.name || "",
-    details: product.description || "",
-    stockQuantity: product.stock || "",
-    quantitySizes: product.quantitySizes || "",
-    weight: product.shippingWeight || "",
-    freeShipping: product.freeShipping || false,
-    price: product.price || 0,
-    discountedPrice: product.discountedPrice || "",
-    color: product.productColorName || "",
+    category: editingProduct?.category.name || "",
+    name: editingProduct?.name || "",
+    details: editingProduct?.description || "",
+    stockQuantity: editingProduct?.stock || "",
+    quantitySizes: editingProduct?.quantitySizes || "",
+    weight: editingProduct?.shippingWeight || "",
+    freeShipping: editingProduct?.freeShipping || false,
+    price: editingProduct?.price || 0,
+    discountedPrice: editingProduct?.discountedPrice || "",
+    color: editingProduct?.productColorName || "",
     dimensions: {
-      length: product.width || "",
-      width: product.height || "",
-      height: product.length || "",
+      length: editingProduct?.width || "",
+      width: editingProduct?.height || "",
+      height: editingProduct?.length || "",
     },
-    packaging: product.packaging || "",
-    handlingTime: product.handlingTime || "",
+    packaging: editingProduct?.packaging || "",
+    handlingTime: editingProduct?.handlingTime || "",
   });
-
-  // Function to toggle the main popup visibility
-  const togglePopup = () => {
-    setIsPopupOpen(!isPopupOpen);
-  };
 
   // Function to show the confirmation popup and hide the main popup
   const showConfirmation = () => {
     setFadeOut(true); // Start fade-out animation for the main popup
     setTimeout(() => {
-      setIsPopupOpen(false); // Close the main popup after the animation
+      closeEditingProduct() // Close the main popup after the animation
       setIsConfirmationOpen(true); // Open the confirmation popup
       setFadeOut(false); // Reset fade-out state
     }, 200); // Match this duration with your CSS transition duration
@@ -62,7 +56,7 @@ const EditProduct = ({ product }) => {
     try {
       const { price, ...rest } = productDetails;
       const data = {
-        productId: product.uuid,
+        productId: editingProduct.uuid,
         stock: Number(productDetails.stockQuantity),
         description: productDetails.details,
         price: Number(price),
@@ -100,69 +94,32 @@ const EditProduct = ({ product }) => {
       }));
     }
   };
+  if (!editingProduct) return null; 
   return (
     <>
-      {/* Button to trigger the popup */}
-      <button
-        onClick={togglePopup}
-        className="hover:scale-110 duration-300 hover:border-[#8ED06C] border-[#ffffff] border-b-[2px] transition underline-offset-2 decoration-[2px] inline-block hover:-translate-x-1"
-      >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M16.2141 4.98239L17.6158 3.58063C18.39 2.80646 19.6452 2.80646 20.4194 3.58063C21.1935 4.3548 21.1935 5.60998 20.4194 6.38415L19.0176 7.78591M16.2141 4.98239L10.9802 10.2163C9.93493 11.2616 9.41226 11.7842 9.05637 12.4211C8.70047 13.058 8.3424 14.5619 8 16C9.43809 15.6576 10.942 15.2995 11.5789 14.9436C12.2158 14.5877 12.7384 14.0651 13.7837 13.0198L19.0176 7.78591M16.2141 4.98239L19.0176 7.78591"
-            stroke="#8ED06C"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M21 12C21 16.2426 21 18.364 19.682 19.682C18.364 21 16.2426 21 12 21C7.75736 21 5.63604 21 4.31802 19.682C3 18.364 3 16.2426 3 12C3 7.75736 3 5.63604 4.31802 4.31802C5.63604 3 7.75736 3 12 3"
-            stroke="#8ED06C"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          />
-        </svg>
-      </button>
-
-      {isPopupOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-10 rounded-lg shadow-lg max-w-3xl w-full relative">
+      {/* */}
+      {editingProduct && (
+        <div className="lg:max-w-[800px] mx-auto">
+          <div className="max-w-3xl w-full  ">
             {/* Cancel Button in the top-right corner */}
-            <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
-              onClick={() => setIsPopupOpen(false)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            <div className="flex gap-1 items-center mb-4">
+              <button
+                className=" text-green hover:text-gray-800"
+                onClick={closeEditingProduct}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+                <FiArrowLeft className="block text-xl" />
+              </button>
+              <h3 className="text-green text-[32px]">Edit Product</h3>
+            </div>
 
             {/* Popup Content */}
             <form>
-              <div className="grid grid-cols-2 gap-12">
+              <div className="bg-white border rounded-md shadow-lg p-4">
                 <div className="space-y-3">
-                  <div className="flex items-center gap-5">
-                    <div className="mb-4 hidden">
+                    <div className="mb-4">
                       <label
                         htmlFor="category"
-                        className="block text-[16px] text-left font-bold text-[#333333]"
+                        className="block text-[16px] text-left font-bold text-[#333]"
                       >
                         Product Category
                       </label>
@@ -172,7 +129,7 @@ const EditProduct = ({ product }) => {
                         type="text"
                         value={productDetails.category}
                         onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                        className="w-full border-lightBlack border bg-[#F5F5F5] rounded-md p-2"
                         placeholder="E.g:Apparel"
                       />
                     </div>
@@ -190,32 +147,31 @@ const EditProduct = ({ product }) => {
                         type="text"
                         value={productDetails.name}
                         onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                        className="w-full border-lightBlack border bg-[#F5F5F5] rounded-md p-2"
                         placeholder="E.g:Floki"
                       />
-                    </div>
                   </div>
 
-                  <div className="flex items-center gap-5">
-                    <div className="mb-4">
+                  <div className="">
+                    <div className="mb-4 ">
                       <label
                         htmlFor="details"
-                        className="block text-[16px] text-left font-bold text-[#333333]"
+                        className="block text-[16px] text-left font-bold text-[#333]"
                       >
                         Product Details
                       </label>
-                      <input
+                      <textarea
                         id="details"
                         name="details"
                         type="text"
                         value={productDetails.details}
                         onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                        className="w-full border-lightBlack border bg-[#F5F5F5] rounded-md p-2 min-h-[150px]"
                         placeholder="Input Details"
-                      />
+                      ></textarea>
                     </div>
 
-                    <div className="mb-4">
+                    <div className="">
                       <label
                         htmlFor="stockQuantity"
                         className="block text-[16px] text-left font-bold text-[#333333]"
@@ -223,13 +179,13 @@ const EditProduct = ({ product }) => {
                         Stock Quantity
                       </label>
                       <input
-                        id="stockQunatity"
+                        id="stockQuantity"
                         name="stockQuantity"
                         type="number"
                         min={1}
                         value={productDetails.stockQuantity}
                         onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                        className="w-full border-lightBlack border bg-[#F5F5F5] rounded-md p-2"
                         placeholder="321"
                       />
                     </div>
@@ -248,7 +204,7 @@ const EditProduct = ({ product }) => {
                         id="size"
                         value={productDetails.quantitySizes}
                         onChange={handleInputChange}
-                        className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
+                        className="w-full rounded-lg border-lightBlack bg-[#F5F5F5] border text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">E.g:XXL</option>
                         <option value="XL">XL</option>
@@ -278,16 +234,16 @@ const EditProduct = ({ product }) => {
                       min={0}
                       value={productDetails.weight}
                       onChange={handleInputChange}
-                      className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                      className="w-full border-lightBlack border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="E.g:20kg"
                     />
                   </div>
-                  <div className=" hidden">
+                  <div className="hidden">
                     <h1 className="block text-[16px] text-left font-bold text-[#333333]">
                       Offer Free Shipping ?
                     </h1>
                     <div className="space-y-3">
-                      <div className="flex items-center justify-between bg-[#F5F5F5] border-[#8ED06C] border-2 p-2 rounded-md">
+                      <div className="flex items-center justify-between bg-[#F5F5F5] border-lightBlack border p-2 rounded-md">
                         <h1 className="text-gray-500 font-bold">Yes</h1>
                         <div className="flex items-center">
                           &#8203;
@@ -300,7 +256,7 @@ const EditProduct = ({ product }) => {
                           />
                         </div>
                       </div>
-                      <div className="flex items-center justify-between bg-[#F5F5F5] border-[#8ED06C] border-2 p-2 rounded-md">
+                      <div className="flex items-center justify-between bg-[#F5F5F5] border-lightBlack border p-2 rounded-md">
                         <h1 className="text-gray-500 font-bold">No</h1>
                         <div className="flex items-center">
                           &#8203;
@@ -316,13 +272,13 @@ const EditProduct = ({ product }) => {
                     </div>
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <div className="mb-4">
+                <div className="flex flex-col lg:flex-row items-center gap-4 mt-4">
+                  <div className="lg:w-[50%]">
                     <label
                       htmlFor="price"
                       className="block text-[16px] text-left font-bold text-[#333333]"
                     >
-                      Product Real Price
+                      Product Price
                     </label>
                     <input
                       id="price"
@@ -331,11 +287,11 @@ const EditProduct = ({ product }) => {
                       min={1}
                       value={productDetails.price}
                       onChange={handleInputChange}
-                      className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                      className="w-full border-lightBlack border bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
                   </div>
-                  <div className="mb-4">
+                  <div className="lg:w-[50%]">
                     <label
                       htmlFor="discountedPrice"
                       className="block text-[16px] text-left font-bold text-[#333333]"
@@ -349,7 +305,7 @@ const EditProduct = ({ product }) => {
                       min={0}
                       value={productDetails.discountedPrice}
                       onChange={handleInputChange}
-                      className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                      className="w-full border-lightBlack border bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
                   </div>
@@ -366,7 +322,7 @@ const EditProduct = ({ product }) => {
                         id="color"
                         value={productDetails.color}
                         onChange={handleInputChange}
-                        className="w-full rounded-lg border-[#8ED06C] bg-[#F5F5F5] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
+                        className="w-full rounded-lg border-lightBlack bg-[#F5F5F5] border pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">E.g:Red</option>
                         <option value="BL">Blue</option>
@@ -393,7 +349,7 @@ const EditProduct = ({ product }) => {
                         min={0}
                         value={productDetails.dimensions.length}
                         onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                        className="w-full border-lightBlack border bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Length"
                       />
                       <input
@@ -403,7 +359,7 @@ const EditProduct = ({ product }) => {
                         min={0}
                         value={productDetails.dimensions.width}
                         onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                        className="w-full border-lightBlack border bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Width"
                       />
                       <input
@@ -413,7 +369,7 @@ const EditProduct = ({ product }) => {
                         min={0}
                         value={productDetails.dimensions.height}
                         onChange={handleInputChange}
-                        className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                        className="w-full border-lightBlack border bg-[#F5F5F5] rounded-md p-2"
                         placeholder="Height"
                       />
                     </div>
@@ -431,7 +387,7 @@ const EditProduct = ({ product }) => {
                         id="packaging"
                         value={productDetails.packaging}
                         onChange={handleInputChange}
-                        className="w-full rounded-lg border-[#8ED06C] bg-[#f5f5f5] border-2 pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
+                        className="w-full rounded-lg border-lightBlack bg-[#f5f5f5] border pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
                       >
                         <option value="">Choose Package Type</option>
                         <option value="BS">Box Size</option>
@@ -455,7 +411,7 @@ const EditProduct = ({ product }) => {
                       type="text"
                       value={productDetails.handlingTime}
                       onChange={handleInputChange}
-                      className="w-full border-[#8ED06C] border-2 bg-[#F5F5F5] rounded-md p-2"
+                      className="w-full border-lightBlack border-2 bg-[#F5F5F5] rounded-md p-2"
                       placeholder="7842"
                     />
                   </div>
@@ -513,6 +469,7 @@ const EditProduct = ({ product }) => {
           </div>
         </div>
       )}
+      {/* */}
 
       {/* Confirmation Modal */}
       {isConfirmationOpen && (
@@ -525,7 +482,7 @@ const EditProduct = ({ product }) => {
             <h1 className="text-[#333333] font-bold text-[18px] text-center">
               Are You Sure You Want To Edit This Product?
             </h1>
-            {isEditingProduct ? (
+            {editingProduct ? (
               <Loader2 className=" mx-auto animate-spin duration-300 transition-all" />
             ) : (
               <div className="flex justify-center gap-20">

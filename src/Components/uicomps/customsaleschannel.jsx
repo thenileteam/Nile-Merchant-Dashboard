@@ -27,13 +27,13 @@ const CustomSalesChannelDropdown = ({ setSalesChannel, salesChannel }) => {
           }
           setModalOpen(true);
         }}
-        className="w-full h-[50px] px-4  text-left   rounded-lg appearance-none"
+        className="w-full h-[50px] px-4  text-left  rounded-lg appearance-none"
       >
         {options.find((opt) => opt.value === salesChannel)?.label ||
           "Choose Payment Status"}
       </button>
       {modalOpen && (
-        <ul className="absolute z-[4000000] top-full w-fit bg-white border border-gray-300 rounded-lg">
+        <ul className="absolute z-[4000000] top-full w-full bg-white border border-gray-300 rounded-lg ">
           {options.map((option) => (
             <li
               onClick={() => {

@@ -174,6 +174,7 @@ export const useFetchCategories = () => {
     isFetchingCategories: isFetching,
     isError,
     isLoading,
+    categoryLength:data?.length
   };
 };
 

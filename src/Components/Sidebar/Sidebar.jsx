@@ -10,7 +10,10 @@ import { useSidebarStore } from "../../ZustandStores/sidebarStore";
 import { usePolicyStore } from "../../ZustandStores/policyStore";
 import { useDropDown } from "../../ZustandStores/dropDown";
 import { useEffect } from "react";
+import Navbar from '../Navbar/Navbar'
+import { useFetchUser } from '../../datahooks/users/userhooks';
 const Sidebar = () => {
+  const { user } = useFetchUser();
   const {
     sidebarOpen,
     setSidebarOpen,
@@ -32,6 +35,7 @@ const Sidebar = () => {
 
   return (
     <>
+        <Navbar profilePic={user && user.image ? user.image : ""}/>
       {/* Overlay for small screens */}
       {sidebarOpen && (
         <button
@@ -44,18 +48,17 @@ const Sidebar = () => {
       {/* Sidebar */}
       {/* overflow-x-hidden overflow-y-scroll  */}
       <aside
-        className={`fixed top-0 left-0 bottom-0 h-screen z-20 bg-[#004324] text-white p-3 transition-all transform ${
+        className={`fixed top-[60px] left-0 bottom-0 border max-h-screen z-10 bg-white text-green px-3 transition-all transform ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0  ${
           isCollapsed
-            ? "w-[110px] duration-100 delay-100 ease-in"
+            ? "w-[90px] duration-100 delay-100 ease-in"
             : "w-[250px] duration-100 delay-100 ease-in"
         }`}
       >
-       <button type="button" className="bg-white w-6 h-6 rounded-full lg:flex items-center border  border-green fixed z-100 -right-2 top-20 hidden" onClick={setIsCollapsed}>
-        <img src={iconExpandCollapsible}  className={isCollapsed?'block rotate-180 transition-transform':'block'} alt="icon to expand and collapse sidebar" />
+       <button type="button" className="bg-white w-4 h-4 lg:flex items-center border border-green fixed z-100 -right-2 top-5 hidden px-[2px]" onClick={setIsCollapsed}>
+        <img src={iconExpandCollapsible}  className={`${isCollapsed?'block rotate-180 transition-transform':'block'} border-r border-green`} alt="icon to expand and collapse sidebar" />
         </button>
-        <img src={isCollapsed?nileBagOnly:nilelogowhite} alt="" className={`${isCollapsed?'w-[55px] object-fit':'w-[110px]'} flex`} />
         <Links isCollapsed={isCollapsed}  />
       </aside>  
       
