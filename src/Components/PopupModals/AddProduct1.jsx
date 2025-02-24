@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
 import {
   useCreateNewProduct,
-  useFetchCategories,
+  useFetchCategories
 } from "../../datahooks/products/productshooks";
 import { addsquare, addImage } from "../../assets";
 import { BiLoaderCircle } from "react-icons/bi";
@@ -16,7 +17,7 @@ import AssignLocation from "../StaffManagement/AssignLocation";
 import { useAssignLocationStore } from "@/ZustandStores/locationStore";
 const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
-    setPopupOpen(false); // close the popup after adding product
+    closePopup(); // close the popup after adding product
   });
   const { categories } = useFetchCategories();
   // State to control the popup visibility and animation
@@ -42,11 +43,12 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
     price: 0,
     discountedPrice: 0,
     productColorName: "",
+
     dimensions: { length: "", width: "", height: "" },
     // packaging: "",
-    handlingTime: "",
+    handlingTime: ""
   });
-  
+
   // Function to show the confirmation popup and hide the main popup
   const showConfirmation = () => {
     setFadeOut(true); // Start fade-out animation for the main popup
@@ -68,7 +70,7 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
       "stock",
       "description",
       // "productColorName",
-      "categoryName",
+      "categoryName"
       // "packaging",
     ];
     try {
@@ -101,7 +103,7 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
         handlingTime: productDetails.handlingTime,
         stock: productDetails.stock,
         productStatus: "AVAILABLE",
-        quantitySizes: `${productDetails.size} ${productDetails.unit}`,
+        quantitySizes: `${productDetails.size} ${productDetails.unit}`
       };
       // return;
       addProductToBackend(dataToBackend);
@@ -121,7 +123,7 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
         const dataToBackend = {
           name: productDetails.name,
           storeId: store.id,
-          locationId: selectedLocation.id,
+          locationId: selectedLocationId,
           userId: store.userId,
           length: productDetails.dimensions.length,
           width: productDetails.dimensions.width,
@@ -138,7 +140,7 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
           handlingTime: productDetails.handlingTime,
           stock: productDetails.stock,
           productStatus: "AVAILABLE",
-          quantitySizes: productDetails.quantitySizes,
+          quantitySizes: productDetails.quantitySizes
         };
         addProductToBackend(dataToBackend);
       } catch (error) {
@@ -159,36 +161,42 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
         ...prev,
         dimensions: {
           ...prev.dimensions,
-          [key]: value,
-        },
+          [key]: value
+        }
       }));
     } else if (type === "checkbox") {
       setProductDetails((prev) => ({
         ...prev,
-        [name]: checked,
+        [name]: checked
       }));
     } else {
       setProductDetails((prev) => ({
         ...prev,
-        [name]: value,
+        [name]: value
       }));
     }
   };
   return (
     <>
       {/* Button to trigger the popup */}
-      {!isPopupOpen&&<button  className='flex font-light gap-1 items-center w-[130px] p-2 rounded-md justify-center bg-[#004324] text-[#fff]' onClick={openPopup}> <FiPlus/> Add Product
-      </button>}
+      {!isPopupOpen && (
+        <button
+          className="flex font-light gap-1 items-center w-[130px] p-2 rounded-md justify-center bg-[#004324] text-[#fff]"
+          onClick={openPopup}
+        >
+          {" "}
+          <FiPlus /> Add Product
+        </button>
+      )}
 
       {isPopupOpen && (
-       
         <div className="max-w-[800px] mx-auto w-full relative">
           {/* Popup Content */}
-          <div className="flex gap-2 items-center"  >
+          <div className="flex gap-2 items-center">
             <button type="button" onClick={closePopup}>
-            <FiArrowLeft  className='text-2xl text-green'/>
+              <FiArrowLeft className="text-2xl text-green" />
             </button>
-          <h2 className="text-green text-[32px]  ">Add Product</h2>
+            <h2 className="text-green text-[32px]  ">Add Product</h2>
           </div>
           <form>
             <div className="container mt-8">
@@ -274,7 +282,7 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
 
               {/* second section */}
               <article className="border mt-6 rounded-md shadow-md px-4 py-5">
-                <h3 className='pb-5 font-bold'>Pricing and Quantity</h3>
+                <h3 className="pb-5 font-bold">Pricing and Quantity</h3>
                 <div className="flex-container flex flex-col gap-3 lg:flex-row lg:gap-4">
                   <div className="mb-4 lg:w-[50%]">
                     <label
@@ -329,8 +337,8 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
                   />
                 </div>
               </article>
-                {/* third section */}
-              
+              {/* third section */}
+
               <div className="border shadow-md rounded-md mt-4 p-4">
                 <div className="relative">
                   <label
@@ -363,76 +371,76 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
                   </span>
                 </div>
                 <div className="">
-                <CustomProductSizeSelector
-                  productDetails={productDetails}
-                  setProductDetails={setProductDetails}
-                />
-              </div>
-               
-              <div className="space-y-3">
-                <div>
-                  <label
-                    htmlFor="dimensionsLength"
-                    className="block text-[16px] font-bold text-[#333333]"
-                  >
-                    Product Dimensions
-                  </label>
-                  <div className="mb-4 flex items-center gap-3">
-                    <input
-                      id="dimensionsLength"
-                      name="dimensions.length"
-                      type="text"
-                      value={productDetails.dimensions.length}
-                      onChange={handleInputChange}
-                      className="w-full border-[#6e6e6e] border bg-[#F5F5F5] rounded-md p-2"
-                      placeholder="Length"
-                    />
-                    <input
-                      id="dimensionsWidth"
-                      name="dimensions.width"
-                      type="text"
-                      value={productDetails.dimensions.width}
-                      onChange={handleInputChange}
-                      className="w-full border-[#6e6e6e] border bg-[#F5F5F5] rounded-md p-2"
-                      placeholder="Width"
-                    />
-                    <input
-                      id="dimensionsHeight"
-                      name="dimensions.height"
-                      type="text"
-                      value={productDetails.dimensions.height}
-                      onChange={handleInputChange}
-                      className="w-full border-[#6e6e6e] border bg-[#F5F5F5] rounded-md p-2"
-                      placeholder="Height"
-                    />
-                  </div>
+                  <CustomProductSizeSelector
+                    productDetails={productDetails}
+                    setProductDetails={setProductDetails}
+                  />
                 </div>
-                <div>
-                  <div className="relative">
+
+                <div className="space-y-3">
+                  <div>
                     <label
-                      htmlFor="packaging"
+                      htmlFor="dimensionsLength"
                       className="block text-[16px] font-bold text-[#333333]"
                     >
-                      Packaging Preference
+                      Product Dimensions
                     </label>
-                    <select
-                      name="packaging"
-                      id="packaging"
-                      value={productDetails.packaging}
-                      onChange={handleInputChange}
-                      className="w-full rounded-lg border-[#6e6e6e] bg-[#f5f5f5] border pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
-                    >
-                      <option value="">Choose Package Type</option>
-                      <option value="BOX">Box Size</option>
-                      <option value="MATERIAL">Packaging Materials</option>
-                    </select>
-                    <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
-                      <img src={addsquare} alt="" />
-                    </span>
+                    <div className="mb-4 flex items-center gap-3">
+                      <input
+                        id="dimensionsLength"
+                        name="dimensions.length"
+                        type="text"
+                        value={productDetails.dimensions.length}
+                        onChange={handleInputChange}
+                        className="w-full border-[#6e6e6e] border bg-[#F5F5F5] rounded-md p-2"
+                        placeholder="Length"
+                      />
+                      <input
+                        id="dimensionsWidth"
+                        name="dimensions.width"
+                        type="text"
+                        value={productDetails.dimensions.width}
+                        onChange={handleInputChange}
+                        className="w-full border-[#6e6e6e] border bg-[#F5F5F5] rounded-md p-2"
+                        placeholder="Width"
+                      />
+                      <input
+                        id="dimensionsHeight"
+                        name="dimensions.height"
+                        type="text"
+                        value={productDetails.dimensions.height}
+                        onChange={handleInputChange}
+                        className="w-full border-[#6e6e6e] border bg-[#F5F5F5] rounded-md p-2"
+                        placeholder="Height"
+                      />
+                    </div>
                   </div>
-                  <AssignLocation title="Product" formType="addProduct" />
-                </div>
-                {/* <div className="mb-4">
+                  <div>
+                    <div className="relative">
+                      <label
+                        htmlFor="packaging"
+                        className="block text-[16px] font-bold text-[#333333]"
+                      >
+                        Packaging Preference
+                      </label>
+                      <select
+                        name="packaging"
+                        id="packaging"
+                        value={productDetails.packaging}
+                        onChange={handleInputChange}
+                        className="w-full rounded-lg border-[#6e6e6e] bg-[#f5f5f5] border pe-10 text-gray-700 sm:text-sm p-3 appearance-none cursor-pointer"
+                      >
+                        <option value="">Choose Package Type</option>
+                        <option value="BOX">Box Size</option>
+                        <option value="MATERIAL">Packaging Materials</option>
+                      </select>
+                      <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
+                        <img src={addsquare} alt="" />
+                      </span>
+                    </div>
+                    <AssignLocation title="Product" formType="addProduct" />
+                  </div>
+                  {/* <div className="mb-4">
                     <label
                       htmlFor="handlingTime"
                       className="block text-[16px] font-bold text-[#333333]"
@@ -449,8 +457,8 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
                       placeholder="7842"
                     />
                   </div> */}
+                </div>
               </div>
-            </div>
             </div>
             <div className="flex justify-center gap-4 my-6">
               {/* Edit Button */}
@@ -460,12 +468,14 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
                 onClick={handleAddProduct}
                 type="button"
               >
-                {isAddingProduct? (
+                {isAddingProduct ? (
                   <div className="w-[100px] grid justify-center h-[40px] border-4 border-white border-t-transparent rounded-full ">
                     {" "}
                     <BiLoaderCircle className=" animate-spin duration-300 transition-all" />
                   </div>
-                ):'Add Product'}
+                ) : (
+                  "Add Product"
+                )}
               </button>
             </div>
           </form>

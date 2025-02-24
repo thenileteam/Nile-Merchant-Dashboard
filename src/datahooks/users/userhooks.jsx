@@ -53,11 +53,11 @@ export const useLogUserIn = () => {
         );
         setStore(store?.data?.responseObject);
         toast("Auth Success✔");
-        if (role === 'STORE_OWNER') {
-          navigate("/dashboard");
-        } else {
+        // if (role === 'STORE_OWNER') {
+        //   navigate("/dashboard");
+        // } else {
           navigate('/')
-        }
+        // }
       } catch (error) {
         // console.error("Error fetching store data:", error);
         toast.error("Login successful but error loading store data");

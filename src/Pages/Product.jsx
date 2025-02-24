@@ -147,7 +147,7 @@ const Product = () => {
                     </div>
                     <div className="flex justify-center mt-3">
                       <AddProduct1
-                        setPopupOpen={setPopupOpen}
+                        // setPopupOpen={setPopupOpen}
                         isPopupOpen={isPopupOpen}
                       />
                     </div>
