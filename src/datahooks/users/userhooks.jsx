@@ -44,7 +44,8 @@ export const useLogUserIn = () => {
       // Set essential user data
       localStorage.setItem("Id", response?.data?.data?.user?._id);
       localStorage.setItem("refreshToken", response?.data?.refreshToken);
-
+      const role = response.data.role
+      console.log(role);
       // Now fetch store data with the token available
       try {
         const store = await ApiInstance.get(
@@ -52,7 +53,11 @@ export const useLogUserIn = () => {
         );
         setStore(store?.data?.responseObject);
         toast("Auth Success✔");
-        navigate("/dashboard");
+        if (role === 'STORE_OWNER') {
+          navigate("/dashboard");
+        } else {
+          navigate('/')
+        }
       } catch (error) {
         // console.error("Error fetching store data:", error);
         toast.error("Login successful but error loading store data");
@@ -176,8 +181,8 @@ export const useSignUserUp = () => {
     onSuccess: (response) => {
       // const username = response.data.ownerName;
       toast("Auth Success✔");
-      //store and set users name
       // Navigate to dashboard
+   
       navigate("/");
       // localStorage.setItem("ownerName", JSON.stringify(username));
       // setUsername(username);
