@@ -1,21 +1,22 @@
+/* eslint-disable react/prop-types */
 import { useForm } from "react-hook-form";
 import { useCreateLocation } from "../../datahooks/location/useLocationhook";
- import {useStore} from '../../ZustandStores/generalStore'
+import { useStore } from "../../ZustandStores/generalStore";
 import { useFetchCountries } from "../GetCountries/GetCountries";
 
 // Country fetch function
- 
-const AddLocation = ({setLocationOpen }) => {
-  const {store} = useStore()
-  const storeId = store?.id
+
+const AddLocation = ({ setLocationOpen }) => {
+  const { store } = useStore();
+  const storeId = store?.id;
   const { data: countries, isLoading, isError } = useFetchCountries();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm();
   const { addLocationToBackend, locationPending } = useCreateLocation(() => {
-    setLocationOpen(false)
+    setLocationOpen(false);
   });
   const submitLocation = (data) => {
     const locationData = {
@@ -24,16 +25,16 @@ const AddLocation = ({setLocationOpen }) => {
       address: `${data.city}, ${data.state}, ${data.country}`,
       state: data.state,
       city: data.city,
-      country: data.country,
+      country: data.country
     };
-    addLocationToBackend(locationData)
+    addLocationToBackend(locationData);
   };
   return (
     <div>
-      <div className="bg-[rgba(0,0,0,0.6)] fixed inset-0 z-50">
-        <div className="max-w-[450px] mx-auto relative">
+      <div className="bg-[rgba(0,0,0,0.6)] flex justify-center items-center fixed inset-0 z-50">
+        <div className="w-fit pt-[136px] h-[514px] bg-white mx-auto  relative">
           <button
-            className="absolute top-4 right-4 text-lightGreen border border-lightGreen rounded-lg"
+            className="absolute top-[64px] right-8 text-lightGreen border border-lightGreen rounded-lg"
             onClick={() => setLocationOpen(false)}
           >
             <svg
@@ -51,9 +52,7 @@ const AddLocation = ({setLocationOpen }) => {
               />
             </svg>
           </button>
-          <form
-            className="bg-white p-8 mt-[100px]  "
-          >
+          <form className="relative p-8 _mt-[100px]  ">
             <div className="grid grid-cols-2 gap-5">
               {/* location Name */}
               <div className="">
@@ -66,7 +65,7 @@ const AddLocation = ({setLocationOpen }) => {
                 <input
                   type="text"
                   {...register("locationName", {
-                    required: "Location name is required",
+                    required: "Location name is required"
                   })}
                   placeholder="Enter Location Name "
                   className="border-2 border-lightGreen rounded-md p-2 block w-full"
@@ -82,25 +81,35 @@ const AddLocation = ({setLocationOpen }) => {
                 >
                   Country
                 </label>
-                
-                 <select
-                  {...register("country", { 
+
+                <select
+                  {...register("country", {
                     required: "Country is required",
-                    validate: value => value !== "" || "Please select a country"
+                    validate: (value) =>
+                      value !== "" || "Please select a country"
                   })}
                   className="border border-lightGreen rounded-md p-2 block w-full"
                   disabled={isLoading || isError}
                 >
                   <option value="">Select a country</option>
                   {countries?.map((country) => (
-                    <option key={country.name.common} value={country.name.common}>
+                    <option
+                      key={country.name.common}
+                      value={country.name.common}
+                    >
                       {country.name.common}
                     </option>
                   ))}
                 </select>
 
-                {isLoading && <p className="text-sm text-gray-500">Loading countries...</p>}
-                {isError && <p className="text-sm text-red-500">Error loading countries</p>}
+                {isLoading && (
+                  <p className="text-sm text-gray-500">Loading countries...</p>
+                )}
+                {isError && (
+                  <p className="text-sm text-red-500">
+                    Error loading countries
+                  </p>
+                )}
                 {errors.country && (
                   <p className="text-red-500">{errors.country.message}</p>
                 )}
@@ -140,10 +149,17 @@ const AddLocation = ({setLocationOpen }) => {
                 )}
               </div>
             </div>
+
+            <div className=" flex justify-center mt-10 mb-[49px] text-[#6E6E6E] gap-6 items-center">
+              <span className=" font-bold  text-[14px] leading-[18px] ">
+                Make This Address Headquarter
+              </span>{" "}
+              <input type="checkbox" />
+            </div>
             {/* Buttons */}
             <button
               type="button"
-              className="bg-green text-white w-[150px] p-2 rounded-md block mx-auto mt-5"
+              className="bg-green text-white w-[150px] p-2 rounded-md block mx-auto"
               disabled={locationPending}
               onClick={handleSubmit(submitLocation)}
             >

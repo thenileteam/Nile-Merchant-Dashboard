@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { Loader2 } from "lucide-react";
 
 const ProtectRoutes = ({ children }) => {
   const navigate = useNavigate();
@@ -19,8 +18,8 @@ const ProtectRoutes = ({ children }) => {
   // If still loading, show the loader
   if (loading) {
     return (
-      <div className="fixed w-full h-screen grid place-items-center">
-        <Loader2 className="animate-spin duration-300" />
+      <div className="flex justify-center mx-auto min-h-screen w-full items-center">
+        <div className="w-10 h-10 border-4 border-dashed rounded-full animate-spin"></div>
       </div>
     );
   }

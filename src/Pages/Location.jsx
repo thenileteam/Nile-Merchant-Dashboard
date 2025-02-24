@@ -1,7 +1,7 @@
 import LocationTable from "@/Components/StaffManagement/LocationTable";
-import { useFetchUser } from '../datahooks/users/userhooks'
+import { useFetchUser } from "../datahooks/users/userhooks";
 import { useSidebarStore } from "@/ZustandStores/sidebarStore";
-import Navbar from '../Components/Navbar/Navbar'
+import Navbar from "../Components/Navbar/Navbar";
 const Location = () => {
   const { user } = useFetchUser();
   const { isCollapsed } = useSidebarStore();
@@ -20,7 +20,7 @@ const Location = () => {
           profilePic={user && user.image ? user.image : ""}
         />
         <section>
-          <LocationTable isCollapsed={ isCollapsed} />
+          <LocationTable isCollapsed={isCollapsed} />
           {/* <AddLocation/> */}
         </section>
       </div>

@@ -42,7 +42,7 @@ const SignIn = () => {
         email,
         password,
       });
-     
+     localStorage.setItem('clear',true)
     } catch (error) {
       console.error("Login error:", error);
     }

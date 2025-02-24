@@ -6,7 +6,6 @@ import { useFetchProducts } from "../datahooks/products/productshooks";
 import Skeleton from "react-loading-skeleton";
 import { useFetchUser } from "../datahooks/users/userhooks";
 import Navbar from "../Components/Navbar/Navbar";
-import Sidebar from "../Components/Sidebar/Sidebar";
 import CategoryTable from "../Components/Products/CategoryTable";
 import AddCategory from "../Components/PopupModals/AddCategory";
 import { useSidebarStore } from "../ZustandStores/sidebarStore";
@@ -31,8 +30,8 @@ const Product = () => {
           />
           <div className={`mt-28 mb-6 ${isCollapsed?'max-w-[1000px]':'max-w-[800px]'}   mx-auto`}>
             {isFetching ? (
-              <div className="grid grid-cols-3 gap-20">
-                <Skeleton className="w-[300px] h-[150px] rounded-sm" />
+              <div className="flex  gap-20">
+                <Skeleton className="w-[300px] mr-10 h-[150px] rounded-sm" />
                 <Skeleton className="w-[300px] h-[150px] rounded-sm" />
               </div>
             ) : (

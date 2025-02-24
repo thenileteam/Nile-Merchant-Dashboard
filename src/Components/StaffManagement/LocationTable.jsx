@@ -1,4 +1,5 @@
-import usePagination from "../Pagination/PaginationHook";
+/* eslint-disable react/prop-types */
+// import usePagination from "../Pagination/PaginationHook";
 import AddLocation from "../PopupModals/AddLocation";
 import EditLocation from "../PopupModals/EditLocation";
 import { useState } from "react";
@@ -18,7 +19,7 @@ const LocationTable = ({ isCollapsed }) => {
       >
         {locations?.length > 0 && (
           <button
-            className="bg-green text-white font-bold p-inherit flex items-center w-[185px] rounded-md p-2 mb-4"
+            className="bg-green text-white text-nowrap font-bold p-inherit flex items-center w-[185px] rounded-md p-2 mb-4"
             onClick={() => setLocationOpen(true)}
           >
             <svg
@@ -41,7 +42,7 @@ const LocationTable = ({ isCollapsed }) => {
                 strokeWidth="1.5"
               />
             </svg>
-            Add New Location
+           <span className=" ml-2"> Add New Location</span> 
           </button>
         )}
         {locations?.length === 0 && (
@@ -78,7 +79,7 @@ const LocationTable = ({ isCollapsed }) => {
                 </tr>
               </thead>
               <tbody>
-                {locations?.map((location, i) => {
+                {locations?.map((location) => {
                   return (
                     <tr className="mt-4 bg-white shadow-md" key={location?.id}>
                       <td className="bg-[#EAF4E2] p-2 text-[#6e6e6e] capitalize">

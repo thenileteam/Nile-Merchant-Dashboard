@@ -253,7 +253,7 @@ const App = () => {
   //Trigger Re Auth To Clear Local Storage And Cookies
   useEffect(() => {
     const cleared = JSON.parse(localStorage.getItem("clear"));
-    console.log(cleared);
+    // console.log(cleared);
     if (cleared) {
       return;
     } else if (
@@ -275,7 +275,13 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <main>
         <Toaster />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense
+          fallback={
+            <div className="flex justify-center mx-auto min-h-80 w-full items-center">
+              <div className="w-10 h-10 border-4 border-dashed rounded-full animate-spin"></div>
+            </div>
+          }
+        >
           <RouterProvider router={router}>
             <ScrollToTop />
           </RouterProvider>
