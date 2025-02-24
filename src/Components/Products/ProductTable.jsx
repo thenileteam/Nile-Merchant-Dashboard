@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 
 import DeleteProduct from "../PopupModals/DeleteProduct";
-import Skeleton from "react-loading-skeleton";
+
 import Pagination from "../Pagination/Pagination";
 import usePagination from "../Pagination/PaginationHook";
 import { useSidebarStore } from "../../ZustandStores/sidebarStore";
 import { useEditProductStore } from "@/ZustandStores/transferStore";
-// code start
-const ProductTable = ({ data, isFetching, isError }) => {
+
+const ProductTable = ({ data }) => {
+  
   const itemsPerPage = 10;
   const { pageCount, currentItems, handlePageChange } = usePagination(
     data,
@@ -25,16 +26,8 @@ const ProductTable = ({ data, isFetching, isError }) => {
             isCollapsed ? "max-w-[1100px]" : "max-w-[940px]"
           } mx-auto  bg-white rounded-md shadow-md p-4  border-[0.5px]`}
         >
-          {isFetching ? (
-            <div className="bg-[#ffffff] w-full shadow-md">
-              <Skeleton className=" w-full h-10" />
-              <Skeleton className=" w-full  h-10" />
-              <Skeleton className=" w-full h-10" />
-            </div>
-          ) : isError ? (
-            "An error occurred"
-          ) : (
-            <div className=" overflow-x-scroll lg:overflow-auto text-lightBlack ">
+         
+ <div className=" overflow-x-scroll lg:overflow-auto text-lightBlack ">
               <table className=" w-full border-separate border-spacing-y-4">
                 <thead>
                   <tr className="text-left bg-[#EAF4E2] shadow-lg">
@@ -146,7 +139,9 @@ const ProductTable = ({ data, isFetching, isError }) => {
                 </tbody>
               </table>
             </div>
-          )}
+      
+           
+        
         </div>
       ) : null}
       {/* pagination */}
