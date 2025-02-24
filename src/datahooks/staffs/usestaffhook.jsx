@@ -1,5 +1,4 @@
 import ApiInstance from "../../Api/ApiInstance";
-import axios from 'axios'
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import{useStore} from '../../ZustandStores/generalStore'
 import { toast } from "sonner";
@@ -143,30 +142,30 @@ export const useDeleteStaff = (onSuccessDelete) => {
 };
 
 //fetch single staff
-// export const useFetchStaff = (staffId) => {
-//   const{store} = useStore()
-//   if (!store) return { data: [], isFetching: false, isError: false };
-//   const { data, isFetching, isError, isLoading } = useQuery({
-//     queryKey: ["singleStaff", store?.id],
-//     queryFn: async () => {
-//       try {
-//         const res = await axios.get(`/store/store/staffs/single/${staffId}`);
-//         console.log(res.data?.responseObject);
-//         return res.data?.responseObject || [];
-//       } catch (error) {
-//         console.error("Error fetching staff:", error);
-//         throw error;
-//       }
-//     },
-//     staleTime: Infinity,
-//     cacheTime: Infinity,
-//     retry: 3,
-//   });
+export const useFetchStaff = (staffId) => {
+  const{store} = useStore()
+  if (!store) return { data: [], isFetching: false, isError: false };
+  const { data, isFetching, isError, isLoading } = useQuery({
+    queryKey: ["singleStaff", store?.id],
+    queryFn: async () => {
+      try {
+        const res = await ApiInstance.get(`/store/store/staffs/single/${staffId}`);
+        console.log(res.data?.responseObject);
+        return res.data?.responseObject || [];
+      } catch (error) {
+        console.error("Error fetching staff:", error);
+        throw error;
+      }
+    },
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    retry: 3,
+  });
 
-//   return {
-//     staff: data,
-//     isFetching,
-//     isError,
-//     isLoading,
-//   };
-// };
+  return {
+    staff: data,
+    isFetching,
+    isError,
+    isLoading,
+  };
+};

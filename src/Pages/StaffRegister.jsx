@@ -2,16 +2,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import LoginReviews from "@/Components/LoginReviews/LoginReviews";
 import { nilelogosolid, eye, lashesIcon } from "../assets";
-import { useSearchParams,Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useShowPasswordStore } from "../ZustandStores/showPasswordStore";
 import { useForm } from "react-hook-form";
 // import { useStore } from "@/ZustandStores/generalStore";
+import { Link } from "react-router-dom";
 import axios from "axios";
+
 const StaffRegister = () => {
+  const location = useLocation();
+
   // Extract query params
-  const [searchParams] = useSearchParams();
+  const searchParams = new URLSearchParams(location.search);
   const staffId = searchParams.get("staffId");
+
   const url = "https://api.nile.ng/store/store/staffs/single";
   const [fetchingStaffDetails, setFetchingStaffDetails] = useState(false);
   const [staff, setStaff] = useState(null);
@@ -19,6 +24,7 @@ const StaffRegister = () => {
     try {
       setFetchingStaffDetails(true);
       const data = await axios.get(`${url}/${staffId}`);
+     
       setStaff(data?.data.responseObject);
       console.log(data?.data)
       setFetchingStaffDetails(false);
@@ -41,21 +47,34 @@ const StaffRegister = () => {
     handleSubmit
   } = useForm();
 
-    console.log(staff, staffId)
-  const submitStaffDetails = (data) => {
-      const newData = {
-          name: staff.name,
-          email: staff.email,
-          staffId: staffId,
-          isStaff: true,
-          branchId:staff.locationId
+  // const [searchParams] = useSearchParams();
+  // const navigate = useNavigate();
+  //   const staffId = searchParams.get("staffId");
+  //   console.log(staffId)
+  //   const { staffs } = useFetchStaffs()
+  //   const staff = staffs?.find((item)=>item?.id === staffId)
+  //   console.log(staff)
 
-      }
-  };
+  // // Redirect user if no staffId is found
+  // //   useEffect(() => {
+  // //     if (!staffId) {
+  // //       navigate("/"); // Redirects to homepage if staffId is missing
+  // //     }
+  // //   }, [staffId, navigate]);
+  // const submitStaffDetails = (data) => {
+  //     const newData = {
+  //         name: staff.name,
+  //         email: staff.email,
+  //         staffId: staffId,
+  //         isStaff: true,
+  //         branchId:staff.locationId
+
+  //     }
+  // };
   if (fetchingStaffDetails)
     return (
-      <div className=" h-screen w-full flex justify-center items center">
-         Loading...
+      <div className=" h-screen w-full flex justify-center">
+        Show Proper Loading Sscreen
       </div>
     );
   return (

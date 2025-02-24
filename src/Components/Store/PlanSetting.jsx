@@ -14,15 +14,18 @@ import {
   notification,
   store1,
 } from "../../assets";
-// import { getCardImage } from "@/utils/formatNumber";
-// import SaveCard from "../PopupModals/SaveCard";
-// import Upgrade from "../PopupModals/Upgrade";
-// import Navbar from "../Navbar/Navbar";
+import { getCardImage } from "@/utils/formatNumber";
+import SaveCard from "../PopupModals/SaveCard";
+import Upgrade from "../PopupModals/Upgrade";
+import Navbar from "../Navbar/Navbar";
 import { useFetchUser } from "@/datahooks/users/userhooks";
 import { useSidebarStore } from "@/ZustandStores/sidebarStore";
 import { useForm } from "react-hook-form";
-
+import { useCreateCard } from "@/datahooks/billinghooks/useBillinghook";
+import { getCardType } from "@/utils/formatNumber";
 import { useStore } from "@/ZustandStores/generalStore";
+import DeleteCard from "../PopupModals/DeleteCard";
+import { useFetchCards } from "@/datahooks/billinghooks/useBillinghook";
 import {
   useSubscriptionStatus,
   useUpgradeSubscription,
@@ -31,26 +34,37 @@ import { Loader2 } from "lucide-react";
 import { PaystackButton } from "react-paystack";
 import clsx from "clsx";
 import { usePaystackPayment } from "react-paystack";
-import DashboardIntro from "../Dashboard/DashboardIntro";
 const PlanSetting = () => {
   const { store } = useStore();
-  // const {
-  //   register,
-  //   formState: { errors },
-  //   handleSubmit,
-  //   watch,
-  // } = useForm();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    watch,
+  } = useForm();
   const { user } = useFetchUser();
   const { isCollapsed } = useSidebarStore();
+  const [showBilling, setShowBilling] = useState(false);
+  const [addPayment, setAddPayment] = useState(true);
+  const [showCard, setShowCard] = useState(false);
+  const { addCardToBackend, cardPending } = useCreateCard(() => {
+    setShowCard(true);
+    setShowBilling(false);
+  });
+  const { allCards, isFetchingCards } = useFetchCards();
+  const handleShowFormAndHidePaymentButton = () => {
+    setShowBilling(true);
+    setAddPayment(false);
+  };
   const {
     data: subscriptionStatus,
     isLoading: subscriptionStatusLoading,
     isError: subscriptionStatusError,
   } = useSubscriptionStatus();
+
   console.log(subscriptionStatus);
-  const SUBSCRIPTION_END_DATE = new Date(
-    subscriptionStatus.endDate
-  ).toLocaleDateString();
+
+
   const [chosenPlan, setChosenPlan] = useState(null);
   const componentProps = {
     email: user?.email,
@@ -74,8 +88,6 @@ const PlanSetting = () => {
       return new Date(new Date().setFullYear(new Date().getFullYear() + 1));
     }
   };
-  const date = new Date();
-  const fullDate = date.toLocaleDateString("en-GB");
   const handleUpgrade = () => {
     const dataForBackend = {
       id: subscriptionStatus?.id,
@@ -98,18 +110,18 @@ const PlanSetting = () => {
   const renderPlanDetails = () => {
     if (subscriptionStatus?.subscriptionType === "FREE")
       return (
-        <div className="bg-[#8ED06C80] border-lightGreen border-2  p-4 rounded-lg">
+        <div className="bg-[#EAF4E2] border-[#8ED06C] border-2  p-4 rounded-lg">
+          <h1 className="text-[#004324] text-[20px] font-bold">Plan Details</h1>
           <p className="text-[#8ED06C] font-bold text-sm">
-            You’re on a free trial
-            <span> It will expire in </span>
-            <span className="font-bold p-1 text-green">
-              {SUBSCRIPTION_END_DATE}
+            You’re on a free plan and your free trial will end on{" "}
+            <span className="font-black p-1 text-black">
+              {new Date(subscriptionStatus.endDate).toLocaleDateString()}
             </span>
           </p>
 
           <button
             onClick={() => setShowUpgradeModal(true)}
-            className="bg-green cursor-pointer mt-4 text-[#ffffff] font-bold p-2 rounded-md"
+            className="bg-[#004324] cursor-pointer mt-4 text-[#ffffff] font-bold p-2 rounded-md"
           >
             Upgrade to Premium
           </button>
@@ -117,37 +129,14 @@ const PlanSetting = () => {
       );
     else if (subscriptionStatus?.subscriptionType === "PREMIUM") {
       return (
-        <div className="rounded-md shadow-lg border bg-white">
-          <div className="bg-[#EAF4E2] p-4 rounded-lg">
-            <p className="text-green font-bold text-lg">
-              You’re on an Upgraded Plan
-            </p>
-            <span className="p-1 text-green block py-1">
-              Valid Till {SUBSCRIPTION_END_DATE}
+        <div className="bg-[#EAF4E2] p-4 rounded-lg">
+          <h1 className="text-green text-[20px] font-bold">Plan Details</h1>
+          <p className="text-green font-bold text-sm">
+            You’re on a premium plan and your premium plan will end on{" "}
+            <span className="font-black p-1 text-black">
+              {new Date(subscriptionStatus.endDate).toLocaleDateString()}
             </span>
-          </div>
-          <ul className="subscription-information grid grid-cols-2 lg:grid-cols-4 gap-1 mt-6">
-            <li className="text-[#6e6e6e] font-semibold">
-              Subscription Date
-              <span className="block  text-lightBlack font-light text-sm">
-                {fullDate}
-              </span>
-            </li>
-            <li className="text-[#6e6e6e] font-semibold">
-              Expiry Date{" "}
-              <span className="block text-lightBlack font-normal text-sm">
-                {SUBSCRIPTION_END_DATE}
-              </span>
-            </li>
-            <li className="text-[#6e6e6e] font-semibold">
-              Duration{" "}
-              <span className="block text-lightBlack font-normal text-sm">{}</span>
-            </li>
-            <li className="text-[#6e6e6e] font-semibold">
-              Next Billing Period 
-              <span className="block text-lightBlack font-normal text-sm">{SUBSCRIPTION_END_DATE}</span>
-            </li>
-          </ul>
+          </p>
         </div>
       );
     }
@@ -158,15 +147,15 @@ const PlanSetting = () => {
     return (
       <div
         className={clsx(
-          "fixed inset-0 h-screen lg:w-[35%] w-[90%] left-0 right-0 top-0 bottom-0 bg-black/30 backdrop-blur-sm transition-all duration-300 bg-opacity-50 flex justify-center items-center",
+          "fixed inset-0 h-screen w-screen left-0 right-0 top-0 bottom-0 bg-black transition-all duration-300 bg-opacity-50 flex justify-center items-center",
           showUpgradeModal
             ? "bottom-[100%] z-[10000] opacity-100"
             : "bottom-0 opacity-0 z-[-100]"
         )}
       >
-        <div className="flex bg-white lg:w-[500px] rounded-lg p-4  flex-col ">
+        <div className="flex bg-white w-[500px] rounded-lg p-4  flex-col ">
           {!chosenPlan && (
-            <div className="flex w-full p-4 gap-4">
+            <div className="flex w-full p-4  gap-4">
               <div className="bg-white border-2 border-[#8ED06C] shadow-lg p-4 rounded w-full">
                 <h1>1 month</h1>
                 <p>#5000</p>
@@ -242,30 +231,27 @@ const PlanSetting = () => {
         showUpgradeModal={showUpgradeModal}
         setShowUpgradeModal={setShowUpgradeModal}
       />
-      <section className="m-[73px]">
+      <section>
         <div
           className={
             isCollapsed
-              ? "flex-grow lg:ml-20 overflow-x-hidden border border-red-500 "
-              : "flex-grow lg:ml-56 overflow-x-hidden border border-red-500 "
+              ? "flex-grow lg:ml-20 overflow-x-hidden"
+              : "flex-grow lg:ml-56 overflow-x-hidden"
           }
-        >
-          <DashboardIntro introText={"Plans & Billings"} />
-          {/* Input Field  for saving a card*/}
-          <div
-            className={`${
-              isCollapsed ? "lg:max-w-[1100px]" : "lg:max-w-[1000px]"
-            } mx-auto mt-5`}
-          >
+        ></div>
+
+        {/* Input Field  for saving a card*/}
+        <div
+          className={` mt-24 flex justify-center gap-10 border border-red-500`}>
+          <div className="space-y-7">
             {renderPlanDetails()}
           </div>
-        </div>
-
-        {/* subscription */}
-
-        {/* <div className="flex justify-center mt-10">
+          {/* subscription */}
+           
+         {/* <div className="flex justify-center mt-10">
                 <Upgrade />
               </div> */}
+        </div>
       </section>
     </>
   );
