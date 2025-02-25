@@ -14,10 +14,11 @@ export const LastStep = ({
 }) => {
   console.log(transferStat, "stats");
   return (
-    <div className="last-step relative">
+    <div className="_last-step h-[82vh] relative">
+      <div className=" max-h-[70vh] overflow-y-auto">
       <p className="text-[#6e6e6e] font-semibold">Products Transferring</p>
-      <div className=" flex flex-col gap-4  mt-4">
-        {selectedProducts.map((product, i) => (
+      <div className="  flex flex-col gap-4  mt-4">
+        {selectedProducts?.map((product, i) => (
           <div
             key={i}
             className=" px-5  rounded-2xl py-3 bg-[#F1F6EDEB]  flex items-center justify-between"
@@ -30,7 +31,7 @@ export const LastStep = ({
               <div className="size-[5px] rounded-full bg-[#DC143C] mr-2.5" />
               <FiShoppingBag className="w-6 h-6 mr-8 text-lightGreen" />
               <span className=" font-medium text-[16px] leading-[21px]">
-                {product.name}{" "}
+                {product?.name}{" "}
               </span>
             </div>
 
@@ -42,7 +43,7 @@ export const LastStep = ({
               >
                 <Minus color="white" className=" text-white" />
               </button>
-              {product.quantityToTransfer}
+              {product?.quantityToTransfer}
               <button
                 type="button"
                 onClick={() => handleQuantity("Plus", product)}
@@ -73,11 +74,13 @@ export const LastStep = ({
           <div className="size-[5px] rounded-full bg-[#DC143C] mr-2.5" />
           <Store className="w-6 h-6 mr-8 text-lightGreen" />
           <span className=" font-medium text-[16px] leading-[21px]">
-            {selectedLocation.locationName}{" "}
+            {selectedLocation?.locationName}{" "}
           </span>
         </div>
       </div>
-      <div className="w-full flex gap-8 items-center justify-center mx-auto absolute top-[400px] left-1/2 transform -translate-x-1/2  ">
+      </div>
+    
+      <div className="w-full absolute flex gap-8 items-center justify-center mx-auto  bottom-[10px] left-1/2 transform -translate-x-1/2  ">
         {/* Submit Button */}
         {!transferStat?.transfering && (
           <>
@@ -89,7 +92,7 @@ export const LastStep = ({
               Back
             </button>
             <button
-              disabled={transferStat.transfering || isTransfering}
+              disabled={transferStat?.transfering || isTransfering}
               type="button"
               onClick={handleTransfer}
               className="bg-green text-white p-3 rounded-md hover:bg-[#004315] transitions disabled:bg-opacity-25 disabled:cursor-wait"
@@ -108,14 +111,14 @@ export const LastStep = ({
           <div className=" flex flex-col gap-1 w-full" >
             <p className=" block">
               Transferred <span className=" text-[#8ED06C] ">{transferStat.transferSuccessfully}</span>  of {" "}
-              {selectedProducts.length} products 😊
+              {selectedProducts?.length} products 😊
             </p>
             <div className=" w-full rounded-lg h-[8px] p-[1px] border border-[#8ED06C] ">
               <div
                 style={{
                   width: `${Math.round(
                     (transferStat?.transferSuccessfully /
-                      selectedProducts.length) *
+                      selectedProducts?.length) *
                       100
                   )}%`
                 }}

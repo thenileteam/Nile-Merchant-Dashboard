@@ -16,7 +16,7 @@ const DeleteProduct = ({ product }) => {
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
   };
-  const { deleteProduct } = useDeleteProduct(() => {
+  const { deleteProduct, deletingProduct } = useDeleteProduct(() => {
     setIsPopupOpen(false);
     setIsFinalConfirmationOpen(true);
 
@@ -95,10 +95,15 @@ const DeleteProduct = ({ product }) => {
 
             <div className="flex items-center justify-center gap-28">
               {/* Yes Button */}
-              <button onClick={handleYesClick} type="button">
+              <button
+                className=" disabled:bg-opacity-25 disabled:cursor-not-allowed"
+                disabled={deletingProduct}
+                onClick={handleYesClick}
+                type="button"
+              >
                 <div className=" flex mt-10">
                   <h1 className="text-[#333333] flex font-bold gap-1 items-center hover:border-[#ffffff] hover:bg-[#E2E8F0] transition ease-out duration-500 border-[#004324] border-2 p-2 px-6 rounded-md">
-                    Yes
+                    {deletingProduct ? "Deleting" : "Yes"}
                   </h1>
                 </div>
               </button>
