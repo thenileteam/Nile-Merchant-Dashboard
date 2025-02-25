@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useCallback, useMemo, useState } from "react";
 import { toast } from "sonner";
 import ApiInstance from "../../Api/ApiInstance";
+import {useFetchStaff} from '../../datahooks/staffs/usestaffhook'
 import {
   endOfDay,
   endOfMonth,
@@ -16,55 +17,158 @@ import {
   startOfYear,
 } from "date-fns";
 import { useStore } from "../../ZustandStores/generalStore";
-
+ 
 export const useLogUserIn = () => {
-  // console.log("attempting new login");
-  const {setStore} = useStore()
+  const { setStore, setStaff } = useStore(); // Add setStaff to your store
   const navigate = useNavigate();
-  const [error] = useState("");
+
   const { mutate, isPending } = useMutation({
-    mutationFn: (data) => {
-      // console.log(data);
-      return ApiInstance.post("/users/auth/login", data);
-    },
-
+    mutationFn: (data) => ApiInstance.post('/users/auth/login', data),
     onSuccess: async (response) => {
-      // First set the tokens
-      console.log(response?.data)
-      Cookies.set("accessToken", response?.data?.accessToken,  {
+      // Set tokens in cookies
+      Cookies.set('accessToken', response?.data?.accessToken, {
         secure: true,
-        sameSite: "Strict",
+        sameSite: 'Strict',
       });
-      Cookies.set("refreshToken", response?.data?.refreshToken, {
+      Cookies.set('refreshToken', response?.data?.refreshToken, {
         secure: true,
-        sameSite: "Strict",
+        sameSite: 'Strict',
       });
-      Cookies.set("isUserLoggedIn", "yes");
+      Cookies.set('isUserLoggedIn', 'yes');
 
-      // Set essential user data
-      localStorage.setItem("Id", response?.data?.data?.user?._id);
-      localStorage.setItem("refreshToken", response?.data?.refreshToken);
-      const role = response.data.role
-      console.log(role);
-      // Now fetch store data with the token available
-      try {
-        const store = await ApiInstance.get(
-          `/store/store/getStoreByUserId?userId=${response?.data?.data?.user?._id}`
-        );
-        setStore(store?.data?.responseObject);
-        toast("Auth Success✔");
-        if (role === 'STORE_OWNER') {
-          navigate("/dashboard");
-        } else {
-          navigate('/')
+      // Extract user data
+      const userData = response?.data?.data?.user;
+
+      // Set essential user data in localStorage
+      localStorage.setItem('Id', userData?._id);
+      localStorage.setItem('userRole', userData?.role);
+
+      // Handle staff members
+      if (userData?.role === 'STAFF') {
+        const { data: staffDetails, isLoading, error } = useFetchStaff(userData._id);
+
+        if (isLoading) {
+          toast.info('Fetching staff details...');
+          return; // Wait for the data to be fetched
         }
-      } catch (error) {
-        // console.error("Error fetching store data:", error);
-        toast.error("Login successful but error loading store data");
+
+        if (error) {
+          console.error('Failed to fetch staff details:', error);
+          toast.error('Failed to fetch staff details');
+          return;
+        }
+
+        // Store staff details in localStorage and Zustand store
+        localStorage.setItem('staffDetails', JSON.stringify(staffDetails));
+        setStaff(staffDetails);
+
+        // Redirect to the first role's page
+        const firstPageToRedirectStaff = `/${staff.roles[0].name.split(' ')[0].tolowerCase()}`
+        navigate(firstPageToRedirectStaff);
+      }
+
+      // Handle store owners
+      if (userData?.role === 'STORE_OWNER') {
+        try {
+          const store = await ApiInstance.get(
+            `/store/store/getStoreByUserId?userId=${userData?._id}`
+          );
+          setStore(store?.data?.responseObject);
+          toast('Auth Success✔');
+          navigate('/dashboard');
+        } catch (error) {
+          toast.error('Login successful but error loading store data');
+        }
       }
     },
     onError: (err) => {
-      // console.log(err);
+      toast.error(err.response?.data?.message || 'An error occurred');
+    },
+  });
+
+  return {
+    mutate,
+    isPending,
+  };
+};
+ 
+
+export const useLogOut = () => {
+  const { clearStore } = useStore(); 
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { mutate, isPending } = useMutation({
+    mutationFn: () => ApiInstance.post("/users/auth/logout"),
+    onSuccess: () => {
+      localStorage.removeItem('userRole')
+      localStorage.removeItem("Id");
+      localStorage.removeItem("store");
+
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
+      Cookies.remove("isUserLoggedIn");
+      //clear store
+      clearStore();
+      queryClient.invalidateQueries(["dashboard",'products', 'orders', 'customers', 'user','transactions', 'expenses']);
+      toast("Logout Successful✔");
+      navigate("/");
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message || "An error occurred");
+    },
+  });
+
+  return {
+    mutate,
+    isPending,
+  };
+};
+export const useSignUserUp = () => {
+  const navigate = useNavigate();
+  ;
+  const [error] = useState("");
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data) => {
+      const { name, email, isStaff, branchId, staffId, password, storeName, passwordConfirm, marketingAccept } = data;
+
+      return ApiInstance.post("/users/auth/register",
+        { password, storeName, marketingAccept, passwordConfirm }, {
+        params: { 
+          name, 
+          email, 
+          isStaff, 
+          branchId, 
+          staffId 
+        },
+      }    //body request data
+      );
+    },
+    onSuccess: () => {
+      toast("Auth Success✔");
+      // Navigate to dashboard
+      navigate("/");
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message || "An error occurred");
+    },
+  });
+
+  return {
+    signUpMutate: mutate,
+    signUpIsPending: isPending,
+    signUpError: error,
+  };
+};
+export const useForgetPassword = () => {
+  const [error] = useState("");
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data) => {
+      return ApiInstance.post("/users/auth/forgotPassword", data);
+    },
+    onSuccess: () => {
+      toast("Password Reset Link Sent To Your Mail ");
+    },
+    onError: (err) => {
       toast.error(err.response.data.message || "An error occurred");
     },
   });
@@ -125,98 +229,6 @@ export const useModifyProfile = () => {
   return {
     modifyProfile,
     isPending,
-  };
-};
-
-export const useLogOut = () => {
-  const { clearStore } = useStore(); 
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
-    mutationFn: () => ApiInstance.post("/users/auth/logout"),
-    onSuccess: () => {
-      localStorage.removeItem("Id");
-      localStorage.removeItem("store");
-
-      Cookies.remove("accessToken");
-      Cookies.remove("refreshToken");
-      Cookies.remove("isUserLoggedIn");
-      //clear store
-      clearStore();
-      queryClient.invalidateQueries(["dashboard",'products', 'orders', 'customers', 'user','transactions', 'expenses']);
-      toast("Logout Successful✔");
-      navigate("/");
-    },
-    onError: (err) => {
-      toast.error(err.response.data.message || "An error occurred");
-    },
-  });
-
-  return {
-    mutate,
-    isPending,
-  };
-};
-export const useSignUserUp = () => {
-  const navigate = useNavigate();
-  //access state from zustand store
-  // const setUsername = useUserStore((state) => state.setUsername);
-  const [error] = useState("");
-  const { mutate, isPending } = useMutation({
-    mutationFn: (data) => {
-      const { name, email, isStaff, branchId, staffId, password, storeName, passwordConfirm, marketingAccept } = data;
-
-      return ApiInstance.post("/users/auth/register",
-        { password, storeName, marketingAccept, passwordConfirm }, {
-        params: { 
-          name, 
-          email, 
-          isStaff, 
-          branchId, 
-          staffId 
-        },
-      }    //body request data
-      );
-    },
-    onSuccess: (response) => {
-      // const username = response.data.ownerName;
-      toast("Auth Success✔");
-      // Navigate to dashboard
-   
-      navigate("/");
-      // localStorage.setItem("ownerName", JSON.stringify(username));
-      // setUsername(username);
-      // console.log(response.data);
-    },
-    onError: (err) => {
-      toast.error(err.response.data.message || "An error occurred");
-    },
-  });
-
-  return {
-    signUpMutate: mutate,
-    signUpIsPending: isPending,
-    signUpError: error,
-  };
-};
-export const useForgetPassword = () => {
-  const [error] = useState("");
-  const { mutate, isPending } = useMutation({
-    mutationFn: (data) => {
-      return ApiInstance.post("/users/auth/forgotPassword", data);
-    },
-    onSuccess: () => {
-      toast("Password Reset Link Sent To Your Mail ");
-    },
-    onError: (err) => {
-      toast.error(err.response.data.message || "An error occurred");
-    },
-  });
-
-  return {
-    mutate,
-    isPending,
-    error,
   };
 };
 export const useResetPassword = (token) => {

@@ -8,6 +8,7 @@ import { useShowPasswordStore } from "../ZustandStores/showPasswordStore";
 import { useForm } from "react-hook-form";
 // import { useStore } from "@/ZustandStores/generalStore";
 import axios from "axios";
+import { useSignUserUp } from "@/datahooks/users/userhooks";
 const StaffRegister = () => {
   // Extract query params
   const [searchParams] = useSearchParams();
@@ -15,6 +16,7 @@ const StaffRegister = () => {
   const url = "https://api.nile.ng/store/store/staffs/single";
   const [fetchingStaffDetails, setFetchingStaffDetails] = useState(false);
   const [staff, setStaff] = useState(null);
+  const {signUpMutate, signUpIsPending} = useSignUserUp()
   const fetchStaffDetails = async () => {
     try {
       setFetchingStaffDetails(true);
@@ -38,19 +40,24 @@ const StaffRegister = () => {
   const {
     register,
     formState: { errors },
-    handleSubmit
+    handleSubmit,
+    watch
   } = useForm();
 
-    console.log(staff, staffId)
+  console.log(staff, staffId)
+  const password  = watch('password')
   const submitStaffDetails = (data) => {
       const newData = {
           name: staff.name,
           email: staff.email,
           staffId: staffId,
           isStaff: true,
-          branchId:staff.locationId
-
-      }
+          branchId:staff.locationId,
+          password: data.password,
+          passwordConfirm: data.confirmPassword
+    }
+    console.log(newData)
+    signUpMutate(newData)
   };
   if (fetchingStaffDetails)
     return (
@@ -60,7 +67,7 @@ const StaffRegister = () => {
     );
   return (
     <section className="h-screen">
-      <div className="container md:max-w-[700px] lg:max-w-[1184px] mx-auto mt-28 lg:flex lg:gap-[100px] items-center bg-dimWhite rounded-lg p-4 lg:p-16 shadow-md shadow-gray-300">
+      <div className="container md:max-w-[700px] lg:max-w-[1184px] mx-auto mt-28 lg:flex lg:gap-[100px] items-center bg-dimWhite rounded-lg p-4 lg:p-16 lg:shadow-md lg:shadow-gray-300">
         <article className="mb-10 lg:w-[40%]">
           <div>
             <img
@@ -82,7 +89,7 @@ const StaffRegister = () => {
            
           </div>
 
-          <form>
+          <form onSubmit={handleSubmit(submitStaffDetails)}>
             <div className="relative  ">
               <label htmlFor="password">Password</label>
               <input

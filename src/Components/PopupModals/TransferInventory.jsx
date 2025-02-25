@@ -118,7 +118,7 @@ const TransferInventory = ({ isTransferOpen, setOpenTransfer }) => {
     setFilteredProducts(products);
   }, [products]);
 
-  console.log(selectedLocation, "selected location");
+  // console.log(selectedLocation, "selected location");
   const validateSelectedProducts = () => {
     console.log(selectedProducts);
     if (selectedProducts.length === 0) {

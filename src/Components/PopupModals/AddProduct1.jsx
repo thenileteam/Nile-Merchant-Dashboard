@@ -16,7 +16,7 @@ import AssignLocation from "../StaffManagement/AssignLocation";
 import { useAssignLocationStore } from "@/ZustandStores/locationStore";
 const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
-    setPopupOpen(false); // close the popup after adding product
+    closePopup(); // close the popup after adding product
   });
   const { categories } = useFetchCategories();
   // State to control the popup visibility and animation
@@ -121,7 +121,7 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
         const dataToBackend = {
           name: productDetails.name,
           storeId: store.id,
-          locationId: selectedLocation.id,
+          locationId: selectedLocationId,
           userId: store.userId,
           length: productDetails.dimensions.length,
           width: productDetails.dimensions.width,

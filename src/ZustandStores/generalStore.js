@@ -1,6 +1,8 @@
 import { create } from "zustand";
 export const useStore = create((set) => ({
-    store: JSON.parse(localStorage.getItem('store')) || null,
+  store: JSON.parse(localStorage.getItem('store')) || null,
+  staff:null,
+  setStaff: (newStaff) => set({ newStaff }),
     setStore: (newStore) => {
       set({ store: newStore });
       localStorage.setItem('store', JSON.stringify(newStore)); // Persist to localStorage

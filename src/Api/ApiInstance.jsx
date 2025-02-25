@@ -16,8 +16,7 @@ const retryAttempts = new Map();
 
 // Function to check if user is in login or authentication process
 const isAuthenticatingPage = () => {
-  const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
- 
+  const currentPath = window.location.pathname.replace(/\/$/, "").split("?")[0];
   const authPaths = [
     "/",
     "/signup",
@@ -54,12 +53,10 @@ const refreshAccessToken = async () => {
       }
     );
 
-    if (!response.data?.accessToken) {
+    if (!response?.data?.accessToken) {
       throw new Error("Failed to retrieve new access token");
     }
-
     const newAccessToken = response.data.accessToken;
-
     // Update storage and cookies
     localStorage.setItem("accessToken", newAccessToken);
     Cookies.set("accessToken", newAccessToken, {
@@ -83,7 +80,6 @@ const refreshAccessToken = async () => {
 
 // Function to handle refresh token failure
 const handleRefreshTokenFailure = () => {
- 
   // Only redirect if not already on an authentication page
   
   if (!isAuthenticatingPage()) {
