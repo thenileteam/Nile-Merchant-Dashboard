@@ -9,11 +9,30 @@ const ProtectRoutes = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const accessToken = Cookies.get("accessToken");
+      // Check for the specific roles of whoever is logged in
+      const isStoreOwner = localStorage.getItem("storeOwnerRole");
+      const isStoreStaff = localStorage.getItem("staffRole");
+    // role-specific token keys
+    const accessToken =
+     isStoreOwner
+        ? Cookies.get("storeOwnerAccessToken") || localStorage.getItem("storeOwnerAccessToken")
+        : isStoreStaff
+        ? Cookies.get("staffAccessToken") || localStorage.getItem("staffAccessToken")
+        : null;
+    //get the store
     const store = localStorage.getItem("store");
+    // const accessToken = Cookies.get("accessToken");
     setIsLoggedIn(!!accessToken && store !== null);
     setLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (loading) return; // Wait for loading to complete
+    // If not logged in, redirect and do not render children
+    if (!isLoggedIn) {
+      navigate("/", { replace: true });
+    }
+  }, [loading, isLoggedIn, navigate]);
 
   // If still loading, show the loader
   if (loading) {
@@ -24,11 +43,11 @@ const ProtectRoutes = ({ children }) => {
     );
   }
 
-  // If not logged in, redirect and do not render children
-  if (!isLoggedIn) {
-    navigate("/", { replace: true });
-    return null; // Return null to avoid rendering the children when not logged in
-  }
+  
+  // if (!isLoggedIn) {
+  //   navigate("/", { replace: true });
+  //   return null; // Return null to avoid rendering the children when not logged in
+  // }
 
   // Render children if logged in
   return children;

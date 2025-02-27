@@ -38,11 +38,11 @@ const FinancialManagement = ({ data }) => {
   console.log(totalExpense);
 
   const [tabs, setTabs] = useState([
-    {
-      id: 1,
-      name: "Finance",
-      active: true,
-    },
+    // {
+    //   id: 1,
+    //   name: "Finance",
+    //   active: true,
+    // },
     {
       id: 2,
       name: "Expenses",
@@ -148,7 +148,7 @@ const FinancialManagement = ({ data }) => {
                 </div>
               </div>
             )}
-            {searchParams.get("expense") === "false" && <FinancialTable />}
+            {/* {searchParams.get("expense") === "false" && <FinancialTable />} */}
             {searchParams.get("expense") === "true" && <ExpensesTable />}
           </div>
         </div>

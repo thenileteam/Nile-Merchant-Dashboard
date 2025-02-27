@@ -10,7 +10,7 @@ const ApiInstance = axios.create({
     "Content-Type": "application/json",
   },
 });
-
+ 
 // Track retry attempts separately
 const retryAttempts = new Map();
 
@@ -27,15 +27,35 @@ const isAuthenticatingPage = () => {
   ];
   return authPaths.includes(currentPath);
 };
+//get the current user role
+const getUserRole = () => {
+  const isStoreOwner = localStorage.getItem("storeOwnerRole");
+  const isStoreStaff = localStorage.getItem("staffRole");
+  return { isStoreOwner, isStoreStaff };
+};
 
+//get the current user based on their role
+const getUserId = () => {
+  const{isStoreOwner, isStoreStaff} = getUserRole()
+  if (isStoreOwner) {
+    console.log(isStoreOwner)
+    return localStorage.getItem("storeOwnerId");
+  } else if ( isStoreStaff) {
+    return localStorage.getItem("staffId");
+  }
+  return null;
+}
 // Function to refresh access token
 const refreshAccessToken = async () => {
   try {
-    // console.log("Trying to get kini");
-    const id = localStorage.getItem("Id");
-    const refreshToken =
-      Cookies.get("refreshToken") || localStorage.getItem("refreshToken");
-
+    const{isStoreOwner, isStoreStaff} = getUserRole()
+    console.log("Trying to get kini");
+    const id = getUserId();
+      // Use role-specific refresh token keys
+      const refreshTokenKey = isStoreOwner ? "storeOwnerRefreshToken" : "staffRefreshToken";
+      const refreshToken = Cookies.get(refreshTokenKey) || localStorage.getItem(refreshTokenKey);
+    console.log('role-checker storeOwner:', isStoreOwner, 'staff:', isStoreStaff)
+    
     if (!refreshToken || !id) {
       throw new Error("No refresh token available or user id");
     }
@@ -57,9 +77,10 @@ const refreshAccessToken = async () => {
       throw new Error("Failed to retrieve new access token");
     }
     const newAccessToken = response.data.accessToken;
-    // Update storage and cookies
-    localStorage.setItem("accessToken", newAccessToken);
-    Cookies.set("accessToken", newAccessToken, {
+       // Use role-specific access token keys
+    const accessTokenKey =  isStoreOwner ? "storeOwnerAccessToken" : "staffAccessToken";
+    localStorage.setItem(accessTokenKey, newAccessToken);
+    Cookies.set(accessTokenKey, newAccessToken, {
       expires: 1 / 24,
       secure: true,
       sameSite: "strict",
@@ -80,20 +101,26 @@ const refreshAccessToken = async () => {
 
 // Function to handle refresh token failure
 const handleRefreshTokenFailure = () => {
+  const{isStoreOwner, isStoreStaff} = getUserRole()
   // Only redirect if not already on an authentication page
-  
   if (!isAuthenticatingPage()) {
     console.warn("Session expired. Logging out the user...");
-
-    // Clear all authentication-related storage
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("Id");
-    localStorage.removeItem("store");
-
+// Clear role-specific session data
+if ( isStoreOwner) {
+  localStorage.removeItem("storeOwnerAccessToken");
+  localStorage.removeItem("storeOwnerRefreshToken");
+  localStorage.removeItem("storeOwnerId");
+} else if ( isStoreStaff) {
+  localStorage.removeItem("staffAccessToken");
+  localStorage.removeItem("staffRefreshToken");
+  localStorage.removeItem("staffId");
+  // localStorage.removeItem("staffPermissions");
+}
     // Remove cookies
-    Cookies.remove("accessToken");
-    Cookies.remove("refreshToken");
+    Cookies.remove("storeOwnerAccessToken");
+    Cookies.remove("storeOwnerRefreshToken");
+    Cookies.remove("staffAccessToken");
+    Cookies.remove("staffRefreshToken");
 
     // Redirect to login page
     window.location.href = "/";
@@ -103,9 +130,13 @@ const handleRefreshTokenFailure = () => {
 // Add request interceptor
 ApiInstance.interceptors.request.use(
   (config) => {
+    const{isStoreOwner, isStoreStaff} = getUserRole()
+    // Use role-specific access token keys
+    const accessTokenKey = isStoreOwner ? "storeOwnerAccessToken" : "staffAccessToken";
+    const token = Cookies.get(accessTokenKey) || localStorage.getItem(accessTokenKey);
     // Check both cookies and localStorage, but be more lenient
-    const token =
-      Cookies.get("accessToken") || localStorage.getItem("accessToken");
+    // const token =
+    //   Cookies.get("accessToken") || localStorage.getItem("accessToken");
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

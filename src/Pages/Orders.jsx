@@ -32,7 +32,7 @@ const Orders = () => {
     setCreateOrderForm(false);
   });
   const store = JSON.parse(localStorage.getItem("store"));
-  const { sidebarOpen, setSidebarOpen, closeSidebar, isCollapsed } =
+  const { isCollapsed } =
     useSidebarStore();
   const [createdAt, setCreatedAt] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState("");

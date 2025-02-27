@@ -37,9 +37,9 @@ const CategoryTable = () => {
               <thead>
                 <tr className="text-left bg-[#EAF4E2]">
                   <th className=" p-3 shadow-lg">Category </th>
-                  <th className=" p-3 shadow-lg">Descriptions</th>
+                  <th className=" p-3 shadow-lg ">Descriptions</th>
                   <th className=" p-3 shadow-lg">Products</th>
-                  <th className=" p-3 shadow-lg">Actions</th>
+                  <th className=" p-3 shadow-lg text-center">Actions</th>
                   {/* <th className=" p-3 shadow-lg">Bulk Actions</th> */}
                 </tr>
               </thead>
@@ -54,18 +54,17 @@ const CategoryTable = () => {
                         {category?.description || "NA"}
                       </td>
                       <td className="bg-white p-3 text-[#6e6e6e]">
-                       
-                        <Link to={`/categories/${i}`}>
+                      {category?.products?.length || 0}
+                      </td>
+                      <td className="p-3 flex text-[#6e6e6e]  items-center justify-center gap-1 capitalize bg-[#f5f5f5]">
+                      <Link to={`/categories/${i}`}>
                           <button
                             className="text-[#6e6e6e] capitalize flex items-center gap-[2px]"
                             disabled={category?.products?.length === 0}
                           >
-                              {category?.products?.length || 0}
                             <FaEye/>
                           </button>
                         </Link>
-                      </td>
-                      <td className="bg-white p-3 flex text-[#6e6e6e]  items-center gap-1 capitalize">
                         <EditCategory category={category} />
                         <DeleteCategory category={category} />
                       </td>

@@ -37,6 +37,7 @@ export const useFetchProducts = () => {
 
 export const useCreateNewProduct = (onSuccessCallback) => {
   const { store } = useStore();
+  console.log(store?.id)
   const queryClient = useQueryClient();
   const { mutate, isPending: isAddingProduct } = useMutation({
     mutationFn: (data) => ApiInstance.post("/products/product/create", data),

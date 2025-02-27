@@ -20,8 +20,8 @@ const DeleteCategory = ({category}) => {
         className="hover:scale-110 duration-300 hover:border-lightBlack border-[#ffffff] border-b-[2px] transition underline-offset-2 decoration-[2px] inline-block hover:-translate-x-1" onClick={()=>setDelCategory(true)}
       >
         <svg
-          width="24"
-          height="24"
+          width="20"
+          height="20"
           viewBox="0 0 32 32"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

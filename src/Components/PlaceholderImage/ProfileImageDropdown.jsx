@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import { logout, accountsetting, idea } from "../../assets";
 import { useLogOut } from "@/datahooks/users/userhooks";
 export default function RadixPopover({ profilePic }) {
-    const { mutate } = useLogOut();
+  const { mutate } = useLogOut();
+  const isStoreOwner = localStorage.getItem("storeOwnerRole");
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
@@ -21,18 +22,29 @@ export default function RadixPopover({ profilePic }) {
           side="bottom"
           align="center"
         >
-          <div className="text-lightBlack font-semibold">
-            <Link to="/profilesetting">
+          {isStoreOwner ? (
+            <div className="text-lightBlack font-semibold">
+              <Link to="/profilesetting">
+                <button
+                  type="button"
+                  className="w-full flex items-center gap-1 p-2 hover:bg-zinc-100 transitions"
+                >
+                  <img src={accountsetting} className="w-5" alt="settings" />
+                  <span>Profile Settings</span>
+                </button>
+              </Link>
+
+              <Walkthrough />
               <button
                 type="button"
-                className="w-full flex items-center gap-1 p-2 hover:bg-zinc-100 transitions"
+                className="w-full flex gap-1 items-center p-2 hover:bg-zinc-100 "
+                onClick={() => mutate()}
               >
-                <img src={accountsetting} className="w-5" alt="settings" />
-                <span>Profile Settings</span>
+                <img src={logout} className="w-5" alt="logout" />
+                <span className="text-red-500  ">Logout</span>
               </button>
-            </Link>
-
-            <Walkthrough />
+            </div>
+          ) : (
             <button
               type="button"
               className="w-full flex gap-1 items-center p-2 hover:bg-zinc-100 "
@@ -41,7 +53,7 @@ export default function RadixPopover({ profilePic }) {
               <img src={logout} className="w-5" alt="logout" />
               <span className="text-red-500  ">Logout</span>
             </button>
-          </div>
+          )}
           {/* <Popover.Close className="absolute top-2 right-2 p-1 rounded-md text-gray-600 hover:bg-gray-100">
             ✖
           </Popover.Close> */}

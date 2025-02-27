@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
 
 import { useSidebarStore } from "../../ZustandStores/sidebarStore";
-import { useProfileStore } from "@/ZustandStores/profileStore";
+// import { useProfileStore } from "@/ZustandStores/profileStore";
 import { nilelogogreen } from "@/assets";
 import { FiSearch } from "react-icons/fi";
 import ProfileImageDropDown from '../PlaceholderImage/ProfileImageDropdown'
 const Navbar = ({ profilePic }) => {
   const { sidebarOpen, setSidebarOpen } = useSidebarStore();
-  const { toggleProfile } = useProfileStore();
   return (
     <nav className="bg-white fixed top-0 border-b z-20 w-full py-2">
       <div className="container mx-auto px-4  ">
