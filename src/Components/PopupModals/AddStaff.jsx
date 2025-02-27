@@ -59,15 +59,7 @@ const AddStaff = ({ showStaffPopUp, setShowStaffPopUp }) => {
       locationId: selectedLocationId,
       storeId,
     };
-    addStaffToBackend(staffData, {
-      onSuccess: () =>
-        toast.success(
-          "Staff successfully added,, invite has been sent to staff email."
-        ),
-      onError: (error) => {
-        toast.error(error.response?.data?.message || "An error occurred.");
-      },
-    });
+    addStaffToBackend(staffData);
   };
 
   return (

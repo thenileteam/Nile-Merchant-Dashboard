@@ -49,7 +49,7 @@ const PlanSetting = () => {
   } = useSubscriptionStatus();
   console.log(subscriptionStatus);
   const SUBSCRIPTION_END_DATE = new Date(
-    subscriptionStatus.endDate
+    subscriptionStatus?.endDate
   ).toLocaleDateString();
   const [chosenPlan, setChosenPlan] = useState(null);
   const componentProps = {
@@ -246,8 +246,8 @@ const PlanSetting = () => {
         <div
           className={
             isCollapsed
-              ? "flex-grow lg:ml-20 overflow-x-hidden border border-red-500 "
-              : "flex-grow lg:ml-56 overflow-x-hidden border border-red-500 "
+              ? "flex-grow lg:ml-20 overflow-x-hidden   "
+              : "flex-grow lg:ml-56 overflow-x-hidden "
           }
         >
           <DashboardIntro introText={"Plans & Billings"} />

@@ -1,10 +1,11 @@
-import { useFetchStaffs } from "@/datahooks/staffs/usestaffhook";
+import { useFetchStaffs} from "@/datahooks/staffs/usestaffhook";
 import EditStaff from "../PopupModals/EditStaff";
 import Skeleton from "react-loading-skeleton";
 import DashboardIntro from '../../Components/Dashboard/DashboardIntro'
 import DeleteStaff from "../PopupModals/DeleteStaff";
 import { FiPlus } from "react-icons/fi";
 import usePagination from "../Pagination/PaginationHook";
+
 const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
   const { staffs, isLoading, isError } = useFetchStaffs();
   // const itemsPerPage = 10
@@ -15,6 +16,7 @@ const StaffTable = ({ isCollapsed, setShowStaffPopUp }) => {
   // } else if (isError) {
   //   console.log('error..')
   // }
+ 
   const sortedStaffs = staffs?.sort((a, b) => a.name.localeCompare(b.name));
   return (
     <section>

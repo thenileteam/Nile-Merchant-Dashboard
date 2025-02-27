@@ -65,3 +65,6 @@ export const getCardImage= (cardNumber) => {
   const dollarAmount = nairaAmount / exchangeRate;
   return dollarAmount;
 };
+
+
+ 

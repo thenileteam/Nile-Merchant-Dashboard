@@ -21,8 +21,9 @@ const Sidebar = () => {
     isCollapsed,
     setIsDesktop,
   } = useSidebarStore();
-  const { policyOpen, openPolicy } = usePolicyStore();
+  const { policyOpen } = usePolicyStore();
   const { isDropdownOpen } = useDropDown();
+  const isStoreOwner = localStorage.getItem("storeOwnerRole");
   useEffect(() => {
     const handleResize = () => {
       setIsDesktop(window.innerWidth);
@@ -35,7 +36,7 @@ const Sidebar = () => {
 
   return (
     <>
-        <Navbar profilePic={user && user.image ? user.image : ""}/>
+      <Navbar profilePic={user && user.image ? user.image : ''}/>
       {/* Overlay for small screens */}
       {sidebarOpen && (
         <button

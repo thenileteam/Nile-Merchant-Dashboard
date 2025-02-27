@@ -72,7 +72,7 @@ const App = () => {
           )
         },
         {
-          path: "/orders",
+          path: "/order",
           element: (
             <ProtectRoutes>
               <Orders />
@@ -263,11 +263,25 @@ const App = () => {
     ) {
       return;
     } else {
-      localStorage.removeItem("store");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("accessToken");
-      Cookies.remove("accessToken");
-      Cookies.remove("refreshToken");
+      // clear role-specific tokens
+      const isStoreOwner = localStorage.getItem("storeOwnerRole");
+      const isStoreStaff = localStorage.getItem("staffRole");
+    if ( isStoreOwner) {
+      localStorage.removeItem("storeOwnerAccessToken");
+      localStorage.removeItem("storeOwnerRefreshToken");
+      Cookies.remove("storeOwnerAccessToken");
+      Cookies.remove("storeOwnerRefreshToken");
+    } else if ( isStoreStaff) {
+      localStorage.removeItem("staffAccessToken");
+      localStorage.removeItem("staffRefreshToken");
+      Cookies.remove("staffAccessToken");
+      Cookies.remove("staffRefreshToken");
+      }
+      
+      // Clear common data
+    localStorage.removeItem("store");
+      localStorage.removeItem("storeOwnerRole");
+       localStorage.removeItem("staffRole");
       window.location.href = "/";
     }
   }, []);
