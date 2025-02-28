@@ -109,7 +109,7 @@ const EditProduct = ( ) => {
               >
                 <FiArrowLeft className="block text-xl" />
               </button>
-              <h3 className="text-green text-[32px]">Edit Product</h3>
+              <h3 className="text-green text-[32px] font-bold">Edit Product</h3>
             </div>
 
             {/* Popup Content */}

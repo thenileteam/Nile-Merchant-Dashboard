@@ -17,12 +17,10 @@ const SignUp = () => {
     password: "",
     passwordConfirm: "",
     storeName: "",
-    storeURL: "",
+    // storeURL: "",
     marketingAccept: false,
-    isStaff: false,
-    staffId: '',
-    branchId:''
-  });
+    isStaff: false
+   });
 
   const { signUpMutate, signUpIsPending } = useSignUserUp();
 
@@ -36,20 +34,32 @@ const SignUp = () => {
   };
 
   // Form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
+    const newData = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+      passwordConfirm:formData.passwordConfirm,
+      storeName: formData.storeName,
+      // storeURL: formData.storeURL,
+      marketingAccept: false,
+      isStaff: false,
+      // branchId:'', staffId: ''
+      }
     if (formData.password !== formData.passwordConfirm) {
       toast.error("Passwords do not match.");
       return;
     }
+    console.log(newData)
+    console.log(typeof newData.isStaff)
+    // const data = new FormData();
+    // console.log(data)
+    // Object.entries(formData).forEach(([key, value]) => {
+    //   data.append(key, value);
+    // });
 
-    const data = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      data.append(key, value);
-    });
-
-    signUpMutate(data);
+    signUpMutate(newData);
   };
 
   // Validate form before proceeding to Step 2

@@ -141,7 +141,7 @@ const PlanSetting = () => {
             </li>
             <li className="text-[#6e6e6e] font-semibold">
               Duration{" "}
-              <span className="block text-lightBlack font-normal text-sm py-1">{}</span>
+              <span className="block text-lightBlack font-normal text-sm py-1">{"3 months "}</span>
             </li>
             <li className="text-[#6e6e6e] font-semibold">
               Next Billing Period 
