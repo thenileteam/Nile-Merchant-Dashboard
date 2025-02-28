@@ -38,7 +38,7 @@ const SelectProduct = ({ cart, setCart }) => {
   };
 
   return (
-    <div className="w-full max-w-sm">
+    <div className="w-full max-w-sm ">
       <label className="block text-gray-700 font-bold mb-2">Select Product</label>
       <input
         type="text"

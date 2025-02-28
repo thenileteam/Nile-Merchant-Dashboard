@@ -5,10 +5,10 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 import { useFetchProducts } from "../../datahooks/products/productshooks";
 import { toast } from "sonner";
 
-const SelectProductForm = ({ cart, setCart, setSelectProductForm, selectProductForm }) => {
+const SelectProductForm = ({ cart, setCart, setSelectProductForm}) => {
   const { data, isFetching, isError } = useFetchProducts();
   const [products, setProducts] = useState();
-
+ const [quantity, setQuantity] = useState(1)
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   useEffect(() => {
@@ -59,14 +59,14 @@ const SelectProductForm = ({ cart, setCart, setSelectProductForm, selectProductF
     if (isInCart) {
       setCart(cart.filter((item) => item.id !== product.id));
     } else {
-      setCart([...cart, { ...product }]);
+      setCart([...cart, { ...product, quantity: 1 }]);
     }
   };
   // Handle quantity change for a specific product in the cart
-  const handleQuantityChange = (productName, increment = true) => {
+  const handleQuantityChange = (productId, increment = true) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
-        item.name === productName
+        item.id === productId
           ? {
               ...item,
               quantity: increment
@@ -117,29 +117,16 @@ const SelectProductForm = ({ cart, setCart, setSelectProductForm, selectProductF
   };
 
   return (
-    <div className=" relative">
-      {/* <div
-        // onClick={() => setSelectProductForm(false)}
-        className="bg-white  w-[300px] h-[400px] border border-red-500"
-      ></div> */}
-      <div className="bg-white flex flex-col pb-4  rounded-[8px]">
-        <img
-          onClick={() => {
-            setSelectProductForm(false)
-            addProductData(true);
-          }}
-          src="/public/Cancel.svg"
-          className=" cursor-pointer size-6 absolute top-2 right-2"
-          alt=""
-        />
-        <div className="gap-8 w-full grid grid-cols-1 p-2">
-          <div className="w-full border border-blue-500">
-            <div className="mb-2 w-full">
+    <div className="">
+      <div className="bg-white h-[200px] overflow-y-auto pb-2 justify-center items-center rounded-md absolute top-[80px] left-0 right-0 shadow-lg"   onClick={(e) => e.stopPropagation()}>
+        <div className=" gap-8 w-full p-6">
+          <div className="">
+            <div className="mb-4 w-full">
               <p>Select Product</p>
-              <div className="border h-[26px] bg-[#F5F5F5] border-lightBlack rounded-[4px]">
+              <div className="border bg-[#F1F6EDEB] border-[#6e6e6e] rounded-[4px]">
                 <input
                   type="text"
-                  className="bg-transparent text-[rgba(110,110,110,0.5)] leading-[18px] px-1 font-[700] text-[14px] outline-none w-full h-full"
+                  className="bg-transparent text-[#6E6E6E80] leading-[18px] p-1 font-semibold text-[14px] outline-none w-full block"
                   placeholder="Search Product"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -148,19 +135,36 @@ const SelectProductForm = ({ cart, setCart, setSelectProductForm, selectProductF
             </div>
 
             {/* Product List */}
-            <ul className="flex absolute z-50 top-6 h-auto max-h-[220px] overflow-y-auto flex-col gap-1 w-full bg-white">
+            <ul className="flex h-auto overflow-y-auto flex-col gap-1">
               {filteredProducts?.length > 0 ? (
                 filteredProducts?.map((product, index) => (
                   <li
                     key={index}
-                    className="w-full border rounded-[4px] border-lightBlack flex justify-between p-2 bg-[#F5F5F5]"
+                    className="w-full border rounded-[4px] border-[#6e6e6e] flex justify-between items-center p-2 bg-[#F5F5F5]"
                   >
                     <span>{product.name}</span>
+                    <div className="w-[50%] flex justify-between">
+                    <div className=" flex items-center border border-[#6e6e6e] gap-2 rounded-[4px] p-1">
+                        <span
+                          onClick={() => handleQuantityChange(product.id, false)}
+                          className="cursor-pointer rounded bg-lightGreen p-1"
+                        >
+                          <FaMinus color="#FFFFFF" />
+                        </span>
+                        {/* <span>{ product.quantity}</span> */}
+                        <span
+                          onClick={() => handleQuantityChange(product.id, true)}
+                          className="cursor-pointer rounded bg-lightGreen p-1"
+                        >
+                          <FaPlus color="#FFFFFF" />
+                        </span>
+                      </div>
                     <input
                       type="checkbox"
                       checked={cart.some((item) => item.id === product.id)}
                       onChange={() => handleCheckboxChange(product)}
                     />
+                     </div>
                   </li>
                 ))
               ) : (
@@ -170,35 +174,18 @@ const SelectProductForm = ({ cart, setCart, setSelectProductForm, selectProductF
           </div>
 
           {/* Display Selected Cart Items */}
-          {/* <div className="">
-            <h1 className="mb-2  font-bold">Your Cart</h1>
+          <div className="">
+            <h1 className="mt-3 font-bold">Your Cart</h1>
             {cart.length > 0 ? (
               <ul className="flex h-auto max-h-[250px] overflow-y-auto flex-col gap-1">
                 {cart.map((item, index) => (
                   <li
                     key={index}
-                    className="w-full items-center rounded-[4px] border border-[#8ED06C] p-2 bg-[#E5FCE5] flex justify-between"
+                    className="w-full items-center rounded-[4px] flex justify-between"
                   >
-                    <span>{item.name}</span>
-                    <div className="flex ml-5 items-center gap-8">
-                      <div className="flex items-center border border-[#8ED06C] gap-2 rounded-[4px] p-1">
-                        <span
-                          onClick={() => handleQuantityChange(item.name, false)}
-                          className="cursor-pointer rounded bg-[#004324] p-1"
-                        >
-                          <FaMinus color="#FFFFFF" />
-                        </span>
-                        <span>{item.quantity}</span>
-                        <span
-                          onClick={() => handleQuantityChange(item.name, true)}
-                          className="cursor-pointer rounded bg-[#004324] p-1"
-                        >
-                          <FaPlus color="#FFFFFF" />
-                        </span>
-                      </div>
-                      <span className="text-[14px] text-[#333333] font-bold leading-[18px]">
-                        &#8358;{item.price * item.quantity}
-                      </span>
+                    <div className="flex items-center justify-between  border-lightGreen border w-full rounded-md p-1">
+                    <span className="  mt-1 block">{item.name}</span>
+                     <span>{item.quantity}</span>
                     </div>
                   </li>
                 ))}
@@ -206,7 +193,7 @@ const SelectProductForm = ({ cart, setCart, setSelectProductForm, selectProductF
             ) : (
               <p className="text-gray-500">Cart is empty</p>
             )}
-            <div className=" flex mt-8 bg-[#8ED06C] p-2 text-[14px]  font-bold leading-[18px] justify-between items-center">
+            <div className=" flex mt-2 border rounded-md border-lightGreen p-2 text-[14px]  font-bold leading-[18px] justify-between items-center">
               Total Price
               <div className=" w-fit pr-3 flex items-center gap-8">
                 <span className="text-[14px] w-[56px] text-[#333333] font-bold leading-[18px]">
@@ -215,21 +202,22 @@ const SelectProductForm = ({ cart, setCart, setSelectProductForm, selectProductF
                 <span className="text-[14px] w-[59px] text-[#333333] font-bold leading-[18px]">
                   &#8358;{total_cart_price}
                 </span>
+                {/* <span>Qty: {item.quantity}</span> */}
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
-        {/* {cart.length > 0 && (
+        {cart.length > 0 && (
           <button
             onClick={() => {
               addProductData(false);
             }}
             type="submit"
-            className="  mt-8 bg-[#004324]  rounded  px-2 py-1 text-white"
+            className="my-2 mx-auto  block bg-[#004324]  rounded  px-2 py-1 text-white"
           >
             Add Selected
           </button>
-        )} */}
+        )}
       </div>
     </div>
   );

@@ -21,6 +21,7 @@ const CreateOrderForm = ({
   createOrderForm,
   selectedCustomer,
   setSelectedCustomer,
+  selectProductForm
 }) => {
   return (
     <>
@@ -83,19 +84,21 @@ const CreateOrderForm = ({
                   Product Name
                 </label>
                 <div
-                  onClick={() => setSelectProductForm(true)}
-                  //   placeholder="Select Product"
-                  //   type="text"
-                  className="cursor-pointer bg-[#F5F5F5]  h-[50px] rounded-[4px]  border-[#6e6e6e] border px-4 placeholder:text-[#6E6E6E80]"
+                  onClick={() => setSelectProductForm(prev=>!prev)}
+                  className="cursor-pointer bg-[#F5F5F5] rounded-[4px] p-3 border-[#6e6e6e] border px-4 placeholder:text-[#6E6E6E80] "
                 >
+                  <div className="flex items-center justify-between">
                   {cart.length > 0
-                    ? "Product In Cart , View"
+                    ? "Product In Cart"
                     : "Select Product"}
-                  {/* <SelectProductForm
+                  <FiChevronDown className="w-5 "/>
+
+                  </div>
+                  {selectProductForm&&<SelectProductForm
                     cart={cart}
                     setCart={setCart}
                     setSelectProductForm={setSelectProductForm}
-                  /> */}
+                  />}
                 </div>
               </div>
               <div className="flex flex-col gap-2">

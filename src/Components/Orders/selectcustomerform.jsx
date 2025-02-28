@@ -82,7 +82,7 @@ const SelectCustomerForm = ({
     addCustomerQuery(customerData);
   };
   return (
-    <div className="fixed z-[100000] w-full right-0 left-0 h-screen grid place-items-center">
+    <div className="fixed z-50 w-full right-0 left-0 h-screen grid place-items-center">
       <div
         // onClick={() => setSelectCustomerForm(false)}
         className="absolute w-full h-full left-0 right-0 top-0 bg-black/80"
@@ -116,7 +116,7 @@ const SelectCustomerForm = ({
             </div>
 
             {/* Customer List */}
-            <ul className="flex h-auto max-h-[450px] overflow-y-auto flex-col gap-1">
+            <ul className="flex h-auto max-h-[450px] overflow-y-auto flex-col gap-1  ">
               {isFetchingCustomers ? (
                 <p className="text-center text-gray-500">
                   Loading Customers...

@@ -6,6 +6,7 @@ import { useSearchParams,Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useShowPasswordStore } from "../ZustandStores/showPasswordStore";
 import { useForm } from "react-hook-form";
+import ReactLoading from "react-loading";
 // import { useStore } from "@/ZustandStores/generalStore";
 import axios from "axios";
 import { useSignUserUp } from "@/datahooks/users/userhooks";
@@ -61,9 +62,9 @@ const StaffRegister = () => {
   };
   if (fetchingStaffDetails)
     return (
-      <div className=" h-screen w-full flex justify-center items center">
-         Loading...
-      </div>
+      <div className="flex items-center justify-center h-full">
+      <ReactLoading type="spin" color="#004324" height={50} width={50} />
+    </div>
     );
   return (
     <section className="h-screen">
@@ -139,7 +140,7 @@ const StaffRegister = () => {
             >
               Complete Setup
             </button>
-            <Link to="/" className="text-center block mt-4"> Login</Link>
+            {/* <Link to="/" className="text-center block mt-4"> Login</Link> */}
           </form>
         </article>
         <LoginReviews />

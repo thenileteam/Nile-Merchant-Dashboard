@@ -127,48 +127,43 @@ export const CustomerIcon = ({isActive, path}) => {
 export const OrderIcon = ({isActive, path}) => {
   return (
     <svg
-      width="24"
-      height="25"
-      viewBox="0 0 24 25"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M13 22.6406C12.1818 22.6406 11.4002 22.2994 9.83691 21.617C8.01233 20.8206 6.61554 20.2109 5.64648 19.6406H2M13 22.6406C13.8182 22.6406 14.5998 22.2994 16.1631 21.617C20.0544 19.9185 22 19.0692 22 17.6406V7.14062M13 22.6406V11.6406M4 7.14062V10.1406"
-        stroke={isActive(path) ? "#fff" : "#004324"}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9.32592 10.332L6.40472 8.91848C4.80157 8.14273 4 7.75485 4 7.14062C4 6.5264 4.80157 6.13852 6.40472 5.36277L9.32592 3.94924C11.1288 3.07683 12.0303 2.64062 13 2.64062C13.9697 2.64062 14.8712 3.07682 16.6741 3.94924L19.5953 5.36277C21.1984 6.13852 22 6.5264 22 7.14062C22 7.75485 21.1984 8.14273 19.5953 8.91848L16.6741 10.332C14.8712 11.2044 13.9697 11.6406 13 11.6406C12.0303 11.6406 11.1288 11.2044 9.32592 10.332Z"
-        stroke={isActive(path) ? "#fff" : "#004324"}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M18.1366 4.65625L7.86719 9.62547"
-        stroke={isActive(path) ? "#fff" : "#004324"}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M2 13.6406H5"
-        stroke={isActive(path) ? "#fff" : "#004324"}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M2 16.6406H5"
-        stroke={isActive(path) ? "#fff" : "#004324"}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    width="24"
+    height="25"
+    viewBox="0 0 24 25"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M3 2.64062H4.30116C5.48672 2.64062 6.0795 2.64062 6.4814 3.01204C6.88331 3.38347 6.96165 4.00369 7.11834 5.24413L8.24573 14.1693C8.45464 15.8232 8.5591 16.6501 9.09497 17.1454C9.63085 17.6406 10.4212 17.6406 12.002 17.6406H22"
+      stroke={isActive(path) ?'#fff': "#004324"}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M11.5 21.6406C12.3284 21.6406 13 20.9691 13 20.1406C13 19.3122 12.3284 18.6406 11.5 18.6406C10.6716 18.6406 10 19.3122 10 20.1406C10 20.9691 10.6716 21.6406 11.5 21.6406Z"
+      stroke={isActive(path) ? "#fff" : "#004324"}
+      strokeWidth="1.5"
+    />
+    <path
+      d="M18.5 21.6406C19.3284 21.6406 20 20.9691 20 20.1406C20 19.3122 19.3284 18.6406 18.5 18.6406C17.6716 18.6406 17 19.3122 17 20.1406C17 20.9691 17.6716 21.6406 18.5 21.6406Z"
+      stroke={isActive(path) ? '#fff': "#004324" }
+      strokeWidth="1.5"
+    />
+    <path
+      d="M18 14.6406H16C14.1144 14.6406 13.1716 14.6406 12.5858 14.0548C12 13.469 12 12.5262 12 10.6406V8.64062C12 6.75501 12 5.8122 12.5858 5.22642C13.1716 4.64063 14.1144 4.64062 16 4.64062H18C19.8856 4.64062 20.8284 4.64063 21.4142 5.22642C22 5.8122 22 6.75501 22 8.64062V10.6406C22 12.5262 22 13.469 21.4142 14.0548C20.8284 14.6406 19.8856 14.6406 18 14.6406Z"
+      stroke={isActive(path) ?  '#fff':"#004324" }
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M16.5 7.64062H17.5"
+      stroke={isActive(path) ?'#fff': "#004324"}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
   );
 };
 export const FinancialIcon = ({isActive, path}) => {
