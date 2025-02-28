@@ -45,6 +45,7 @@ const SignUp = () => {
       // storeURL: formData.storeURL,
       marketingAccept: false,
       isStaff: false,
+      // branchId:'', staffId: ''
       }
     if (formData.password !== formData.passwordConfirm) {
       toast.error("Passwords do not match.");
