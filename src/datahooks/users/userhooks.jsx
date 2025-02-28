@@ -147,9 +147,9 @@ export const useLogOut = () => {
 
       // Clear role-specific data
       if ( isStoreOwner) {
-        localStorage.removeItem("storeOwnerRole");
         localStorage.removeItem("storeOwnerAccessToken");
         localStorage.removeItem("storeOwnerRefreshToken");
+        localStorage.removeItem("storeOwnerRole");
         localStorage.removeItem("storeOwnerId");
         Cookies.remove("isStoreOwnerLoggedIn");
         clearStore(); // Clear store owner state
@@ -207,17 +207,21 @@ export const useSignUserUp = () => {
         marketingAccept,
       } = data;
 
+
+      const params = {
+        name,
+        email,
+        isStaff,
+        staffId,
+        branchId
+      };
+
+      
       return ApiInstance.post(
         "/users/auth/register",
-        { password, storeName, marketingAccept, passwordConfirm },
+        { password, storeName, marketingAccept, passwordConfirm},
         {
-          params: {
-            name,
-            email,
-            isStaff,
-            branchId,
-            staffId,
-          },
+          params
         } //body request data
       );
     },

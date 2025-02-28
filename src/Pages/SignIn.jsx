@@ -10,11 +10,22 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [checkingUser, setCheckingUser] = useState(true);
   useEffect(() => {
-    const accessToken = Cookies.get("accessToken");
+    let accessToken
+    // Check specific role keys
+    const isStoreOwner = localStorage.getItem("storeOwnerRole");
+    const isStoreStaff = localStorage.getItem("staffRole");
+    if (isStoreOwner) {
+       accessToken = Cookies.get("storeOwnerAccessToken");
+    } else if(isStoreStaff) {
+    accessToken =  Cookies.get("staffAccessToken");
+      
+    }
+    
     const store = localStorage.getItem("store");
     if (accessToken && store !== null) {
       setCheckingUser(false);
       navigate("/dashboard");
+      return
     }
     setCheckingUser(false);
   }, [navigate]);

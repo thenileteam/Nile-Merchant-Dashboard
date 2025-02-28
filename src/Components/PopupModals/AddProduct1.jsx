@@ -196,7 +196,7 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
             <button type="button" onClick={closePopup}>
               <FiArrowLeft className="text-2xl text-green" />
             </button>
-            <h2 className="text-green text-[32px]  ">Add Product</h2>
+            <h2 className="text-green text-[32px] font-semibold ">Add Product</h2>
           </div>
           <form>
             <div className="container mt-8">

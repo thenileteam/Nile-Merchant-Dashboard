@@ -31,7 +31,7 @@ const FinancialManagement = ({ data }) => {
   const [displaySuccessModal, setDisplaySuccessModal] = useState(false);
   const [open, setOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams({
-    expense: "false",
+    expense: "true", //setback to false when the other tab is available
   });
   const { totalRevenue, totalRevenueForMonth } = useFetchTransactions();
   const { totalExpense } = useFetchExpense();
@@ -119,8 +119,9 @@ const FinancialManagement = ({ data }) => {
                         searchParams.get("expense") ===
                         `${tab.id === 2 ? true : false}`
                           ? "bg-[#004324] text-[#ffffff] p-2 rounded-md"
-                          : "text-[#004324] p-2 rounded-md"
-                      }`}
+                          : "bg-[#004324] text-[#ffffff] p-2 rounded-md"
+                        }`}
+                      //  "text-[#004324] p-2 rounded-md"
                     >
                       {tab.name}
                     </button>

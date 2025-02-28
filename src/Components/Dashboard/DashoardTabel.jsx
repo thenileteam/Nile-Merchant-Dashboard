@@ -59,7 +59,7 @@ const DashoardTabel = ({
                   </td>
                   <td className="lg:p-3 p-2 text-center bg-[#F5F5F5] text-[#8ED06C] font-extrabold">
                     <Link
-                      to="/orders"
+                      to="/order"
                       className="hover:border-[#6e6e6e] border-[#f5f5f5] border-b-2 transition duration-300 underline-offset-4 decoration-[2px] inline-block hover:-translate-x-1"
                     >
                       <FaEye className="text-[#6e6e6e]"/>
@@ -91,7 +91,7 @@ const DashoardTabel = ({
                   </td>
                   <td className="lg:p-3 p-2  text-center bg-[#F5F5F5] text-[#8ED06C] font-extrabold">
                     <Link
-                      to="/orders"
+                      to="/order"
                       className="hover:border-[#6e6e6e] border-[#f5f5f5] border-b-2 transition duration-300 underline-offset-4 decoration-[2px] inline-block hover:-translate-x-1"
                     >
                        <FaEye className="text-[#6e6e6e]"/>
