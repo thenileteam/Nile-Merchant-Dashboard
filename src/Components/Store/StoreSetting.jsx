@@ -95,7 +95,7 @@ const StoreSetting = () => {
               buttonStates.store.editMode ? "Edit Mode" : "Store Information"
             }
           />
-          <EnableEdit text="Store Information" buttonKey="store" />
+       {  !buttonStates.store.editMode&& <EnableEdit text="Store Information" buttonKey="store" />}
         </article>
         <form className="mt-8">
           {/* First Section */}

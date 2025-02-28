@@ -47,7 +47,7 @@ const Branch = () => {
             <div
               className={`${isCollapsed ? "max-w-[1100px]" : "max-w-[950px]"
                 } mt-[73px] mx-auto`} >
-              <article className="flex lg:items-center justify-between">
+              <article className="flex lg:items-center flex-col lg:flex-row gap-4 lg:gap-0 justify-between">
                 <DashboardIntro
                   introText={
                     getName?.locationName.split("")[0].toUpperCase() +

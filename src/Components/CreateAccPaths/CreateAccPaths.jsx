@@ -14,7 +14,7 @@ const CreateAccPaths = ({ text, path,linkText }) => {
       </p>
       </div>
       <span className="text-center block">
-      <Link to='/staff/onboarding'> Staff</Link>
+      {/* <Link to='/staff/onboarding'> Staff</Link> */}
        
       </span>
     </>

@@ -113,6 +113,7 @@ const Orders = () => {
             setPaymentStatus={setPaymentStatus}
             paymentStatus={paymentStatus}
             setSelectProductForm={setSelectProductForm}
+            selectProductForm={selectProductForm}
             salesChannel={salesChannel}
             setSalesChannel={setSalesChannel}
             selectedCustomer={selectedCustomer}

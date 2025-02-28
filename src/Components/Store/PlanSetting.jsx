@@ -117,7 +117,7 @@ const PlanSetting = () => {
       );
     else if (subscriptionStatus?.subscriptionType === "PREMIUM") {
       return (
-        <div className="rounded-md shadow-lg border bg-white">
+        <div className="rounded-md shadow-lg border bg-white p-4">
           <div className="bg-[#EAF4E2] p-4 rounded-lg">
             <p className="text-green font-bold text-lg">
               You’re on an Upgraded Plan
@@ -129,23 +129,23 @@ const PlanSetting = () => {
           <ul className="subscription-information grid grid-cols-2 lg:grid-cols-4 gap-1 mt-6">
             <li className="text-[#6e6e6e] font-semibold">
               Subscription Date
-              <span className="block  text-lightBlack font-light text-sm">
+              <span className="block  text-lightBlack font-normal text-sm py-1">
                 {fullDate}
               </span>
             </li>
             <li className="text-[#6e6e6e] font-semibold">
               Expiry Date{" "}
-              <span className="block text-lightBlack font-normal text-sm">
+              <span className="block text-lightBlack font-normal text-sm py-1">
                 {SUBSCRIPTION_END_DATE}
               </span>
             </li>
             <li className="text-[#6e6e6e] font-semibold">
               Duration{" "}
-              <span className="block text-lightBlack font-normal text-sm">{}</span>
+              <span className="block text-lightBlack font-normal text-sm py-1">{}</span>
             </li>
             <li className="text-[#6e6e6e] font-semibold">
               Next Billing Period 
-              <span className="block text-lightBlack font-normal text-sm">{SUBSCRIPTION_END_DATE}</span>
+              <span className="block text-lightBlack font-normal text-sm py-1">{SUBSCRIPTION_END_DATE}</span>
             </li>
           </ul>
         </div>
