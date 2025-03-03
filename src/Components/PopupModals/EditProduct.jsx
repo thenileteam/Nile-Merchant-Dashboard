@@ -51,7 +51,7 @@ const EditProduct = () => {
   };
   const { addProductToBackend, isEditingProduct } = useEditProduct(() => {
     setIsConfirmationOpen(false);
-    closeEditingProduct()
+    closeEditingProduct();
   });
   // Function to handle confirmation and send data to API
   const handleConfirm = async () => {
@@ -428,10 +428,10 @@ const EditProduct = () => {
                   onClick={handleConfirm}
                   type="button"
                 >
-                  {isEditingProduct ? (
-                    <Loader2 className=" mx-auto animate-spin duration-300 transition-all" />
-                  ) : (
-                    <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1">
+                    {isEditingProduct ? (
+                      <Loader2 className=" mx-auto animate-spin duration-300 transition-all" />
+                    ) : (
                       <svg
                         width="25"
                         height="24"
@@ -466,9 +466,9 @@ const EditProduct = () => {
                           strokeWidth="1.5"
                         />
                       </svg>
-                      <p>Edit Now</p>
-                    </div>
-                  )}
+                    )}
+                    <p>{isEditingProduct ? "Editing" : "Edit Now"}</p>
+                  </div>
                 </button>
               </div>
             </form>

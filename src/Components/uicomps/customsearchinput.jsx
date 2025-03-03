@@ -98,7 +98,7 @@ const CustomSearchInput = ({ setSelectedCustomer, selectedCustomer }) => {
         value={input}
         placeholder={selectedCustomer[0]?.name || "Enter Customer Name"}
         type="text"
-        className={`w-full bg-[#F5F5F5] rounded-[4px] border-[#6e6e6e] border-[1px] placeholder:text-[#6E6E6E80] h-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+        className={`w-full bg-[#F5F5F5] rounded-[4px] border-[#6e6e6e] border-[1px] placeholder:text-[#6E6E6E80] h-full px-4 py-2  ${
           selectedCustomer[0]?.name
             ? "placeholder:text-black"
             : "placeholder:text-[#6E6E6E80]"
@@ -115,13 +115,13 @@ const CustomSearchInput = ({ setSelectedCustomer, selectedCustomer }) => {
       />
       {/* Display filtered results */}
       {debouncedSearchTerm && (
-        <div className=" bg-white border border-zinc-200  shadow shadow-zinc-200 p-2 absolute top-[110%] left-0 right-0 w-full h-[300px] overflow-y-scroll">
+        <div className=" bg-white border border-red-200  shadow shadow-zinc-200 p-2 absolute top-[110%] left-0 right-0 w-full h-[300px] overflow-y-scroll z-50">
           {filteredCustomers.length > 0 ? (
             <ul>
               {filteredCustomers.map((customer, index) => (
                 <li
                   key={index}
-                  className="w-full border mb-3 rounded-[4px] border-[#8ED06C] flex justify-between p-2 bg-[#F5F5F5]"
+                  className="w-full border mb-3 rounded-[4px] border-[#6e6e6e] flex justify-between p-2 bg-[#F5F5F5]"
                 >
                   <span>{customer.name || customer.email}</span>
                   <input

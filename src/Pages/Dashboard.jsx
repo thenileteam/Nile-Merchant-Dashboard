@@ -88,7 +88,7 @@ const Dashboard = () => {
                     text="Available Balance"
                     naira={storeData?.currency==='Naira'? '₦' : '$'}
                     spacing="my-6"
-                    data={storeData?.currency==='Naira'?formatNumber(dashboardRevenue):formatNumber(convertNairaToDollar(dashboardRevenue))}
+                    data={storeData?.currency==='Naira'?formatNumber(dashboardRevenue):formatNumber(convertNairaToDollar(dashboardRevenue))||0}
                   />
                 </div>
                 <DashboardBox

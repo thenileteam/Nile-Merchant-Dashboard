@@ -29,7 +29,7 @@ const LoginReviews = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentReview((prev) => (prev + 1) % reviews.length);
-    }, 3000); // Change review every 3 secs
+    }, 5000); // Change review every 5 secs
     return () => clearInterval(interval);
   }, []);
 
@@ -40,7 +40,7 @@ const LoginReviews = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 3 }}
       >
         <img src={reviews[currentReview].img} className="w-[520px] h-[650px] object-cover rounded-lg" loading="lazy" alt="lady smiling" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-800 via-transparent to-slate-800 opacity-50 rounded-lg"></div>

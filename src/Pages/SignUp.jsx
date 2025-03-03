@@ -44,7 +44,7 @@ const SignUp = () => {
       storeName: formData.storeName,
       // storeURL: formData.storeURL,
       marketingAccept: false,
-      isStaff: false,
+      // isStaff: false,
       // branchId:'', staffId: ''
       }
     if (formData.password !== formData.passwordConfirm) {

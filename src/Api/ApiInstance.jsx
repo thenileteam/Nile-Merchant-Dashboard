@@ -85,6 +85,7 @@ const refreshAccessToken = async () => {
       secure: true,
       sameSite: "strict",
     });
+    console.log("New access token set:", newAccessToken);
 
     // Update default authorization header
     ApiInstance.defaults.headers.common[

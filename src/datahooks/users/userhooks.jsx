@@ -50,7 +50,7 @@ export const useLogUserIn = () => {
       // Clear previous session data to avoid conflicts
       Cookies.remove("storeOwnerAccessToken");
       Cookies.remove("storeOwnerRefreshToken");
-      Cookies.remove("staffAccessToken");'staffAccessToken'
+      Cookies.remove("staffAccessToken"); 
       Cookies.remove("staffRefreshToken");
       localStorage.removeItem("storeOwnerId");
       localStorage.removeItem("staffId");
@@ -195,34 +195,8 @@ export const useSignUserUp = () => {
   const [error] = useState("");
   const { mutate, isPending } = useMutation({
     mutationFn: (data) => {
-      const {
-        name,
-        email,
-        isStaff,
-        branchId,
-        staffId,
-        password,
-        storeName,
-        passwordConfirm,
-        marketingAccept,
-      } = data;
-
-
-      const params = {
-        name,
-        email,
-        isStaff,
-        staffId,
-        branchId
-      };
-
-      
       return ApiInstance.post(
-        "/users/auth/register",
-        { password, storeName, marketingAccept, passwordConfirm},
-        {
-          params
-        } //body request data
+        "/users/auth/register", data
       );
     },
     onSuccess: () => {
@@ -241,6 +215,54 @@ export const useSignUserUp = () => {
     signUpError: error,
   };
 };
+
+export const useStaffSignSignup = () => {
+  const navigate = useNavigate();
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data) => {
+      const {
+        name,
+        email,
+        isStaff,
+        branchId,
+        staffId,
+        password,
+        passwordConfirm,
+      } = data;
+
+
+      const params = {
+        name,
+        email,
+        isStaff,
+        staffId,
+        branchId
+      };
+
+      return ApiInstance.post(
+        "/users/auth/register",
+        { password, passwordConfirm}, //body request data
+        {
+          params
+        }  
+      );
+    },
+    onSuccess: () => {
+      toast("Auth Success✔");
+      // Navigate to login page
+      navigate("/");
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message || "An error occurred");
+    },
+  });
+
+  return {
+    staffSignUpMutate: mutate,
+    staffSignUpIsPending: isPending,
+    staffSignUpError: error,
+  }; 
+}
 export const useForgetPassword = () => {
   const [error] = useState("");
   const { mutate, isPending } = useMutation({

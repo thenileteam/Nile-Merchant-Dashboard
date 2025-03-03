@@ -82,7 +82,7 @@ const SelectCustomerForm = ({
     addCustomerQuery(customerData);
   };
   return (
-    <div className="fixed z-50 w-full right-0 left-0 h-screen grid place-items-center">
+    <div className="fixed z-[10000px] w-full right-0 left-0 h-screen grid place-items-center">
       <div
         // onClick={() => setSelectCustomerForm(false)}
         className="absolute w-full h-full left-0 right-0 top-0 bg-black/80"

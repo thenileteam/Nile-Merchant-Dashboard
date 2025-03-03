@@ -7,9 +7,10 @@ import { useEffect, useState } from "react";
 import { useShowPasswordStore } from "../ZustandStores/showPasswordStore";
 import { useForm } from "react-hook-form";
 import ReactLoading from "react-loading";
+import { Loader2 } from "lucide-react";
 // import { useStore } from "@/ZustandStores/generalStore";
 import axios from "axios";
-import { useSignUserUp } from "@/datahooks/users/userhooks";
+import { useStaffSignSignup  } from "@/datahooks/users/userhooks";
 const StaffRegister = () => {
   // Extract query params
   const [searchParams] = useSearchParams();
@@ -17,7 +18,7 @@ const StaffRegister = () => {
   const url = "https://api.nile.ng/store/store/staffs/single";
   const [fetchingStaffDetails, setFetchingStaffDetails] = useState(false);
   const [staff, setStaff] = useState(null);
-  const {signUpMutate, signUpIsPending} = useSignUserUp()
+  const {staffSignUpMutate, staffSignUpIsPending} = useStaffSignSignup ()
   const fetchStaffDetails = async () => {
     try {
       setFetchingStaffDetails(true);
@@ -58,7 +59,7 @@ const StaffRegister = () => {
           passwordConfirm: data.confirmPassword
     }
     console.log(newData)
-    signUpMutate(newData)
+    staffSignUpMutate(newData)
   };
   if (fetchingStaffDetails)
     return (
@@ -138,7 +139,8 @@ const StaffRegister = () => {
               type="submit"
               className="mx-auto block bg-green rounded-md text-white w-full py-3 text-center text-[14px] mt-4 font-semibold"
             >
-              Complete Setup
+              {staffSignUpIsPending?  <Loader2 className=" mx-auto animate-spin duration-300 transition-all" />: 'Complete Setup'}
+              
             </button>
             {/* <Link to="/" className="text-center block mt-4"> Login</Link> */}
           </form>

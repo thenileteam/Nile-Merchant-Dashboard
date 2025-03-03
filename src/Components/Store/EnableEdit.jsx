@@ -28,7 +28,7 @@ const EnableEdit = ({ text, buttonKey }) => {
                 stroke-linejoin="round"
               />
             </svg>
-              Edit{text}
+              Edit {text}
           </button>
   )
 }
