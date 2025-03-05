@@ -218,7 +218,7 @@ export const useSignUserUp = () => {
 
 export const useStaffSignSignup = () => {
   const navigate = useNavigate();
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending,error } = useMutation({
     mutationFn: (data) => {
       const {
         name,
