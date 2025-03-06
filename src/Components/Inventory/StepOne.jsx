@@ -4,7 +4,7 @@ import { CustomLoading } from "../uicomps/custom-loading";
 import clsx from "clsx";
 import { Switch } from "radix-ui";
 import { toast } from "sonner";
-
+import { useFetchProducts } from "@/datahooks/products/productshooks";
 export const StepOne = ({
   handleSearch,
   isFetching,
@@ -14,6 +14,7 @@ export const StepOne = ({
   setStep,
   validateSelectedProducts
 }) => {
+  const {productLength}  =  useFetchProducts()
   return (
     <div className="first-step">
       <input
@@ -24,7 +25,11 @@ export const StepOne = ({
         placeholder="Search.."
         onChange={handleSearch}
       />
-      <p className="text-[#6e6e6e] font-bold">Select Products To Transfer</p>
+      {
+        productLength === 0 ?
+        <p className="text-[#6e6e6e] font-bold">You don't have any products yet, You need to Add products before you transfer</p>:
+        <p className="text-[#6e6e6e] font-bold">{isFetching?'Loading Products..':'Select Products To Transfer'}</p>
+      }
       <CustomLoading isLoading={isFetching} error={false}>
         {filteredProducts?.map((product) => {
           return (
@@ -32,7 +37,7 @@ export const StepOne = ({
               key={product.id}
               className="border bg-[#F1F6EDEB] p-3 flex justify-between gap-3 items-center mt-4 rounded-md"
             >
-              <div className="flex flex-1 gap-2  ">
+              <div className="flex flex-1 gap-2">
                 <FiShoppingBag className="w-6 h-6 text-lightGreen" />
                 <div className=" flex-1">
                   <div className="flex justify-between">

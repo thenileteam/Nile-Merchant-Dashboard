@@ -124,8 +124,8 @@ const OrdersTable = ({ data, isCollapsed }) => {
       )}
       
       {/* Tables */}
-      <div className={`${isCollapsed?'max-w-[1110px]':'max-w-[950px]'}  text-lightBlack h-fit mx-auto bg-white rounded-md shadow-md p-4 border-[0.5px]`}>
-        <table className="w-full border-separate  h-fit border-spacing-y-4">
+      <div className={`${isCollapsed?'max-w-[1050px]':'max-w-[950px]'}  text-lightBlack h-fit mx-auto bg-white rounded-md shadow-md p-4 border-[0.5px]`}>
+        <table className="w-full border-separate h-fit border-spacing-y-4">
           <thead>
             <tr className="text-left bg-[#EAF4E2] shadow-lg ">
               <th className="p-3 text-[14px] text-center">Order ID</th>

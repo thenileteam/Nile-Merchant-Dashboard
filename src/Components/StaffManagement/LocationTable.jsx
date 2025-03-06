@@ -15,11 +15,21 @@ const LocationTable = ({ isCollapsed }) => {
   const { locations, isError, isFetchingLocation } = useFetchLocations();
   return (
     <section>
+      {locations?.length === 0 ?
+       <EmptyState
+       title="You have not added a location yet"
+       description="Add new location to see your locations"
+       buttonText="Add Location"
+       icon={EmptyStateIcon}
+       showPopUp={locationOpen}
+       setShowPopUp={setLocationOpen}
+       PopUpComponent={AddLocation}
+     />:
+    
       <div
         className={`mt-[73px] ${
           isCollapsed ? "lg:max-w-[1100px]" : "lg:max-w-[950px]"
-        } mx-auto  `}
-      >
+        } mx-auto  `} >
         <article className="flex justify-between items-center">
           <DashboardIntro introText='Store Branches'/>
         {/* {locations?.length === 0 && ( */}
@@ -31,17 +41,6 @@ const LocationTable = ({ isCollapsed }) => {
           </button>
           {/* )} */}
             </article>
-        {locations?.length === 0 && (
-          <EmptyState
-            title="You have not added a location yet"
-            description="Add new location to see your locations"
-            buttonText="Add Location"
-            Icon={EmptyStateIcon}
-            showPopUp={locationOpen}
-            setShowPopUp={setLocationOpen}
-            PopUpComponent={AddLocation}
-          />
-        )}
         {isFetchingLocation ? (
           <div className="w-full border mt-8">
             <Skeleton className=" h-[40px] w-full block" />
@@ -119,7 +118,8 @@ const LocationTable = ({ isCollapsed }) => {
             </table>
           </div>
         )}
-      </div>
+      </div> 
+ }
       {/* {locationOpen && ( */}
         <AddLocation
           locationOpen={locationOpen}

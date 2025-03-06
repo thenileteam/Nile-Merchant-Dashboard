@@ -48,6 +48,14 @@ const StoreSettingLinks = ({
          <StoreSettingLinkTemplate
           getLinkClasses={getLinkClasses}
           isActive={isActive}
+          link="/location"
+          text="Location"
+          isCollapsed={isCollapsed}
+          icon={LocationIcon}
+        />
+         <StoreSettingLinkTemplate
+          getLinkClasses={getLinkClasses}
+          isActive={isActive}
           link="/plansetting"
           text="Plan & Billing Settings"
           isCollapsed={isCollapsed}
@@ -62,14 +70,7 @@ const StoreSettingLinks = ({
           isCollapsed={isCollapsed}
           icon={DomainIcon}
         /> */}
-        <StoreSettingLinkTemplate
-          getLinkClasses={getLinkClasses}
-          isActive={isActive}
-          link="/location"
-          text="Location"
-          isCollapsed={isCollapsed}
-          icon={LocationIcon}
-        />
+        
         {/* <Link to="/profilesetting">
           <div className="border mt-5 flex items-center gap-2 rounded-md">
             <img src={accountsetting} alt="" />

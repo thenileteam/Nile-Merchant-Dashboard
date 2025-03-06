@@ -28,24 +28,56 @@ import { persist } from "zustand/middleware";
 // );
 
 
+// export const useStore = create((set) => ({
+//   store: JSON.parse(localStorage.getItem('store')) || null,
+//   staff: null,
+//   userData: null,
+//   setUserData: (data) => set({ userData: data }),
+//   setStaff: (newStaff) => set({ staff:newStaff }),
+//     setStore: (newStore) => {
+//       set({ store: newStore });
+//       localStorage.setItem('store', JSON.stringify(newStore)); // Persist to localStorage
+//     },
+//     clearStore: () => {
+//       set({ store: null });
+//       localStorage.removeItem('store'); // Clear store 
+//   },
+//   clearStaff: () => set({ staff: null })
+  
+// }));
+  
+
+
 export const useStore = create((set) => ({
-  store: JSON.parse(localStorage.getItem('store')) || null,
-  staff: null,
-  userData: null,
-  setUserData: (data) => set({ userData: data }),
-  setStaff: (newStaff) => set({ staff:newStaff }),
-    setStore: (newStore) => {
-      set({ store: newStore });
-      localStorage.setItem('store', JSON.stringify(newStore)); // Persist to localStorage
-    },
-    clearStore: () => {
-      set({ store: null });
-      localStorage.removeItem('store'); // Clear store 
+  store: JSON.parse(localStorage.getItem("store")) || null,
+  staff: JSON.parse(localStorage.getItem("staff")) || null,
+  userData: JSON.parse(localStorage.getItem("userData")) || null,
+  
+  setUserData: (data) => {
+    set({ userData: data });
+    localStorage.setItem("userData", JSON.stringify(data)); 
   },
-  clearStaff: () => set({ staff: null })
   
+  setStaff: (newStaff) => {
+    set({ staff: newStaff });
+    localStorage.setItem("staff", JSON.stringify(newStaff)); 
+  },
+
+  setStore: (newStore) => {
+    set({ store: newStore });
+    localStorage.setItem("store", JSON.stringify(newStore)); 
+  },
+
+  clearStore: () => {
+    set({ store: null });
+    localStorage.removeItem("store"); 
+  },
+
+  clearStaff: () => {
+    set({ staff: null });
+    localStorage.removeItem("staff");
+  }
 }));
-  
 
 export const useCardStore = create((set) => ({
   delCard: false,

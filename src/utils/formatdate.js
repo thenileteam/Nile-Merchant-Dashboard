@@ -99,3 +99,25 @@ export const policies = [
     ],
   },
 ];
+
+
+//get future 5 days
+export const getFutureDate =(dateString)=> {
+  const date = new Date(dateString);
+  date.setDate(date.getDate() + 5); // Add 5 days
+
+  const day = date.getDate();
+  const month = date.toLocaleString('en-US', { month: 'long' });
+  const year = date.getFullYear();
+
+  // Function to add ordinal suffix (st, nd, rd, th)
+  const getOrdinalSuffix = (day) => {
+    if (day >= 11 && day <= 13) return `${day}th`;
+    const lastDigit = day % 10;
+    return `${day}${['st', 'nd', 'rd'][lastDigit - 1] || 'th'}`;
+  };
+
+  return `${getOrdinalSuffix(day)} of ${month} ${year}`;
+}
+
+console.log(getFutureDate("2025-03-03T15:35:23.931Z")); // Output: "8th of March"

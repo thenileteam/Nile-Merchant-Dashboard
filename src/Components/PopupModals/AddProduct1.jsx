@@ -15,6 +15,7 @@ import CustomProductSizeSelector from "../Products/CustomProductSizeSelector";
 import { toast } from "sonner";
 import AssignLocation from "../StaffManagement/AssignLocation";
 import { useAssignLocationStore } from "@/ZustandStores/locationStore";
+import { FiChevronDown } from "react-icons/fi";
 const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
   const { addProductToBackend, isAddingProduct } = useCreateNewProduct(() => {
     closePopup(); // close the popup after adding product
@@ -367,7 +368,8 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
                   </div>
 
                   <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
-                    <img src={addsquare} alt="add product icon" />
+                    {/* <img src={addsquare} alt="add product icon" /> */}
+                    <FiChevronDown className="text-lightBlack"/>
                   </span>
                 </div>
                 <div className="">
@@ -434,8 +436,7 @@ const AddProduct1 = ({ isPopupOpen, openPopup, closePopup }) => {
                         <option value="BOX">Box Size</option>
                         <option value="MATERIAL">Packaging Materials</option>
                       </select>
-                      <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">
-                        <img src={addsquare} alt="" />
+                      <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none mt-7">                       <FiChevronDown className='text-lightBlack'/> 
                       </span>
                     </div>
                     <AssignLocation title="Product" formType="addProduct" />

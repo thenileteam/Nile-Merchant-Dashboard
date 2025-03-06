@@ -29,9 +29,10 @@ const isAuthenticatingPage = () => {
 };
 //get the current user role
 const getUserRole = () => {
-  const isStoreOwner = localStorage.getItem("storeOwnerRole");
-  const isStoreStaff = localStorage.getItem("staffRole");
-  return { isStoreOwner, isStoreStaff };
+  const isStoreOwner = localStorage.getItem("storeOwnerRole")  === "STORE_OWNER";
+  const isStoreStaff = localStorage.getItem("staffRole")  === "STORE_STAFF";
+  return {
+    isStoreOwner ,isStoreStaff  };
 };
 
 //get the current user based on their role
@@ -48,9 +49,13 @@ const getUserId = () => {
 // Function to refresh access token
 const refreshAccessToken = async () => {
   try {
-    const{isStoreOwner, isStoreStaff} = getUserRole()
-    console.log("Trying to get kini");
+    const { isStoreOwner, isStoreStaff } = getUserRole()
+    if (!isStoreOwner && !isStoreStaff) {
+      throw new Error("User role not detected");
+    }
     const id = getUserId();
+    // console.log("Trying to get kini");
+    
       // Use role-specific refresh token keys
       const refreshTokenKey = isStoreOwner ? "storeOwnerRefreshToken" : "staffRefreshToken";
       const refreshToken = Cookies.get(refreshTokenKey) || localStorage.getItem(refreshTokenKey);
@@ -83,7 +88,7 @@ const refreshAccessToken = async () => {
     Cookies.set(accessTokenKey, newAccessToken, {
       expires: 1 / 24,
       secure: true,
-      sameSite: "strict",
+      sameSite: "None",
     });
     console.log("New access token set:", newAccessToken);
 
@@ -115,8 +120,11 @@ if ( isStoreOwner) {
   localStorage.removeItem("staffAccessToken");
   localStorage.removeItem("staffRefreshToken");
   localStorage.removeItem("staffId");
-  // localStorage.removeItem("staffPermissions");
-}
+  localStorage.removeItem("staffPermissions");
+    }
+    // Clear role flags
+    localStorage.removeItem("storeOwnerRole");  
+    localStorage.removeItem("staffRole");
     // Remove cookies
     Cookies.remove("storeOwnerAccessToken");
     Cookies.remove("storeOwnerRefreshToken");
