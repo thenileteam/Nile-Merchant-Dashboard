@@ -1,7 +1,8 @@
 // usePagination.js
 import { useState } from "react";
 
-const usePagination = (data,itemsPerPage) => {
+const usePagination = (data, itemsPerPage) => {
+console.log(Array.isArray(data))
     const [currentPage, setCurrentPage] = useState(0);
   // divide the data's length by the items per page for the page count
   const pageCount = Math.ceil(data?.length / itemsPerPage);

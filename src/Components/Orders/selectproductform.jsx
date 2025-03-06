@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { useFetchProducts } from "../../datahooks/products/productshooks";
 import { toast } from "sonner";
+import { FaSearch } from "react-icons/fa";
 
 const SelectProductForm = ({
   cart,
@@ -134,7 +135,7 @@ const SelectProductForm = ({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="w-full">
-            <div className="border bg-[#F1F6EDEB] border-[#6e6e6e] rounded-[4px] ">
+            <div className="border border-[#6e6e6e] rounded-[4px] relative">
               <input
               type="text"
               ref={inputRef}
@@ -142,7 +143,8 @@ const SelectProductForm = ({
                 placeholder="Search Product"
                 value={searchTerm}
               onChange={handleDropdown}
-              />
+            />
+            <FaSearch className="absolute right-3 top-4"/>
             </div>
           {selectProductForm&&<article className="bg-white h-[250px] overflow-y-auto absolute top-[52px] left-0 right-0 shadow-lg p-2 z-50">
             {/* Product List */}

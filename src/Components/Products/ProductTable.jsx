@@ -1,7 +1,5 @@
 /* eslint-disable react/prop-types */
-
 import DeleteProduct from "../PopupModals/DeleteProduct";
-
 import Pagination from "../Pagination/Pagination";
 import usePagination from "../Pagination/PaginationHook";
 import { useSidebarStore } from "../../ZustandStores/sidebarStore";
@@ -73,7 +71,6 @@ const ProductTable = ({ data }) => {
                 </th> */}
                 </tr>
               </thead>
-
               <tbody>
                 {currentItems?.map((product) => (
                   <tr key={product?.id} className="bg-[#ffffff] shadow-md">

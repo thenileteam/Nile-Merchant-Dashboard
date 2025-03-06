@@ -2,13 +2,14 @@ import {useState} from 'react'
 import {useDeleteCategory} from '../../datahooks/products/productshooks'
 const DeleteCategory = ({category}) => {
   const [delCategory , setDelCategory]= useState(false)
-  const{deleteCategory, isDeleting} = useDeleteCategory()
+  const { deleteCategory, isDeleting } = useDeleteCategory(() => {
+    setDelCategory(false)
+  })
 
   const handleDeleteCategoryConfirmation = async () => {
     try {
       // Send a delete request to the API
       deleteCategory(category);
-      setDelCategory(false)
     } catch (error) {
       console.error("Error deleting category:", error);
       alert("Failed to delete the category. Please try again.");
@@ -62,23 +63,16 @@ const DeleteCategory = ({category}) => {
               </h1>
             </div>
 
-            <div className="flex items-center justify-center gap-28">
+            <div className="flex items-center justify-center gap-4 mt-5">
               {/* Yes Button */}
-              <button type="button" disabled={ isDeleting}  onClick={handleDeleteCategoryConfirmation}>
-                <div className=" flex mt-10">
-                  <h1 className="text-[#333333] flex font-bold gap-1 items-center hover:border-[#ffffff] hover:bg-[#E2E8F0] transition ease-out duration-500 border-[#004324] border-2 p-2 px-6 rounded-md">
-                  {isDeleting? 'deleting..':'Yes'}
-                  </h1>
-                </div>
+              <button type="button" disabled={ isDeleting}  className='text-[#fff] flex font-bold gap-1 items-center bg-red-600 hover:border-[#ffffff] hover:bg-red-500 transition ease-out duration-500  p-2 px-6 rounded-md' onClick={handleDeleteCategoryConfirmation}>
+                  {isDeleting? 'Deleting..':'Yes'}
               </button>
 
               {/* No Button */}
-              <button type="button" onClick={()=>setDelCategory(false)}>
-                <div className=" flex mt-10">
-                  <h1 className="text-[#ffffff] hover:text-[#333333] transition ease-out duration-700 flex font-bold gap-1 items-center border-[#004324] hover:bg-[#E2E8F0] bg-[#004324] border-2 p-2 px-6 rounded-md">
+              <button type="button" className='text-[#ffffff] hover:text-[#333333] transition ease-out duration-700 flex font-bold gap-1 items-center border-[#004324] hover:bg-[#E2E8F0] bg-[#004324] border-2 p-2 px-6 rounded-md ' onClick={()=>setDelCategory(false)}>
+                
                    No
-                  </h1>
-                </div>
               </button>
             </div>
           </div>

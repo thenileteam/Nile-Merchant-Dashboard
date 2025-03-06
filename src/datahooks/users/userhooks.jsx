@@ -59,16 +59,16 @@ export const useLogUserIn = () => {
       try {
         if (userRole === "STORE_OWNER") {
           // For store owner
+          localStorage.setItem("storeOwnerRole", userRole)
           Cookies.set("storeOwnerAccessToken", response?.data?.accessToken, {
             secure: true,
-            sameSite: "Strict",
+            sameSite: "None",
           });
           Cookies.set("storeOwnerRefreshToken", response?.data?.refreshToken, {
             secure: true,
-            sameSite: "Strict",
+            sameSite: "None",
           });
           localStorage.setItem("storeOwnerId", userId);
-          localStorage.setItem("storeOwnerRole", userRole); //solid
 
           toast.success("Store Owner Login Successful ✔");
           console.log("store owner", userId, "role", userRole);
@@ -79,16 +79,17 @@ export const useLogUserIn = () => {
           navigate("/dashboard");
         } else if (userRole === "STORE_STAFF") {
           // For staff
+          localStorage.setItem("staffRole", userRole); //and this
           Cookies.set("staffAccessToken", response?.data?.accessToken, {
             secure: true,
-            sameSite: "Strict",
+            sameSite: "None",
           });
           Cookies.set("staffRefreshToken", response?.data?.refreshToken, {
             secure: true,
-            sameSite: "Strict",
+            sameSite: "None",
           });
           localStorage.setItem("staffId", userId);
-          localStorage.setItem("staffRole", userRole); //and this
+         
 
           // Fetch staff details
           const staffData = await ApiInstance.get(

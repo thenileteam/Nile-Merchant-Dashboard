@@ -15,7 +15,7 @@ const AssignLocation = ({title,formType}) => {
   return (
     <>
       <div
-        className="flex items-center justify-between bg-[#ffffff] border-lightBlack border p-3 rounded-md cursor-pointer my-3"
+        className="flex items-center justify-between bg-[#ffffff] border-lightBlack border p-3 rounded-md cursor-pointer my-3 relative"
         onClick={() => setLocationAssigned(formType)}
       >
         <h1 className="text-gray-500 font-bold">
@@ -24,7 +24,7 @@ const AssignLocation = ({title,formType}) => {
         <FiChevronDown className='text-[#6e6e6e]'/>
       </div>
       {isLocationAssigned && (
-        <div className="absolute max-w-[380px] w-full border border-[#6e6e6e] bg-white rounded-md shadow-lg max-h-[200px] overflow-y-auto">
+        <div className="absolute w-full lg:max-w-[765px] border border-[#6e6e6e] bg-white rounded-md shadow-lg max-h-[200px] overflow-y-auto">
           {locations?.map((location) => (
             <div
               key={location.id}

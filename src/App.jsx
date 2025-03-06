@@ -264,8 +264,8 @@ const App = () => {
       return;
     } else {
       // clear role-specific tokens
-      const isStoreOwner = localStorage.getItem("storeOwnerRole");
-      const isStoreStaff = localStorage.getItem("staffRole");
+      const isStoreOwner = localStorage.getItem("storeOwnerRole")  === "STORE_OWNER";
+      const isStoreStaff = localStorage.getItem("staffRole")  === "STORE_STAFF";
     if ( isStoreOwner) {
       localStorage.removeItem("storeOwnerAccessToken");
       localStorage.removeItem("storeOwnerRefreshToken");
