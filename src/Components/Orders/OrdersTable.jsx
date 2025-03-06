@@ -82,7 +82,7 @@ const OrdersTable = ({ data, isCollapsed }) => {
   return (
     <>
       {previewView.display && previewView.url && (
-        <div className=" fixed grid z-[3000000] place-items-center w-full h-screen left-0 right-0 bottom-0 top-0">
+        <div className=" fixed grid z-[3000000] place-items-center bg-black bg-opacity-80  w-full overflow-y-auto h-screen left-0 right-0 bottom-0 top-0">
           <div
             onClick={() => {
               //clear state of visibility et al
@@ -95,7 +95,7 @@ const OrdersTable = ({ data, isCollapsed }) => {
                 active: false,
               });
             }}
-            className="absolute top-0 left-0 w-full bg-black bg-opacity-60  h-full blur-sm"
+            className="absolute top-0 left-0 w-full bg-black bg-opacity-80 h-full pt-20 min-h-screen backdrop-filter"
           ></div>
           <div
             onClick={() => {
@@ -109,23 +109,23 @@ const OrdersTable = ({ data, isCollapsed }) => {
                 active: false,
               });
             }}
-            className=" absolute z-[3000001] top-4 right-6 bg-red-300 cursor-pointer size-10 rounded-full grid place-items-center"
+            className=" absolute z-[3000001] top-4 right-6 bg-red-500 cursor-pointer size-10 rounded-full grid place-items-center"
           >
             <FaX className=" " size={15} color="white" />
           </div>
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className=" relative h-[86%] w-[80%]"
-          >
+          {/* <div
+           
+            className=" relative  pt-20 "
+          > */}
             {/* <InvoicePreview pdfUrl={previewView.url}/> */}
             <InvoiceComponent user={user} data={order} />
-          </div>
+         
         </div>
       )}
       
       {/* Tables */}
-      <div className={`${isCollapsed?'max-w-[1110px]':'max-w-[950px]'}  text-lightBlack h-fit mx-auto bg-white rounded-md shadow-md p-4 border-[0.5px]`}>
-        <table className="w-full border-separate  h-fit border-spacing-y-4">
+      <div className={`${isCollapsed?'max-w-[1050px]':'max-w-[950px]'}  text-lightBlack h-fit mx-auto bg-white rounded-md shadow-md p-4 border-[0.5px]`}>
+        <table className="w-full border-separate h-fit border-spacing-y-4">
           <thead>
             <tr className="text-left bg-[#EAF4E2] shadow-lg ">
               <th className="p-3 text-[14px] text-center">Order ID</th>

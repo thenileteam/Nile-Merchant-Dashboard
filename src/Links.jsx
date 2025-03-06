@@ -112,7 +112,7 @@ console.log(staffRoles)
         {renderLinks()}
       </ul>
       {/* Footer */}
-      {!isCollapsed && !isDropdownOpen && (
+      {/* {!isCollapsed && !isDropdownOpen && (
         <footer className="fixed bottom-2">
           <div className="">
             <button
@@ -136,8 +136,8 @@ console.log(staffRoles)
               </span>
             </div>
           </div>
-        </footer>
-      )}
+        </footer> */}
+      {/* )} */}
     </div>
   );
 };

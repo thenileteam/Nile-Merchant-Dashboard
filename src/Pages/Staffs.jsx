@@ -22,7 +22,7 @@ const Staffs = () => {
           {staffs?.length=== 0 ? (
             <EmptyState
               title="You don't have staffs yet"
-              description="Add  a staff to see your staffs"
+              description="Add a staff to see your staffs"
               buttonText="Add Staff"
               showPopUp={showStaffPopUp}
               icon={EmptyStateIcon}

@@ -28,7 +28,7 @@ const CreateOrderForm = ({
       {createOrderForm && (
         <div className=" ">
           <div
-            className="w-full lg:max-w-[875px] mx-auto p-6 relative bg-white rounded-xl"
+            className="w-full lg:max-w-[875px] mx-auto p-4 relative bg-white rounded-xl"
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -41,10 +41,10 @@ const CreateOrderForm = ({
               >
                 <FiArrowLeft className="text-green text-2xl" />
               </button>
-              <h3 className="text-[32px] text-green">Add Order</h3>
+              <h3 className="text-[32px] text-green font-semibold">Add Order</h3>
             </div>
-            <div className="grid lg:grid-cols-2 gap-3 lg:gap-16 mt-6">
-              <div className="flex flex-col gap-2 mb-4">
+            <div className="grid lg:grid-cols-2 gap-3 lg:gap-16 mt-6 ">
+              <div className="flex flex-col gap-2 mb-4  ">
                 <label
                   className=" text-[16px] leading-5 text-[#6e6e6e] font-semibold"
                   htmlFor="Sales Channel"
@@ -58,7 +58,7 @@ const CreateOrderForm = ({
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 ">
                 <label
                   className="text-[#6e6e6e] font-semibold  text-[16px]  leading-5 "
                   htmlFor="Sales Channel"
@@ -70,35 +70,36 @@ const CreateOrderForm = ({
                     setSalesChannel={setSalesChannel}
                     salesChannel={salesChannel}
                   />
-                  <FiChevronDown className=" absolute  top-[18px] right-4" />
+                  <FiChevronDown className="absolute top-[18px] right-4" />
                 </div>
               </div>
             </div>
             {/* the problem */}
             <div className=" grid gap-2 lg:grid-cols-2 lg:gap-16">
-              <div className=" flex flex-col gap-2 mb-4 relative">
+              <div className=" flex flex-col gap-2 mb-4 relative ">
                 <label
-                  className="font-semibold text-[#6e6e6e]  text-[16px]  leading-5 "
+                  className="font-semibold text-[#6e6e6e]  text-[16px] leading-5"
                   htmlFor="Product Name"
                 >
                   Product Name
                 </label>
                 <div
-                  onClick={() => setSelectProductForm(prev=>!prev)}
-                  className="cursor-pointer bg-[#F5F5F5] rounded-[4px] p-3 border-[#6e6e6e] border px-4 placeholder:text-[#6E6E6E80] "
-                >
-                  <div className="flex items-center justify-between">
+                  // onClick={() => setSelectProductForm(prev=>!prev)}
+                    // className="cursor-pointer bg-[#F5F5F5] rounded-[4px] p-3 border-[#6e6e6e] border px-4 placeholder:text-[#6E6E6E80] "
+                 >
+                  {/* <div className="flex items-center justify-between">
                   {cart.length > 0
                     ? "Product In Cart"
                     : "Select Product"}
                   <FiChevronDown className="w-5 "/>
 
-                  </div>
-                  {selectProductForm&&<SelectProductForm
+                  </div> */}
+                  <SelectProductForm
                     cart={cart}
                     setCart={setCart}
                     setSelectProductForm={setSelectProductForm}
-                  />}
+                    selectProductForm={selectProductForm}
+                  />
                 </div>
               </div>
               <div className="flex flex-col gap-2">
