@@ -46,6 +46,8 @@ const Orders = () => {
     handleActiveFilterChange,
     handleSearch,
     noResults,
+    handleDateFilter,
+    selectedDate,
     filteredItems: filteredOrders,
   } = useFilter(orders, orderFilter);
   const { addOrderToBackend, isAddingOrder } = useCreateNewOrder(() => {
@@ -242,6 +244,8 @@ const Orders = () => {
                   onFilterChange={handleActiveFilterChange}
                   handleSearch={handleSearch}
                   page="Orders"
+                  selectedDate={selectedDate}
+                  handleDateFilter={handleDateFilter}
                 />
               </div>
               <div className="overflow-x-scroll lg:overflow-auto lg:max-w-[1100px] ">

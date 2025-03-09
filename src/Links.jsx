@@ -9,10 +9,10 @@ import { useStore } from "./ZustandStores/generalStore";
 import ReactLoading from "react-loading";
 
 const Links = ({ isCollapsed }) => {
-  const isStoreOwner = localStorage.getItem("storeOwnerRole");
+  const isStoreOwner = localStorage.getItem("storeOwnerRole") ;
   const isStoreStaff = localStorage.getItem("staffRole");
   const location = useLocation();
-  const { openPolicy } = usePolicyStore();
+  // const { openPolicy } = usePolicyStore();
   const { staff } = useStore();
   const { isDropdownOpen, setIsDropdownOpen } = useDropDown();
   // Function to determine if link is active

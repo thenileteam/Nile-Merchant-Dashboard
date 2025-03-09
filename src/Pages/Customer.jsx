@@ -9,7 +9,7 @@ import { useSidebarStore } from "../ZustandStores/sidebarStore";
 import DashboardBox from "@/Components/Dashboard/DashboardBox";
 import DashboardIntro from "../Components/Dashboard/DashboardIntro";
 import PageFilters from "@/Components/PageFilters/PageFilter";
-import {useFilter} from "@/Components/PageFilters/usePageFilter";
+import { useFilter } from "@/Components/PageFilters/usePageFilter";
 import { isRecentCustomer } from "@/Components/PageFilters/usePageFilter";
 const Customer = () => {
   //check for recent customers
@@ -17,9 +17,9 @@ const Customer = () => {
     if (selectedFilter === "Recent") {
       return customers.filter((customer) => isRecentCustomer(customer));
     }
-    return customers;  
+    return customers;
   };
-  
+
   const {
     customers,
     isFetchingCustomers: isLoading,
@@ -29,11 +29,13 @@ const Customer = () => {
     selectedFilter,
     handleActiveFilterChange,
     handleSearch,
+    handleDateFilter,
+    selectedDate,
     filteredItems: filteredCustomers,
-    noResults
+    noResults,
   } = useFilter(customers, customerFilterFunction);
   const { isCollapsed } = useSidebarStore();
-console.log(customers)
+  console.log(customers);
   return (
     <section>
       {customers?.length === 0 ? (
@@ -93,35 +95,31 @@ console.log(customers)
                     data={customers?.length}
                     width="w-[50%]"
                   />
-                  {/*<div className="bg-[#FFFFFF] border-2 shadow-sm w-[273px] p-5 rounded-md">
-                    <img src={userarrow} alt="" />
-                    <h1 className="text-[#333333] text-[22px] font-bold mt-1">
-                      0
-                    </h1>
-                    <p className="text-[#6E6E6E]">Repeat Customers</p>
-                  </div>*/}
                 </div>
-              {/* filters */}
-              <PageFilters
-                filters={["All", "Recent"]}
-                page="Customers"
-                searchPlaceholder="Search Customer..."
-                activeFilter={selectedFilter}
-                onFilterChange={handleActiveFilterChange}
-                handleSearch={handleSearch}
-              />
+                {/* filters */}
+                <PageFilters
+                  filters={["All", "Recent"]}
+                  page="Customers"
+                  searchPlaceholder="Search Customer..."
+                  activeFilter={selectedFilter}
+                  onFilterChange={handleActiveFilterChange}
+                  handleSearch={handleSearch}
+                  handleDateFilter={handleDateFilter}
+                  selectedDate={selectedDate}
+                />
               </CustomAwaitCard>
             </div>
-              <div>
-                {noResults ? (
-                  <p className=" text-center my-auto">No Items Found</p>
-                ) : (
-                  <CustomerTable
-                    customers={filteredCustomers}
-                    error={error}
-                    isLoading={isLoading}
-                    isCollapsed={isCollapsed}
-                  />)}
+            <div>
+              {noResults ? (
+                <p className=" text-center my-auto">No Items Found</p>
+              ) : (
+                <CustomerTable
+                  customers={filteredCustomers}
+                  error={error}
+                  isLoading={isLoading}
+                  isCollapsed={isCollapsed}
+                />
+              )}
             </div>
           </div>
         </div>

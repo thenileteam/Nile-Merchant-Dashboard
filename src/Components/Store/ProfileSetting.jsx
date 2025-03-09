@@ -111,7 +111,7 @@ const ProfileSetting = () => {
                   buttonStates.profile.editMode ? "Edit Mode" : "Profile"
                 }
               />
-              <EnableEdit text=" Profile" buttonKey="profile" />
+              {!buttonStates.profile.editMode && <EnableEdit text=" Profile" buttonKey="profile" />}
             </article>
             {/* Input Fields */}
             <div className="relative bg-white rounded-md shadow-lg border mt-8 p-3">

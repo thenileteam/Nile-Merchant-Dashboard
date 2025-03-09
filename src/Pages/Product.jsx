@@ -21,7 +21,7 @@ import EditProduct from "@/Components/PopupModals/EditProduct";
 import { motion, AnimatePresence } from "framer-motion";
 import { UserTableListLoader } from "@/Components/CustomLoaders/loaders";
 import PageFilters from "@/Components/PageFilters/PageFilter";
-import {useFilter }from "@/Components/PageFilters/usePageFilter";
+import { useFilter } from "@/Components/PageFilters/usePageFilter";
 const Product = () => {
   const { isCollapsed } = useSidebarStore();
   const [isActiveTab, setIsActiveTab] = useState(true);
@@ -31,6 +31,7 @@ const Product = () => {
     isError,
     productLength,
   } = useFetchProducts();
+  console.log(products)
   const [isCategoryOpen, setCategoryOpen] = useState(false);
   const { isPopupOpen, openPopup, closePopup } = useProductStore();
   const { categoryLength } = useFetchCategories();
@@ -45,9 +46,10 @@ const Product = () => {
     selectedFilter,
     handleActiveFilterChange,
     handleSearch,
+    selectedDate,
+    handleDateFilter,
     filteredItems: filteredProducts,
   } = useFilter(products, productFilter);
-
 
   return (
     <section>
@@ -81,7 +83,7 @@ const Product = () => {
           <div
             className={` ${
               isCollapsed ? "lg:ml-20" : "lg:ml-56"
-            } overflow-x-hidden`}
+            } lg:overflow-hidden `}
           >
             <AnimatePresence mode="wait">
               {isPopupOpen ? (
@@ -195,6 +197,8 @@ const Product = () => {
                       activeFilter={selectedFilter}
                       onFilterChange={handleActiveFilterChange}
                       handleSearch={handleSearch}
+                      selectedDate={selectedDate}
+                      handleDateFilter={handleDateFilter}
                     />
                     {isActiveTab ? (
                       <div>
