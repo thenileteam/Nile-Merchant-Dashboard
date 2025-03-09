@@ -48,7 +48,7 @@ handleDateFilter,
           selected= {selectedDate ? parseISO(selectedDate) : null} 
           onChange={ handleDateFilter}
           placeholderText="Select Date"
-          className="w-full border-2 rounded-md pl-8 py-2 cursor-pointer text-lightGreen font-semibold"
+          className="w-full border rounded-md pl-8 py-2 cursor-pointer font-semibold placeholder:text-lightGreen"
           dateFormat="yyyy-MM-dd"
           showPopperArrow={false}
           popperClassName="!z-[1000]"

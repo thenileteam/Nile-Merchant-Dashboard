@@ -83,7 +83,7 @@ const Product = () => {
           <div
             className={` ${
               isCollapsed ? "lg:ml-20" : "lg:ml-56"
-            } overflow-x-hidden`}
+            } lg:overflow-hidden `}
           >
             <AnimatePresence mode="wait">
               {isPopupOpen ? (

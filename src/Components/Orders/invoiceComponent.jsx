@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import useBankDetails from "@/datahooks/banks/usebankhook";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import html2pdf from "html2pdf.js";
+import {html2pdf }from "html2pdf.js";
 
 const InvoiceComponent = ({ data, user }) => {
   //TODO
