@@ -1,47 +1,49 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { format } from "date-fns";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useBankDetails from "@/datahooks/banks/usebankhook";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import html2pdf from "html2pdf.js";
+
 const InvoiceComponent = ({ data, user }) => {
+  //TODO
+  ///there will issue here if a staff logs  in edge case tho
+  const store = JSON.parse(localStorage.getItem("store"));
+
   const invoiceRef = useRef();
-  const currentDate = new Date();
-  const formattedDate = format(currentDate, "MMMM dd, yyyy"); // Match the format "June 13, 2021"
-  const dueDate = format(
-    new Date(currentDate.setDate(currentDate.getDate() + 3)),
-    "MMMM dd, yyyy"
-  ); // Due date 3 days later, e.g., "June 16, 2021"
+  const formattedDate = format(data?.createdAt, "MMMM dd, yyyy"); // Match the format "June 13, 2021"
 
   const { customer, items, totalAmount } = data;
-  const store = {
-    name: "Giggling Platypus Co.",
-    address: "123 Anywhere st, AnyCity",
-    phone: "123-456-7890"
-  };
-
-  const handleDownloadPdf = async () => {
+  console.log(data);
+  const handleDownloadPdf = () => {
     const element = invoiceRef.current;
     if (!element) return;
 
-    const canvas = await html2canvas(element, {
-      scale: 2
-    });
+    const options = {
+      margin: [10, 10, 10, 10], // Top, Right, Bottom, Left margins in mm
+      filename: `Invoice_${formattedDate}.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true }, // Ensure CORS is handled
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      pagebreak: { mode: ["avoid-all", "css", "legacy"] } // Handle page breaks
+    };
 
-    const data = canvas.toDataURL("image/png");
+    html2pdf().from(element).set(options).save();
+  };
 
-    const pdf = new jsPDF({
-      orientation: "portrait",
-      unit: "in",
-      format: "a4"
-    });
-    const imgProp = pdf.getImageProperties(data);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProp.height * pdfWidth) / imgProp.width;
+  const getStoreCurr = (currency) => {
+    switch (currency) {
+      case "NGN":
+        return "₦";
 
-    pdf.addImage(data, "PNG", 0, 0, pdfWidth, pdfHeight);
-    pdf.save(`Giggling Platypus Invoice #1234 ${formattedDate}.pdf`);
+      case "USD":
+        return "$";
+
+      default:
+        return "₦";
+    }
   };
 
   return (
@@ -53,19 +55,17 @@ const InvoiceComponent = ({ data, user }) => {
         {/* Header with Company Name and Invoice Details */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex flex-col">
-            <h1 className="text-3xl font-bold text-black">
-              Giggling Platypus Co.
-            </h1>
-            <p className="text-gray-600 text-lg">
-              123 Anywhere st, AnyCity
+            <h1 className="text-3xl font-bold text-black">{store?.name}</h1>
+            <p className="text-gray-600 capitalize text-lg">
+              {store?.address || ""}
+              {store?.city || ""}
               <br />
-              123-456-7890
+              {store?.phone || ""}
             </p>
           </div>
           <div className="text-right">
-            <p className="text-lg font-bold">Invoice Number: #1234</p>
+            <p className="text-lg font-bold">Invoice Number: {data.id}</p>
             <p className="text-gray-600 text-lg">Date: {formattedDate}</p>
-            <p className="text-gray-600 text-lg">Due Date: {dueDate}</p>
           </div>
         </div>
 
@@ -73,22 +73,21 @@ const InvoiceComponent = ({ data, user }) => {
         <div className="mb-6 flex justify-between">
           <div className="w-1/2">
             <p className="text-lg font-bold">BILL TO:</p>
-            <p className="text-gray-600 text-lg">
-              Murad Naser
-              <br />
-              123 Anywhere st, AnyCity
-              <br />
-              123-456-7890
-            </p>
+            {data?.customer && (
+              <p className="text-gray-600 text-lg">
+                {data?.customer?.name || "NA"}
+                <br />
+                {data?.customer?.location || "NA"}
+
+                <br />
+                {data?.customer?.phone || "NA"}
+              </p>
+            )}
           </div>
           <div className="w-1/2 text-right">
-            <p className="text-lg font-bold">Payment Method</p>
+            <p className="text-lg font-bold">Payment Status</p>
             <p className="text-gray-600 text-lg">
-              Central Bank
-              <br />
-              Samira Hadid
-              <br />
-              123-456-7890
+              {data?.paymentStatus || "NA"}
             </p>
           </div>
         </div>
@@ -117,37 +116,51 @@ const InvoiceComponent = ({ data, user }) => {
                     {item.desc || "NA"}
                   </p>
                 </td>
-                <td className="py-4 text-lg">${item.price}</td>
+                <td className="py-4 text-lg">
+                  {" "}
+                  {getStoreCurr(store?.currency)}
+                  {item.price}
+                </td>
                 <td className="py-4 text-lg">{item.quantity}</td>
-                <td className="py-4 text-lg">${item.price * item.quantity}</td>
+                <td className="py-4 text-lg">
+                  {" "}
+                  {getStoreCurr(store?.currency)}
+                  {item.price * item.quantity}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
         {/* Totals */}
-        <div className="flex flex-col justify-end items-end mb-5">
+        <div className="flex flex-col mt-[100px] justify-end items-end mb-5">
           <div className="flex flex-col border-y-[2px] w-[350px] pl-20 py-3  border-black gap-2 mb-4">
             <div className="flex justify-between text-lg">
               <span className=" font-bold text-black text-[17px]">Total</span>
               <span className=" font-bold text-black text-[17px]">
-                ${totalAmount}
+                {getStoreCurr(store?.currency)}
+                {totalAmount}
               </span>
             </div>
             <div className="flex justify-between text-lg">
               <span className=" font-bold text-black text-[17px]">Tax</span>
-              <span className=" font-bold text-black text-[17px]">$0</span>
+              <span className=" font-bold text-black text-[17px]">
+                {" "}
+                {getStoreCurr(store?.currency)}
+                {Math.round(0.13 * data.totalAmount)}
+              </span>
             </div>
             <div className="flex justify-between text-lg">
               <span className=" font-bold text-black text-[17px]">
                 Discount
               </span>
-              <span className=" font-bold text-black text-[17px]">$0</span>
+              <span className=" font-bold text-black text-[17px]">{""}</span>
             </div>
           </div>
           <div className="flex justify-between w-[350px] pl-20 text-lg font-bold">
             <span className=" font-bold text-black text-[17px]">Sub Total</span>
             <span className=" font-bold text-black text-[17px]">
-              ${totalAmount}
+              {getStoreCurr(store?.currency)}
+              {totalAmount + Math.round(0.13 * data.totalAmount)}
             </span>
           </div>
         </div>
@@ -156,16 +169,20 @@ const InvoiceComponent = ({ data, user }) => {
         <div className="flex justify-between mt-[100px] items-end">
           <div>
             <p className="text-lg text-gray-600">
-              <p className=" text-black font-bold"> Terms and Conditions:</p>
+              {store?.terms && (
+                <p className=" text-black font-bold"> Terms and Conditions:</p>
+              )}
 
-              <span className="max-w-[100px]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </span>
+              <span className="max-w-[100px]">{store?.terms}</span>
             </p>
           </div>
           <div className="text-right">
-            <p className="text-lg font-bold">Samira Hadid</p>
-            <p className="text-lg text-gray-600">Manager</p>
+            {store?.manager && (
+              <>
+                <p className="text-lg font-bold">{store?.manager?.name}</p>
+                <p className="text-lg text-gray-600">Manager</p>
+              </>
+            )}
           </div>
         </div>
       </div>
